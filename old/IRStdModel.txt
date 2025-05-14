@@ -1,0 +1,155 @@
+Standard model of DS IR
+--------------------------------------------------------------------------------
+
+- DS IR in the object theory, let's call it O
+- *A* metatheory with DS IR, let's call it T
+- We give a model of O in 2LTT over syntax of T
+
+(DS already gave a model of T using Mahlo in set theory)
+
+
+-- Specification of 2LTT over T (pretty much the same as a SOGAT spec of T)
+--------------------------------------------------------------------------------
+
+Meta level:
+   Set : Set    with ETT type formers (no DSIR)
+
+We have an inner level, which is T
+
+   Ty : Set
+   Tm : Ty → Set
+   U  : Ty
+   _  : Ty = Tm U
+
+   + ETT type formers
+   + DS IR
+
+   Sig : Set
+   ret : Ty → Sig
+   ind : (A : Ty) → (Tm (A → Ty) → Sig) → Sig
+   σ   : (A : Ty) → (A → Sig) → Sig
+
+   arg : Sig → (u : Ty)(el : u → Ty) → Ty
+   _ : arg (ret _)   u el = ⊤
+   _ : arg (ind A B) u el = (f : A → u) × arg (B (el ∘ f)) u el
+   _ : arg (σ A B)   u el = (a : A) × arg (B a) u el
+
+   IRTM : (s : Sig) → Ty
+   El   : {s} → IRTM s → Ty
+   El'  : {s s'} → arg s (IRTM s') El → Ty
+   wrap : arg s (IRTM s) El → IRTm s
+   _    : El (wrap t) = El' t
+   _    : El' {ret X} _             = X
+   _    : El' {ind A B}{s'} (x , y) = El' {B (El ∘ x)}{s'} y
+   _    : El' {σ A B}{s'}   (x , y) = El' {B x}{s'} y
+
+
+-- Standard model
+--------------------------------------------------------------------------------
+
+-- working internally in 2LTT over T (as specified above)
+
+Con : Set
+Con = Set
+
+Sub : Con → Con → Set
+Sub Γ Δ = Γ → Δ
+
+TyO : Con → Set
+TyO Γ = Γ → Ty
+
+TmO : (Γ : Con) → TyO Γ → Set
+TmO Γ A = (γ : Γ) → A γ
+
++ CwF
+
+U : TyO Γ
+  : Γ → Ty
+U _ = Ty
+
+Russell : TmO Γ U = TyO Γ
+...
+
+SigO : Con → Set
+SigO Γ = Γ → Sig
+
+retO : TyO Γ → SigO Γ
+     : (Γ → Ty) → (Γ → Sig)
+retO A γ = ret (A γ)
+
+indO : (A : TyO Γ) → Sig (Γ, A → U) → Sig Γ
+     : (A : Γ → Ty) → (((γ : Γ) × (A γ → Ty)) → Sig) → (Γ → Sig)
+indO A s γ = ind (A γ) (λ f. s (γ, f))
+
+σO : (A : TyO Γ) → SigO (Γ, A) → SigO Γ
+  : (A : Γ → Ty) → (((γ : Γ) × A γ) → Sig) → Γ → Sig
+σO A s γ = σ (A γ) (λ α. s (γ, α))
+
+...   this is just the Set-contextualization of an arbitrary SOGAT
+...   i.e. starting from a second-order model of T, build a first-order model
+...   of T (which is a FO model of O)
+
+
+
+CANONICITY
+--------------------------------------------------------------------------------
+
+- O : MLTT + DS IR
+- T : ETT + Indexed DS IR
+- metatheory: 2LTT over T
+
+
+
+
+--------------------------------------------------------------------------------
+
+Conᴾ : Conᴼ → Set
+Conᴾ Γ = Subᴼ ∙ Γ → Set
+
+Subᴾ : {Γ : Conᴼ}{Γᴾ : Conᴾ Γ}{Δ : Conᴼ}{Δᴾ : Conᴾ Δ} → Subᴼ Γ Δ → Set
+Subᴾ σ = (γ : Subᴼ ∙ Γ) → Γᴾ γ → Δᴾ (σ ∘ γ)
+
+Tyᴾ : {Γ}{Γᴾ : Conᴾ Γ} → (A : Tyᴼ Γ) → Set
+Tyᴾ A = (γ : Subᴼ ∙ Γ) → Γᴾ γ → Tmᴼ ∙ (A[γ]) → Set
+
+Tmᴾ : ...
+Tmᴾ t = ∀ γ γᴾ → Aᴾ γ γᴾ (t[γ])
+
+Sigᴾ : {Γ : Conᴼ}{Γᴾ : Conᴾ Γ} → Sigᴼ Γ → Set
+Sigᴾ {Γ}{Γᴾ} s = ∀ γ γᴾ → ISig (Tmᴼ ∙ (IRTMᵒ s[γ]))
+
+-- try to put the extra ᴾ data and pretty much everything that we have in mahlo.txt
+-- into the computed ISig
+-- (lookup the exact spec for ISig & indexed DSIR, maybe massage it)
+retᴾ
+indᴾ
+σᴾ
+
+
+NORMALIZATION
+--------------------------------------------------------------------------------
+
+O : MLTT + DS IR
+T : ETT + Indexed DS IR
+metatheory: 2LTT over (presheaves over O renamings, which supports ETT + indexed DS IR)
+
+
+1. Model indexed DS IR in presheaf models
+   Use the same 2LTT dance recursively:
+      - O         : MLTT + indexed DS IR
+      - T         : ETT + indexed DS IR
+      - metatheory: 2LTT over T
+
+      model of O that we give in metatheory:
+         model of O in presheaves valued in T types
+
+         PSh C := Cᵒᵖ → Set
+	 PSh C := Cᵒᵖ → Ty
+
+2. Do the rest of the normalization proof
+
+    define neutrals + normals for DS IR
+
+
+
+--------------------------------------------------------------------------------
