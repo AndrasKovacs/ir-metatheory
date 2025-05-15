@@ -50,34 +50,45 @@ module ShallowIRTranslation (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     F0 = λ S → IR.F0 S U El
     F1 = λ S → IR.F1 S U El
 
-    PSig : ∀ {S} → Sigᴾ S → (f : F0 S → F0 S*) → (∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (f x))) → IIR.Sig
-    PSig (ι oᴾ)        f g = IIR.ι (IR.wrap (f (lift tt))) (g oᴾ)
-    PSig (σ {A} Aᴾ Sᴾ) f g = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → PSig (Sᴾ aᴾ) (λ x → f (a , x)) (λ {x} → g {a , x})
-    PSig (δ {A} Aᴾ Sᴾ) f g = IIR.σ (A → U) λ ts → IIR.δ (∃ Aᴾ) (λ aaᴾ → ts (aaᴾ .₁)) λ tsᴾ →
-                               PSig (Sᴾ (λ aᴾ → tsᴾ (_ , aᴾ))) (λ x → f (ts , x)) (λ {x} → g {ts , x})
+    IxSig : ∀ {S} → Sigᴾ S → (f : F0 S → F0 S*) → (∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (f x))) → IIR.Sig
+    IxSig (ι oᴾ)        f g = IIR.ι (IR.wrap (f (lift tt))) (g oᴾ)
+    IxSig (σ {A} Aᴾ Sᴾ) f g = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → IxSig (Sᴾ aᴾ) (λ x → f (a , x)) (λ {x} → g {a , x})
+    IxSig (δ {A} Aᴾ Sᴾ) f g = IIR.σ (A → U) λ ts → IIR.δ (∃ Aᴾ) (λ aaᴾ → ts (aaᴾ .₁)) λ tsᴾ →
+                               IxSig (Sᴾ (λ aᴾ → tsᴾ (_ , aᴾ))) (λ x → f (ts , x)) (λ {x} → g {ts , x})
 
     Uᴾ : U → Set ext
-    Uᴾ = IIR.U (PSig S*ᴾ id id)
+    Uᴾ = IIR.U (IxSig S*ᴾ id id)
 
     Elᴾ : {x : U} → Uᴾ x → Oᴾ (El x)
-    Elᴾ = IIR.El (PSig S*ᴾ id id)
+    Elᴾ = IIR.El (IxSig S*ᴾ id id)
 
-    PF0 : ∀ {S}(Sᴾ : Sigᴾ S)
+    ConvF0 : ∀ {S}(Sᴾ : Sigᴾ S)
             {x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x)
           → (f : F0 S → F0 S*)
           → (g : ∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (f x)))
-          → (h : IIR.F0 (PSig Sᴾ f g) Uᴾ Elᴾ (IR.wrap (f x)) → IIR.F0 (PSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (f x)))
-          → IIR.F0 (PSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (f x))
-    PF0 (ι oᴾ)    xᴾ          f g h = h (lift refl)
-    PF0 (σ Aᴾ Sᴾ) (aᴾ , xᴾ)   f g h = PF0 (Sᴾ aᴾ) xᴾ (λ x → f (_ , x)) g (λ x → h (_ , aᴾ , x))
-    PF0 (δ Aᴾ Sᴾ) (chdᴾ , xᴾ) f g h = PF0 (Sᴾ (Elᴾ ∘ chdᴾ)) xᴾ (λ x → f (_ , x)) g λ x → h (_ , (λ x → chdᴾ (x .₂)) , x)
+          → (h : IIR.F0 (IxSig Sᴾ f g) Uᴾ Elᴾ (IR.wrap (f x)) → IIR.F0 (IxSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (f x)))
+          → IIR.F0 (IxSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (f x))
+    ConvF0 (ι oᴾ)    xᴾ          f g h = h (lift refl)
+    ConvF0 (σ Aᴾ Sᴾ) (aᴾ , xᴾ)   f g h = ConvF0 (Sᴾ aᴾ) xᴾ (λ x → f (_ , x)) g (λ x → h (_ , aᴾ , x))
+    ConvF0 (δ Aᴾ Sᴾ) (chdᴾ , xᴾ) f g h = ConvF0 (Sᴾ (Elᴾ ∘ chdᴾ)) xᴾ (λ x → f (_ , x)) g λ x → h (_ , (λ x → chdᴾ (x .₂)) , x)
 
     wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ Uᴾ Elᴾ S*ᴾ x) → Uᴾ (IR.wrap x)
-    wrapᴾ xᴾ = IIR.wrap (PF0 S*ᴾ xᴾ id id id)
+    wrapᴾ xᴾ = IIR.wrap (ConvF0 S*ᴾ xᴾ id id id)
 
+    ConvF1 :
+         ∀ {S}(Sᴾ : Sigᴾ S)
+            {x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x)
+          → (f : F0 S → F0 S*)
+          → (fᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x → F0ᴾ Uᴾ Elᴾ S*ᴾ (f x))
+          → (g : ∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (f x)))
+          → (h : IIR.F0 (IxSig Sᴾ f g) Uᴾ Elᴾ (IR.wrap (f x)) → IIR.F0 (IxSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (f x)))
+          → (foo : {!!})
+          → IIR.F1 (IxSig S*ᴾ id id) Uᴾ Elᴾ (ConvF0 S*ᴾ (fᴾ xᴾ) id id id)
+          ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (fᴾ xᴾ)
+    ConvF1 = {!!}
 
     El≡ᴾ : ∀ {x} (xᴾ : F0ᴾ Uᴾ Elᴾ S*ᴾ x) → Elᴾ (wrapᴾ xᴾ) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ xᴾ
-    El≡ᴾ xᴾ = {!!}
+    El≡ᴾ xᴾ = ConvF1 S*ᴾ xᴾ id id id id {!!}
 
 
 --   -- wrapᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)

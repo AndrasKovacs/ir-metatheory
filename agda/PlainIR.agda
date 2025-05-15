@@ -1,9 +1,9 @@
 
 open import Lib
 
-module PlainIR (ext : Level) (i : Level) (O : Set i) where
+module PlainIR (ext : Level) (ol : Level) (O : Set ol) where
 
-  data Sig : Set (lsuc (ext ⊔ i)) where
+  data Sig : Set (lsuc (ext ⊔ ol)) where
     ι : O → Sig
     σ : (A : Set ext) → (A → Sig) → Sig
     δ : (A : Set ext) → ((A → O) → Sig) → Sig
