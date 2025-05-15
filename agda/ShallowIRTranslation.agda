@@ -8,130 +8,92 @@ module ShallowIRTranslation (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
   module IR = PlainIR ext ol O
 
   data Sigᴾ : IR.Sig → Set (lsuc ext ⊔ lsuc ol) where
-    ι : ∀ o → Oᴾ o → Sigᴾ (IR.ι o)
-    σ : ∀ A (Aᴾ : A → Set ext)(Γ : A → IR.Sig)(Γᴾ : ∀ a → Aᴾ a → Sigᴾ (Γ a)) → Sigᴾ (IR.σ A Γ)
-    δ : ∀ A (Aᴾ : A → Set ext)(Γ : (A → O) → IR.Sig)(Γᴾ : ∀ f → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (Γ f)) → Sigᴾ (IR.δ A Γ)
+    ι : ∀ {o} → Oᴾ o → Sigᴾ (IR.ι o)
+    σ : ∀ {A} (Aᴾ : A → Set ext){S : A → IR.Sig}      (Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)) → Sigᴾ (IR.σ A S)
+    δ : ∀ {A} (Aᴾ : A → Set ext){S : (A → O) → IR.Sig}(Sᴾ : ∀ {f} → (∀ {a} → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)) → Sigᴾ (IR.δ A S)
 
-  F0ᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
-        (u : Set ext)(uᴾ : u → Set ext)(el : u → O)(elᴾ : ∀ x (xᴾ : uᴾ x) → Oᴾ (el x))
-      → IR.F0 S u el → Set ext
-  F0ᴾ S (ι o oᴾ)      u uᴾ el elᴾ x       = Lift _ ⊤
-  F0ᴾ S (σ A Aᴾ Γ Γᴾ) u uᴾ el elᴾ (a , t) = Σ (Aᴾ a) λ aᴾ → F0ᴾ (Γ a) (Γᴾ a aᴾ) u uᴾ el elᴾ t
-  F0ᴾ S (δ A Aᴾ Γ Γᴾ) u uᴾ el elᴾ (f , t) = Σ (∀ a → Aᴾ a → uᴾ (f a)) λ fᴾ →
-                                            F0ᴾ (Γ (el ∘ f)) (Γᴾ (el ∘ f) λ a aᴾ → elᴾ _ (fᴾ a aᴾ))
-                                                u uᴾ el elᴾ t
+  module _ {u : Set ext}(uᴾ : u → Set ext){el : u → O}(elᴾ : ∀ {x} (xᴾ : uᴾ x) → Oᴾ (el x)) where
+    private
+      F0 = λ S → IR.F0 S u el
+      F1 = λ S → IR.F1 S u el
 
-  F1ᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
-        (u : Set ext)(uᴾ : u → Set ext)(el : u → O)(elᴾ : ∀ x (xᴾ : uᴾ x) → Oᴾ (el x))
-        (x : IR.F0 S u el)(xᴾ : F0ᴾ S Sᴾ u uᴾ el elᴾ x)
-        → Oᴾ (IR.F1 S u el x)
-  F1ᴾ _ (ι o oᴾ)      u uᴾ el elᴾ x xᴾ = oᴾ
-  F1ᴾ _ (σ A Aᴾ S Sᴾ) u uᴾ el elᴾ (a , t) (aᴾ , tᴾ) =
-    F1ᴾ (S a) (Sᴾ a aᴾ) u uᴾ el elᴾ t tᴾ
-  F1ᴾ _ (δ A Aᴾ S Sᴾ) u uᴾ el elᴾ (f , t) (fᴾ , tᴾ) =
-    F1ᴾ (S (el ∘ f)) (Sᴾ (el ∘ f) λ a aᴾ → elᴾ _ (fᴾ a aᴾ)) u uᴾ el elᴾ t tᴾ
+    F0ᴾ : ∀ {S} → Sigᴾ S → F0 S → Set ext
+    F0ᴾ (ι oᴾ)    x       = Lift _ ⊤
+    F0ᴾ (σ Aᴾ Sᴾ) (a , t) = Σ (Aᴾ a) λ aᴾ → F0ᴾ (Sᴾ aᴾ) t
+    F0ᴾ (δ Aᴾ Sᴾ) (f , t) = Σ (∀ {a} → Aᴾ a → uᴾ (f a)) λ fᴾ → F0ᴾ (Sᴾ (elᴾ ∘ fᴾ)) t
 
-  IHᴾ : ∀ {j}
-        (S : IR.Sig)(Sᴾ : Sigᴾ S)
-        (u : Set ext)(uᴾ : u → Set ext)(el : u → O)(elᴾ : ∀ x (xᴾ : uᴾ x) → Oᴾ (el x))
-        (P : u → Set j)(Pᴾ : ∀ x → uᴾ x → P x → Set j)
-        (x : IR.F0 S u el)(xᴾ : F0ᴾ S Sᴾ u uᴾ el elᴾ x)
-        → IR.IH S u el P x → Set (ext ⊔ j)
-  IHᴾ _ (ι o oᴾ)      u uᴾ el elᴾ P Pᴾ x  xᴾ w = Lift _ ⊤
-  IHᴾ _ (σ A Aᴾ S Sᴾ) u uᴾ el elᴾ P Pᴾ (a , t) (aᴾ , tᴾ) w =
-    IHᴾ (S a) (Sᴾ a aᴾ) u uᴾ el elᴾ P Pᴾ t tᴾ w
-  IHᴾ _ (δ A Aᴾ S Sᴾ) u uᴾ el elᴾ P Pᴾ (f , t) (fᴾ , tᴾ) (g , w) =
-    Σ (∀ a (aᴾ : Aᴾ a) → Pᴾ (f a) (fᴾ a aᴾ) (g a)) λ gᴾ →
-      IHᴾ (S (el ∘ f)) (Sᴾ (el ∘ f) (λ a aᴾ → elᴾ _ (fᴾ a aᴾ))) u uᴾ el elᴾ P Pᴾ t tᴾ w
+    F1ᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → Oᴾ (F1 S x)
+    F1ᴾ (ι oᴾ)    xᴾ        = oᴾ
+    F1ᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) = F1ᴾ (Sᴾ aᴾ) tᴾ
+    F1ᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) = F1ᴾ (Sᴾ (elᴾ ∘ fᴾ)) tᴾ
 
-  mapIHᴾ : ∀ {j}
-        (S : IR.Sig)(Sᴾ : Sigᴾ S)
-        (u : Set ext)(uᴾ : u → Set ext)(el : u → O)(elᴾ : ∀ x (xᴾ : uᴾ x) → Oᴾ (el x))
-        (P : u → Set j)(Pᴾ : ∀ x → uᴾ x → P x → Set j)
-        (t : IR.F0 S u el)(tᴾ : F0ᴾ S Sᴾ u uᴾ el elᴾ t)
-        (f : ∀ x → P x) (fᴾ : ∀ x (xᴾ : uᴾ x) → Pᴾ x xᴾ (f x))
-      → IHᴾ S Sᴾ u uᴾ el elᴾ P Pᴾ t tᴾ (IR.mapIH S u el P t f)
-  mapIHᴾ _ (ι o oᴾ) u uᴾ el elᴾ P Pᴾ t tᴾ f fᴾ = lift tt
-  mapIHᴾ _ (σ A Aᴾ S Sᴾ) u uᴾ el elᴾ P Pᴾ (a , t) (aᴾ , tᴾ) g gᴾ =
-    mapIHᴾ (S a) (Sᴾ a aᴾ) u uᴾ el elᴾ P Pᴾ t tᴾ g gᴾ
-  mapIHᴾ _ (δ A Aᴾ S Sᴾ) u uᴾ el elᴾ P Pᴾ (f , t) (fᴾ , tᴾ) g gᴾ =
-      (λ a aᴾ → gᴾ (f a) (fᴾ a aᴾ))
-    , mapIHᴾ (S (el ∘ f)) (Sᴾ (el ∘ f) (λ a aᴾ → elᴾ _ (fᴾ a aᴾ))) u uᴾ el elᴾ P Pᴾ t tᴾ g gᴾ
+    module _ {j}(P : u → Set j)(Pᴾ : ∀ {x} → uᴾ x → P x → Set j) where
 
-  module _ (S* : IR.Sig) where
+      private
+        IH = λ S → IR.IH S u el P
+
+      IHᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → IH S x → Set (ext ⊔ j)
+      IHᴾ (ι oᴾ)    xᴾ        w       = Lift _ ⊤
+      IHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) w       = IHᴾ (Sᴾ aᴾ) tᴾ w
+      IHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) (g , w) = (∀ {a} aᴾ → Pᴾ (fᴾ aᴾ) (g a)) × IHᴾ (Sᴾ (elᴾ ∘ fᴾ)) tᴾ w
+
+      mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){t}(tᴾ : F0ᴾ Sᴾ t){f}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ tᴾ (IR.mapIH S u el P t f)
+      mapIHᴾ (ι oᴾ)    tᴾ        fᴾ = lift tt
+      mapIHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) gᴾ = mapIHᴾ (Sᴾ aᴾ) tᴾ gᴾ
+      mapIHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) gᴾ = (gᴾ ∘ fᴾ) , mapIHᴾ (Sᴾ (elᴾ ∘ fᴾ)) tᴾ gᴾ
+
+  module _ {S* : IR.Sig}(S*ᴾ : Sigᴾ S*) where
     module IIR = IndexedIR {ext}{ext}{ol} (IR.U S*) (Oᴾ ∘ IR.El S*)
 
-    PSig : ∀ (S : IR.Sig) → Sigᴾ S
-      → (f : IR.F0 S (IR.U S*) (IR.El S*) → IR.F0 S* (IR.U S*) (IR.El S*))
-      → (∀ x → Oᴾ (IR.F1 S (IR.U S*) (IR.El S*) x) → Oᴾ (IR.F1 S* (IR.U S*) (IR.El S*) (f x)))
-      → IIR.Sig
-    PSig _ (ι o oᴾ)      f g = IIR.ι (IR.wrap (f (lift tt))) (g (lift tt) oᴾ)
-    PSig _ (σ A Aᴾ S Sᴾ) f g = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → PSig (S a) (Sᴾ a aᴾ) (λ x → f (a , x)) (λ x → g (a , x))
-    PSig _ (δ A Aᴾ S Sᴾ) f g = IIR.σ (A → IR.U S*) λ ts → IIR.δ (∃ Aᴾ) (λ aaᴾ → ts (aaᴾ .₁)) λ tsᴾ →
-                               PSig (S (IR.El S* ∘ ts)) (Sᴾ _ (curry tsᴾ)) (λ x → f (ts , x)) (λ x → g (ts , x))
+    El = IR.El S*
+    U  = IR.U S*
+    F0 = λ S → IR.F0 S U El
+    F1 = λ S → IR.F1 S U El
 
-  Uᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S) → IR.U S → Set ext
-  Uᴾ S Sᴾ x = IIR.U S (PSig S S Sᴾ (λ x → x) (λ _ oᴾ → oᴾ)) x
+    PSig : ∀ {S} → Sigᴾ S → (f : F0 S → F0 S*) → (∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (f x))) → IIR.Sig
+    PSig (ι oᴾ)        f g = IIR.ι (IR.wrap (f (lift tt))) (g oᴾ)
+    PSig (σ {A} Aᴾ Sᴾ) f g = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → PSig (Sᴾ aᴾ) (λ x → f (a , x)) (λ {x} → g {a , x})
+    PSig (δ {A} Aᴾ Sᴾ) f g = IIR.σ (A → U) λ ts → IIR.δ (∃ Aᴾ) (λ aaᴾ → ts (aaᴾ .₁)) λ tsᴾ →
+                               PSig (Sᴾ (λ aᴾ → tsᴾ (_ , aᴾ))) (λ x → f (ts , x)) (λ {x} → g {ts , x})
 
-  Elᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)(x : IR.U S)(xᴾ : Uᴾ S Sᴾ x) → Oᴾ (IR.El S x)
-  Elᴾ S Sᴾ x xᴾ = IIR.El S (PSig S S Sᴾ (λ x → x) (λ _ oᴾ → oᴾ)) {x} xᴾ
+    Uᴾ : U → Set ext
+    Uᴾ = IIR.U (PSig S*ᴾ id id)
 
-  PF0 : (S* : IR.Sig)(S*ᴾ : Sigᴾ S*)
-        (S : IR.Sig)(Sᴾ : Sigᴾ S)
-        (x : IR.F0 S (IR.U S*) (IR.El S*))(xᴾ : F0ᴾ S Sᴾ (IR.U S*) (Uᴾ S* S*ᴾ) (IR.El S*) (Elᴾ S* S*ᴾ) x)
-      → (f : IR.F0 S (IR.U S*) (IR.El S*) → IR.F0 S* (IR.U S*) (IR.El S*))
-      → (g : ∀ x → Oᴾ (IR.F1 S (IR.U S*) (IR.El S*) x) → Oᴾ (IR.F1 S* (IR.U S*) (IR.El S*) (f x)))
+    Elᴾ : {x : U} → Uᴾ x → Oᴾ (El x)
+    Elᴾ = IIR.El (PSig S*ᴾ id id)
 
-      → (h : IIR.F0 S* (PSig S* S Sᴾ f g)
-                       (IIR.U S* (PSig S* S* S*ᴾ (λ x → x)  (λ _ x → x)))
-                       (IIR.El S* (PSig S* S* S*ᴾ (λ x → x) (λ _ x → x)))
-                       (IR.wrap (f x))
+    PF0 : ∀ {S}(Sᴾ : Sigᴾ S)
+            {x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x)
+          → (f : F0 S → F0 S*)
+          → (g : ∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (f x)))
+          → (h : IIR.F0 (PSig Sᴾ f g) Uᴾ Elᴾ (IR.wrap (f x)) → IIR.F0 (PSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (f x)))
+          → IIR.F0 (PSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (f x))
+    PF0 (ι oᴾ)    xᴾ          f g h = h (lift refl)
+    PF0 (σ Aᴾ Sᴾ) (aᴾ , xᴾ)   f g h = PF0 (Sᴾ aᴾ) xᴾ (λ x → f (_ , x)) g (λ x → h (_ , aᴾ , x))
+    PF0 (δ Aᴾ Sᴾ) (chdᴾ , xᴾ) f g h = PF0 (Sᴾ (Elᴾ ∘ chdᴾ)) xᴾ (λ x → f (_ , x)) g λ x → h (_ , (λ x → chdᴾ (x .₂)) , x)
 
-          → IIR.F0 S*
-                  (PSig S* S* S*ᴾ (λ x → x) λ _ x → x)
-                  (IIR.U  S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
-                  (IIR.El S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
-                  (IR.wrap (f x))
-        )
+    wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ Uᴾ Elᴾ S*ᴾ x) → Uᴾ (IR.wrap x)
+    wrapᴾ xᴾ = IIR.wrap (PF0 S*ᴾ xᴾ id id id)
 
-      → IIR.F0 S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x)
-                  (IIR.U  S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
-                  (IIR.El S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
-                  (IR.wrap (f x))
-  PF0 S* S*ᴾ _ (ι o oᴾ)      x xᴾ f g h = h (lift refl)
-  PF0 S* S*ᴾ _ (σ A Aᴾ S Sᴾ) (a , t) (aᴾ , tᴾ) f g h =
-    PF0 S* S*ᴾ (S a) (Sᴾ a aᴾ) t tᴾ (λ x → f (a , x)) (λ x → g (a , x)) (λ x → h (a , aᴾ , x))
-  PF0 S* S*ᴾ _ (δ A Aᴾ S Sᴾ) (chd , t) (chdᴾ , tᴾ) f g h =
-    PF0 S* S*ᴾ (S (IR.El S* ∘ chd)) (Sᴾ (IR.El S* ∘ chd) (λ a aᴾ → Elᴾ S* S*ᴾ (chd a) (chdᴾ a aᴾ)))
-               t tᴾ (λ x → f (chd , x)) (λ x xᴾ → g (chd , x) xᴾ)
-               (λ x → h (chd , uncurry chdᴾ , x))
 
-  -- PF0 S* S*ᴾ S (ι o oᴾ)      x xᴾ f g =
-  --   lift refl
-  -- PF0 S* S*ᴾ _ (σ A Aᴾ S Sᴾ) (a , t) (aᴾ , tᴾ) f g =
-  --   a , aᴾ , {!PF0 S* S*ᴾ !}
-  --   -- {!PF0 S* S*ᴾ (S a) (Sᴾ a aᴾ) t tᴾ (λ x → f (a , x)) (λ x → g (a , x))!}
-  -- PF0 S* S*ᴾ _ (δ A Aᴾ S Sᴾ) (chd , t) (chdᴾ , tᴾ) f g =
-  --   {!!}
+    El≡ᴾ : ∀ {x} (xᴾ : F0ᴾ Uᴾ Elᴾ S*ᴾ x) → Elᴾ (wrapᴾ xᴾ) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ xᴾ
+    El≡ᴾ xᴾ = {!!}
 
-  -- PF0 _ (ι o oᴾ) x xᴾ = lift refl
-  -- PF0 _ (σ A Aᴾ S Sᴾ) (a , t) (aᴾ , tᴾ) = a , aᴾ         , {!PF0 (S a) (Sᴾ a aᴾ) !}
-  -- PF0 _ (δ A Aᴾ S Sᴾ) (f , t) (fᴾ , tᴾ) = f , uncurry fᴾ , {!!}
 
-  wrapᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
-          (x : IR.F0 S (IR.U S) (IR.El S))(xᴾ : F0ᴾ S Sᴾ (IR.U S) (Uᴾ S Sᴾ) (IR.El S) (Elᴾ S Sᴾ) x)
-        → Uᴾ S Sᴾ (IR.wrap x)
-  wrapᴾ S Sᴾ x xᴾ = IIR.wrap {!!} -- (PF0 S Sᴾ S Sᴾ x xᴾ (λ x → x) (λ _ x → x))
+--   -- wrapᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
+--   --         (x : IR.F0 S (IR.U S) (IR.El S))(xᴾ : F0ᴾ S Sᴾ (IR.U S) (Uᴾ S Sᴾ) (IR.El S) (Elᴾ S Sᴾ) x)
+--   --       → Uᴾ S Sᴾ (IR.wrap x)
+--   -- wrapᴾ S Sᴾ x xᴾ = IIR.wrap {!!} -- (PF0 S Sᴾ S Sᴾ x xᴾ (λ x → x) (λ _ x → x))
 
-  -- mutual
-  --   data U (Γ : Sig) : Set ext where
-  --     wrap : F0 Γ (U Γ) (El Γ) → U Γ
-  --   {-# TERMINATING #-}
-  --   El : ∀ Γ → U Γ → O
-  --   El Γ (wrap t) = F1 Γ (U Γ) (El Γ) t
+--   -- mutual
+--   --   data U (Γ : Sig) : Set ext where
+--   --     wrap : F0 Γ (U Γ) (El Γ) → U Γ
+--   --   {-# TERMINATING #-}
+--   --   El : ∀ Γ → U Γ → O
+--   --   El Γ (wrap t) = F1 Γ (U Γ) (El Γ) t
 
-  -- {-# TERMINATING #-}
-  -- elim : ∀ {j} Γ (P : U Γ → Set j) → (∀ t → IH Γ (U Γ) (El Γ) P t → P (wrap t)) → ∀ t → P t
-  -- elim Γ P f (wrap t) = f t (mapIH _ _ _ _ t (elim Γ P f))
+--   -- {-# TERMINATING #-}
+--   -- elim : ∀ {j} Γ (P : U Γ → Set j) → (∀ t → IH Γ (U Γ) (El Γ) P t → P (wrap t)) → ∀ t → P t
+--   -- elim Γ P f (wrap t) = f t (mapIH _ _ _ _ t (elim Γ P f))
 
---------------------------------------------------------------------------------
+-- --------------------------------------------------------------------------------

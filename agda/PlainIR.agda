@@ -28,13 +28,14 @@ module PlainIR (ext : Level) (i : Level) (O : Set i) where
   mapIH (σ A Γ) u el P (a , t) f = mapIH (Γ a) u el P t f
   mapIH (δ A Γ) u el P (g , t) f = f ∘ g , mapIH (Γ (el ∘ g)) u el P t f
 
-  mutual
-    data U (Γ : Sig) : Set ext where
-      wrap : F0 Γ (U Γ) (El Γ) → U Γ
+  data U (Γ : Sig) : Set ext
+  El : ∀ Γ → U Γ → O
 
-    {-# TERMINATING #-}
-    El : ∀ Γ → U Γ → O
-    El Γ (wrap t) = F1 Γ (U Γ) (El Γ) t
+  data U Γ where
+    wrap : F0 Γ (U Γ) (El Γ) → U Γ
+
+  {-# TERMINATING #-}
+  El Γ (wrap t) = F1 Γ (U Γ) (El Γ) t
 
   {-# TERMINATING #-}
   elim : ∀ {j} Γ (P : U Γ → Set j) → (∀ t → IH Γ (U Γ) (El Γ) P t → P (wrap t)) → ∀ t → P t
