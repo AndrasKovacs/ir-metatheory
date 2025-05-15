@@ -31,7 +31,6 @@ module IndexedIR {ext il ol}(I : Set il)(O : I → Set ol) where
   mapIH (δ A ix Γ) u el i P (g , t) f = f ∘ g , mapIH (Γ (el ∘ g)) u el i P t f
 
   mutual
-    -- sizing rule isn't good!
     data U (Γ : Sig) : I → Set (ext ⊔ il) where
       wrap : ∀ {i} → F0 Γ (U Γ) (El Γ) i → U Γ i
 

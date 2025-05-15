@@ -12,7 +12,7 @@ module ShallowIRTranslation (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     σ : ∀ A (Aᴾ : A → Set ext)(Γ : A → IR.Sig)(Γᴾ : ∀ a → Aᴾ a → Sigᴾ (Γ a)) → Sigᴾ (IR.σ A Γ)
     δ : ∀ A (Aᴾ : A → Set ext)(Γ : (A → O) → IR.Sig)(Γᴾ : ∀ f → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (Γ f)) → Sigᴾ (IR.δ A Γ)
 
-  F0ᴾ : (S : IR.Sig)    (Sᴾ : Sigᴾ S)
+  F0ᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
         (u : Set ext)(uᴾ : u → Set ext)(el : u → O)(elᴾ : ∀ x (xᴾ : uᴾ x) → Oᴾ (el x))
       → IR.F0 S u el → Set ext
   F0ᴾ S (ι o oᴾ)      u uᴾ el elᴾ x       = Lift _ ⊤
@@ -21,7 +21,7 @@ module ShallowIRTranslation (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
                                             F0ᴾ (Γ (el ∘ f)) (Γᴾ (el ∘ f) λ a aᴾ → elᴾ _ (fᴾ a aᴾ))
                                                 u uᴾ el elᴾ t
 
-  F1ᴾ : (S : IR.Sig)    (Sᴾ : Sigᴾ S)
+  F1ᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
         (u : Set ext)(uᴾ : u → Set ext)(el : u → O)(elᴾ : ∀ x (xᴾ : uᴾ x) → Oᴾ (el x))
         (x : IR.F0 S u el)(xᴾ : F0ᴾ S Sᴾ u uᴾ el elᴾ x)
         → Oᴾ (IR.F1 S u el x)
@@ -58,35 +58,70 @@ module ShallowIRTranslation (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
       (λ a aᴾ → gᴾ (f a) (fᴾ a aᴾ))
     , mapIHᴾ (S (el ∘ f)) (Sᴾ (el ∘ f) (λ a aᴾ → elᴾ _ (fᴾ a aᴾ))) u uᴾ el elᴾ P Pᴾ t tᴾ g gᴾ
 
-  -- And here comes the complication. I can't just predicate-ify the rest of the IR spec, because they
-  -- are *postulates*, and I'm not allowed to postulate random crap. I'm only allowed to use features
-  -- in my TT. I have indexed IR in my TT, so I shall use that to get predicates for U, El, and elim.
-
   module _ (S* : IR.Sig) where
     module IIR = IndexedIR {ext}{ext}{ol} (IR.U S*) (Oᴾ ∘ IR.El S*)
 
-    PSig : ∀ (S : IR.Sig) → Sigᴾ S → (f : IR.F0 S (IR.U S*) (IR.El S*) → IR.U S*)
-                                   → (∀ x → Oᴾ (IR.F1 S (IR.U S*) (IR.El S*) x) → Oᴾ (IR.El S* (f x))) → IIR.Sig
-    PSig _ (ι o oᴾ)      f g = IIR.ι (f (lift tt)) (g (lift tt) oᴾ)
+    PSig : ∀ (S : IR.Sig) → Sigᴾ S
+      → (f : IR.F0 S (IR.U S*) (IR.El S*) → IR.F0 S* (IR.U S*) (IR.El S*))
+      → (∀ x → Oᴾ (IR.F1 S (IR.U S*) (IR.El S*) x) → Oᴾ (IR.F1 S* (IR.U S*) (IR.El S*) (f x)))
+      → IIR.Sig
+    PSig _ (ι o oᴾ)      f g = IIR.ι (IR.wrap (f (lift tt))) (g (lift tt) oᴾ)
     PSig _ (σ A Aᴾ S Sᴾ) f g = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → PSig (S a) (Sᴾ a aᴾ) (λ x → f (a , x)) (λ x → g (a , x))
     PSig _ (δ A Aᴾ S Sᴾ) f g = IIR.σ (A → IR.U S*) λ ts → IIR.δ (∃ Aᴾ) (λ aaᴾ → ts (aaᴾ .₁)) λ tsᴾ →
                                PSig (S (IR.El S* ∘ ts)) (Sᴾ _ (curry tsᴾ)) (λ x → f (ts , x)) (λ x → g (ts , x))
 
-  Uᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S) → IR.U S → Set (ext ⊔ ol) -- problem: sigantures are too big for this sizing! I need to shift up everything, but how?
-  Uᴾ S Sᴾ x = IIR.U S (PSig S S Sᴾ IR.wrap (λ _ oᴾ → oᴾ)) x
-
-  -- lemmas: if I have a canonical IR.F0, I get an IIR of PSig
-  -- similar for IR.F1
+  Uᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S) → IR.U S → Set ext
+  Uᴾ S Sᴾ x = IIR.U S (PSig S S Sᴾ (λ x → x) (λ _ oᴾ → oᴾ)) x
 
   Elᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)(x : IR.U S)(xᴾ : Uᴾ S Sᴾ x) → Oᴾ (IR.El S x)
-  Elᴾ S Sᴾ x (IndexedIR.wrap x₁) = {!!}
-  -- Elᴾ S (ι o oᴾ)      x xᴾ = {!!}
-  -- Elᴾ S (σ A Aᴾ Γ Γᴾ) x xᴾ = {!!}
-  -- Elᴾ S (δ A Aᴾ Γ Γᴾ) x xᴾ = {!!}
+  Elᴾ S Sᴾ x xᴾ = IIR.El S (PSig S S Sᴾ (λ x → x) (λ _ oᴾ → oᴾ)) {x} xᴾ
 
-  -- wrapᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)(x : IR.F0 S (IR.U S) (IR.El S))(xᴾ : F0ᴾ S Sᴾ (IR.U S) (Uᴾ S Sᴾ) (IR.El S) (Elᴾ S Sᴾ) x)
-  --         → Uᴾ S Sᴾ (IR.wrap x)
-  -- wrapᴾ S Sᴾ x xᴾ = {!!}
+  PF0 : (S* : IR.Sig)(S*ᴾ : Sigᴾ S*)
+        (S : IR.Sig)(Sᴾ : Sigᴾ S)
+        (x : IR.F0 S (IR.U S*) (IR.El S*))(xᴾ : F0ᴾ S Sᴾ (IR.U S*) (Uᴾ S* S*ᴾ) (IR.El S*) (Elᴾ S* S*ᴾ) x)
+      → (f : IR.F0 S (IR.U S*) (IR.El S*) → IR.F0 S* (IR.U S*) (IR.El S*))
+      → (g : ∀ x → Oᴾ (IR.F1 S (IR.U S*) (IR.El S*) x) → Oᴾ (IR.F1 S* (IR.U S*) (IR.El S*) (f x)))
+
+      → (h : IIR.F0 S* (PSig S* S Sᴾ f g)
+                       (IIR.U S* (PSig S* S* S*ᴾ (λ x → x)  (λ _ x → x)))
+                       (IIR.El S* (PSig S* S* S*ᴾ (λ x → x) (λ _ x → x)))
+                       (IR.wrap (f x))
+
+          → IIR.F0 S*
+                  (PSig S* S* S*ᴾ (λ x → x) λ _ x → x)
+                  (IIR.U  S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
+                  (IIR.El S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
+                  (IR.wrap (f x))
+        )
+
+      → IIR.F0 S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x)
+                  (IIR.U  S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
+                  (IIR.El S* (PSig S* S* S*ᴾ (λ x → x) λ _ x → x))
+                  (IR.wrap (f x))
+  PF0 S* S*ᴾ _ (ι o oᴾ)      x xᴾ f g h = h (lift refl)
+  PF0 S* S*ᴾ _ (σ A Aᴾ S Sᴾ) (a , t) (aᴾ , tᴾ) f g h =
+    PF0 S* S*ᴾ (S a) (Sᴾ a aᴾ) t tᴾ (λ x → f (a , x)) (λ x → g (a , x)) (λ x → h (a , aᴾ , x))
+  PF0 S* S*ᴾ _ (δ A Aᴾ S Sᴾ) (chd , t) (chdᴾ , tᴾ) f g h =
+    PF0 S* S*ᴾ (S (IR.El S* ∘ chd)) (Sᴾ (IR.El S* ∘ chd) (λ a aᴾ → Elᴾ S* S*ᴾ (chd a) (chdᴾ a aᴾ)))
+               t tᴾ (λ x → f (chd , x)) (λ x xᴾ → g (chd , x) xᴾ)
+               (λ x → h (chd , uncurry chdᴾ , x))
+
+  -- PF0 S* S*ᴾ S (ι o oᴾ)      x xᴾ f g =
+  --   lift refl
+  -- PF0 S* S*ᴾ _ (σ A Aᴾ S Sᴾ) (a , t) (aᴾ , tᴾ) f g =
+  --   a , aᴾ , {!PF0 S* S*ᴾ !}
+  --   -- {!PF0 S* S*ᴾ (S a) (Sᴾ a aᴾ) t tᴾ (λ x → f (a , x)) (λ x → g (a , x))!}
+  -- PF0 S* S*ᴾ _ (δ A Aᴾ S Sᴾ) (chd , t) (chdᴾ , tᴾ) f g =
+  --   {!!}
+
+  -- PF0 _ (ι o oᴾ) x xᴾ = lift refl
+  -- PF0 _ (σ A Aᴾ S Sᴾ) (a , t) (aᴾ , tᴾ) = a , aᴾ         , {!PF0 (S a) (Sᴾ a aᴾ) !}
+  -- PF0 _ (δ A Aᴾ S Sᴾ) (f , t) (fᴾ , tᴾ) = f , uncurry fᴾ , {!!}
+
+  wrapᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
+          (x : IR.F0 S (IR.U S) (IR.El S))(xᴾ : F0ᴾ S Sᴾ (IR.U S) (Uᴾ S Sᴾ) (IR.El S) (Elᴾ S Sᴾ) x)
+        → Uᴾ S Sᴾ (IR.wrap x)
+  wrapᴾ S Sᴾ x xᴾ = IIR.wrap {!!} -- (PF0 S Sᴾ S Sᴾ x xᴾ (λ x → x) (λ _ x → x))
 
   -- mutual
   --   data U (Γ : Sig) : Set ext where
