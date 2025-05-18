@@ -13,3 +13,6 @@ open import Level using (Lift; lift; lower)
   public
 open import Function
   public
+
+coe : ∀ {i}{A B : Set i} → A ≡ B → A → B
+coe refl x = x
