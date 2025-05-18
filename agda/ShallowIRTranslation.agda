@@ -53,8 +53,9 @@ module ShallowIRTranslation (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     IxSig : ∀ {S} → Sigᴾ S → (acci : F0 S → F0 S*)(acco : ∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (acci x))) → IIR.Sig
     IxSig (ι oᴾ)        acci acco = IIR.ι (IR.wrap (acci (lift tt))) (acco oᴾ)
     IxSig (σ {A} Aᴾ Sᴾ) acci acco = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → IxSig (Sᴾ aᴾ) (λ x → acci (a , x)) (λ {x} → acco {a , x})
-    IxSig (δ {A} Aᴾ Sᴾ) acci acco = IIR.σ (A → U) λ ts → IIR.δ (∃ Aᴾ) (λ aaᴾ → ts (aaᴾ .₁)) λ tsᴾ →
-                                    IxSig (Sᴾ (λ aᴾ → tsᴾ (_ , aᴾ))) (λ x → acci (ts , x)) (λ {x} → acco {ts , x})
+    IxSig (δ {A} Aᴾ {S} Sᴾ) acci acco = IIR.σ (A → U) λ ts → IIR.δ (∃ Aᴾ) (λ aaᴾ → ts (aaᴾ .₁)) λ tsᴾ →
+                                    {!S!}
+--                                    IxSig (Sᴾ (λ aᴾ → tsᴾ (_ , aᴾ))) (λ x → acci (ts , x)) (λ {x} → acco {ts , x})
 
     Uᴾ : U → Set ext
     Uᴾ = IIR.U (IxSig S*ᴾ id id)
