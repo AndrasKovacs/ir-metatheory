@@ -85,6 +85,11 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     Elᴾ : {x : U} → Uᴾ x → Oᴾ (El x)
     Elᴾ = IIR.El (IxSig S*ᴾ idh)
 
+    Homᴾ : ∀ {S}{Sᴾ : Sigᴾ S} → Hom Sᴾ → Set (lsuc ext ⊔ lsuc ol)
+    Homᴾ idh           = Lift _ ⊤
+    Homᴾ (σ< hom a aᴾ) = Homᴾ hom
+    Homᴾ (δ< {A}{Aᴾ} hom f fᴾ) = Σ (∀ {a} → Aᴾ a → Uᴾ (f a)) λ fᴾ* → ((λ {a} → fᴾ {a}) ≡ Elᴾ ∘ fᴾ*) × Homᴾ hom
+
     IxF0ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x) → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ (IR.wrap (HomF0 hom x))
     IxF0ᴾ (ι oᴾ)    hom xᴾ               = lift refl
     IxF0ᴾ (σ Aᴾ Sᴾ) hom {a , x}(aᴾ , xᴾ) = a , aᴾ , IxF0ᴾ (Sᴾ aᴾ) (σ< hom a aᴾ) xᴾ
@@ -93,36 +98,26 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ Uᴾ Elᴾ S*ᴾ x) → Uᴾ (IR.wrap x)
     wrapᴾ xᴾ = IIR.wrap (IxF0ᴾ S*ᴾ idh xᴾ)
 
-    HomF0ᴾ : ∀ {S}{Sᴾ}(hom : Hom {S} Sᴾ){x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x) → F0ᴾ Uᴾ Elᴾ S*ᴾ (HomF0 hom x)
-    HomF0ᴾ idh           xᴾ = xᴾ
-    HomF0ᴾ (σ< hom a aᴾ) xᴾ = HomF0ᴾ hom (aᴾ , xᴾ)
-    HomF0ᴾ (δ< hom f fᴾ) xᴾ = HomF0ᴾ hom ((λ {a} aᴾ → {!fᴾ {a} aᴾ!}) , {!!})
+    HomF0ᴾ : ∀ {S}{Sᴾ}(hom : Hom {S} Sᴾ)(homᴾ : Homᴾ hom){x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x) → F0ᴾ Uᴾ Elᴾ S*ᴾ (HomF0 hom x)
+    HomF0ᴾ idh           homᴾ                xᴾ = xᴾ
+    HomF0ᴾ (σ< hom a aᴾ) homᴾ                xᴾ = HomF0ᴾ hom homᴾ (aᴾ , xᴾ)
+    HomF0ᴾ (δ< hom f fᴾ) (fᴾ* , refl , homᴾ) xᴾ = HomF0ᴾ hom homᴾ (fᴾ* , xᴾ)
 
-    IxF1ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x)
-          → IIR.F1 (IxSig Sᴾ hom) Uᴾ Elᴾ (IxF0ᴾ Sᴾ hom xᴾ) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (HomF0ᴾ hom xᴾ)
-    IxF1ᴾ Sᴾ hom xᴾ = {!!}
+    HomF1ᴾ : ∀ {S}{Sᴾ}(hom : Hom {S} Sᴾ)(homᴾ : Homᴾ hom){x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x)(oᴾ : Oᴾ (F1 S x))
+
+             → HomF1 hom oᴾ ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (HomF0ᴾ hom homᴾ xᴾ)
+    HomF1ᴾ idh           homᴾ xᴾ oᴾ = {!!}
+    HomF1ᴾ (σ< hom a aᴾ) homᴾ xᴾ oᴾ = {!!}
+    HomF1ᴾ (δ< hom f fᴾ) homᴾ xᴾ oᴾ = {!!}
+
+    IxF1ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ)(homᴾ : Homᴾ hom){x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x)
+          → IIR.F1 (IxSig Sᴾ hom) Uᴾ Elᴾ (IxF0ᴾ Sᴾ hom xᴾ) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (HomF0ᴾ hom homᴾ xᴾ)
+    IxF1ᴾ (ι oᴾ)    hom homᴾ        xᴾ        = {!!}
+    IxF1ᴾ (σ Aᴾ Sᴾ) hom homᴾ {a , x}(aᴾ , xᴾ) = IxF1ᴾ (Sᴾ aᴾ) (σ< hom a aᴾ) homᴾ xᴾ
+    IxF1ᴾ (δ Aᴾ Sᴾ) hom homᴾ {f , x}(fᴾ , xᴾ) = IxF1ᴾ (Sᴾ (Elᴾ ∘ fᴾ)) (δ< hom f (Elᴾ ∘ fᴾ)) (fᴾ , refl , homᴾ) xᴾ
 
     El≡ᴾ : ∀ {x} (xᴾ : F0ᴾ Uᴾ Elᴾ S*ᴾ x) → Elᴾ (wrapᴾ xᴾ) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ xᴾ
-    El≡ᴾ xᴾ = {!!}
-
---     ConvF1 :
---          ∀ {S}(Sᴾ : Sigᴾ S)
---             {x : F0 S}(xᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x)
---           → (acci  : F0 S → F0 S*)
---           → (acciᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x → F0ᴾ Uᴾ Elᴾ S*ᴾ (acci x))
---           → (acco  : ∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (acci x)))
---           → (accf0 : IIR.F0 (IxSig Sᴾ acci acco) Uᴾ Elᴾ (IR.wrap (acci x)) → IIR.F0 (IxSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (acci x)))
---           → (accf1 : IIR.F1 (IxSig Sᴾ acci acco) Uᴾ Elᴾ {IR.wrap (acci x)} {!!} ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (acciᴾ xᴾ)
---                    → IIR.F1 (IxSig S*ᴾ id id) Uᴾ Elᴾ (ConvF0 S*ᴾ (acciᴾ xᴾ) id) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (acciᴾ xᴾ))
---           → IIR.F1 (IxSig S*ᴾ id id) Uᴾ Elᴾ (ConvF0 S*ᴾ (acciᴾ xᴾ) id)
---           ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (acciᴾ xᴾ)
---     ConvF1 (ι oᴾ)    xᴾ acci acciᴾ acco accf0 accf1 = {!!}
---     ConvF1 (σ Aᴾ Sᴾ) xᴾ acci acciᴾ acco accf0 accf1 = {!!}
---     ConvF1 (δ Aᴾ Sᴾ) xᴾ acci acciᴾ acco accf0 accf1 = {!!}
-
---     El≡ᴾ : ∀ {x} (xᴾ : F0ᴾ Uᴾ Elᴾ S*ᴾ x) → Elᴾ (wrapᴾ xᴾ) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ xᴾ
---     El≡ᴾ xᴾ = ConvF1 S*ᴾ xᴾ id id id id {!!}
-
+    El≡ᴾ xᴾ = IxF1ᴾ S*ᴾ idh (lift tt) xᴾ
 
 -- --   -- wrapᴾ : (S : IR.Sig)(Sᴾ : Sigᴾ S)
 -- --   --         (x : IR.F0 S (IR.U S) (IR.El S))(xᴾ : F0ᴾ S Sᴾ (IR.U S) (Uᴾ S Sᴾ) (IR.El S) (Elᴾ S Sᴾ) x)
