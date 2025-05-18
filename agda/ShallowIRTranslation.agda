@@ -82,7 +82,7 @@ module ShallowIRTranslation (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
           → (acciᴾ : F0ᴾ Uᴾ Elᴾ Sᴾ x → F0ᴾ Uᴾ Elᴾ S*ᴾ (acci x))
           → (acco  : ∀ {x} → Oᴾ (F1 S x) → Oᴾ (F1 S* (acci x)))
           → (accf0 : IIR.F0 (IxSig Sᴾ acci acco) Uᴾ Elᴾ (IR.wrap (acci x)) → IIR.F0 (IxSig S*ᴾ id id) Uᴾ Elᴾ (IR.wrap (acci x)))
-          → (accf1 : IIR.F1 (IxSig Sᴾ acci acco) Uᴾ Elᴾ {IR.wrap (acci x)} {!ConvF0!} ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (acciᴾ xᴾ)
+          → (accf1 : IIR.F1 (IxSig Sᴾ acci acco) Uᴾ Elᴾ {IR.wrap (acci x)} {!!} ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (acciᴾ xᴾ)
                    → IIR.F1 (IxSig S*ᴾ id id) Uᴾ Elᴾ (ConvF0 S*ᴾ (acciᴾ xᴾ) id) ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (acciᴾ xᴾ))
           → IIR.F1 (IxSig S*ᴾ id id) Uᴾ Elᴾ (ConvF0 S*ᴾ (acciᴾ xᴾ) id)
           ≡ F1ᴾ Uᴾ Elᴾ S*ᴾ (acciᴾ xᴾ)
