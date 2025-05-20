@@ -8,9 +8,22 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
   module IR = PlainIR ext ol O
 
   data Sigᴾ : IR.Sig → Set (lsuc ext ⊔ lsuc ol) where
-    ι : ∀ {o} → Oᴾ o → Sigᴾ (IR.ι o)
+    ι : ∀ {o}(oᴾ : Oᴾ o) → Sigᴾ (IR.ι o)
     σ : ∀ {A} (Aᴾ : A → Set ext){S : A → IR.Sig}      (Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)) → Sigᴾ (IR.σ A S)
     δ : ∀ {A} (Aᴾ : A → Set ext){S : (A → O) → IR.Sig}(Sᴾ : ∀ {f} → (∀ {a} → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)) → Sigᴾ (IR.δ A S)
+
+  -- -- cons list as subsignature relation
+  -- data Moh : ∀ {S} → Sigᴾ S → ∀ {S'} → Sigᴾ S' → Set (lsuc ext ⊔ lsuc ol) where
+  --   idh : ∀ {S Sᴾ} → Moh {S} Sᴾ Sᴾ
+  --   σ<  : ∀ {A : Set ext}{Aᴾ : A → Set ext}{S : A → IR.Sig}{Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)}{S' Sᴾ'}
+  --         → ∀ a (aᴾ : Aᴾ a)
+  --         → Moh (Sᴾ aᴾ) {S'} Sᴾ'
+  --         → Moh (σ Aᴾ Sᴾ) {S'} Sᴾ'
+  --   δ<  : ∀ {A : Set ext}{Aᴾ : A → Set ext}
+  --           {S : (A → O) → IR.Sig}{Sᴾ : ∀ {f} → (∀ {a} → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)}{S' Sᴾ'}
+  --         → ∀ (f : A → U)(fᴾ : ∀ {a} → Aᴾ a → Oᴾ (El (f a)))
+  --         → Moh (Sᴾ ?) {S'} Sᴾ'
+  --         → Moh (δ Aᴾ Aᴾ) Sᴾ'
 
   module _ {S* : IR.Sig}(S*ᴾ : Sigᴾ S*) where
 
@@ -21,6 +34,7 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     F0 = λ S → IR.F0 S U El
     F1 = λ S → IR.F1 S U El
 
+    -- snoc list as subsignature relation, holding the larger signature to be fixed S*
     data Hom : ∀ {S} → Sigᴾ S → Set (lsuc ext ⊔ lsuc ol) where
       idh : Hom S*ᴾ
       σ<  : ∀ {A : Set ext}{Aᴾ : A → Set ext}{S : A → IR.Sig}{Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)}
@@ -33,10 +47,28 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
             → ∀ (f : A → U)(fᴾ : ∀ {a} → Aᴾ a → Oᴾ (El (f a)))
             → Hom (Sᴾ fᴾ)
 
+    -- -- cons list as subsignature relation, holding the smaller signature fixed
+    -- data Moh : ∀ {S} → Sigᴾ S → ∀ {S'} → Sigᴾ S' → Set (lsuc ext ⊔ lsuc ol) where
+    --   idh : ∀ {S Sᴾ} → Moh {S} Sᴾ Sᴾ
+    --   σ<  : ∀ {A : Set ext}{Aᴾ : A → Set ext}{S : A → IR.Sig}{Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)}{S' Sᴾ'}
+    --         → ∀ a (aᴾ : Aᴾ a)
+    --         → Moh (Sᴾ aᴾ) {S'} Sᴾ'
+    --         → Moh (σ Aᴾ Sᴾ) {S'} Sᴾ'
+    --   δ<  : ∀ {A : Set ext}{Aᴾ : A → Set ext}
+    --           {S : (A → O) → IR.Sig}{Sᴾ : ∀ {f} → (∀ {a} → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)}{S' Sᴾ'}
+    --         → ∀ (f : A → U)(fᴾ : ∀ {a} → Aᴾ a → Oᴾ (El (f a)))
+    --         → Moh (Sᴾ fᴾ) {S'} Sᴾ'
+    --         → Moh (δ Aᴾ Sᴾ) Sᴾ'
+
     HomF0 : ∀ {S}{Sᴾ} → Hom {S} Sᴾ → F0 S → F0 S*
     HomF0 idh           acc = acc
     HomF0 (σ< hom a aᴾ) acc = HomF0 hom (a , acc)
     HomF0 (δ< hom f fᴾ) acc = HomF0 hom (f , acc)
+
+    -- MohF0 : ∀ {S Sᴾ S' Sᴾ'} → Moh {S} Sᴾ {S'} Sᴾ' → F0 S → F0 S'
+    -- MohF0 idh           x        = x
+    -- MohF0 (σ< a aᴾ moh) (a' , x) = {!MohF0 moh!}
+    -- MohF0 (δ< f fᴾ moh) (f' , x) = {!!}
 
     HomF1 : ∀ {S}{Sᴾ}(hom : Hom {S} Sᴾ) → ∀ {x} → F1 S x ≡ F1 S* (HomF0 hom x)
     HomF1 idh           = refl
@@ -44,9 +76,9 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     HomF1 (δ< hom f fᴾ) = HomF1 hom
 
     IxSig : ∀ {S}(Sᴾ : Sigᴾ S) → Hom Sᴾ → IIR.Sig
-    IxSig (ι oᴾ)            hom = IIR.ι (IR.wrap (HomF0 hom (lift tt))) (tr Oᴾ (HomF1 hom) oᴾ)
-    IxSig (σ {A} Aᴾ {S} Sᴾ) hom = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → IxSig (Sᴾ aᴾ) (σ< hom a aᴾ)
-    IxSig (δ {A} Aᴾ Sᴾ)     hom = IIR.σ (A → U) λ f → IIR.δ (∃ Aᴾ) (λ aaᴾ → f (aaᴾ .₁)) λ fᴾ →
+    IxSig (ι oᴾ)            hom = IIR.ι (IR.wrap (HomF0 hom (lift tt))) (tr Oᴾ (HomF1 hom) oᴾ)  -- we don't need to collect
+    IxSig (σ {A} Aᴾ {S} Sᴾ) hom = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → IxSig (Sᴾ aᴾ) (σ< hom a aᴾ) -- ᴾ-s for this shit here!!
+    IxSig (δ {A} Aᴾ Sᴾ)     hom = IIR.σ (A → U) λ f → IIR.δ (∃ Aᴾ) (λ aaᴾ → f (aaᴾ .₁)) λ fᴾ →  -- try to refine the Hom accumulation!
                                   IxSig (Sᴾ λ aᴾ → fᴾ (_ , aᴾ)) (δ< hom f (λ aᴾ → fᴾ (_ , aᴾ)))
 
     Uᴾ : U → Set ext
@@ -70,10 +102,40 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     Homᴾ (σ< hom a aᴾ)         = Homᴾ hom
     Homᴾ (δ< {A}{Aᴾ} hom f fᴾ) = Σ (∀ {a} → Aᴾ a → Uᴾ (f a)) λ fᴾ* → ((λ {a} → fᴾ {a}) ≡ Elᴾ ∘ fᴾ*) × Homᴾ hom
 
-    IxF0ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : F0 S}(xᴾ : F0ᴾ Sᴾ x) → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ (IR.wrap (HomF0 hom x))
+    IxF0ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : F0 S} → F0ᴾ Sᴾ x → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ (IR.wrap (HomF0 hom x))
     IxF0ᴾ (ι oᴾ)    hom xᴾ               = lift refl
     IxF0ᴾ (σ Aᴾ Sᴾ) hom {a , x}(aᴾ , xᴾ) = a , aᴾ , IxF0ᴾ (Sᴾ aᴾ) (σ< hom a aᴾ) xᴾ
     IxF0ᴾ (δ Aᴾ Sᴾ) hom {f , x}(fᴾ , xᴾ) = f , (λ aaᴾ → fᴾ (aaᴾ .₂)) , IxF0ᴾ (Sᴾ (Elᴾ ∘ fᴾ)) (δ< hom f (Elᴾ ∘ fᴾ)) xᴾ
+
+    foo : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : U} → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ x → F0 S
+    foo (ι oᴾ)    hom xᴾ            = lift tt
+    foo (σ Aᴾ Sᴾ) hom (a , aᴾ , xᴾ) = a , foo (Sᴾ aᴾ) (σ< hom a aᴾ) xᴾ
+    foo (δ Aᴾ Sᴾ) hom (f , fᴾ , xᴾ) = f , foo (Sᴾ λ aᴾ → Elᴾ (fᴾ (_ , aᴾ))) (δ< hom f λ aᴾ → Elᴾ (fᴾ (_ , aᴾ))) xᴾ
+
+    foo' : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : U} → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ x → F0 S
+    foo' Sᴾ hom {x} xᴾ = {!!}
+
+    bar : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : U}(xᴾ : IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ x) → F0ᴾ Sᴾ (foo Sᴾ hom xᴾ)
+    bar (ι oᴾ)    hom xᴾ            = lift tt
+    bar (σ Aᴾ Sᴾ) hom (a , aᴾ , xᴾ) = aᴾ , bar (Sᴾ aᴾ) (σ< hom a aᴾ) xᴾ
+    bar (δ Aᴾ Sᴾ) hom (f , fᴾ , xᴾ) = (λ {a} z → fᴾ (a , z)) , bar (Sᴾ (λ aᴾ → Elᴾ (fᴾ (_ , aᴾ))))
+                                                                (δ< hom f (λ aᴾ → Elᴾ (fᴾ (_ , aᴾ)))) xᴾ
+
+
+    UnIxF0ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : F0 S} → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ (IR.wrap (HomF0 hom x)) → F0ᴾ Sᴾ x
+    UnIxF0ᴾ (ι oᴾ)    hom x                       = lift tt
+    UnIxF0ᴾ (σ Aᴾ Sᴾ) hom {a' , x'} (a , aᴾ , xᴾ) = {!!} , {!!}
+    UnIxF0ᴾ (δ Aᴾ Sᴾ) hom {f' , x'} (f , fᴾ , xᴾ) = {!!} , {!!}
+
+    -- UnIxF0ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : U} → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ x → F0ᴾ Sᴾ {!IR.unwrap x!}
+    -- UnIxF0ᴾ = {!U!}
+
+    -- UnIxF0ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : U} → IIR.F0 (IxSig Sᴾ hom) Uᴾ Elᴾ (IR.wrap (HomF0 hom {!IR.unwrap x!})) → F0ᴾ Sᴾ {!IR.unwrap x!}
+    -- UnIxF0ᴾ  = {!!}
+
+
+
+
 
     -- TODO: UnIxF0ᴾ
 
@@ -110,9 +172,9 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
       IHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) w       = IHᴾ (Sᴾ aᴾ) tᴾ w
       IHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) (g , w) = (∀ {a} aᴾ → Pᴾ (fᴾ aᴾ) (g a)) × IHᴾ (Sᴾ (Elᴾ ∘ fᴾ)) tᴾ w
 
-      UnIxIHᴾ : ∀ {S}(Sᴾ : Sigᴾ S)(hom : Hom Sᴾ){x}(xᴾ : F0ᴾ Sᴾ x){ih : IH S x}
-                → IIR.IH (IxSig Sᴾ hom) Uᴾ Elᴾ (λ {x} xᴾ → Pᴾ xᴾ {!!}) (IxF0ᴾ Sᴾ hom xᴾ) → IHᴾ {S} Sᴾ xᴾ ih
-      UnIxIHᴾ = {!!}
+      -- UnIxIHᴾ : ∀ {S}(Sᴾ : Sigᴾ S)(hom : Hom Sᴾ){x}(xᴾ : F0ᴾ Sᴾ x){ih : IH S x}
+      --           → IIR.IH (IxSig Sᴾ hom) Uᴾ Elᴾ (λ {x} xᴾ → Pᴾ xᴾ {!!}) (IxF0ᴾ Sᴾ hom xᴾ) → IHᴾ {S} Sᴾ xᴾ ih
+      -- UnIxIHᴾ = {!!}
 
       mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x){f}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S x f)
       mapIHᴾ (ι oᴾ)    tᴾ        fᴾ = lift tt
@@ -125,7 +187,7 @@ module ShallowIRTranslation2 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
       elimᴾ {met} metᴾ {x} =
         IIR.elim (IxSig S*ᴾ idh)
                  (λ {x} xᴾ → Pᴾ xᴾ (IR.elim S* P met x))
-                 (λ {x} xᴾ hyp → {!metᴾ!})
+                 (λ {x} xᴾ hyp → {!metᴾ {IR.unwrap x} !})
 
   -- {-# TERMINATING #-}
   -- elim : ∀ {j} Γ (P : U Γ → Set j) → (∀ t → IH Γ (U Γ) (El Γ) P t → P (wrap t)) → ∀ t → P t
