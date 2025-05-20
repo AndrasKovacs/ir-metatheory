@@ -185,7 +185,7 @@ module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
         ... | refl | refl =
            let lhs = metᴾ xᴾ (decIHᴾ S*ᴾ idh (IIR.mapIH (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ _ encPᴾ (encF0ᴾ S*ᴾ idh xᴾ) elimᴾ))
                rhs = metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
-           in {!lhs!}
+           in {!lhs7!}
 
 -- metᴾ xᴾ (decIHᴾ S*ᴾ idh elimᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
 
