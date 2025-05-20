@@ -73,9 +73,9 @@ module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
 
     decF0ᴾ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x : U}(xᴾ : IIR.F0 (encSigᴾ Sᴾ hom) Uᴾ Elᴾ x)
                  → Σ (F0 S) λ x' →
-                   Σ (x ≡ IR.wrap (HomF0 hom x')) λ eq →
+                   Σ (IR.wrap (HomF0 hom x') ≡ x) λ eq →
                    Σ (F0ᴾ Sᴾ x') λ xᴾ' →
-                   tr (IIR.F0 (encSigᴾ Sᴾ hom) Uᴾ Elᴾ) eq xᴾ ≡ encF0ᴾ Sᴾ hom xᴾ'
+                     tr (IIR.F0 (encSigᴾ Sᴾ hom) Uᴾ Elᴾ) eq (encF0ᴾ Sᴾ hom xᴾ') ≡ xᴾ
     decF0ᴾ (ι oᴾ)    hom (lift refl) = lift tt , refl , lift tt , refl
     decF0ᴾ (σ Aᴾ Sᴾ) hom (a , aᴾ , xᴾ) with decF0ᴾ (Sᴾ aᴾ) (σ< hom a aᴾ) xᴾ
     ... | x' , refl , xᴾ' , refl = _ , refl , _ , refl
@@ -156,8 +156,21 @@ module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
 
         encMetᴾ : ∀ {x} (xᴾ : IIR.F0 (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ x) → IIR.IH (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ encPᴾ xᴾ
                  → encPᴾ (IIR.wrap xᴾ)
-        encMetᴾ {x} xᴾ ih with decF0ᴾ S*ᴾ idh xᴾ
-        ... | x , refl , xᴾ , refl = metᴾ xᴾ (decIHᴾ S*ᴾ idh ih)
+        encMetᴾ {x} xᴾ ih =
+           let x' , eq , xᴾ' , eq' = decF0ᴾ S*ᴾ idh xᴾ
+           in J (λ x eq → (xᴾ  : IIR.F0 (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ x)
+                          (eq' : tr (IIR.F0 (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ) eq (encF0ᴾ S*ᴾ idh xᴾ') ≡ xᴾ)
+                          (ih  : IIR.IH (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ encPᴾ xᴾ)
+                           → encPᴾ (IIR.wrap xᴾ))
+                  eq
+                  (λ xᴾ eq' ih →
+                    J (λ xᴾ eq' → IIR.IH (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ encPᴾ xᴾ → encPᴾ (IIR.wrap xᴾ))
+                      eq'
+                      (λ ih → metᴾ xᴾ' (decIHᴾ S*ᴾ idh ih))
+                      ih)
+                  xᴾ
+                  eq'
+                  ih
 
         elimᴾ : ∀ {x}(xᴾ : Uᴾ x) → Pᴾ xᴾ (IR.elim S* P met x)
         elimᴾ {x} xᴾ = IIR.elim (encSigᴾ S*ᴾ idh) encPᴾ encMetᴾ xᴾ
@@ -169,7 +182,12 @@ module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
                  → elimᴾ (wrapᴾ xᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
         elimβᴾ {x} xᴾ with decF0ᴾ S*ᴾ idh (encF0ᴾ S*ᴾ idh xᴾ)
         ... | x , refl , xᴾ' , eq' with encF0ᴾ-inj S*ᴾ idh _ _ eq' | eq'
-        ... | refl | refl = {!!}
+        ... | refl | refl =
+           let lhs = metᴾ xᴾ (decIHᴾ S*ᴾ idh (IIR.mapIH (encSigᴾ S*ᴾ idh) Uᴾ Elᴾ _ encPᴾ (encF0ᴾ S*ᴾ idh xᴾ) elimᴾ))
+               rhs = metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
+           in {!lhs!}
+
+-- metᴾ xᴾ (decIHᴾ S*ᴾ idh elimᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
 
 
 --------------------------------------------------------------------------------
