@@ -82,6 +82,21 @@ module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     decF0ᴾ (δ Aᴾ Sᴾ) hom (f , fᴾ , xᴾ) with decF0ᴾ (Sᴾ λ aᴾ → Elᴾ (fᴾ (_ , aᴾ))) (δ< hom f λ aᴾ → Elᴾ (fᴾ (_ , aᴾ))) xᴾ
     ... | x' , refl , xᴾ' , refl  = _ , refl , _ , refl
 
+    unwrap : U → F0 S*
+    unwrap = IR.elim S* (λ _ → F0 S*) (λ x _ → x)
+
+    -- note: we never use any IR-elim to prove equations!
+    -- morally, all prop equations are definitional for the object theory,
+    -- and wrap inj works up to defn eq by applying unwrap to both sides
+    wrap-inj : ∀ {x x' : F0 S*} → IR.wrap x ≡ IR.wrap x' → x ≡ x'
+    wrap-inj = ap unwrap
+
+    encF0ᴾ-inj : ∀ {S x} Sᴾ (hom : Hom {S} Sᴾ) (xᴾ xᴾ' : F0ᴾ Sᴾ x)
+                 → encF0ᴾ Sᴾ hom xᴾ ≡ encF0ᴾ Sᴾ hom xᴾ' → xᴾ ≡ xᴾ'
+    encF0ᴾ-inj (ι oᴾ)    hom xᴾ xᴾ' eq = refl
+    encF0ᴾ-inj (σ Aᴾ Sᴾ) hom (aᴾ , xᴾ) (aᴾ' , xᴾ') eq = {!!}
+    encF0ᴾ-inj (δ Aᴾ Sᴾ) hom (fᴾ , xᴾ) (fᴾ' , xᴾ') eq = {!!}
+
     wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ S*ᴾ x) → Uᴾ (IR.wrap x)
     wrapᴾ xᴾ = IIR.wrap (encF0ᴾ S*ᴾ idh xᴾ)
 
@@ -107,8 +122,8 @@ module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
     encF1ᴾ (σ Aᴾ Sᴾ) hom homᴾ {a , x}(aᴾ , xᴾ) = encF1ᴾ (Sᴾ aᴾ) (σ< hom a aᴾ) homᴾ xᴾ
     encF1ᴾ (δ Aᴾ Sᴾ) hom homᴾ {f , x}(fᴾ , xᴾ) = encF1ᴾ (Sᴾ (Elᴾ ∘ fᴾ)) (δ< hom f (Elᴾ ∘ fᴾ)) (fᴾ , refl , homᴾ) xᴾ
 
-    El≡ᴾ : ∀ {x} (xᴾ : F0ᴾ S*ᴾ x) → Elᴾ (wrapᴾ xᴾ) ≡ F1ᴾ S*ᴾ xᴾ
-    El≡ᴾ xᴾ = encF1ᴾ S*ᴾ idh (lift tt) xᴾ
+    Elᴾ≡ : ∀ {x} (xᴾ : F0ᴾ S*ᴾ x) → Elᴾ (wrapᴾ xᴾ) ≡ F1ᴾ S*ᴾ xᴾ
+    Elᴾ≡ xᴾ = encF1ᴾ S*ᴾ idh (lift tt) xᴾ
 
     module _ {j}(P : U → Set j)(Pᴾ : ∀ {x} → Uᴾ x → P x → Set j) where
 
@@ -145,11 +160,16 @@ module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
         ... | x , refl , xᴾ , refl = metᴾ xᴾ (decIHᴾ S*ᴾ idh ih)
 
         elimᴾ : ∀ {x}(xᴾ : Uᴾ x) → Pᴾ xᴾ (IR.elim S* P met x)
-        elimᴾ {x} = IIR.elim (encSigᴾ S*ᴾ idh) encPᴾ encMetᴾ
+        elimᴾ {x} xᴾ = IIR.elim (encSigᴾ S*ᴾ idh) encPᴾ encMetᴾ xᴾ
 
+        -- here we need to have extra proof that:
+        --     1. "IR.wrap" is *definitionally* injective (proven by application of IR.unwrap to both sides)
+        --     2. encF0 S*ᴾ idh is injective
+        elimβᴾ : ∀ {x : F0 S*} (xᴾ : F0ᴾ S*ᴾ x)
+                 → elimᴾ (wrapᴾ xᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
+        elimβᴾ {x} xᴾ with decF0ᴾ S*ᴾ idh (encF0ᴾ S*ᴾ idh xᴾ)
+        ... | x , refl , xᴾ' , eq' with encF0ᴾ-inj S*ᴾ idh _ _ eq' | eq'
+        ... | refl | refl = {!!}
 
-  -- {-# TERMINATING #-}
-  -- elim : ∀ {j} Γ (P : U Γ → Set j) → (∀ t → IH Γ (U Γ) (El Γ) P t → P (wrap t)) → ∀ t → P t
-  -- elim Γ P f (wrap t) = f t (mapIH _ _ _ _ t (elim Γ P f))
 
 --------------------------------------------------------------------------------
