@@ -16,3 +16,10 @@ open import Function
 
 coe : ∀ {i}{A B : Set i} → A ≡ B → A → B
 coe refl x = x
+
+apd : ∀ {i j}{A : Set i}{B : A → Set j}(f : ∀ a → B a){x y : A}(p : x ≡ y) → tr B p (f x) ≡ f y
+apd f refl = refl
+
+tr-∘ : ∀ {i j k}{A : Set i}{B : Set j} (P : B → Set k) (f : A → B) {a b : A} (p : a ≡ b) (x : P (f a))
+       → _≡_ {k}{P (f b)} (tr P (ap f p) x) (tr (P ∘ f) p x)
+tr-∘ P f refl x = refl

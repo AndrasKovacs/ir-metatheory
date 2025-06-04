@@ -40,3 +40,6 @@ module PlainIR (ext : Level) (ol : Level) (O : Set ol) where
   {-# TERMINATING #-}
   elim : ∀ {j} Γ (P : U Γ → Set j) → (∀ t → IH Γ (U Γ) (El Γ) P t → P (wrap t)) → ∀ t → P t
   elim Γ P f (wrap t) = f t (mapIH _ _ _ _ t (elim Γ P f))
+
+  unwrap : ∀ {Γ} → U Γ → F0 Γ (U Γ) (El Γ)
+  unwrap {Γ} = elim Γ _ λ x _ → x
