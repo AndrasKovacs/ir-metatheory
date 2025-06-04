@@ -1,3 +1,4 @@
+{-# OPTIONS --without-K #-}
 
 module Lib where
 
@@ -23,3 +24,7 @@ apd f refl = refl
 tr-∘ : ∀ {i j k}{A : Set i}{B : Set j} (P : B → Set k) (f : A → B) {a b : A} (p : a ≡ b) (x : P (f a))
        → _≡_ {k}{P (f b)} (tr P (ap f p) x) (tr (P ∘ f) p x)
 tr-∘ P f refl x = refl
+
+Σ≡ : ∀ {i j}{A : Set i}{B : A → Set j}{a₀ a₁ : A}(a₂ : a₀ ≡ a₁){b₀ : B a₀}{b₁ : B a₁}(b₂ : tr B a₂ b₀ ≡ b₁)
+     → _≡_ {A = Σ A B} (a₀ , b₀) (a₁ , b₁)
+Σ≡ refl refl = refl

@@ -1,3 +1,4 @@
+{-# OPTIONS --without-K #-}
 
 open import Lib
 
@@ -35,15 +36,22 @@ mapIH (δ A ix Γ) u el i P (g , t) f = f ∘ g , mapIH (Γ (el ∘ g)) u el i P
 
 --------------------------------------------------------------------------------
 
-encSig : Sig → IR.Sig
-encSig (ι i o)   = IR.ι (i , o)
-encSig (σ A S)   = IR.σ (Lift (ext ⊔ il) A) λ a → encSig (S (lower a))
-encSig (δ A f S) = IR.δ (Lift (ext ⊔ il) A) λ g → IR.σ ((a : A) → g (lift a) .₁ ≡ f a)
-                        λ g* → encSig (S (λ a → tr O (g* a) (g (lift a) .₂)))
+Sig→ : Sig → IR.Sig
+Sig→ (ι i o)   = IR.ι (i , o)
+Sig→ (σ A S)   = IR.σ (Lift (ext ⊔ il) A) λ a → Sig→ (S (lower a))
+Sig→ (δ A f S) = IR.δ (Lift (ext ⊔ il) A) λ g → IR.σ ((a : A) → g (lift a) .₁ ≡ f a)
+                        λ g* → Sig→ (S (λ a → tr O (g* a) (g (lift a) .₂)))
 
 module _ (S* : Sig) where
 
-  S*' = encSig S*
+  S*'  = Sig→ S*
+
+  IRU  = IR.U S*'
+  IREl = IR.El S*'
+  IRF0 = λ S → IR.F0 (Sig→ S) IRU IREl
+  IRF1 = λ S → IR.F1 (Sig→ S) IRU IREl
+  IRIH = λ {j} S → IR.IH {j} (Sig→ S) IRU IREl
+  IRMapIH = λ {j} S → IR.mapIH {j} (Sig→ S) IRU IREl
 
   U : I → Set (ext ⊔ il)
   U i = Σ (IR.U S*') (λ x → IR.El S*' x .₁ ≡ i)
@@ -51,37 +59,76 @@ module _ (S* : Sig) where
   El : ∀ {i} → U i → O i
   El {i} (x , wx) = tr O wx (IR.El S*' x .₂)
 
-  -- characterization of encode-decode
-  --   F0 i ≃ ((x : IR.F0) × F1 x .₁ ≡ i)
-  encF0 : ∀ {i} S → F0 S U El i → IR.F0 (encSig S) (IR.U S*') (IR.El S*')
-  encF0 (ι i o)   x       = lift tt
-  encF0 (σ A S)   (a , x) = lift a , encF0 (S a) x
-  encF0 (δ A f S) (g , x) = (λ a → g (lower a) .₁) , (λ a → g a .₂) , encF0 (S (El ∘ g)) x
+  F0' : ∀ S I → Set (ext ⊔ il)
+  F0' S i = Σ (IRF0 S) λ x → IRF1 S x .₁ ≡ i
 
-  encF1 : ∀ {i} S (x : F0 S U El i)
-          → IR.F1 (encSig S) (IR.U S*') (IR.El S*') (encF0 S x)
-          ≡ (i , F1 S U El x)
-  encF1 (ι i o)   (lift refl) = refl
-  encF1 (σ A S)   (a , x)     = encF1 (S a) x
-  encF1 (δ A f S) (g , x)     = encF1 (S _) x
+  module _ {i} where
 
-  decF0 : ∀ {i} S → IR.F0 (encSig S) (IR.U S*') (IR.El S*') → F0 S U El i
-  decF0 (ι i' o)  x = {!!}
-  decF0 (σ A S)   (lift a , x) = a , decF0 (S a) x
-  decF0 (δ A f S) (g , gw , x) = {!!} , {!!}
+    F0→ : ∀ S → F0 S U El i → F0' S i
+    F0→ (ι i o)   x       .₁ .lower    = tt
+    F0→ (ι i o)   x       .₂           = x .lower
+    F0→ (σ A S)   (a , x) .₁ .₁ .lower = a
+    F0→ (σ A S)   (a , x) .₁ .₂        = F0→ (S a) x .₁
+    F0→ (σ A S)   (a , x) .₂           = F0→ (S a) x .₂
+    F0→ (δ A f S) (g , x) .₁ .₁    a   = g (a .lower) .₁
+    F0→ (δ A f S) (g , x) .₁ .₂ .₁ a   = g a .₂
+    F0→ (δ A f S) (g , x) .₁ .₂ .₂     = F0→ (S (El ∘ g)) x .₁
+    F0→ (δ A f S) (g , x) .₂           = F0→ (S (El ∘ g)) x .₂
+
+    F0← : ∀ S → F0' S i → F0 S U El i
+    F0← (ι i o)   (x , w)            .lower  = w
+    F0← (σ A S)   ((lift a , x) , w) .₁      = a
+    F0← (σ A S)   ((lift a , x) , w) .₂      = F0← (S a) (x , w)
+    F0← (δ A f S) ((g , gw , x) , w) .₁ a .₁ = g (lift a)
+    F0← (δ A f S) ((g , gw , x) , w) .₁ a .₂ = gw a
+    F0← (δ A f S) ((g , gw , x) , w) .₂      = F0← (S (El ∘ F0← (δ A f S) ((g , gw , x) , w) .₁)) (x , w)
+
+    F0lr : ∀ S x → F0← S (F0→ S x) ≡ x
+    F0lr (ι i o)   (lift p) = refl
+    F0lr (σ A S)   (a , x)  = ap (a ,_) (F0lr (S a) x)
+    F0lr (δ A f S) (g , x)  = ap (g ,_) (F0lr (S _) x)
+
+    F0rl : ∀ S x → F0→ S (F0← S x) ≡ x
+    F0rl (ι i o)   (x , w)            = refl
+    F0rl (σ A S)   ((lift a , x) , w) = ap (λ xw → ((lift a , xw .₁) , xw .₂)) (F0rl (S a) (x , w))
+    F0rl (δ A f S) ((g , gw , x) , w) = ap (λ xw → (g , gw , xw .₁) , xw .₂) (F0rl (S _) (x , w))
+
+    F1→ : ∀ S x → tr O (F0→ S x .₂) (IRF1 S (F0→ S x .₁) .₂) ≡ F1 S U El x
+    F1→ (ι i o)   x       = refl
+    F1→ (σ A S)   (a , x) = F1→ (S a) x
+    F1→ (δ A f S) (g , x) = F1→ (S (El ∘ g)) x
 
   wrap : ∀ {i} → F0 S* U El i → U i
-  wrap x = IR.wrap (encF0 S* x) , ap ₁ (encF1 S* x)
+  wrap x = IR.wrap (F0→ S* x .₁) , F0→ S* x .₂
 
   El≡ : ∀ {i} x → El (wrap {i} x) ≡ F1 S* U El x
-  El≡ x = tr-∘ O ₁ (encF1 S* x) _ ◼ apd ₂ (encF1 S* x)
+  El≡ x = F1→ S* x
 
-  elim : ∀ {j}(P : ∀ {i} → U i → Set j)
-         → (∀ {i} x → IH S* U El P {i} x → P (wrap x)) → ∀ {i} x → P {i} x
-  elim P met {i} (x , wx) = IR.elim S*'
-    (λ x → ∀ {i} wx → P {i} (x , wx))
-    (λ x ih {i} wx' → {!met!})
-    x
-    wx
+  module _ j (P : ∀ {i} → U i → Set j)(met : ∀ {i} x → IH S* U El P {i} x → P (wrap x)) where
 
-  -- elim Γ P f (wrap t) = f t (mapIH _ _ _ _ _ t (elim Γ P f))
+    P' : IRU → Set (il ⊔ j)
+    P' x = ∀ {i} wx → P {i} (x , wx)
+
+    IH← : ∀ S {i} (x : F0' S i) → IRIH S P' (x .₁) → IH S U El P (F0← S x)
+    IH← (ι i o)   x                  ih .lower      = tt
+    IH← (σ A S)   ((lift a , x) , w) ih             = IH← (S a) (x , w) ih
+    IH← (δ A f S) ((g , gw , x) , w) (gᴾ , ih) .₁ a = gᴾ (lift a) (gw a)
+    IH← (δ A f S) ((g , gw , x) , w) (gᴾ , ih) .₂   = IH← (S _) (x , w) ih
+
+    met' : ∀ {i} (x : F0' S* i) → IRIH S* P' (x .₁) → P (IR.wrap (x .₁) , x .₂)
+    met' x ih = tr P (ap (λ x → IR.wrap (x .₁) , x .₂) (F0rl S* x))
+                     (met (F0← S* x) (IH← S* x ih))
+
+    elim : ∀ {i} x → P {i} x
+    elim (x , wx) = IR.elim S*' P' (λ x ih {i} wx → met' (x , wx) ih) x wx
+
+    mapIH-trip : ∀ {i} S (x : F0 S U El i) f
+                 → tr (IH S U El P) (F0lr S x)
+                   (IH← S (F0→ S x) (IRMapIH S P' (F0→ S x .₁) f))
+                 ≡ mapIH S U El i P x (λ y → f (y .₁) (y .₂))
+    mapIH-trip (ι i o)   x       s = refl
+    mapIH-trip (σ A S)   (a , x) s = {!!} ◼ mapIH-trip (S a) x s
+    mapIH-trip (δ A f S) x s = {!!}
+
+    elimβ : ∀ {i} x → elim {i} (wrap x) ≡ met x (mapIH S* U El i P x elim)
+    elimβ {i} x = {!!}
