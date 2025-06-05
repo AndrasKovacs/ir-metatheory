@@ -28,3 +28,11 @@ tr-∘ P f refl x = refl
 Σ≡ : ∀ {i j}{A : Set i}{B : A → Set j}{a₀ a₁ : A}(a₂ : a₀ ≡ a₁){b₀ : B a₀}{b₁ : B a₁}(b₂ : tr B a₂ b₀ ≡ b₁)
      → _≡_ {A = Σ A B} (a₀ , b₀) (a₁ , b₁)
 Σ≡ refl refl = refl
+
+tr-Σ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : ∀ a → B a → Set k}
+         {x y : A}(p : x ≡ y)(s : Σ (B x) (C x))
+       → tr (λ x → Σ (B x) (C x)) p s ≡ (tr B p (s .₁) , tr (λ x → C (x .₁) (x .₂)) (Σ≡ p refl) (s .₂))
+tr-Σ refl s = refl
+
+tr-const : ∀ {i j}{A : Set i}{B : Set j}{x y : A}(p : x ≡ y)(b : B) → tr (λ _ → B) p b ≡ b
+tr-const refl b = refl

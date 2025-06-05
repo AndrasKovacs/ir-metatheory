@@ -4,8 +4,6 @@ open import Lib
 
 module DeriveIndexed {ext il ol : Level }(I : Set il)(O : I → Set ol) where
 
-import PlainIR (ext ⊔ il) (il ⊔ ol) (∃ O) as IR
-
 data Sig : Set (lsuc (ext ⊔ il ⊔ ol)) where
   ι : ∀ i → O i → Sig
   σ : (A : Set ext) → (A → Sig) → Sig
@@ -35,6 +33,8 @@ mapIH (σ A Γ)    u el i P (a , t) f = mapIH (Γ a) u el i P t f
 mapIH (δ A ix Γ) u el i P (g , t) f = f ∘ g , mapIH (Γ (el ∘ g)) u el i P t f
 
 --------------------------------------------------------------------------------
+
+import PlainIR (ext ⊔ il) (il ⊔ ol) (∃ O) as IR
 
 Sig→ : Sig → IR.Sig
 Sig→ (ι i o)   = IR.ι (i , o)
@@ -127,8 +127,19 @@ module _ (S* : Sig) where
                    (IH← S (F0→ S x) (IRMapIH S P' (F0→ S x .₁) f))
                  ≡ mapIH S U El i P x (λ y → f (y .₁) (y .₂))
     mapIH-trip (ι i o)   x       s = refl
-    mapIH-trip (σ A S)   (a , x) s = {!!} ◼ mapIH-trip (S a) x s
-    mapIH-trip (δ A f S) x s = {!!}
+    mapIH-trip (σ A S)   (a , x) s = tr-∘ (IH (σ A S) U El P) (a ,_) (F0lr (S a) x) _ ◼ mapIH-trip (S a) x s
+    mapIH-trip (δ A f S) (g , x) s = tr-∘ (IH (δ A f S) U El P) (g ,_) (F0lr (S (λ x₁ → El (g x₁))) x) _
+                                   ◼ tr-Σ (F0lr (S (El ∘ g)) x) (IH← (δ A f S) (F0→ (δ A f S) (g , x))
+                                          (IRMapIH (δ A f S) P' (F0→ (δ A f S) (g , x) .₁) s))
+                                   ◼ Σ≡ (tr-const (F0lr (S (El ∘ g)) x) _)
+                                        (  tr-const (tr-const (F0lr (S (El ∘ g)) x)
+                                                    (IH← (δ A f S) (F0→ (δ A f S) (g , x))
+                                                    (IRMapIH (δ A f S) P' (F0→ (δ A f S) (g , x) .₁) s) .₁)) _
+                                         ◼ {!!}
+                                         ◼ mapIH-trip (S _) x s)
 
     elimβ : ∀ {i} x → elim {i} (wrap x) ≡ met x (mapIH S* U El i P x elim)
     elimβ {i} x = {!!}
+
+
+--------------------------------------------------------------------------------
