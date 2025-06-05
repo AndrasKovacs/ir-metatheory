@@ -127,16 +127,23 @@ module _ (S* : Sig) where
                    (IH← S (F0→ S x) (IRMapIH S P' (F0→ S x .₁) f))
                  ≡ mapIH S U El i P x (λ y → f (y .₁) (y .₂))
     mapIH-trip (ι i o)   x       s = refl
-    mapIH-trip (σ A S)   (a , x) s = tr-∘ (IH (σ A S) U El P) (a ,_) (F0lr (S a) x) _ ◼ mapIH-trip (S a) x s
-    mapIH-trip (δ A f S) (g , x) s = tr-∘ (IH (δ A f S) U El P) (g ,_) (F0lr (S (λ x₁ → El (g x₁))) x) _
-                                   ◼ tr-Σ (F0lr (S (El ∘ g)) x) (IH← (δ A f S) (F0→ (δ A f S) (g , x))
-                                          (IRMapIH (δ A f S) P' (F0→ (δ A f S) (g , x) .₁) s))
-                                   ◼ Σ≡ (tr-const (F0lr (S (El ∘ g)) x) _)
-                                        (  tr-const (tr-const (F0lr (S (El ∘ g)) x)
-                                                    (IH← (δ A f S) (F0→ (δ A f S) (g , x))
-                                                    (IRMapIH (δ A f S) P' (F0→ (δ A f S) (g , x) .₁) s) .₁)) _
-                                         ◼ {!!}
-                                         ◼ mapIH-trip (S _) x s)
+    mapIH-trip (σ A S)   (a , x) s =
+      tr-∘ (IH (σ A S) U El P) (a ,_) (F0lr (S a) x) _ ◼ mapIH-trip (S a) x s
+    mapIH-trip (δ A f S) (g , x) s =
+        tr-∘ (IH (δ A f S) U El P) (g ,_) (F0lr (S (El ∘ g)) x) _
+      ◼ tr-Σ (F0lr (S (El ∘ g)) x) (IH← (δ A f S) (F0→ (δ A f S) (g , x))
+             (IRMapIH (δ A f S) P' (F0→ (δ A f S) (g , x) .₁) s))
+      ◼ Σ≡ (tr-const (F0lr (S (El ∘ g)) x) _)
+           (  tr-const (tr-const (F0lr (S (El ∘ g)) x)
+                       (IH← (δ A f S) (F0→ (δ A f S) (g , x))
+                       (IRMapIH (δ A f S) P' (F0→ (δ A f S) (g , x) .₁) s) .₁)) _
+            ◼ tr-∘ (IH (S _) U El P) ₁
+                   (Σ≡ (F0lr (S _) x) refl) _ ⁻¹
+            ◼ ap (λ eq → tr (IH (S _) U El P) eq
+                            (IH← (δ A f S) (F0→ (δ A f S) (g , x))
+                               (IRMapIH (δ A f S) P' (F0→ (δ A f S) (g , x) .₁) s) .₂))
+                 (Σ≡₁ (F0lr (S _) x) refl)
+            ◼ mapIH-trip (S _) x s)
 
     elimβ : ∀ {i} x → elim {i} (wrap x) ≡ met x (mapIH S* U El i P x elim)
     elimβ {i} x = {!!}

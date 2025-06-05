@@ -4,7 +4,7 @@ module Lib where
 
 open import Agda.Primitive public
 open import Relation.Binary.PropositionalEquality
-  renaming (cong to ap; trans to infixr 5 _◼_; sym to infix 5 _⁻¹; subst to tr)
+  renaming (cong to ap; trans to infixr 5 _◼_; sym to infix 6 _⁻¹; subst to tr)
   public
 open import Data.Product hiding (map) renaming (proj₁ to ₁; proj₂ to ₂)
   public
@@ -28,6 +28,11 @@ tr-∘ P f refl x = refl
 Σ≡ : ∀ {i j}{A : Set i}{B : A → Set j}{a₀ a₁ : A}(a₂ : a₀ ≡ a₁){b₀ : B a₀}{b₁ : B a₁}(b₂ : tr B a₂ b₀ ≡ b₁)
      → _≡_ {A = Σ A B} (a₀ , b₀) (a₁ , b₁)
 Σ≡ refl refl = refl
+
+Σ≡₁ : ∀ {i j}{A : Set i}{B : A → Set j}{a₀ a₁ : A}(a₂ : a₀ ≡ a₁)
+        {b₀ : B a₀}{b₁ : B a₁}(b₂ : tr B a₂ b₀ ≡ b₁)
+        → ap ₁ (Σ≡ a₂ b₂) ≡ a₂
+Σ≡₁ refl refl = refl
 
 tr-Σ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : ∀ a → B a → Set k}
          {x y : A}(p : x ≡ y)(s : Σ (B x) (C x))
