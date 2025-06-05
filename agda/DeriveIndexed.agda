@@ -98,6 +98,30 @@ module _ (S* : Sig) where
     F1→ (σ A S)   (a , x) = F1→ (S a) x
     F1→ (δ A f S) (g , x) = F1→ (S (El ∘ g)) x
 
+    -- We need a "half-adjoint" coherence condition on the F0 iso, which makes it a proper
+    -- equivalence. Technically, we can get it for free just from the iso, by general HoTT
+    -- nonsense, but here I do a quick n dirty proof by induction.
+    half-adjoint : ∀ S x → ap (F0→ S) (F0lr S x) ≡ F0rl S (F0→ S x)
+    half-adjoint (ι i o)   x       = refl
+    half-adjoint (σ A S)   (a , x) =
+         J (λ x eq → ap (F0→ (σ A S)) (ap (a ,_) eq)
+                   ≡ ap (λ xw → (lift a , xw .₁) , xw .₂) (ap (F0→ (S a)) eq))
+           (F0lr (S a) x)
+           refl
+       ◼ ap (ap (λ xw → (lift a , xw .₁) , xw .₂)) (half-adjoint (S a) x)
+    half-adjoint (δ A f S) (g , x) =
+      let lhs = ap (F0→ (δ A f S)) (ap (g ,_) (F0lr (S (El ∘ g)) x))
+          rhs = ap (λ xw → ((λ a → g (a .lower) .₁) , (λ a → g a .₂) , xw .₁) , xw .₂)
+                   (F0rl (S (El ∘ g)) (F0→ (S (El ∘ g)) x))
+      in the (lhs ≡ rhs) $
+          J (λ x eq → ap (F0→ (δ A f S)) (ap (g ,_) eq)
+                    ≡ ap (λ xw → ((λ a → g (a .lower) .₁) , (λ a → g a .₂) , xw .₁) , xw .₂)
+                         (ap (F0→ (S _)) eq))
+            (F0lr (S _) x)
+            refl
+        ◼ ap (ap (λ xw → ((λ a → g (a .lower) .₁) , (λ a → g a .₂) , xw .₁) , xw .₂))
+             (half-adjoint (S (El ∘ g)) x)
+
   wrap : ∀ {i} → F0 S* U El i → U i
   wrap x = IR.wrap (F0→ S* x .₁) , F0→ S* x .₂
 
@@ -146,7 +170,20 @@ module _ (S* : Sig) where
             ◼ mapIH-trip (S _) x s)
 
     elimβ : ∀ {i} x → elim {i} (wrap x) ≡ met x (mapIH S* U El i P x elim)
-    elimβ {i} x = {!!}
+    elimβ {i} x rewrite mapIH-trip S* x (λ x wx → elim (x , wx)) ⁻¹ =
 
+      let inner = IH← S* (F0→ S* x) (IRMapIH S* P' (F0→ S* x .₁) (λ x wx → elim (x , wx)))
+          lhs   = tr P (ap (λ x → IR.wrap (x .₁) , x .₂) (F0rl S* (F0→ S* x)))
+                       (met (F0← S* (F0→ S* x)) inner)
+          rhs   = met x (tr (IH S* U El P) (F0lr S* x) inner)
 
---------------------------------------------------------------------------------
+      in the (lhs ≡ rhs) $
+         tr-∘ P (λ x → IR.wrap (x .₁) , x .₂) (F0rl S* (F0→ S* x)) _
+       ◼ ap (λ eq → tr (P ∘ (λ x₁ → IR.wrap (x₁ .₁) , x₁ .₂))
+          eq (met (F0← S* (F0→ S* x)) inner)) (half-adjoint S* x ⁻¹)
+       ◼ tr-∘ (λ x₁ → P (IR.wrap (x₁ .₁) , x₁ .₂)) (F0→ S*) (F0lr S* x) _
+
+       -- lhs = tr (P ∘ wrap) (F0lr S* x) (met (F0← S* (F0→ S* x)) inner)
+       -- rhs = met x (tr (IH S* U El P) (F0lr S* x) inner)
+
+       ◼ tr-app-lem {C = P ∘ wrap} met (F0lr S* x)

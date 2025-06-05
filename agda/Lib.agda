@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --safe #-}
 
 module Lib where
 
@@ -41,3 +41,14 @@ tr-Σ refl s = refl
 
 tr-const : ∀ {i j}{A : Set i}{B : Set j}{x y : A}(p : x ≡ y)(b : B) → tr (λ _ → B) p b ≡ b
 tr-const refl b = refl
+
+the : ∀ {i}(A : Set i) → A → A
+the A x = x
+
+tr-app-lem :
+   ∀ {i j k}{A : Set i}{B : A → Set j}{C : A → Set k}
+     (f : ∀ a → B a → C a)
+     {a₀ a₁ : A}(a₂ : a₀ ≡ a₁)
+     {b₀ : B a₀}
+   → tr C a₂ (f a₀ b₀) ≡ f a₁ (tr B a₂ b₀)
+tr-app-lem f refl = refl
