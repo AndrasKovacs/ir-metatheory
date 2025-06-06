@@ -51,23 +51,19 @@ module TranslationIR-IIR {ext il ol}(I : Set il) (O : I → Set ol) where
           → (∀ {i} u → P {i} u) → IH Γ u el P t
   mapIH Γ u el i P t f = IR.mapIH Γ (u i) (λ x₁ → i , el x₁) P (t .₁) f
 
+  U : Sig → I → Set (ext ⊔ il)
+  U Γ i = Σ (IR.U Γ) λ x → IR.El Γ x .₁ ≡ i
 
-  mutual
-    U : Sig → I → Set (ext ⊔ il)
-    U Γ i = Σ (IR.U Γ) λ x → IR.El Γ x .₁ ≡ i
+  El : ∀ Γ {i} → U Γ i → O i
+  El Γ {i} (u , refl) = (IR.El Γ u) .₂
 
-    {-# TERMINATING #-}
-    El : ∀ Γ {i} → U Γ i → O i
-    El Γ {i} (u , refl) = (IR.El Γ u) .₂
+  wrap : ∀ {i Γ} → F0 Γ (U Γ) (El Γ) i → U Γ i
+  wrap {i} {Γ} (f0 , snd) = IR.wrap (F0-tr Γ (U Γ) (λ x → IR.U Γ) (λ {i'} x → i' , El Γ x) (IR.El Γ) i f0 (λ x → x .₁) eq)
+                            , F1-tr Γ i f0 (λ x → x .₁) eq snd
+          where
+            eq : (x : U Γ i) → (i , El Γ x) ≡ IR.El Γ (x .₁)
+            eq (fst , refl) = refl
+  -- one should be easy
 
-    wrap : ∀ {i Γ} → F0 Γ (U Γ) (El Γ) i → U Γ i
-    wrap {i} {Γ} (f0 , snd) = IR.wrap (F0-tr Γ (U Γ) (λ x → IR.U Γ) (λ {i'} x → i' , El Γ x) (IR.El Γ) i f0 (λ x → x .₁) eq)
-                              , F1-tr Γ i f0 (λ x → x .₁) eq snd
-            where
-              eq : (x : U Γ i) → (i , El Γ x) ≡ IR.El Γ (x .₁)
-              eq (fst , refl) = refl
-    -- one should be easy
-
-  {-# TERMINATING #-}
   elim : ∀ {j}(Γ : Sig)(P : ∀ {i} → U Γ i → Set j) → (∀ {i} t → IH Γ (U Γ) (El Γ) P {i} t → P (wrap t)) → ∀ {i} t → P {i} t
   elim Γ P f {i} (f0 , eq) = (IR.elim Γ (λ x → ((i : I) → (eq : (IR.El Γ x .₁ ≡ i)) → P (x , eq))) (λ t x i₁ eq → {!f ? ?!}) f0) i eq
