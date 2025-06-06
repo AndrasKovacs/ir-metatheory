@@ -200,8 +200,8 @@ module _ (S* : Sig) where
     IH← (δ A f S) ((g , gw , x) , w) (gᴾ , ih) .₂   = IH← (S _) (x , w) ih
 
     met' : ∀ {i} (x : F0' S* i) → IRIH S* P' (x .₁) → P (IR.wrap (x .₁) , x .₂)
-    met' x ih = tr P (ap (λ x → IR.wrap (x .₁) , x .₂) (F0rl S* x))
-                     (met (F0← S* x) (IH← S* x ih))
+    met' x ih = tr (λ x → P (IR.wrap (x .₁) , x .₂)) (F0rl S* x)
+                   (met (F0← S* x) (IH← S* x ih))
 
     -- as expected, IIR elim is given by IR induction on well-indexed IR values.
     elim : ∀ {i} x → P {i} x
@@ -238,20 +238,15 @@ module _ (S* : Sig) where
 
       -- as before I manually improve on the quality of goal type display
       let inner = IH← S* (F0→ S* x) (IRMapIH S* P' (F0→ S* x .₁) (λ x wx → elim (x , wx)))
-          lhs   = tr P (ap (λ x → IR.wrap (x .₁) , x .₂) (F0rl S* (F0→ S* x)))
-                       (met (F0← S* (F0→ S* x)) inner)
+          lhs   = tr (λ x → P (IR.wrap (x .₁) , x .₂)) (F0rl S* (F0→ S* x))
+                     (met (F0← S* (F0→ S* x)) inner)
           rhs   = met x (tr (IH S* U El P) (F0lr S* x) inner)
 
       in the (lhs ≡ rhs) $
-         tr-∘ P (λ x → IR.wrap (x .₁) , x .₂) (F0rl S* (F0→ S* x)) _
         -- The half adjoint lemma is needed because we have an F0rl on one side of the goal
         -- equation and F0lr on the other side, and we can use half-adjoint to get rid of the F0rl,
         -- and only have F0lr on both sides.
-       ◼ ap (λ eq → tr (P ∘ (λ x₁ → IR.wrap (x₁ .₁) , x₁ .₂))
-          eq (met (F0← S* (F0→ S* x)) inner)) (half-adjoint S* x ⁻¹) -- note the half-adjoint
+         ap (λ eq → tr (P ∘ (λ x₁ → IR.wrap (x₁ .₁) , x₁ .₂))
+            eq (met (F0← S* (F0→ S* x)) inner)) (half-adjoint S* x ⁻¹) -- note the half-adjoint
        ◼ tr-∘ (λ x₁ → P (IR.wrap (x₁ .₁) , x₁ .₂)) (F0→ S*) (F0lr S* x) _
-
-       -- lhs = tr (P ∘ wrap) (F0lr S* x) (met (F0← S* (F0→ S* x)) inner)
-       -- rhs = met x (tr (IH S* U El P) (F0lr S* x) inner)
-
        ◼ tr-app-lem {C = P ∘ wrap} met (F0lr S* x)
