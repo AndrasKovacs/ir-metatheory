@@ -178,8 +178,11 @@ module ShallowIRTranslation5 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
         metᴾ' : ∀ {x} (xᴾ : IIR.F0 (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ x) → IIR.IH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ Pᴾ' xᴾ
                  → Pᴾ' (IIR.wrap xᴾ)
         metᴾ' {x} xᴾ ih =
-           let foo = metᴾ (F0ᴾ← S*ᴾ idh xᴾ .₂ .₂) (IHᴾ← S*ᴾ idh ih)
-           in tr Pᴾ'' {!F0ᴾrl S*ᴾ idh xᴾ!} foo
+          tr (λ xᴾ → Pᴾ' (IIR.wrap xᴾ))
+             (F0ᴾrl S*ᴾ idh xᴾ)
+             (J (λ _ eq → Pᴾ' (IIR.wrap (F0ᴾ→ S*ᴾ idh (F0ᴾ← S*ᴾ idh xᴾ .₁ , eq , F0ᴾ← S*ᴾ idh xᴾ .₂ .₂))))
+                (F0ᴾ← S*ᴾ idh xᴾ .₂ .₁)
+                (metᴾ (F0ᴾ← S*ᴾ idh xᴾ .₂ .₂) (IHᴾ← S*ᴾ idh ih)))
 
         elimᴾ : ∀ {x}(xᴾ : Uᴾ x) → Pᴾ xᴾ (IR.elim S* P met x)
         elimᴾ {x} xᴾ = IIR.elim (Sigᴾ→ S*ᴾ idh) Pᴾ' metᴾ' xᴾ
