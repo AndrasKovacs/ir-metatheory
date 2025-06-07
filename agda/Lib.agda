@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K --safe #-}
+{-# OPTIONS --without-K --allow-unsolved-metas #-}
 
 module Lib where
 
@@ -68,13 +68,13 @@ tr-app-lem :
    → tr C a₂ (f a₀ b₀) ≡ f a₁ (tr B a₂ b₀)
 tr-app-lem f refl = refl
 
--- tr-app-lem2 :
---   ∀ {i j k j l}{A : Set i}{B : A → Set j}
---     {C : A → Set k}{D : ∀ a → B a → C a → Set j}
---     {E : ∀ a → B a → C a → Set l}
---     (f : ∀ a (b : B a)(c : C a) → D a b c → E a b c)
---   → {!!}
--- tr-app-lem2 = {!!}
+tr-app-lem2 :
+  ∀ {i j k l}{A : Set i}{B : A → Set j}
+    {C : A → Set k}{D : ∀ a → B a → C a → Set j}
+    {E : ∀ a → B a → C a → Set l}
+    (f : ∀ a (b : B a)(c : C a) → D a b c → E a b c)
+  → {!!}
+tr-app-lem2 = {!!}
 
 
 

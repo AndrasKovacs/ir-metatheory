@@ -260,17 +260,64 @@ module ShallowIRTranslation5 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
         elimᴾ : ∀ {x}(xᴾ : Uᴾ x) → Pᴾ xᴾ (IR.elim S* P met x)
         elimᴾ {x} xᴾ = IIR.elim (Sigᴾ→ S*ᴾ idh) Pᴾ' metᴾ' xᴾ
 
+        lem : ∀ {x : F0 S*} (xᴾ : F0ᴾ S*ᴾ x) →
+            tr (λ xᴾ → Pᴾ (wrapᴾ (xᴾ .₂ .₂))
+                           (met (xᴾ .₁) (mapIH S* (xᴾ .₁)
+                           (IR.elim S* P met))))
+                (F0ᴾlr S*ᴾ idh (x , refl , xᴾ))
+                (metᴾ (F0ᴾ← S*ᴾ idh (F0ᴾ→' S*ᴾ idh xᴾ) .₂ .₂)
+                      (IHᴾ← S*ᴾ idh (IIR.mapIH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ (IR.wrap x) Pᴾ'
+                      (F0ᴾ→' S*ᴾ idh xᴾ) elimᴾ)))
+              ≡ metᴾ xᴾ (tr
+                   (λ xᴾ₁ → IHᴾ S*ᴾ (xᴾ₁ .₂ .₂) (mapIH S* (xᴾ₁ .₁) (IR.elim S* P met)))
+                   (F0ᴾlr S*ᴾ idh (x , refl , xᴾ))
+                   (IHᴾ← S*ᴾ idh
+                    (IIR.mapIH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ (IR.wrap x) Pᴾ'
+                     (F0ᴾ→' S*ᴾ idh xᴾ) elimᴾ)))
+        lem {x} xᴾ = {!metᴾ!}
+
         elimβᴾ : ∀ {x : F0 S*} (xᴾ : F0ᴾ S*ᴾ x)
                  → elimᴾ (wrapᴾ xᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
         elimβᴾ {x} xᴾ =
           let lhs = metᴾ' (F0ᴾ→' S*ᴾ idh xᴾ)
                       (IIR.mapIH S*ᴾ' Uᴾ Elᴾ _ Pᴾ' (F0ᴾ→' S*ᴾ idh xᴾ) (IIR.elim S*ᴾ' Pᴾ' metᴾ'))
               rhs = metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
-          in the (lhs ≡ rhs) $
+          in the (lhs ≡ rhs) (
+      --         let lem : tr (λ xᴾ → Pᴾ (wrapᴾ (xᴾ .₂ .₂))
+      --                                (met (xᴾ .₁) (mapIH S* (xᴾ .₁)
+      --                                (IR.elim S* P met))))
+      --                     (F0ᴾlr S*ᴾ idh (x , refl , xᴾ))
+      --                     (metᴾ (F0ᴾ← S*ᴾ idh (F0ᴾ→' S*ᴾ idh xᴾ) .₂ .₂)
+      --                          (IHᴾ← S*ᴾ idh (IIR.mapIH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ (IR.wrap x) Pᴾ'
+      --                           (F0ᴾ→' S*ᴾ idh xᴾ) elimᴾ)))
+      --                   ≡ metᴾ xᴾ (tr
+      --                        (λ xᴾ₁ → IHᴾ S*ᴾ (xᴾ₁ .₂ .₂) (mapIH S* (xᴾ₁ .₁) (IR.elim S* P met)))
+      --                        (F0ᴾlr S*ᴾ idh (x , refl , xᴾ))
+      --                        (IHᴾ← S*ᴾ idh
+      --                         (IIR.mapIH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ (IR.wrap x) Pᴾ'
+      --                          (F0ᴾ→' S*ᴾ idh xᴾ) elimᴾ)))
+      --             lem = {!J (λ xᴾ eq → tr
+      -- (λ xᴾ₁ →
+      --    Pᴾ (wrapᴾ (xᴾ₁ .₂ .₂))
+      --    (met (xᴾ₁ .₁) (mapIH S* (xᴾ₁ .₁) (IR.elim S* P met))))
+      -- eq
+      -- (metᴾ (F0ᴾ← S*ᴾ idh (F0ᴾ→' S*ᴾ idh xᴾ) .₂ .₂)
+      --  (IHᴾ← S*ᴾ idh
+      --   (IIR.mapIH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ (IR.wrap x) Pᴾ'
+      --    (F0ᴾ→' S*ᴾ idh xᴾ) elimᴾ)))
+      -- ≡
+      -- metᴾ xᴾ
+      -- (tr
+      --  (λ xᴾ₁ →
+      --     IHᴾ S*ᴾ (xᴾ₁ .₂ .₂) (mapIH S* (xᴾ₁ .₁) (IR.elim S* P met)))
+      --  (F0ᴾlr S*ᴾ idh (x , refl , xᴾ))
+      --  (IHᴾ← S*ᴾ idh
+      --   (IIR.mapIH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ (IR.wrap x) Pᴾ'
+      --    (F0ᴾ→' S*ᴾ idh xᴾ) elimᴾ))))!}
 
-              {!!}
-
-            ◼ ap (metᴾ xᴾ) (mapIH-trip S*ᴾ idh xᴾ elimᴾ)
+                   {!(F0ᴾlr S*ᴾ idh (x , refl , xᴾ))!}
+                 ◼ ap (metᴾ xᴾ) (mapIH-trip S*ᴾ idh xᴾ elimᴾ)
+            )
 
 
 --------------------------------------------------------------------------------
