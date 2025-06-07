@@ -160,7 +160,7 @@ module ShallowIRTranslation5 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
 
       module _  (met  : ∀ (x : F0 S*) → IH S* x → P (IR.wrap x))
                 (metᴾ : ∀ {x}(xᴾ : F0ᴾ S*ᴾ x)
-                {ih : IH S* x}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ (wrapᴾ xᴾ) (met x ih)) where
+                   {ih : IH S* x}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ {IR.wrap x} (wrapᴾ xᴾ) (met x ih)) where
 
         Pᴾ' : ∀ {x} → Uᴾ x → Set j
         Pᴾ' {x} xᴾ = Pᴾ xᴾ (IR.elim S* P met x)
@@ -176,15 +176,15 @@ module ShallowIRTranslation5 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
         IHᴾ← (δ Aᴾ Sᴾ) hom {f , fᴾ , xᴾ} ihᴾ .₁ a aᴾ = ihᴾ .₁ (a , aᴾ)
         IHᴾ← (δ Aᴾ Sᴾ) hom {f , fᴾ , xᴾ} ihᴾ .₂ = IHᴾ← (Sᴾ _) (δ< hom f _) (ihᴾ .₂)
 
-        abstract
-         metᴾ' : ∀ {x} (xᴾ : IIR.F0 (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ x) → IIR.IH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ Pᴾ' xᴾ
-                  → Pᴾ' (IIR.wrap xᴾ)
-         metᴾ' {x} xᴾ ih =
-           tr (λ xᴾ → Pᴾ' (IIR.wrap xᴾ))
-              (F0ᴾrl S*ᴾ idh xᴾ)
-              (J (λ _ eq → Pᴾ' (IIR.wrap (F0ᴾ→ S*ᴾ idh (F0ᴾ← S*ᴾ idh xᴾ .₁ , eq , F0ᴾ← S*ᴾ idh xᴾ .₂ .₂))))
-                 (F0ᴾ← S*ᴾ idh xᴾ .₂ .₁)
-                 (metᴾ (F0ᴾ← S*ᴾ idh xᴾ .₂ .₂) (IHᴾ← S*ᴾ idh ih)))
+
+        metᴾ' : ∀ {x} (xᴾ : IIR.F0 (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ x) → IIR.IH (Sigᴾ→ S*ᴾ idh) Uᴾ Elᴾ Pᴾ' xᴾ
+                 → Pᴾ' (IIR.wrap xᴾ)
+        metᴾ' {x} xᴾ ih =
+          tr (λ xᴾ → Pᴾ' (IIR.wrap xᴾ))
+             (F0ᴾrl S*ᴾ idh xᴾ)
+             (J (λ _ eq → Pᴾ' (IIR.wrap (F0ᴾ→ S*ᴾ idh (F0ᴾ← S*ᴾ idh xᴾ .₁ , eq , F0ᴾ← S*ᴾ idh xᴾ .₂ .₂))))
+                (F0ᴾ← S*ᴾ idh xᴾ .₂ .₁)
+                (metᴾ (F0ᴾ← S*ᴾ idh xᴾ .₂ .₂) (IHᴾ← S*ᴾ idh ih)))
 
         mapIH-trip :
           ∀ {S} Sᴾ {x} (hom : Hom {S} Sᴾ) (xᴾ : F0ᴾ Sᴾ x)(f : ∀ {i}(x : Uᴾ i) → Pᴾ' x)
@@ -266,8 +266,11 @@ module ShallowIRTranslation5 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O �
           let lhs = metᴾ' (F0ᴾ→' S*ᴾ idh xᴾ)
                       (IIR.mapIH S*ᴾ' Uᴾ Elᴾ _ Pᴾ' (F0ᴾ→' S*ᴾ idh xᴾ) (IIR.elim S*ᴾ' Pᴾ' metᴾ'))
               rhs = metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
-          in {!!}
+          in the (lhs ≡ rhs) $
 
+              {!!}
+
+            ◼ ap (metᴾ xᴾ) (mapIH-trip S*ᴾ idh xᴾ elimᴾ)
 
 
 --------------------------------------------------------------------------------
