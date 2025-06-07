@@ -39,6 +39,11 @@ tr-Σ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : ∀ a → B a → Set k}
        → tr (λ x → Σ (B x) (C x)) p s ≡ (tr B p (s .₁) , tr (λ x → C (x .₁) (x .₂)) (Σ≡ p refl) (s .₂))
 tr-Σ refl s = refl
 
+tr-Σ₀ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : ∀ a → B a → Set k}
+         {x y : A}(p : x ≡ y)(s : Σ (B x) (C x))
+       → tr (λ x → Σ (B x) (C x)) p s .₁ ≡ tr B p (s .₁)
+tr-Σ₀ refl s = refl
+
 tr-const : ∀ {i j}{A : Set i}{B : Set j}{x y : A}(p : x ≡ y)(b : B) → tr (λ _ → B) p b ≡ b
 tr-const refl b = refl
 
