@@ -1,10 +1,11 @@
-{-# OPTIONS --without-K --allow-unsolved-metas #-}
+{-# OPTIONS --without-K --safe #-}
 
 module Lib where
 
 open import Agda.Primitive public
 open import Relation.Binary.PropositionalEquality
-  renaming (cong to ap; trans to infixr 5 _◼_; sym to infix 6 _⁻¹; subst to tr)
+  renaming (cong to ap; trans to infixr 5 _◼_; sym to infix 6 _⁻¹)
+  hiding (J)
   public
 open import Data.Product hiding (map) renaming (proj₁ to ₁; proj₂ to ₂)
   public
@@ -17,6 +18,19 @@ open import Function
 
 coe : ∀ {i}{A B : Set i} → A ≡ B → A → B
 coe refl x = x
+
+coe-coe : ∀ {i}{A B C : Set i}(p : B ≡ C)(q : A ≡ B)(x : A) → coe p (coe q x) ≡ coe (q ◼ p) x
+coe-coe refl refl x = refl
+
+tr : ∀ {i j}{A : Set i}(B : A → Set j){x y : A} → x ≡ y → B x → B y
+tr B p x = coe (ap B p) x
+
+contr : ∀ {i}{A : Set i}{x y : A}(p : x ≡ y) → _≡_ {A = ∃ λ y → x ≡ y} (x , refl) (y , p)
+contr refl = refl
+
+J : ∀ {i j}{A : Set i} {x : A} (B : (y : A) → x ≡ y → Set j)
+    {y : A} (p : x ≡ y) → B x refl → B y p
+J {x = x} B {y} p b = tr (λ x → B (x .₁) (x .₂)) (contr p) b
 
 apd : ∀ {i j}{A : Set i}{B : A → Set j}(f : ∀ a → B a){x y : A}(p : x ≡ y) → tr B p (f x) ≡ f y
 apd f refl = refl
@@ -67,18 +81,3 @@ tr-app-lem :
      {b₀ : B a₀}
    → tr C a₂ (f a₀ b₀) ≡ f a₁ (tr B a₂ b₀)
 tr-app-lem f refl = refl
-
-tr-app-lem2 :
-  ∀ {i j k l}{A : Set i}{B : A → Set j}
-    {C : A → Set k}{D : ∀ a → B a → C a → Set j}
-    {E : ∀ a → B a → C a → Set l}
-    (f : ∀ a (b : B a)(c : C a) → D a b c → E a b c)
-  → {!!}
-tr-app-lem2 = {!!}
-
-
-
--- -- Pᴾ : {x = x₁ : U} → Uᴾ x₁ → P x₁ → Set j
-
--- (metᴾ : ∀ {x}(xᴾ : F0ᴾ S*ᴾ x)
---    {ih : IH S* x}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ {IR.wrap x} (wrapᴾ xᴾ) (met x ih)) where
