@@ -57,8 +57,16 @@
 \newcommand{\msf}[1]{{\mathsf{#1}}}
 \newcommand{\mbf}[1]{{\mathbf{#1}}}
 \newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\data}{\mbf{data}}
+\newcommand{\U}{\msf{U}}
+\newcommand{\Set}{\msf{Set}}
+\newcommand{\where}{\mbf{where}}
+\newcommand{\Nat}{\msf{Nat}}
+\newcommand{\El}{\msf{El}}
+
+
 %% \newcommand{\rel}{^{\approx}}
-%% \newcommand{\U}{\mathsf{U}}
+
 %% \newcommand{\Id}{\msf{Id}}
 %% \newcommand{\p}{\mathsf{p}}
 %% \newcommand{\q}{\mathsf{q}}
@@ -306,8 +314,7 @@ construct IIR types from inductive-recursive (IR) types and intensional identity
 simplify the subsequent canonicity proof. The constructed IIR types support the same definitional
 computation rules that are available in Agda's native IIR implementation. Second, we give a
 canonicity proof for IR types, building on the well-known method of Artin gluing. The main idea is
-to represent the canonicity predicate for each IR type using a metatheoretic IIR type. In short,
-we use metatheoretic IIR types to prove canonicity for IR types.
+to encode the canonicity predicate for each IR type using a metatheoretic IIR type. In short, we reduce IIR types to IR types, then use metatheoretic IIR types to prove canonicity for IR types.
 \end{abstract}
 
 %% \begin{CCSXML}
@@ -323,22 +330,94 @@ we use metatheoretic IIR types to prove canonicity for IR types.
 Induction-recursion (IR) was first used by Martin-Löf in an informal way \cite{TODO}, then made
 formal by Dybjer and Setzer \cite{TODO}, who also developed set-theoretic and categorical semantics
 \cite{TODO}. A common application of IR is to define custom universe hierarchies inside a type
-theory. In the proof assistant Agda, we can use IR to define a universe closed under a choice of
-type formers.
+theory. In the proof assistant Agda, we can use IR to define a universe that is closed under our
+choice of type formers:
 \begin{alignat*}{3}
-& TODO
+  & \mbf{mutual} \\
+  & \quad\data\,\U : \Set\,\where \\
+  & \quad\quad \Nat' : \U\\
+  & \quad\quad \Pi' \hspace{0.8em} : (A : \U) \to (\El\,A \to \U) \to \U
+  & \\
+  & \\
+  & \quad\El : \U \to \Set \\
+  & \quad\El\,\Nat'\hspace{1.5em}  = \Nat \\
+  & \quad\El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
 \end{alignat*}
+This $\U$, unlike the ambient $\Set$ universe, supports an induction principle and can be used to
+define type-generic functions. \emph{Indexed induction-recursion} (IIR) additionally allows indexing
+$\U$ over some type, which lets us define inductive-recursive predicates \cite{TODO}.
+
+One application of IR has been to develop semantics for object theories that support universe
+hierarchies. IR has been used in normalization proofs \cite{TODO} and in modeling first-class
+universe levels \cite{TODO} and proving canonicity for them \cite{TODO}. Another application is to
+do generic programming over universes of type descriptions \cite{TODO} or data layout descriptions
+\cite{TODO}.
+
+IIR has been supported in Agda 2 since the early days of the system \cite{TODO}, and it is also
+available in Idris 1 and Idris 2 \cite{TODO}. In these systems, IR has been implemented in the
+``obvious'' way, supporting closed program execution in compiler backends and normalization during
+type checking, but without any formal justification.
+
+Our \textbf{main contribution} is to \textbf{show canonicity} for a Martin-Löf type theory that
+supports a countable universe hierarchy, where each universe supports indexed inductive-recursive
+types. Canonicity means that every closed term is definitionally equal to a canonical
+term. Canonical terms are built only from constructors; for instance, a canonical natural number
+term is a numeral. Hence, canonicity justifies evaluation for closed terms. The outline of our
+development is as follows.
+
+%% \begin{itemize}
+%% \item For running closed programs, \emph{canonicity} is the most relevant property to show. In
+%%   means that every closed term is definitionally equal to a canonical term. Canonical terms are
+%%   built only from constructors; for instance, a canonical natural number term is a numeral.
+%% \item \emph{Normalization} means that every open term is definitionally equal to a normal form. The
+%%   characterizing property of normal forms is that definitional equality coincides with simple
+%%   structural equality. Hence, normalization is practically important for deciding definitional
+%%   equality, which is in turn required in type checkers for dependently typed languages.
+%% \end{itemize}
+%% Our \textbf{main contribution} is to show canonicity for a Martin-Löf type theory that supports
+%% countable universes with indexed inductive-recursive types in each universe.
 
 
-This can
-be used in building metatheory for type theories with universe hierarchies. For example, IR has been
-used to prove normalization \cite{TODO} and to build semantics for first-class universe levels
-\cite{TODO} and to prove canonicity for them \cite{TODO}. Another application is in generic
-programming, where IR is used to define custom universes of datatype descriptions \cite{TODO}.
+\begin{enumerate}
+\item In Section \ref{TODO} we specify what it means to support IR and IIR, using Dybjer and
+  Setzer's rules with minor modifications \cite{TODO}. We use \emph{first-class signatures},
+  meaning that descriptions of (I)IR types are given as ordinary inductive types internally.
+\item In Section \ref{TODO} we construct IIR types from IR types and other basic type formers. This
+  allows us to only consider IR types in the subsequent canonicity proof, which is a significant
+  simplification. In the construction of IIR types, we lose some definitional equalities when IIR
+  signatures are neutral, but we still get strict computation for canonical signatures. This matches
+  the computational behavior of Agda and Idris, where IIR signatures are second-class and
+  necessarily canonical.
+\item In Section \ref{TODO}, we give a proof-relevant logical predicate interpretation of the type
+  theory, from which canonicity follows. We follow the well-known method of Artin gluing
+  \cite{TODO}. The main challenge here is to give a logical predicate interpretation of IR types. We
+  do this by using IIR in the metatheory: from each object-theoretic signature we compute a
+  metatheoretic IIR signature which encodes the canonicity predicate for the corresponding IR type.
+
+\end{enumerate}
+
+\section{Specification for (I)IR types}\label{sec:specification}
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+%% IIR has been used in normalization proofs for
+
+%% For example, IR
+%% has been used to prove normalization \cite{TODO} and to build semantics for first-class universe
+%% levels \cite{TODO} and to prove canonicity for them \cite{TODO}. Another application is in generic
+%% programming, where IR is used to define custom universes of datatype descriptions \cite{TODO}.
 
 
 
