@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  9 JUN 2025 10:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  9 JUN 2025 11:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1570,7 +1570,7 @@ File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 427.
+(Font)              scaled to size 8.0pt on input line 432.
  [2.2]
 (./paper.aux)
 
@@ -1586,7 +1586,7 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 Here is how much of TeX's memory you used:
  32305 strings out of 478287
  584584 string characters out of 5849289
- 908421 words of memory out of 5000000
+ 908630 words of memory out of 5000000
  49394 multiletter control sequences out of 15000+600000
  639796 words of font info for 306 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
@@ -1608,7 +1608,7 @@ libertine/LinLibertineTI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 libertine/LinLibertineTZ.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 newtx/txmiaX.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.
 pfb>
-Output written on paper.pdf (2 pages, 439637 bytes).
+Output written on paper.pdf (2 pages, 439830 bytes).
 PDF statistics:
  113 PDF objects out of 1000 (max. 8388607)
  82 compressed objects within 1 object stream
