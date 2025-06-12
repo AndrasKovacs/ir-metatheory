@@ -63,6 +63,10 @@
 \newcommand{\where}{\mbf{where}}
 \newcommand{\Nat}{\msf{Nat}}
 \newcommand{\El}{\msf{El}}
+\newcommand{\Lift}{\msf{Lift}}
+\newcommand{\lup}{\uparrow}
+\newcommand{\ldown}{\downarrow}
+\newcommand{\Sig}{\msf{Sig}}
 
 
 %% \newcommand{\rel}{^{\approx}}
@@ -334,24 +338,24 @@ theory. In the proof assistant Agda, we can use IR to define a universe that is 
 choice of type formers:
 \begin{alignat*}{3}
   & \mbf{mutual} \\
-  & \quad\data\,\U : \Set\,\where \\
+  & \quad\data\,\U : \Set_0\,\where \\
   & \quad\quad \Nat' : \U\\
   & \quad\quad \Pi' \hspace{0.8em} : (A : \U) \to (\El\,A \to \U) \to \U
   & \\
   & \\
-  & \quad\El : \U \to \Set \\
+  & \quad\El : \U \to \Set_0 \\
   & \quad\El\,\Nat'\hspace{1.5em}  = \Nat \\
   & \quad\El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
 \end{alignat*}
-This $\U$, unlike the ambient $\Set$ universe, supports an induction principle and can be used to
+This $\U$, unlike the ambient $\Set_0$ universe, supports an induction principle and can be used to
 define type-generic functions. \emph{Indexed induction-recursion} (IIR) additionally allows indexing
 $\U$ over some type, which lets us define inductive-recursive predicates \cite{TODO}.
 
 One application of IR has been to develop semantics for object theories that support universe
-hierarchies. IR has been used in normalization proofs \cite{TODO} and in modeling first-class
-universe levels \cite{TODO} and proving canonicity for them \cite{TODO}. Another application is to
-do generic programming over universes of type descriptions \cite{TODO} or data layout descriptions
-\cite{TODO}.
+hierarchies. IR has been used in normalization proofs \cite{TODO}, in modeling first-class universe
+levels \cite{TODO} and proving canonicity for them \cite{TODO}, and in characterizing domains of
+partial functions \cite{TODO}. Another application is to do generic programming over universes of
+type descriptions \cite{TODO} or data layout descriptions \cite{TODO}.
 
 IIR has been supported in Agda 2 since the early days of the system \cite{TODO}, and it is also
 available in Idris 1 and Idris 2 \cite{TODO}. In these systems, IR has been implemented in the
@@ -380,14 +384,14 @@ development is as follows.
 
 \begin{enumerate}
 \item In Section \ref{TODO} we specify what it means to support IR and IIR, using Dybjer and
-  Setzer's rules with minor modifications \cite{TODO}. We use \emph{first-class signatures},
+  Setzer's rules with minor modifications \cite{TODO}. We use first-class signatures,
   meaning that descriptions of (I)IR types are given as ordinary inductive types internally.
 \item In Section \ref{TODO} we construct IIR types from IR types and other basic type formers. This
   allows us to only consider IR types in the subsequent canonicity proof, which is a significant
   simplification. In the construction of IIR types, we lose some definitional equalities when IIR
   signatures are neutral, but we still get strict computation for canonical signatures. This matches
   the computational behavior of Agda and Idris, where IIR signatures are second-class and
-  necessarily canonical.
+  necessarily canonical. We formalize the construction in Agda.
 \item In Section \ref{TODO}, we give a proof-relevant logical predicate interpretation of the type
   theory, from which canonicity follows. We follow the well-known method of Artin gluing
   \cite{TODO}. The main challenge here is to give a logical predicate interpretation of IR types. We
@@ -395,13 +399,119 @@ development is as follows.
   metatheoretic IIR signature which encodes the canonicity predicate for the corresponding IR type.
   We formalize the predicate interpretation of IR types in Agda, using a shallow embedding of the
   syntax of the object theory. Hence, there is a gap between the Agda version and the fully formal
-  construction, but we argue that it is a fairly modest gap.
+  construction, but we argue that it is a modest gap.
 
 \end{enumerate}
 
 \section{Specification for (I)IR types}\label{sec:specification}
 
+In this section we describe the object type theory, focusing on the specification of IR and IIR
+types. We do not yet go into the formal details of structure of the object type theory; instead, we
+mostly give internal definitions in an Agda-like syntax. We give an overview of the object theory.
 
+We have a countable hierarchy of Russell-style universes, written as $\U_i$, where $i$ is an
+external natural number. We have $\U_i : \U_{i + 1}$. We take maxima of universe levels for sizes of
+type formers. For example, the $\Pi$-type $(x : A) \to B\,x$ is in $\U_{\max(i,\,j)}$ when $A :
+\U_i$ and $B : A \to \U_j$. We also have a lifting operation $\Lift\,i\,j : \U_i \to \U_j$ together
+with $\lup : A \to \Lift\,i\,j\,A$ and $\ldown : \Lift\,i\,j\,A \to A$ such that $\lup$ and $\ldown$
+are definitional inverses. We have intensional identity types, as $t = u : \U_i$ for $t : A : \U_i$.
+
+\subsection{IR types}
+
+The IR specification is parameterized over the following data:
+\begin{itemize}
+\item The level $i$ is the size of the IR type that is being specified.
+\item The level $j$ is the size of the recursive output type.
+\item $O : \U_j$ is the output type.
+\end{itemize}
+IR signatures are specified by the following inductive type:
+\begin{alignat*}{4}
+  &\data\, \Sig : \U_{\max(i+1,\,o)}\\
+  &\quad \iota\hspace{0.25em}  : O \to \Sig \\
+  &\quad \sigma               : (A : \U_i) \to (A \to \Sig) \to \Sig \\
+  &\quad \delta\hspace{0.1em} : (A : \U_i) \to ((A \to O) \to \Sig) \to \Sig
+\end{alignat*}
+
+\begin{example}
+The Agda example on Figure \cite{TODO} can be specified as follows. We assume a
+
+
+
+\end{example}
+
+
+  %% data Sig : Set (lsuc (ext ⊔ ol)) where
+  %%   ι : O → Sig
+  %%   σ : (A : Set ext) → (A → Sig) → Sig
+  %%   δ : (A : Set ext) → ((A → O) → Sig) → Sig
+
+
+%% , which we denote as $\le$ and $\lo$.
+
+
+
+%% Recall the IR example from Figure \ref{TODO}.
+
+
+
+
+%% : there, we defined a type which resides in $\Set_0$
+%% and whose recursive component $\El$ returns in $\Set_0$ as well. These two universe
+
+
+%% The specification of IR types is parameterized over three pieces of data:
+
+%% \begin{itemize}
+%% \item Universe levels $l_e$ and $l_o$.
+%% \item A type $O : \U_{l_o}$.
+%% \end{itemize}
+
+
+
+\section{TODO}
+
+\begin{itemize}
+  \item Small IIR paper: reduction of small IIR to IR + identity, similar to mine
+  \item Bove-Capretta: IIR is used to model domains of partial functions.
+  \item Canonicity metatheory: Loic, Anton say it looks OK
+\end{itemize}a
+
+
+
+
+
+
+%% module PlainIR (ext : Level) (ol : Level) (O : Set ol) where
+
+%%   data Sig : Set (lsuc (ext ⊔ ol)) where
+%%     ι : O → Sig
+%%     σ : (A : Set ext) → (A → Sig) → Sig
+%%     δ : (A : Set ext) → ((A → O) → Sig) → Sig
+
+%%   F0 : Sig → (u : Set ext) → (u → O) → Set ext
+%%   F0 (ι _)   u el = Lift _ ⊤
+%%   F0 (σ A Γ) u el = Σ A λ a → F0 (Γ a) u el
+%%   F0 (δ A Γ) u el = Σ (A → u) λ f → F0 (Γ (el ∘ f)) u el
+
+%%   F1 : ∀ Γ u el → F0 Γ u el → O
+%%   F1 (ι o)   u el t       = o
+%%   F1 (σ A Γ) u el (a , t) = F1 (Γ a) u el t
+%%   F1 (δ A Γ) u el (f , t) = F1 (Γ (el ∘ f)) u el t
+
+%%   IH : ∀ {j} Γ (u : Set ext) (el : u → O) (P : u → Set j) → F0 Γ u el → Set (ext ⊔ j)
+%%   IH (ι o)   u el P t       = Lift _ ⊤
+%%   IH (σ A Γ) u el P (a , t) = IH (Γ a) u el P t
+%%   IH (δ A Γ) u el P (f , t) = (∀ a → P (f a)) × IH (Γ (el ∘ f)) u el P t
+
+%%   mapIH : ∀ {j} Γ (u : Set ext)(el : u → O)(P : u → Set j)(t : F0 Γ u el)(f : ∀ x → P x) → IH Γ u el P t
+%%   mapIH (ι _)   u el P t       f = lift tt
+%%   mapIH (σ A Γ) u el P (a , t) f = mapIH (Γ a) u el P t f
+%%   mapIH (δ A Γ) u el P (g , t) f = f ∘ g , mapIH (Γ (el ∘ g)) u el P t f
+
+
+%% \item \emph{Notation:} we write $(x : A) \to B$ for $\Pi$-types and $(x : A) \times B$ for $\Sigma$-types.
+%%   where $\lift$ and $\lower$
+%% are definitional inverses.
 
 
 
