@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  15 JUN 2025 23:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  16 JUN 2025 23:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1915,11 +1915,11 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: A57E926859FF54032218C3F5D13B5B18;709.
  ) 
 Here is how much of TeX's memory you used:
- 32368 strings out of 478287
- 585884 string characters out of 5849290
- 908210 words of memory out of 5000000
+ 32371 strings out of 478287
+ 585956 string characters out of 5849290
+ 908199 words of memory out of 5000000
  49409 multiletter control sequences out of 15000+600000
- 654387 words of font info for 337 fonts, out of 8000000 for 9000
+ 654660 words of font info for 339 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  99i,16n,131p,1002b,552s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{/us
@@ -1940,7 +1940,7 @@ bertine/LinLibertineTI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/li
 bertine/LinLibertineTZ.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ne
 wtx/txmiaX.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pf
 b>
-Output written on paper.pdf (3 pages, 467695 bytes).
+Output written on paper.pdf (3 pages, 467701 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  98 compressed objects within 1 object stream
