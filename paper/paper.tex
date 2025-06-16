@@ -67,6 +67,13 @@
 \newcommand{\lup}{\uparrow}
 \newcommand{\ldown}{\downarrow}
 \newcommand{\Sig}{\msf{Sig}}
+\newcommand{\Code}{\msf{Code}}
+\newcommand{\Tag}{\msf{Tag}}
+\newcommand{\case}{\mbf{case}}
+\newcommand{\of}{\mbf{of}}
+\newcommand{\ttt}{\msf{tt}}
+\newcommand{\blank}{{\mathord{\hspace{1pt}\text{--}\hspace{1pt}}}}
+
 
 
 %% \newcommand{\rel}{^{\approx}}
@@ -211,7 +218,7 @@
 %% \newcommand{\fst}{\msf{fst}}
 %% \newcommand{\snd}{\msf{snd}}
 
-%% \newcommand{\blank}{{\mathord{\hspace{1pt}\text{--}\hspace{1pt}}}}
+
 
 %% \newcommand{\Nat}{\msf{Nat}}
 %% \newcommand{\Zero}{\msf{Zero}}
@@ -318,7 +325,7 @@ construct IIR types from inductive-recursive (IR) types and intensional identity
 simplify the subsequent canonicity proof. The constructed IIR types support the same definitional
 computation rules that are available in Agda's native IIR implementation. Second, we give a
 canonicity proof for IR types, building on the well-known method of Artin gluing. The main idea is
-to encode the canonicity predicate for each IR type using a metatheoretic IIR type. In short, we reduce IIR types to IR types, then use metatheoretic IIR types to prove canonicity for IR types.
+to encode the canonicity predicate for each IR type using a metatheoretic IIR type.
 \end{abstract}
 
 %% \begin{CCSXML}
@@ -338,18 +345,19 @@ theory. In the proof assistant Agda, we can use IR to define a universe that is 
 choice of type formers:
 \begin{alignat*}{3}
   & \mbf{mutual} \\
-  & \quad\data\,\U : \Set_0\,\where \\
+  & \quad\data\,\Code : \Set_0\,\where \\
   & \quad\quad \Nat' : \U\\
-  & \quad\quad \Pi' \hspace{0.8em} : (A : \U) \to (\El\,A \to \U) \to \U
+  & \quad\quad \Pi' \hspace{0.8em} : (A : \Code) \to (\El\,A \to \Code) \to \Code
   & \\
   & \\
-  & \quad\El : \U \to \Set_0 \\
+  & \quad\El : \Code \to \Set_0 \\
   & \quad\El\,\Nat'\hspace{1.5em}  = \Nat \\
   & \quad\El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
 \end{alignat*}
-This $\U$, unlike the ambient $\Set_0$ universe, supports an induction principle and can be used to
+Here, $\Code$ is a type of codes of types which behaves as a custom Tarski-style universe. This
+universe, unlike the ambient $\Set_0$ universe, supports an induction principle and can be used to
 define type-generic functions. \emph{Indexed induction-recursion} (IIR) additionally allows indexing
-$\U$ over some type, which lets us define inductive-recursive predicates \cite{TODO}.
+$\Code$ over some type, which lets us define inductive-recursive predicates \cite{TODO}.
 
 One application of IR has been to develop semantics for object theories that support universe
 hierarchies. IR has been used in normalization proofs \cite{TODO}, in modeling first-class universe
@@ -415,56 +423,54 @@ type formers. For example, the $\Pi$-type $(x : A) \to B\,x$ is in $\U_{\max(i,\
 \U_i$ and $B : A \to \U_j$. We also have a lifting operation $\Lift\,i\,j : \U_i \to \U_j$ together
 with $\lup : A \to \Lift\,i\,j\,A$ and $\ldown : \Lift\,i\,j\,A \to A$ such that $\lup$ and $\ldown$
 are definitional inverses. We have intensional identity types, as $t = u : \U_i$ for $t : A : \U_i$.
+We have $\top : \U_0$ for the unit type with the unique inhabitant $\ttt$.
 
 \subsection{IR types}
-
-The IR specification is parameterized over the following data:
+IR signatures are parameterized by the following data:
 \begin{itemize}
 \item The level $i$ is the size of the IR type that is being specified.
 \item The level $j$ is the size of the recursive output type.
 \item $O : \U_j$ is the output type.
 \end{itemize}
-IR signatures are specified by the following inductive type:
+IR signatures are specified by the following inductive type. We only mark $i$ and $O$ as parameters to $\Sig$,
+since $j$ is inferable from $O$.
 \begin{alignat*}{4}
-  &\data\, \Sig : \U_{\max(i+1,\,o)}\\
+  &\data\, \Sig_i\,O : \U_{\max(i+1,\,o)}\\
   &\quad \iota\hspace{0.25em}  : O \to \Sig \\
   &\quad \sigma               : (A : \U_i) \to (A \to \Sig) \to \Sig \\
   &\quad \delta\hspace{0.1em} : (A : \U_i) \to ((A \to O) \to \Sig) \to \Sig
 \end{alignat*}
-
 \begin{example}
-The Agda example on Figure \cite{TODO} can be specified as follows. We assume a
-
-
-
+We can reproduce the Agda example from Figure \cite{TODO}. First, we need an enumeration type to
+represent the constructor labels of $\Code$. We assume this as $\Tag : \U_0$ with constructors
+$\Nat'$ and $\Pi'$, and we use an informal case splitting operation for it. We also assume $\Nat :
+\U_0$ for natural numbers and a right-associative $\blank\!\$\!\blank$ operator for function application.
+\begin{alignat*}{4}
+  & S : \Sig_0\,\U_0\\
+  & S := \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
+  & \quad \Nat' \to \iota\,\Nat \\
+  & \quad \Pi'\hspace{0.85em} \to \delta\,\top\,\$\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\$\,\lambda\,{ElB}.\,
+      \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
+\end{alignat*}
+First, we introduce a choice between two constructors by $\sigma\,\Tag$. In the $\Nat'$ branch, we
+specify that the recursive function maps the constructor to $\Nat$. In the $\Pi'$ branch, we first
+introduce a single inductive constructor field by $\delta\,\top$, where $\top$ represents the number
+of introduced fields. The naming of the freshly bound ${ElA}$ variable is meant to suggest that it
+represent the recursive function's output for the inductive field. It has type $\top \to \U_0$.
+Next, we introduce $({ElA}\,\ttt)$-many inductive fields, and bind ${ElB} : {ElA}\,\ttt \to \U_0$ to
+represent the corresponding recursive output. Finally, $\iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)$
+specifies the output of the recursive function for a $\Pi'$ constructor.
 \end{example}
 
-
-  %% data Sig : Set (lsuc (ext ⊔ ol)) where
-  %%   ι : O → Sig
-  %%   σ : (A : Set ext) → (A → Sig) → Sig
-  %%   δ : (A : Set ext) → ((A → O) → Sig) → Sig
-
-
-%% , which we denote as $\le$ and $\lo$.
-
-
-
-%% Recall the IR example from Figure \ref{TODO}.
+This notion of signature is close to Dybjer and Setzer's \cite{TODO}. There are two main differences.
+First, Dybjer and Setzer factor out the $O$ field from the $\iota$ constructor into a separate annotation
+on signatures, called ``$\msf{Arg}$'', but this is clearly equivalent to ours. Second, we consider a countable
+universe hierarchy while Dybjer and Setzer only consider a single universe.
 
 
 
 
-%% : there, we defined a type which resides in $\Set_0$
-%% and whose recursive component $\El$ returns in $\Set_0$ as well. These two universe
 
-
-%% The specification of IR types is parameterized over three pieces of data:
-
-%% \begin{itemize}
-%% \item Universe levels $l_e$ and $l_o$.
-%% \item A type $O : \U_{l_o}$.
-%% \end{itemize}
 
 
 

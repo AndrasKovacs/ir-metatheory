@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  12 JUN 2025 19:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  15 JUN 2025 23:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1053,8 +1053,8 @@ Package: appendix 2020/02/08 v1.2c extra appendix facilities
 \c@@ppsavesec=\count336
 \c@@ppsaveapp=\count337
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 299.
-Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 299
+Package hyperref Info: Option `colorlinks' set `true' on input line 306.
+Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 306
 .
 \c@theorem=\count338
 
@@ -1068,124 +1068,124 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 299.
+LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 306.
 LaTeX Font Info:    Trying to load font information for OML+nxlmi on input line
- 299.
+ 306.
  (/usr/share/texlive/texmf-dist/tex/latex/newtx/omlnxlmi.fd
 File: omlnxlmi.fd 2013/11/19 Fontinst v1.933 font definitions for OML/nxlmi.
 )
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 299.
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 299.
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 299.
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 299.
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 299.
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 299.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 306.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 306.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 306.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 306.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 306.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 306.
 LaTeX Font Info:    Trying to load font information for U+ntxexa on input line 
-299.
+306.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxexa.fd
 File: untxexa.fd 2012/04/16 Fontinst v1.933 font definitions for U/ntxexa.
 )
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 299.
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 299.
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 299.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 306.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 306.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 306.
 LaTeX Font Info:    Trying to load font information for LMS+ntxsy on input line
- 299.
+ 306.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/lmsntxsy.fd
 File: lmsntxsy.fd 2016/07/02 Fontinst v1.933 font definitions for LMS/ntxsy.
 )
-LaTeX Font Info:    ... okay on input line 299.
-LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 299.
+LaTeX Font Info:    ... okay on input line 306.
+LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 306.
 LaTeX Font Info:    Trying to load font information for LMX+ntxexx on input lin
-e 299.
+e 306.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/lmxntxexx.fd
 File: lmxntxexx.fd 2016/07/03 Fontinst v1.933 font definitions for LMX/ntxexx.
 )
-LaTeX Font Info:    ... okay on input line 299.
+LaTeX Font Info:    ... okay on input line 306.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 299.
+(Font)              scaled to size 8.0pt on input line 306.
 LaTeX Font Info:    Trying to load font information for OT1+LinuxLibertineT-TLF
- on input line 299.
+ on input line 306.
 
 (/usr/share/texlive/texmf-dist/tex/latex/libertine/OT1LinuxLibertineT-TLF.fd
 File: OT1LinuxLibertineT-TLF.fd 2017/03/20 (autoinst) Font definitions for OT1/
 LinuxLibertineT-TLF.
 )
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 299.
+(Font)              scaled to size 8.0pt on input line 306.
 <<ot1.cmap>>
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 299.
+(Font)              scaled to size 6.2pt on input line 306.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 299.
+(Font)              scaled to size 5.5pt on input line 306.
 <<oml.cmap>>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 299
+LaTeX Font Info:    Trying to load font information for U+msa on input line 306
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 299
+LaTeX Font Info:    Trying to load font information for U+msb on input line 306
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+ntxmia on input line 
-299.
+306.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxmia.fd
 File: untxmia.fd 2018/04/14 Fontinst v1.933 font definitions for U/ntxmia.
 )
 LaTeX Font Info:    Trying to load font information for U+ntxsym on input line 
-299.
+306.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxsym.fd
 File: untxsym.fd 2015/03/20 Fontinst v1.933 font definitions for U/ntxsym.
 )
 LaTeX Font Info:    Trying to load font information for U+ntxsyc on input line 
-299.
+306.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxsyc.fd
 File: untxsyc.fd 2012/04/12 Fontinst v1.933 font definitions for U/ntxsyc.
 )
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 8.0pt on input line 299.
+(Font)              scaled to size 8.0pt on input line 306.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 6.2pt on input line 299.
+(Font)              scaled to size 6.2pt on input line 306.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 5.5pt on input line 299.
-LaTeX Font Info:    Trying to load font information for U+stmry on input line 2
-99.
+(Font)              scaled to size 5.5pt on input line 306.
+LaTeX Font Info:    Trying to load font information for U+stmry on input line 3
+06.
 
 (/usr/share/texlive/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
 
 LaTeX Font Warning: Font shape `U/stmry/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 299.
+(Font)              size <5> substituted on input line 306.
 
-LaTeX Info: Redefining \microtypecontext on input line 299.
-Package microtype Info: Applying patch `item' on input line 299.
-Package microtype Info: Applying patch `toc' on input line 299.
-Package microtype Info: Applying patch `eqnum' on input line 299.
-Package microtype Info: Applying patch `footnote' on input line 299.
+LaTeX Info: Redefining \microtypecontext on input line 306.
+Package microtype Info: Applying patch `item' on input line 306.
+Package microtype Info: Applying patch `toc' on input line 306.
+Package microtype Info: Applying patch `eqnum' on input line 306.
+Package microtype Info: Applying patch `footnote' on input line 306.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 299.
+LaTeX Info: Redefining \showhyphens on input line 306.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -1193,7 +1193,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-Package hyperref Info: Link coloring ON on input line 299.
+Package hyperref Info: Link coloring ON on input line 306.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -1202,9 +1202,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count340
 )
-LaTeX Info: Redefining \ref on input line 299.
-LaTeX Info: Redefining \pageref on input line 299.
-LaTeX Info: Redefining \nameref on input line 299.
+LaTeX Info: Redefining \ref on input line 306.
+LaTeX Info: Redefining \pageref on input line 306.
+LaTeX Info: Redefining \nameref on input line 306.
 
 (./paper.out) (./paper.out)
 \@outlinefile=\write5
@@ -1281,55 +1281,55 @@ Package caption Info: End \AtBeginDocument code.
 Package todonotes Warning: The length marginparwidth is less than 2cm and will 
 most likely cause issues with the appearance of inserted todonotes. The issue c
 an be solved by adding a line like \setlength {\marginparwidth }{2cm} prior to 
-loading the todonotes package. on input line 299.
+loading the todonotes package. on input line 306.
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 14.4pt on input line 330.
+(Font)              scaled to size 14.4pt on input line 337.
 LaTeX Font Info:    Trying to load font information for T1+LinuxBiolinumT-TLF o
-n input line 330.
+n input line 337.
 (/usr/share/texlive/texmf-dist/tex/latex/libertine/T1LinuxBiolinumT-TLF.fd
 File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
 uxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 14.4pt on input line 330.
+(Font)              scaled to size 14.4pt on input line 337.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 14.4pt on input line 330.
+(Font)              scaled to size 14.4pt on input line 337.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 330.
+(Font)              scaled to size 10.95pt on input line 337.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 330.
+(Font)              scaled to size 10.95pt on input line 337.
 LaTeX Font Info:    Trying to load font information for TS1+LinuxLibertineT-TLF
- on input line 330.
+ on input line 337.
 
 (/usr/share/texlive/texmf-dist/tex/latex/libertine/TS1LinuxLibertineT-TLF.fd
 File: TS1LinuxLibertineT-TLF.fd 2017/03/20 (autoinst) Font definitions for TS1/
 LinuxLibertineT-TLF.
 )
 LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 330.
+(Font)              scaled to size 8.0pt on input line 337.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 330.
+(Font)              scaled to size 9.0pt on input line 337.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 330.
+(Font)              scaled to size 9.0pt on input line 337.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 330.
+(Font)              scaled to size 9.0pt on input line 337.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 330.
+(Font)              scaled to size 9.0pt on input line 337.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 330.
+(Font)              scaled to size 7.3pt on input line 337.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
@@ -1338,381 +1338,552 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 9.0pt on input line 330.
+(Font)              scaled to size 9.0pt on input line 337.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 7.3pt on input line 330.
+(Font)              scaled to size 7.3pt on input line 337.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 332.
+(Font)              scaled to size 10.0pt on input line 339.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 10.0pt on input line 332.
+(Font)              scaled to size 10.0pt on input line 339.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.0pt on input line 334.
+(Font)              scaled to size 10.0pt on input line 341.
 
 
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 334.
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 341.
 
 
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 335.
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 342.
 
 
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 336.
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 343.
 
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 339.
+(Font)              scaled to size 10.0pt on input line 346.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 10.0pt on input line 339.
+(Font)              scaled to size 10.0pt on input line 346.
 LaTeX Font Info:    Freeze math alphabet allocation in version normal.
-(Font)              Allocated math groups: 15 (local: 2) on input line 349.
+(Font)              Allocated math groups: 15 (local: 2) on input line 356.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 349.
+(Font)              scaled to size 7.3pt on input line 356.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 349.
+(Font)              scaled to size 5.5pt on input line 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 349.
+ne 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 349.
+ine 356.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 350.
+ne 357.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 350.
+ne 358.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 351.
+(Font)              scaled to size 10.0pt on input line 359.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 352.
-
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 352.
-
-
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 355.
-
-
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 356.
-
-
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 356.
-
-
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 357.
-
-
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 358.
-
-
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 358.
-
+ne 360.
 
 Package natbib Warning: Citation `TODO' on page 1 undefined on input line 360.
 
 
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 361.
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 363.
+
+
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 364.
+
+
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 364.
+
+
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 365.
+
+
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 366.
+
+
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 366.
+
+
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 368.
+
+
+Package natbib Warning: Citation `TODO' on page 1 undefined on input line 369.
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 365.
+(Font)              scaled to size 7.0pt on input line 373.
 [1.1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: Reference `TODO' on page 2 undefined on input line 386.
+LaTeX Warning: Reference `TODO' on page 2 undefined on input line 394.
 
 
-Package natbib Warning: Citation `TODO' on page 2 undefined on input line 387.
+Package natbib Warning: Citation `TODO' on page 2 undefined on input line 395.
 
 
-LaTeX Warning: Reference `TODO' on page 2 undefined on input line 389.
+LaTeX Warning: Reference `TODO' on page 2 undefined on input line 397.
 
 
-LaTeX Warning: Reference `TODO' on page 2 undefined on input line 395.
+LaTeX Warning: Reference `TODO' on page 2 undefined on input line 403.
 
 
-Package natbib Warning: Citation `TODO' on page 2 undefined on input line 397.
+Package natbib Warning: Citation `TODO' on page 2 undefined on input line 405.
 
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 412.
+ne 420.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 412.
+ine 420.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 413.
+ne 421.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 414.
+ine 422.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 414.
+ine 422.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 414.
+ne 422.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 415.
+ne 423.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 415.
+ne 423.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 415.
+ne 423.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 416.
+ne 424.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 416.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 416.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 416.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 417.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 417.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 423.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 423.
+ne 424.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 424.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 424.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 425.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 425.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 425.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 426.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 426.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 431.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 431.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 432.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 432.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 433.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 433.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 435.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 435.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 433.
+ne 435.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 436.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 436.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 433.
+ne 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 433.
+ne 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 433.
+ne 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 433.
+ne 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 433.
+ne 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 433.
+ne 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 433.
+ine 442.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 442.
 
-Package natbib Warning: Citation `TODO' on page 2 undefined on input line 436.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 474.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 475.
-[2.2]
+(Font)              scaled to size 8.0pt on input line 442.
+ [2.2]
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 475.
+ine 442.
+
+
+Package natbib Warning: Citation `TODO' on page 3 undefined on input line 444.
+
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 445.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 445.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 446.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 476.
- (./paper.bbl
+ine 446.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 447.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 7.3pt on input line 447.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 5.5pt on input line 447.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 447.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 447.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 447.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 454.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 455.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 455.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 456.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 456.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 457.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 457.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 458.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 459.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 460.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 460.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 461.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 462.
+
+Package natbib Warning: Citation `TODO' on page 3 undefined on input line 465.
+
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 466.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 466.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 467.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 480.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 481.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 482.
+(./paper.bbl
 
 Package natbib Warning: Empty `thebibliography' environment on input line 39.
 
@@ -1744,11 +1915,11 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: A57E926859FF54032218C3F5D13B5B18;709.
  ) 
 Here is how much of TeX's memory you used:
- 32345 strings out of 478287
- 585397 string characters out of 5849289
- 906737 words of memory out of 5000000
- 49400 multiletter control sequences out of 15000+600000
- 643617 words of font info for 328 fonts, out of 8000000 for 9000
+ 32368 strings out of 478287
+ 585884 string characters out of 5849290
+ 908210 words of memory out of 5000000
+ 49409 multiletter control sequences out of 15000+600000
+ 654387 words of font info for 337 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  99i,16n,131p,1002b,552s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{/us
@@ -1769,10 +1940,10 @@ bertine/LinLibertineTI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/li
 bertine/LinLibertineTZ.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ne
 wtx/txmiaX.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pf
 b>
-Output written on paper.pdf (3 pages, 461791 bytes).
+Output written on paper.pdf (3 pages, 467695 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  98 compressed objects within 1 object stream
  15 named destinations out of 1000 (max. 500000)
- 90189 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 94285 words of extra memory for PDF output out of 106986 (max. 10000000)
 

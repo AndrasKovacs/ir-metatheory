@@ -1,4 +1,4 @@
-PWD /home/andrask/Dropbox/src/IR-metatheory/paper
+PWD /home/andraskovacs/Dropbox/src/IR-metatheory/paper
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
@@ -1553,6 +1553,8 @@ INPUT /usr/share/texlive/texmf-dist/fonts/vf/public/newtx/nxlmi7.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newtx/LibertineMathMI7.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newtx/NewTXMI7.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newtx/stxscr.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1.tfm
 INPUT ./paper.bbl
 INPUT paper.bbl
 INPUT ./paper.bbl
