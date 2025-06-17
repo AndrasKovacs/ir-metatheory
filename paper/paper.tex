@@ -431,11 +431,12 @@ also lands in $\U_{\max(i,\,j)}$.
 The object theory additionally supports inductive-recursive types. On a high level, the specification consists
 of the following.
 \begin{enumerate}
-\item A type of signatures. Each signature describes an IR type. Since signatures are first-class internal values,
-      we also internally define some \emph{semantics of signatures}, interpreting them as endofunctors on slice categories.
-      This interpretation is required in the rest of the specification.
+\item A type of signatures. Each signature describes an IR type. Also, we internally define some
+  interpretations of signatures. Conceptually, each signature is interpreted as an endofunctor on a
+  slice category, but we do not use exactly this much data. The interpretation of signatures is
+  required in the rest of the specification.
 \item Rules for type formation, term formation and the recursive function, with a computation rule
-      for the recursive function.
+  for the recursive function.
 \item The induction principle with a $\beta$ rule.
 \end{enumerate}
 
@@ -480,21 +481,47 @@ represent the corresponding recursive output. Finally, $\iota\, ((x : {ElA}\,\tt
 specifies the output of the recursive function for a $\Pi'$ constructor.
 \end{example}
 
-\paragraph{Comparison to prior specifications}
-\begin{enumerate}
-  \item Dybjer and Setzer's finite axiomatization \cite{TODO}. There are two main differences.
-    First, Dybjer and Setzer factor out the $O$ field from the $\iota$ constructor into a separate
-    annotation on signatures, called ``$\msf{Arg}$''. However, the bundle of a signature with an
-    $\msf{Arg}$ over it is clearly equivalent to our version. Second, we have a countable universe
-    hierarchy, while Dybjer and Setzer use a logical framework presentation with only three
-    universes, $\msf{set}$, $\msf{stype}$ and $\msf{type}$, where $\msf{set}$ contains the
-    inductively specified type, $\msf{stype}$ contains the non-inductive constructor arguments and
-    $\msf{type}$ contains the recursive output type and the type of signatures.
-  \item The specification of small induction-recursion by Hancock et al. \cite{TODO}. Small IR mentions
-    only two universes, $\Set$ and $\Set_1$, where the inductive type and the recursive output type
-    are both in $\Set$, and $\Set_1$ hosts the type of signatures. Small IR signatures store an $O$
-    value in the $\iota$ constructor, just like out signatures.
-\end{enumerate}
+Our signatures are identical to Dybjer and Setzer's \cite{TODO}, except for one difference.  We have
+countable universe levels, while Dybjer and Setzer use a logical framework presentation with only
+three universes, $\msf{set}$, $\msf{stype}$ and $\msf{type}$, where $\msf{set}$ contains the
+inductively specified type, $\msf{stype}$ contains the non-inductive constructor arguments and
+$\msf{type}$ contains the recursive output type and the type of signatures.
+
+\subsubsection{Interpretations of signatures}\label{sec:signature-semantics}
+
+In this section we also follow Dybjer and Setzer \cite{TODO}, with minor differences of notation, and
+also accounting for the refinement of universe levels.
+
+First, any signature $S : \Sig_i\,O$ can be interpreted as a function from $(A : \U_i) \times (A \to O)$
+to $(A : \U_i) \times (A \to O)$. This can be extended to an endofunctor on the slice category $\U_i/O$,
+but we will only need the action on objects. To aid readability, we split the interpretation to two functions,
+as follows:
+\begin{alignat*}{3}
+  &\hspace{-1em}\rlap{$\blank_0 : \Sig_i\,O \to (A : \U_i) \to (A \to O) \to \U_i$} \\
+  &\hspace{-1em}S_0\,(\iota\,o)    \,&&A\,f && = \Lift\,\top\\
+  &\hspace{-1em}S_0\,(\sigma\,I\,S)\,&&A\,f && = (i : I) \times (S\,i)_0\,A\,f\\
+  &\hspace{-1em}S_0\,(\delta\,I\,S)\,&&A\,f && = (g : I \to A) \times (S\,(f \circ g))_0\,A\,f\\
+  &\hspace{-1em} && &&\\
+  &\hspace{-1em}\rlap{$\blank_1 : (S : \Sig_i\,O) \to (A : \U_i) \to (f : A \to O) \to S_0\,A\,f \to O$} \\
+  &\hspace{-1em}S_1\,(\iota\,o)    \,&&A\,f\,x       && = o\\
+  &\hspace{-1em}S_1\,(\sigma\,I\,S)\,&&A\,f\,(i,\,x) && = (S\,i)_1\,A\,f\,x\\
+  &\hspace{-1em}S_1\,(\delta\,I\,S)\,&&A\,f\,(g,\,x) && = (S\,(f \circ g))_1\,A\,f\,x
+\end{alignat*}
+
+
+
+
+  %% F0 : Sig → (u : Set ext) → (u → O) → Set ext
+  %% F0 (ι _)   u el = Lift _ ⊤
+  %% F0 (σ A Γ) u el = Σ A λ a → F0 (Γ a) u el
+  %% F0 (δ A Γ) u el = Σ (A → u) λ f → F0 (Γ (el ∘ f)) u el
+
+  %% F1 : ∀ Γ u el → F0 Γ u el → O
+  %% F1 (ι o)   u el t       = o
+  %% F1 (σ A Γ) u el (a , t) = F1 (Γ a) u el t
+  %% F1 (δ A Γ) u el (f , t) = F1 (Γ (el ∘ f)) u el t
+
+
 
 
 
