@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{0}
+\begin{thebibliography}{1}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -35,5 +35,21 @@
 \providecommand\bibinfo[2]{#2}
 \providecommand\natexlab[1]{#1}
 \providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Hugunin(2020)]%
+        {whynotw}
+\bibfield{author}{\bibinfo{person}{Jasper Hugunin}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Why Not W?}. In \bibinfo{booktitle}{\emph{26th
+  International Conference on Types for Proofs and Programs, {TYPES} 2020,
+  March 2-5, 2020, University of Turin, Italy}}
+  \emph{(\bibinfo{series}{LIPIcs}, Vol.~\bibinfo{volume}{188})},
+  \bibfield{editor}{\bibinfo{person}{Ugo de'Liguoro}, \bibinfo{person}{Stefano
+  Berardi}, {and} \bibinfo{person}{Thorsten Altenkirch}} (Eds.).
+  \bibinfo{publisher}{Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik},
+  \bibinfo{pages}{8:1--8:9}.
+\newblock
+\href{https://doi.org/10.4230/LIPICS.TYPES.2020.8}{doi:\nolinkurl{10.4230/LIPICS.TYPES.2020.8}}
+
 
 \end{thebibliography}
