@@ -73,6 +73,15 @@
 \newcommand{\of}{\mbf{of}}
 \newcommand{\ttt}{\msf{tt}}
 \newcommand{\blank}{{\mathord{\hspace{1pt}\text{--}\hspace{1pt}}}}
+\newcommand{\ir}{{ir}}
+\newcommand{\el}{{el}}
+\newcommand{\IR}{\msf{IR}}
+\newcommand{\intro}{\msf{intro}}
+\newcommand{\IH}{\msf{IH}}
+\newcommand{\map}{\msf{map}}
+\newcommand{\elim}{\msf{elim}}
+
+
 
 
 
@@ -432,9 +441,7 @@ The object theory additionally supports inductive-recursive types. On a high lev
 of the following.
 \begin{enumerate}
 \item A type of signatures. Each signature describes an IR type. Also, we internally define some
-  interpretations of signatures. Conceptually, each signature is interpreted as an endofunctor on a
-  slice category, but we do not use exactly this much data. The interpretation of signatures is
-  required in the rest of the specification.
+  functions on signatures which are required in the specification of other rules.
 \item Rules for type formation, term formation and the recursive function, with a computation rule
   for the recursive function.
 \item The induction principle with a $\beta$ rule.
@@ -487,114 +494,76 @@ three universes, $\msf{set}$, $\msf{stype}$ and $\msf{type}$, where $\msf{set}$ 
 inductively specified type, $\msf{stype}$ contains the non-inductive constructor arguments and
 $\msf{type}$ contains the recursive output type and the type of signatures.
 
-\subsubsection{Interpretations of signatures}\label{sec:signature-semantics}
+\subsubsection{Type and term formation}\label{sec:signature-semantics}
 
 In this section we also follow Dybjer and Setzer \cite{TODO}, with minor differences of notation, and
 also accounting for the refinement of universe levels.
 
-First, any signature $S : \Sig_i\,O$ can be interpreted as a function from $(A : \U_i) \times (A \to O)$
-to $(A : \U_i) \times (A \to O)$. This can be extended to an endofunctor on the slice category $\U_i/O$,
-but we will only need the action on objects. To aid readability, we split the interpretation to two functions,
-as follows:
+First, assuming $i$ and $O : \U_j$, a signature $S : \Sig_i\,O$ can be interpreted as a function
+from $(A : \U_i) \times (A \to O)$ to $(A : \U_i) \times (A \to O)$. This can be extended to an
+endofunctor on the slice category $\U_i/O$, but in the following we only need the action on
+objects. We split this action to two functions, to aid readability:
 \begin{alignat*}{3}
-  &\hspace{-1em}\rlap{$\blank_0 : \Sig_i\,O \to (A : \U_i) \to (A \to O) \to \U_i$} \\
-  &\hspace{-1em}S_0\,(\iota\,o)    \,&&A\,f && = \Lift\,\top\\
-  &\hspace{-1em}S_0\,(\sigma\,I\,S)\,&&A\,f && = (i : I) \times (S\,i)_0\,A\,f\\
-  &\hspace{-1em}S_0\,(\delta\,I\,S)\,&&A\,f && = (g : I \to A) \times (S\,(f \circ g))_0\,A\,f\\
-  &\hspace{-1em} && &&\\
-  &\hspace{-1em}\rlap{$\blank_1 : (S : \Sig_i\,O) \to (A : \U_i) \to (f : A \to O) \to S_0\,A\,f \to O$} \\
-  &\hspace{-1em}S_1\,(\iota\,o)    \,&&A\,f\,x       && = o\\
-  &\hspace{-1em}S_1\,(\sigma\,I\,S)\,&&A\,f\,(i,\,x) && = (S\,i)_1\,A\,f\,x\\
-  &\hspace{-1em}S_1\,(\delta\,I\,S)\,&&A\,f\,(g,\,x) && = (S\,(f \circ g))_1\,A\,f\,x
+  &\hspace{-4em}\rlap{$\blank_0 : \Sig_i\,O \to (\ir : \U_i) \to (\ir \to O) \to \U_i$} \\
+  &\hspace{-4em}S_0\,(\iota\,o)    \,&&\ir\,\el && \hspace{-2.2em}= \Lift\,\top\\
+  &\hspace{-4em}S_0\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-2.2em}= (a : A) \times (S\,a)_0\,\ir\,\el\\
+  &\hspace{-4em}S_0\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-2.2em}= (f : A \to \ir) \times (S\,(\el \circ f))_0\,\ir\,\el\\
+  &\hspace{-4em} && &&\\
+  &\hspace{-4em}\rlap{$\blank_1 : (S : \Sig_i\,O) \to (\ir : \U_i) \to (\el : \ir \to O) \to S_0\,\ir\,\el \to O$} \\
+  &\hspace{-4em}S_1\,(\iota\,o)    \,&&\ir\,\el\,x       && = o\\
+  &\hspace{-4em}S_1\,(\sigma\,A\,S)\,&&\ir\,\el\,(a,\,x) && = (S\,i)_1\,\ir\,\el\,x\\
+  &\hspace{-4em}S_1\,(\delta\,A\,S)\,&&\ir\,\el\,(f,\,x) && = (S\,(\el \circ f))_1\,A\,\ir\,\el\,x
 \end{alignat*}
+Although we use Agda-like pattern matching notation above, these functions are formally defined by
+the elimination principle of $\Sig$. Also note the quantification of the $i$ and $j$ universe
+levels. The object theory does not support universe polymorphism, so this quantification is
+understood to happen in the metatheory. The introduction rules are the following.
+\begin{alignat*}{3}
+  &\IR                && : (S : \Sig_i\,O) \to \U_i\\
+  &\El                && : \IR\,S \to O\\
+  &\intro             && : S_0\,(\IR\,S)\,\El \to \IR\,S\\
+  &\msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv S_1\,(\IR\,S)\,\El\,x
+\end{alignat*}
+Above, we leave some rule arguments implicit, like $S$ in $\El$, $\intro$ and
+$\msf{El\!\!-\!\!intro}$. The rule $\msf{El\!\!-\!\!intro}$ specifies a definitional equality.  Note
+that these rules are not internal definitions but part of the specification of the object
+theory. Hence, they are also assumed to be stable under object-theoretic substitution, formally
+speaking (we omit the substitution rules here). On a high level, the introduction rules express the
+existence of an $S$-algebra where we view $S$ as an endofunctor on $\U_i/O$.
 
+\subsubsection{Elimination}\label{sec:ir-elimination}
 
-
-
-  %% F0 : Sig → (u : Set ext) → (u → O) → Set ext
-  %% F0 (ι _)   u el = Lift _ ⊤
-  %% F0 (σ A Γ) u el = Σ A λ a → F0 (Γ a) u el
-  %% F0 (δ A Γ) u el = Σ (A → u) λ f → F0 (Γ (el ∘ f)) u el
-
-  %% F1 : ∀ Γ u el → F0 Γ u el → O
-  %% F1 (ι o)   u el t       = o
-  %% F1 (σ A Γ) u el (a , t) = F1 (Γ a) u el t
-  %% F1 (δ A Γ) u el (f , t) = F1 (Γ (el ∘ f)) u el t
-
-
-
-
-
-
-
+Here we follow the specification in \cite{TODO}. We assume another universe level $k$ that specifies
+the size of the type into which we eliminate. We define two additional functions on signatures:
+\begin{alignat*}{3}
+  &\rlap{$\blank_\IH : (S : \Sig_i\,O)(\ir : \U_i)(\el : \ir \to O)(P : \ir \to \U_k) \to S_0\,\ir\,\el \to \U_{\max(i,\,k)}$} \\
+  &(\iota\,o)_\IH    \,&&\ir\,\el\,P\,x       &&= \Lift\,\top \\
+  &(\sigma\,A\,S)_\IH\,&&\ir\,\el\,P\,(a,\,x) &&= (S\,a)_\IH\,\ir\,\el\,P\,x \\
+  &(\delta\,A\,S)_\IH\,&&\ir\,\el\,P\,(f,\,x) &&= ((a : A) \to P\,(f\,a)) \times (S\,(\el \circ f))_\IH\,\ir\,\el\,P\,x
+\end{alignat*}
+\begin{alignat*}{3}
+  &\rlap{$\blank_\map : (S : \Sig_i\,O)(\ir : \U_i)(\el : \ir \to O)(P : \ir \to \U_k)$}\\
+  &\hspace{3.1em}\rlap{$\to ((x : \ir) \to P\,x) \to (x : S_0\,\ir\,\el) \to S_\IH\,\ir\,\el\,P\,x$} \\
+  &(\iota\,o)_\map    \,&&\ir\,\el\,P\,h\,x       &&=\,\lup\!\ttt \\
+  &(\sigma\,A\,S)_\map\,&&\ir\,\el\,P\,h\,(a,\,x) &&= (S\,a)_\map\,\ir\,\el\,P\,h\,x \\
+  &(\delta\,A\,S)_\map\,&&\ir\,\el\,P\,h\,(f,\,x) &&= (\el \circ h,\,(S\,(\el \circ f))_\map\,\ir\,\el\,P\,h\,x)
+\end{alignat*}
+$S_\IH$ stands for ``induction hypothesis'': it specifies having a witness of a predicate $P$ for
+each inductive field in a value of $S_0\,\ir\,\el$. $S_\map$ maps over $S_0\,\ir\,\el$, applying the
+section $h : (x : \ir) \to P\,x$ to each inductive field. Elimination is specified as follows.
+\begin{alignat*}{3}
+  &\elim           &&: (P : \IR\,S \to \U_k) \to ((x : S_0\,(\IR\,S)\,\El) \to S_\IH\,(\IR\,S)\,\El\,P\,x \to P\,(\intro\,x)) \to (x : \IR\,S) \to P\,x \\
+  &\elim\!-\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,(\IR\,S)\,\El\,P\,(\elim\,P\,f)\,x)
+\end{alignat*}
 
 \section{TODO}
 
 \begin{itemize}
+  \item make more args implicit in IR spec
   \item Small IIR paper: reduction of small IIR to IR + identity, similar to mine
   \item Bove-Capretta: IIR is used to model domains of partial functions.
   \item Canonicity metatheory: Loic, Anton say it looks OK
-\end{itemize}a
-
-
-
-
-
-
-%% module PlainIR (ext : Level) (ol : Level) (O : Set ol) where
-
-%%   data Sig : Set (lsuc (ext ⊔ ol)) where
-%%     ι : O → Sig
-%%     σ : (A : Set ext) → (A → Sig) → Sig
-%%     δ : (A : Set ext) → ((A → O) → Sig) → Sig
-
-%%   F0 : Sig → (u : Set ext) → (u → O) → Set ext
-%%   F0 (ι _)   u el = Lift _ ⊤
-%%   F0 (σ A Γ) u el = Σ A λ a → F0 (Γ a) u el
-%%   F0 (δ A Γ) u el = Σ (A → u) λ f → F0 (Γ (el ∘ f)) u el
-
-%%   F1 : ∀ Γ u el → F0 Γ u el → O
-%%   F1 (ι o)   u el t       = o
-%%   F1 (σ A Γ) u el (a , t) = F1 (Γ a) u el t
-%%   F1 (δ A Γ) u el (f , t) = F1 (Γ (el ∘ f)) u el t
-
-%%   IH : ∀ {j} Γ (u : Set ext) (el : u → O) (P : u → Set j) → F0 Γ u el → Set (ext ⊔ j)
-%%   IH (ι o)   u el P t       = Lift _ ⊤
-%%   IH (σ A Γ) u el P (a , t) = IH (Γ a) u el P t
-%%   IH (δ A Γ) u el P (f , t) = (∀ a → P (f a)) × IH (Γ (el ∘ f)) u el P t
-
-%%   mapIH : ∀ {j} Γ (u : Set ext)(el : u → O)(P : u → Set j)(t : F0 Γ u el)(f : ∀ x → P x) → IH Γ u el P t
-%%   mapIH (ι _)   u el P t       f = lift tt
-%%   mapIH (σ A Γ) u el P (a , t) f = mapIH (Γ a) u el P t f
-%%   mapIH (δ A Γ) u el P (g , t) f = f ∘ g , mapIH (Γ (el ∘ g)) u el P t f
-
-
-%% \item \emph{Notation:} we write $(x : A) \to B$ for $\Pi$-types and $(x : A) \times B$ for $\Sigma$-types.
-%%   where $\lift$ and $\lower$
-%% are definitional inverses.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%% IIR has been used in normalization proofs for
-
-%% For example, IR
-%% has been used to prove normalization \cite{TODO} and to build semantics for first-class universe
-%% levels \cite{TODO} and to prove canonicity for them \cite{TODO}. Another application is in generic
-%% programming, where IR is used to define custom universes of datatype descriptions \cite{TODO}.
-
-
+\end{itemize}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
