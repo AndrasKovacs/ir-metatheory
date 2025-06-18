@@ -29,18 +29,18 @@ module PlainIR (i : Level) (j : Level) (O : Set j) where
   mapIH (σ A Γ)          P h (a , x) = mapIH (Γ a) P h x
   mapIH (δ A Γ) {ir}{el} P h (f , x) = h ∘ f , mapIH (Γ (el ∘ f)) P h x
 
-  data U (Γ : Sig) : Set i
-  El : ∀ {Γ} → U Γ → O
+  data IR (S : Sig) : Set i
+  El : ∀ {S} → IR S → O
 
-  data U Γ where
-    wrap : F0 Γ (U Γ) El → U Γ
+  data IR S where
+    wrap : F0 S (IR S) El → IR S
 
   {-# TERMINATING #-}
   El {S} (wrap t) = F1 S t
 
   {-# TERMINATING #-}
-  elim : ∀ {k} S (P : U S → Set k) → (∀ x → IH S P x → P (wrap x)) → ∀ x → P x
+  elim : ∀ {k} S (P : IR S → Set k) → (∀ x → IH S P x → P (wrap x)) → ∀ x → P x
   elim S P f (wrap x) = f x (mapIH S P (elim S P f) x)
 
-  unwrap : ∀ {S} → U S → F0 S (U S) El
-  unwrap {Γ} = elim Γ _ λ x _ → x
+  unwrap : ∀ {S} → IR S → F0 S (IR S) El
+  unwrap {S} = elim S _ λ x _ → x

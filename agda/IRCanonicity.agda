@@ -15,10 +15,10 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
 
   module _ {S* : IR.Sig}(S*ᴾ : Sigᴾ S*) where
 
-    module IIR = IndexedIR {i}{j}{i} (IR.U S*) (Oᴾ ∘ IR.El)
+    module IIR = IndexedIR {i}{j}{i} (IR.IR S*) (Oᴾ ∘ IR.El)
 
     El = IR.El {S*}
-    U  = IR.U S*
+    U  = IR.IR S*
     F0 = λ S → IR.F0 S U El
     F1 = λ S → IR.F1 S {U} {El}
 
@@ -159,8 +159,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
       mapIHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) gᴾ = (λ a aᴾ → gᴾ (fᴾ a aᴾ)) , mapIHᴾ (Sᴾ _) tᴾ gᴾ
 
       module _  (met  : ∀ (x : F0 S*) → IH S* x → P (IR.wrap x))
-                (metᴾ : ∀ {x}(xᴾ : F0ᴾ S*ᴾ x)
-                   {ih : IH S* x}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ {IR.wrap x} (wrapᴾ xᴾ) (met x ih)) where
+                (metᴾ : ∀ {x}(xᴾ : F0ᴾ S*ᴾ x){ih}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ {IR.wrap x} (wrapᴾ xᴾ) (met x ih)) where
 
         Pᴾ' : ∀ {x} → IRᴾ x → Set k
         Pᴾ' {x} xᴾ = Pᴾ xᴾ (IR.elim S* P met x)

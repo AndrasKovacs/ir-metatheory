@@ -83,7 +83,7 @@ module _ (S* : Sig) where
   S*'  = Sig→ S*
 
   -- abbreviations for readability
-  IRU  = IR.U S*'
+  IRU  = IR.IR S*'
   IREl = IR.El
   IRF0 = λ S → IR.F0 (Sig→ S) IRU IREl
   IRF1 = λ S → IR.F1 (Sig→ S) {IRU} {IREl}
@@ -93,7 +93,7 @@ module _ (S* : Sig) where
   -- Here's the necessary extra restriction:
   -- the first projection of the El result must be the given "i".
   U : I → Set (li ⊔ k)
-  U i = Σ (IR.U S*') λ x → IR.El x .₁ ≡ i
+  U i = Σ (IR.IR S*') λ x → IR.El x .₁ ≡ i
 
   El : ∀ {i} → U i → O i
   El {i} (x , wx) = tr O wx (IR.El x .₂)

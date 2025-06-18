@@ -86,6 +86,7 @@
 \newcommand{\map}{\msf{map}}
 \newcommand{\elim}{\msf{elim}}
 \newcommand{\inj}{\msf{inj}}
+\newcommand{\tr}{\msf{tr}}
 
 %% --------------------------------------------------------------------------------
 
@@ -184,7 +185,6 @@ development is as follows.
   We formalize the predicate interpretation of IR types in Agda, using a shallow embedding of the
   syntax of the object theory. Hence, there is a gap between the Agda version and the fully formal
   construction, but we argue that it is a modest gap.
-
 \end{enumerate}
 
 \section{Specification for (I)IR types}\label{sec:specification}
@@ -194,15 +194,21 @@ types. We do not yet go into the formal details; instead, we shall mostly work w
 definitions in an Agda-like syntax. In Section \ref{TODO} we will give a rigorous specification that
 is based on categories-with-families.
 
-\paragraph{Basic type formers} We have a countable hierarchy of Russell-style universes, written as $\U_i$, where $i$ is an
+\paragraph{Basic type formers}
+We have a countable hierarchy of Russell-style universes, written as $\U_i$, where $i$ is an
 external natural number. We have $\U_i : \U_{i + 1}$. We have $\Pi$-types as $(x : A) \to B\,x$,
-which has type $\U_{\max(i,\,j)}$ when $A : \U_i$ and $B : A \to \U_j$. We also have a lifting
-operation $\Lift\,i\,j : \U_i \to \U_j$ together with $\lup : A \to \Lift\,i\,j\,A$ and $\ldown :
-\Lift\,i\,j\,A \to A$ such that $\lup$ and $\ldown$ are definitional inverses. We have intensional
-identity types, as $t = u : \U_i$ for $t : A : \U_i$.  We have $\top : \U_0$ for the unit type with
-the unique inhabitant $\ttt$. We have $\Sigma$-types, written as $(x : A) \times B\,x$, where the type
-also lands in $\U_{\max(i,\,j)}$. Finally, we have binary sum types, written as $A + B$ with constructors
-$\inj_1$ and $\inj_2$.
+which has type $\U_{\max(i,\,j)}$ when $A : \U_i$ and $B : A \to \U_j$. We use Agda-style implicit
+function types for convenience, as $\{x : A\} \to B\,x$, to mark that a function argument should be
+inferred from context. We also have a lifting operation $\Lift\,i\,j : \U_i \to \U_j$ together with
+$\lup : A \to \Lift\,i\,j\,A$ and $\ldown : \Lift\,i\,j\,A \to A$ such that $\lup$ and $\ldown$ are
+definitional inverses. We have intensional identity types, as $t = u : \U_i$ for $t : A : \U_i$,
+with a transport operation $\tr : \{A : \U_i\}(P : A \to \U_j)\{x\,y : A\} \to x = y \to P\,x \to
+P\,y$. We have $\top : \U_0$ for the unit type with the unique inhabitant $\ttt$. We have
+$\Sigma$-types, written as $(x : A) \times B\,x$, where the type also lands in
+$\U_{\max(i,\,j)}$. Finally, we have binary sum types, written as $A + B$ with constructors $\inj_1$
+and $\inj_2$.
+
+\todo{Implicit argument quantification}
 
 \subsection{IR types}
 The object theory additionally supports inductive-recursive types. On a high level, the specification consists
@@ -241,7 +247,7 @@ $\Nat'$ and $\Pi'$, and we use an informal case splitting operation for it. We a
 \U_0$ for natural numbers and a right-associative $\blank\!\$\!\blank$ operator for function application.
 \begin{alignat*}{4}
   & S : \Sig_0\,\U_0\\
-  & S := \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
+  & S :\equiv \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
   & \quad \Nat' \to \iota\,\Nat \\
   & \quad \Pi'\hspace{0.85em} \to \delta\,\top\,\$\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\$\,\lambda\,{ElB}.\,
       \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
@@ -262,7 +268,7 @@ three universes, $\msf{set}$, $\msf{stype}$ and $\msf{type}$, where $\msf{set}$ 
 inductively specified type, $\msf{stype}$ contains the non-inductive constructor arguments and
 $\msf{type}$ contains the recursive output type and the type of signatures.
 
-\subsubsection{Type and term formation}\label{sec:signature-semantics}
+\subsubsection{Type and term formation}\label{sec:ir-type-and-term-formation}
 
 In this section we also follow Dybjer and Setzer \cite{TODO}, with minor differences of notation, and
 also accounting for the refinement of universe levels.
@@ -273,14 +279,14 @@ endofunctor on the slice category $\U_i/O$, but in the following we only need th
 objects. We split this action to two functions, to aid readability:
 \begin{alignat*}{3}
   &\rlap{$\blank_0 : \Sig_i\,O \to (\ir : \U_i) \to (\ir \to O) \to \U_i$} \\
-  &S_0\,(\iota\,o)    \,&&\ir\,\el && \hspace{-0.7em}= \Lift\,\top\\
-  &S_0\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}= (a : A) \times (S\,a)_0\,\ir\,\el\\
-  &S_0\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}= (f : A \to \ir) \times (S\,(\el \circ f))_0\,\ir\,\el\\
+  &S_0\,(\iota\,o)    \,&&\ir\,\el && \hspace{-0.7em}:\equiv \Lift\,\top\\
+  &S_0\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (a : A) \times (S\,a)_0\,\ir\,\el\\
+  &S_0\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (f : A \to \ir) \times (S\,(\el \circ f))_0\,\ir\,\el\\
   & && &&\\
   &\rlap{$\blank_1 : (S : \Sig_i\,O) \to S_0\,\ir\,\el \to O$} \\
-  &S_1\,(\iota\,o)    \,&&x       && = o\\
-  &S_1\,(\sigma\,A\,S)\,&&(a,\,x) && = (S\,i)_1\,x\\
-  &S_1\,(\delta\,A\,S)\,&&(f,\,x) && = (S\,(\el \circ f))_1\,x
+  &S_1\,(\iota\,o)    \,&&x       && :\equiv o\\
+  &S_1\,(\sigma\,A\,S)\,&&(a,\,x) && :\equiv (S\,i)_1\,x\\
+  &S_1\,(\delta\,A\,S)\,&&(f,\,x) && :\equiv (S\,(\el \circ f))_1\,x
 \end{alignat*}
 Although we use Agda-like pattern matching notation above, these functions are formally defined by
 the elimination principle of $\Sig$. Also note the quantification of the $i$ and $j$ universe
@@ -296,8 +302,8 @@ Above, we leave some rule arguments implicit, like $S$ in $\El$, $\intro$ and
 $\msf{El\!\!-\!\!intro}$. The rule $\msf{El\!\!-\!\!intro}$ specifies a definitional equality.  Note
 that these rules are not internal definitions but part of the specification of the object
 theory. Hence, they are also assumed to be stable under object-theoretic substitution, formally
-speaking (we omit the substitution rules here). On a high level, the introduction rules express the
-existence of an $S$-algebra where we view $S$ as an endofunctor on $\U_i/O$.
+speaking. On a high level, the introduction rules express the existence of an $S$-algebra where we
+view $S$ as an endofunctor on $\U_i/O$.
 
 \subsubsection{Elimination}\label{sec:ir-elimination}
 
@@ -305,17 +311,17 @@ Here we follow the specification in \cite{TODO}. We assume another universe leve
 the size of the type into which we eliminate. We define two additional functions on signatures:
 \begin{alignat*}{3}
   &\rlap{$\blank_\IH : (S : \Sig_i\,O)(P : \ir \to \U_k) \to S_0\,\ir\,\el \to \U_{\max(i,\,k)}$} \\
-  &(\iota\,o)_\IH    \,&&P\,x       &&= \Lift\,\top \\
-  &(\sigma\,A\,S)_\IH\,&&P\,(a,\,x) &&= (S\,a)_\IH\,P\,x \\
-  &(\delta\,A\,S)_\IH\,&&P\,(f,\,x) &&= ((a : A) \to P\,(f\,a)) \times (S\,(\el \circ f))_\IH\,P\,x
+  &(\iota\,o)_\IH    \,&&P\,x       &&:\equiv \Lift\,\top \\
+  &(\sigma\,A\,S)_\IH\,&&P\,(a,\,x) &&:\equiv (S\,a)_\IH\,P\,x \\
+  &(\delta\,A\,S)_\IH\,&&P\,(f,\,x) &&:\equiv ((a : A) \to P\,(f\,a)) \times (S\,(\el \circ f))_\IH\,P\,x
 \end{alignat*}
 \begin{alignat*}{3}
-  &\hspace{-8em}\rlap{$\blank_\map : (S : \Sig_i\,O)(P : \ir \to \U_k) \to ((x : \ir) \to P\,x) \to (x : S_0\,\ir\,\el) \to S_\IH\,\ir\,\el\,P\,x$} \\
-  &\hspace{-8em}(\iota\,o)_\map    \,&&P\,h\,x       &&=\,\lup\!\ttt \\
-  &\hspace{-8em}(\sigma\,A\,S)_\map\,&&P\,h\,(a,\,x) &&= (S\,a)_\map\,P\,h\,x \\
-  &\hspace{-8em}(\delta\,A\,S)_\map\,&&P\,h\,(f,\,x) &&= (\el \circ h,\,(S\,(\el \circ f))_\map\,P\,h\,x)
+  &\hspace{-7em}\rlap{$\blank_\map : (S : \Sig_i\,O)(P : \ir \to \U_k) \to ((x : \ir) \to P\,x) \to (x : S_0\,\ir\,\el) \to S_\IH\,P\,x$} \\
+  &\hspace{-7em}(\iota\,o)_\map    \,&&P\,h\,x       &&:\equiv\,\lup\!\ttt \\
+  &\hspace{-7em}(\sigma\,A\,S)_\map\,&&P\,h\,(a,\,x) &&:\equiv (S\,a)_\map\,P\,h\,x \\
+  &\hspace{-7em}(\delta\,A\,S)_\map\,&&P\,h\,(f,\,x) &&:\equiv (h \circ f,\,(S\,(\el \circ f))_\map\,P\,h\,x)
 \end{alignat*}
-$S_\IH$ stands for ``induction hypothesis'': it specifies having a witness of a predicate $P$ for
+$\blank_\IH$ stands for ``induction hypothesis'': it specifies having a witness of a predicate $P$ for
 each inductive field in a value of $S_0\,\ir\,\el$. $S_\map$ maps over $S_0\,\ir\,\el$, applying the
 section $h : (x : \ir) \to P\,x$ to each inductive field. Elimination is specified as follows.
 \begin{alignat*}{3}
@@ -323,18 +329,15 @@ section $h : (x : \ir) \to P\,x$ to each inductive field. Elimination is specifi
   &\elim\!-\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,P\,(\elim\,P\,f)\,x)
 \end{alignat*}
 If we have function extensionality, this specification of elimination can be shown to be equivalent
-to the initiality of $\IR\,S$ and $\El$ as an $S$-algebra \cite{TODO}.
+to the initiality of $(\IR\,S,\,\El)$ as an $S$-algebra \cite{TODO}.
 
-\subsection{IIR types}
+\subsection{IIR types}\label{sec:iir}
 
-Dybjer and Setzer originally considered two variants of IIR, \emph{restricted} and \emph{general}
-\cite{TODO}. A restricted IIR signature requires that every constructor has a non-inductive first
-field from which the constructor index can be determined. General IIR allows constructor indices to
-depend on any non-inductive field. We use general IIR with a mild modification borrowed from Hancock
-et al.'s small IIR \cite{TODO}. Since IIR is quite similar to IR, we give a more terse presentation
-of the rules and definitions in the following.
+We extend Dybjer and Setzer's general IIR signatures \cite{TODO} with refined universe levels. Since
+IIR is quite similar to IR, we give a more terse presentation of the rules and definitions in the
+following.
 
-\subsubsection{Signatures} We assume levels $i$, $j$, $k$, an indexing type $I : \U_k$ and a type family
+\subsubsection{Signatures}\label{sec:iir-signatures} We assume levels $i$, $j$, $k$, an indexing type $I : \U_k$ and a type family
 for the recursive output as $O : I \to \U_j$. Signatures are as follows.
 \begin{alignat*}{4}
   &\data\, \Sig_i\,I\,O : \U_{\max(i+1,\,j,\,k)}\,\where\\
@@ -347,7 +350,7 @@ for the recursive output as $O : I \to \U_j$. Signatures are as follows.
 and a type $\Tag : \U_0$ with inhabitants $\Nil'$ and $\Cons'$.
 \begin{alignat*}{4}
   & S : \Sig_0\,\Nat\,(\lambda\,\_.\,\top)\\
-  & S := \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
+  & S :\equiv \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
   & \quad \Nil'\hspace{0.85em} \to \iota\,\zero\,\ttt \\
   & \quad \Cons'\to \sigma\,\Nat\,\$\,\lambda\,n.\,\sigma\,A\,\$\,\lambda\,\_.\,\delta\,\top\,(\lambda\,\_.\,n)\,\$\,\lambda\,\_.\,\iota\,(\suc\,n)\,\ttt
 \end{alignat*}
@@ -358,17 +361,64 @@ the inductive field using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that t
 (single) inductive field is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$.
 \end{example}
 
+\subsubsection{Type and term formation}\label{sec:iir-type-and-term-formation}
+The signature actions $\blank_0$ and $\blank_1$ are similar to before:
+\begin{alignat*}{4}
+  &\hspace{-6em}\rlap{$\blank_0 : \Sig_i\,I\,O \to (\ir : I \to \U_{\max(i,\,k)}) \to (\{i : I\} \to \ir\,i \to O\,i) \to I \to \U_{\max(i,\,k)}$} \\
+  &\hspace{-6em}S_0\,(\iota\,i'\,o)     \,&&\ir\,\el\,i && :\equiv \Lift\,(i' = i)\\
+  &\hspace{-6em}S_0\,(\sigma\,A\,S)     \,&&\ir\,\el\,i && :\equiv (a : A) \times (S\,a)_0\,\ir\,\el\,i\\
+  &\hspace{-6em}S_0\,(\delta\,A\,\ix\,S)\,&&\ir\,\el\,i && :
+                     \equiv (f : (a : A) \to \ir\,(\ix\,a)) \times (S\,(\el \circ f))_0\,\ir\,\el\,i\\
+  &\hspace{-6em} && &&\\
+  &\hspace{-6em}\rlap{$\blank_1 : (S : \Sig_i\,I\,O) \to S_0\,\ir\,\el\,i \to O\,i$} \\
+  &\hspace{-6em}S_1\,(\iota\,i'\,o)\,&&\hspace{-0.8em}(\lup x) && \hspace{-0.6em}:\equiv \tr\,O\,x\,o\\
+  &\hspace{-6em}S_1\,(\sigma\,A\,S)\,&&\hspace{-0.8em}(a,\,x)  && \hspace{-0.6em}:\equiv (S\,i)_1\,x\\
+  &\hspace{-6em}S_1\,(\delta\,A\,S)\,&&\hspace{-0.8em}(f,\,x)  && \hspace{-0.6em}:\equiv (S\,(\el \circ f))_1\,x
+\end{alignat*}
+Note the transport in $\tr\,O\,x\,o$: this is necessary, since $o$ has type $O\,i'$ while the
+required type is $O\,i$. The type and term formation rules are the following.
+\begin{alignat*}{4}
+  &\IR                && : (S : \Sig_i\,I\,O) \to I \to \U_{\max(i,\,k)}\\
+  &\El                && : \IR\,S\,i \to O\,i\\
+  &\intro             && : S_0\,(\IR\,S)\,\El\,i \to \IR\,S\,i\\
+  &\msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv S_1\,x
+\end{alignat*}
+\subsubsection{Elimination}\label{sec:iir-elimination} $\blank_\IH$, $\blank_\map$ and elimination are
+as follows. We assume a level $l$ for the target type of elimination.
+\begin{alignat*}{3}
+  &\rlap{$\blank_\IH : (S : \Sig_i\,I\,O)(P : \{i : I\}\to \ir\,i \to \U_l) \to S_0\,\ir\,\el\,i \to \U_{\max(i,\,l)}$} \\
+  &(\iota\,i\,o)_\IH \,&&P\,x       &&:\equiv \Lift\,\top \\
+  &(\sigma\,A\,S)_\IH\,&&P\,(a,\,x) &&:\equiv (S\,a)_\IH\,P\,x \\
+  &(\delta\,A\,\ix\,S)_\IH\,&&P\,(f,\,x) &&:\equiv ((a : A) \to P\,(f\,a)) \times (S\,(\el \circ f))_\IH\,P\,x
+\end{alignat*}
+\begin{alignat*}{3}
+  &\hspace{-3em}\rlap{$\blank_\map : (S : \Sig_i\,I\,O)(P : \{i : I\}\to \ir\,i \to \U_l)$}\\
+  &\hspace{-3em}\rlap{$\hspace{3em}\to (\{i : I\}(x : \ir\,i) \to P\,x) \to (x : S_0\,\ir\,\el\,i) \to S_\IH\,P\,x$} \\
+  &\hspace{-3em}(\iota\,o)_\map    \,&&P\,h\,x       &&:\equiv\,\lup\!\ttt \\
+  &\hspace{-3em}(\sigma\,A\,S)_\map\,&&P\,h\,(a,\,x) &&:\equiv (S\,a)_\map\,P\,h\,x \\
+  &\hspace{-3em}(\delta\,A\,S)_\map\,&&P\,h\,(f,\,x) &&:\equiv (h \circ f,\,(S\,(\el \circ f))_\map\,P\,h\,x)
+\end{alignat*}
+\begin{alignat*}{3}
+  &\elim           &&: (P : \IR\,S \to \U_k) \to ((x : S_0\,(\IR\,S)\,\El) \to S_\IH\,P\,x \to P\,(\intro\,x)) \to (x : \IR\,S) \to P\,x \\
+  &\elim\!-\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,P\,(\elim\,P\,f)\,x)
+\end{alignat*}
 
 
+  %% IH : ∀ {l}(S : Sig){ir : I → Set (li ⊔ k)}{el : ∀{i} → ir i → O i}
+  %%           (P : ∀ {i} → ir i → Set l) → ∀ {i} → F0 S ir el i → Set (li ⊔ l)
+  %% IH (ι _ _)             P _       = Lift _ ⊤
+  %% IH (σ A S)             P (a , x) = IH (S a) P x
+  %% IH (δ A ix S) {ir}{el} P (f , x) = (∀ a → P (f a)) × IH (S (el ∘ f)) P x
 
+  %% mapIH : ∀ {l}(S : Sig){ir : I → Set (li ⊔ k)}{el : {i : I} → ir i → O i} (P : ∀ {i} → ir i → Set l)
+  %%         → (∀ {i} x → P {i} x) → ∀ {i} (x : F0 S ir el i) → IH S P x
+  %% mapIH (ι i' o)            P h t       = lift tt
+  %% mapIH (σ A S)             P h (a , x) = mapIH (S a) P h x
+  %% mapIH (δ A ix S) {ir}{el} P h (f , x) = h ∘ f , mapIH (S (el ∘ f)) P h x
 
-
-
-
-
-
-
-
+  %% elim : ∀ {l}(S : Sig)(P : ∀ {i} → IR S i → Set l)
+  %%        → (∀ {i} x → IH S P {i} x → P (wrap x)) → ∀ {i} x → P {i} x
+  %% elim S P f (wrap x) = f x (mapIH S P (elim S P f) x)
 
 
 \section{TODO}
@@ -377,6 +427,7 @@ the inductive field using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that t
   \item Small IIR paper: reduction of small IIR to IR + identity, similar to mine
   \item Bove-Capretta: IIR is used to model domains of partial functions.
   \item Canonicity metatheory: Loic, Anton says it looks OK
+  \item Rename wrap to intro in Agda
 \end{itemize}
 
 \bibliographystyle{ACM-Reference-Format}
