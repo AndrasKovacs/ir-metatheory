@@ -1,6 +1,6 @@
 {-# OPTIONS --rewriting #-}
 
-module IndexedCont where
+module ContIndexed where
 
 open import Lib
 

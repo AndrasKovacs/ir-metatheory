@@ -4,7 +4,7 @@ open import Lib
 
 module IndexedIR {ext il ol}(I : Set il)(O : I → Set ol) where
 
-  data Sig : Set (lsuc (ext ⊔ il ⊔ ol)) where
+  data Sig : Set (lsuc ext ⊔ il ⊔ ol) where
     ι : ∀ i → O i → Sig
     σ : (A : Set ext) → (A → Sig) → Sig
     δ : (A : Set ext)(f : A → I) → ((∀ a → O (f a)) → Sig) → Sig
