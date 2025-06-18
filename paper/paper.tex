@@ -80,6 +80,7 @@
 \newcommand{\IH}{\msf{IH}}
 \newcommand{\map}{\msf{map}}
 \newcommand{\elim}{\msf{elim}}
+\newcommand{\inj}{\msf{inj}}
 
 
 
@@ -386,19 +387,6 @@ term. Canonical terms are built only from constructors; for instance, a canonica
 term is a numeral. Hence, canonicity justifies evaluation for closed terms. The outline of our
 development is as follows.
 
-%% \begin{itemize}
-%% \item For running closed programs, \emph{canonicity} is the most relevant property to show. In
-%%   means that every closed term is definitionally equal to a canonical term. Canonical terms are
-%%   built only from constructors; for instance, a canonical natural number term is a numeral.
-%% \item \emph{Normalization} means that every open term is definitionally equal to a normal form. The
-%%   characterizing property of normal forms is that definitional equality coincides with simple
-%%   structural equality. Hence, normalization is practically important for deciding definitional
-%%   equality, which is in turn required in type checkers for dependently typed languages.
-%% \end{itemize}
-%% Our \textbf{main contribution} is to show canonicity for a Martin-Löf type theory that supports
-%% countable universes with indexed inductive-recursive types in each universe.
-
-
 \begin{enumerate}
 \item In Section \ref{TODO} we specify what it means to support IR and IIR, using Dybjer and
   Setzer's rules with minor modifications \cite{TODO}. We use first-class signatures,
@@ -410,7 +398,7 @@ development is as follows.
   the computational behavior of Agda and Idris, where IIR signatures are second-class and
   necessarily canonical. We formalize the construction in Agda.
 \item In Section \ref{TODO}, we give a proof-relevant logical predicate interpretation of the type
-  theory, from which canonicity follows. We follow the well-known method of Artin gluing
+  theory, from which canonicity follows. We build on the well-known method of Artin gluing
   \cite{TODO}. The main challenge here is to give a logical predicate interpretation of IR types. We
   do this by using IIR in the metatheory: from each object-theoretic signature we compute a
   metatheoretic IIR signature which encodes the canonicity predicate for the corresponding IR type.
@@ -434,7 +422,8 @@ operation $\Lift\,i\,j : \U_i \to \U_j$ together with $\lup : A \to \Lift\,i\,j\
 \Lift\,i\,j\,A \to A$ such that $\lup$ and $\ldown$ are definitional inverses. We have intensional
 identity types, as $t = u : \U_i$ for $t : A : \U_i$.  We have $\top : \U_0$ for the unit type with
 the unique inhabitant $\ttt$. We have $\Sigma$-types, written as $(x : A) \times B\,x$, where the type
-also lands in $\U_{\max(i,\,j)}$.
+also lands in $\U_{\max(i,\,j)}$. Finally, we have binary sum types, written as $A + B$ with constructors
+$\inj_1$ and $\inj_2$.
 
 \subsection{IR types}
 The object theory additionally supports inductive-recursive types. On a high level, the specification consists
@@ -504,15 +493,15 @@ from $(A : \U_i) \times (A \to O)$ to $(A : \U_i) \times (A \to O)$. This can be
 endofunctor on the slice category $\U_i/O$, but in the following we only need the action on
 objects. We split this action to two functions, to aid readability:
 \begin{alignat*}{3}
-  &\hspace{-4em}\rlap{$\blank_0 : \Sig_i\,O \to (\ir : \U_i) \to (\ir \to O) \to \U_i$} \\
-  &\hspace{-4em}S_0\,(\iota\,o)    \,&&\ir\,\el && \hspace{-2.2em}= \Lift\,\top\\
-  &\hspace{-4em}S_0\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-2.2em}= (a : A) \times (S\,a)_0\,\ir\,\el\\
-  &\hspace{-4em}S_0\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-2.2em}= (f : A \to \ir) \times (S\,(\el \circ f))_0\,\ir\,\el\\
-  &\hspace{-4em} && &&\\
-  &\hspace{-4em}\rlap{$\blank_1 : (S : \Sig_i\,O) \to (\ir : \U_i) \to (\el : \ir \to O) \to S_0\,\ir\,\el \to O$} \\
-  &\hspace{-4em}S_1\,(\iota\,o)    \,&&\ir\,\el\,x       && = o\\
-  &\hspace{-4em}S_1\,(\sigma\,A\,S)\,&&\ir\,\el\,(a,\,x) && = (S\,i)_1\,\ir\,\el\,x\\
-  &\hspace{-4em}S_1\,(\delta\,A\,S)\,&&\ir\,\el\,(f,\,x) && = (S\,(\el \circ f))_1\,A\,\ir\,\el\,x
+  &\rlap{$\blank_0 : \Sig_i\,O \to (\ir : \U_i) \to (\ir \to O) \to \U_i$} \\
+  &S_0\,(\iota\,o)    \,&&\ir\,\el && \hspace{-0.7em}= \Lift\,\top\\
+  &S_0\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}= (a : A) \times (S\,a)_0\,\ir\,\el\\
+  &S_0\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}= (f : A \to \ir) \times (S\,(\el \circ f))_0\,\ir\,\el\\
+  & && &&\\
+  &\rlap{$\blank_1 : (S : \Sig_i\,O) \to S_0\,\ir\,\el \to O$} \\
+  &S_1\,(\iota\,o)    \,&&x       && = o\\
+  &S_1\,(\sigma\,A\,S)\,&&(a,\,x) && = (S\,i)_1\,x\\
+  &S_1\,(\delta\,A\,S)\,&&(f,\,x) && = (S\,(\el \circ f))_1\,x
 \end{alignat*}
 Although we use Agda-like pattern matching notation above, these functions are formally defined by
 the elimination principle of $\Sig$. Also note the quantification of the $i$ and $j$ universe
@@ -522,7 +511,7 @@ understood to happen in the metatheory. The introduction rules are the following
   &\IR                && : (S : \Sig_i\,O) \to \U_i\\
   &\El                && : \IR\,S \to O\\
   &\intro             && : S_0\,(\IR\,S)\,\El \to \IR\,S\\
-  &\msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv S_1\,(\IR\,S)\,\El\,x
+  &\msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv S_1\,x
 \end{alignat*}
 Above, we leave some rule arguments implicit, like $S$ in $\El$, $\intro$ and
 $\msf{El\!\!-\!\!intro}$. The rule $\msf{El\!\!-\!\!intro}$ specifies a definitional equality.  Note
@@ -536,30 +525,36 @@ existence of an $S$-algebra where we view $S$ as an endofunctor on $\U_i/O$.
 Here we follow the specification in \cite{TODO}. We assume another universe level $k$ that specifies
 the size of the type into which we eliminate. We define two additional functions on signatures:
 \begin{alignat*}{3}
-  &\rlap{$\blank_\IH : (S : \Sig_i\,O)(\ir : \U_i)(\el : \ir \to O)(P : \ir \to \U_k) \to S_0\,\ir\,\el \to \U_{\max(i,\,k)}$} \\
-  &(\iota\,o)_\IH    \,&&\ir\,\el\,P\,x       &&= \Lift\,\top \\
-  &(\sigma\,A\,S)_\IH\,&&\ir\,\el\,P\,(a,\,x) &&= (S\,a)_\IH\,\ir\,\el\,P\,x \\
-  &(\delta\,A\,S)_\IH\,&&\ir\,\el\,P\,(f,\,x) &&= ((a : A) \to P\,(f\,a)) \times (S\,(\el \circ f))_\IH\,\ir\,\el\,P\,x
+  &\rlap{$\blank_\IH : (S : \Sig_i\,O)(P : \ir \to \U_k) \to S_0\,\ir\,\el \to \U_{\max(i,\,k)}$} \\
+  &(\iota\,o)_\IH    \,&&P\,x       &&= \Lift\,\top \\
+  &(\sigma\,A\,S)_\IH\,&&P\,(a,\,x) &&= (S\,a)_\IH\,P\,x \\
+  &(\delta\,A\,S)_\IH\,&&P\,(f,\,x) &&= ((a : A) \to P\,(f\,a)) \times (S\,(\el \circ f))_\IH\,P\,x
 \end{alignat*}
 \begin{alignat*}{3}
-  &\rlap{$\blank_\map : (S : \Sig_i\,O)(\ir : \U_i)(\el : \ir \to O)(P : \ir \to \U_k)$}\\
-  &\hspace{3.1em}\rlap{$\to ((x : \ir) \to P\,x) \to (x : S_0\,\ir\,\el) \to S_\IH\,\ir\,\el\,P\,x$} \\
-  &(\iota\,o)_\map    \,&&\ir\,\el\,P\,h\,x       &&=\,\lup\!\ttt \\
-  &(\sigma\,A\,S)_\map\,&&\ir\,\el\,P\,h\,(a,\,x) &&= (S\,a)_\map\,\ir\,\el\,P\,h\,x \\
-  &(\delta\,A\,S)_\map\,&&\ir\,\el\,P\,h\,(f,\,x) &&= (\el \circ h,\,(S\,(\el \circ f))_\map\,\ir\,\el\,P\,h\,x)
+  &\hspace{-8em}\rlap{$\blank_\map : (S : \Sig_i\,O)(P : \ir \to \U_k) \to ((x : \ir) \to P\,x) \to (x : S_0\,\ir\,\el) \to S_\IH\,\ir\,\el\,P\,x$} \\
+  &\hspace{-8em}(\iota\,o)_\map    \,&&P\,h\,x       &&=\,\lup\!\ttt \\
+  &\hspace{-8em}(\sigma\,A\,S)_\map\,&&P\,h\,(a,\,x) &&= (S\,a)_\map\,P\,h\,x \\
+  &\hspace{-8em}(\delta\,A\,S)_\map\,&&P\,h\,(f,\,x) &&= (\el \circ h,\,(S\,(\el \circ f))_\map\,P\,h\,x)
 \end{alignat*}
 $S_\IH$ stands for ``induction hypothesis'': it specifies having a witness of a predicate $P$ for
 each inductive field in a value of $S_0\,\ir\,\el$. $S_\map$ maps over $S_0\,\ir\,\el$, applying the
 section $h : (x : \ir) \to P\,x$ to each inductive field. Elimination is specified as follows.
 \begin{alignat*}{3}
-  &\elim           &&: (P : \IR\,S \to \U_k) \to ((x : S_0\,(\IR\,S)\,\El) \to S_\IH\,(\IR\,S)\,\El\,P\,x \to P\,(\intro\,x)) \to (x : \IR\,S) \to P\,x \\
-  &\elim\!-\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,(\IR\,S)\,\El\,P\,(\elim\,P\,f)\,x)
+  &\elim           &&: (P : \IR\,S \to \U_k) \to ((x : S_0\,(\IR\,S)\,\El) \to S_\IH\,P\,x \to P\,(\intro\,x)) \to (x : \IR\,S) \to P\,x \\
+  &\elim\!-\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,P\,(\elim\,P\,f)\,x)
 \end{alignat*}
+If we have function extensionality, this specification of elimination can be shown to be equivalent
+to the initiality of $\IR\,S$ and $\El$ as an $S$-algebra \cite{TODO}.
+
+\subsection{IIR types}
+
+Indexed induction-recursion
+
+
 
 \section{TODO}
 
 \begin{itemize}
-  \item make more args implicit in IR spec
   \item Small IIR paper: reduction of small IIR to IR + identity, similar to mine
   \item Bove-Capretta: IIR is used to model domains of partial functions.
   \item Canonicity metatheory: Loic, Anton say it looks OK
