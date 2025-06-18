@@ -1,6 +1,6 @@
 {-# OPTIONS --rewriting #-}
 
-module ContIndexed where
+module old.ContIndexed where
 
 open import Lib
 

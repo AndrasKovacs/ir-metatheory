@@ -1,7 +1,7 @@
 {-# OPTIONS --type-in-type #-}
 open import Lib
 
-module TranslationIR-IIR {ext il ol}(I : Set il) (O : I → Set ol) where
+module old.TranslationIR-IIR {ext il ol}(I : Set il) (O : I → Set ol) where
   postulate
     funext : ∀{i j} {A : Set i} → {B : A → Set j} → (f : (a : A) → B a) → (g : (a : A) → B a) → (∀ x → f x ≡ g x) → f ≡ g
 

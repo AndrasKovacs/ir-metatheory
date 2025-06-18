@@ -3,7 +3,7 @@ open import Lib
 import PlainIR
 import IndexedIR
 
-module ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O → Set ol) where
+module old.ShallowIRTranslation3 (ext : Level) (ol : Level) (O : Set ol) (Oᴾ : O → Set ol) where
 
   module IR = PlainIR ext ol O
 
