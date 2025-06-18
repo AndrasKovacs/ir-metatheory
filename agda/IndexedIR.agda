@@ -32,14 +32,14 @@ module IndexedIR {li j k}(I : Set k)(O : I → Set j) where
   mapIH (δ A ix S) {ir}{el} P h (f , x) = h ∘ f , mapIH (S (el ∘ f)) P h x
 
   mutual
-    data IR (S : Sig) : I → Set (li ⊔ k) where
-      wrap : ∀ {i} → F0 S (IR S) El i → IR S i
+    data IIR (S : Sig) : I → Set (li ⊔ k) where
+      wrap : ∀ {i} → F0 S (IIR S) El i → IIR S i
 
     {-# TERMINATING #-}
-    El : ∀ {S i} → IR S i → O i
+    El : ∀ {S i} → IIR S i → O i
     El {S} (wrap x) = F1 S x
 
   {-# TERMINATING #-}
-  elim : ∀ {l}(S : Sig)(P : ∀ {i} → IR S i → Set l)
+  elim : ∀ {l}(S : Sig)(P : ∀ {i} → IIR S i → Set l)
          → (∀ {i} x → IH S P {i} x → P (wrap x)) → ∀ {i} x → P {i} x
   elim S P f (wrap x) = f x (mapIH S P (elim S P f) x)

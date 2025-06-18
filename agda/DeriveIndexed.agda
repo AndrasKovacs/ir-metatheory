@@ -2,7 +2,7 @@
 
 open import Lib
 
-module DeriveIndexed {li j k : Level }(I : Set k)(O : I → Set j) where
+module DeriveIndexed {li j k : Level}(I : Set k)(O : I → Set j) where
 
 {-
 We want to derive IIR types from IR. Now, everything from "Sig" to "mapIH" in the
@@ -83,24 +83,24 @@ module _ (S* : Sig) where
   S*'  = Sig→ S*
 
   -- abbreviations for readability
-  IRU  = IR.IR S*'
+  IRIR = IR.IR S*'
   IREl = IR.El
-  IRF0 = λ S → IR.F0 (Sig→ S) IRU IREl
-  IRF1 = λ S → IR.F1 (Sig→ S) {IRU} {IREl}
-  IRIH = λ {l} S → IR.IH {l} (Sig→ S) {IRU} {IREl}
-  IRMapIH = λ {l} S → IR.mapIH {l} (Sig→ S) {IRU} {IREl}
+  IRF0 = λ S → IR.F0 (Sig→ S) IRIR IREl
+  IRF1 = λ S → IR.F1 (Sig→ S) {IRIR} {IREl}
+  IRIH = λ {l} S → IR.IH {l} (Sig→ S) {IRIR} {IREl}
+  IRMapIH = λ {l} S → IR.mapIH {l} (Sig→ S) {IRIR} {IREl}
 
   -- Here's the necessary extra restriction:
   -- the first projection of the El result must be the given "i".
-  U : I → Set (li ⊔ k)
-  U i = Σ (IR.IR S*') λ x → IR.El x .₁ ≡ i
+  IIR : I → Set (li ⊔ k)
+  IIR i = Σ (IR.IR S*') λ x → IREl x .₁ ≡ i
 
-  El : ∀ {i} → U i → O i
-  El {i} (x , wx) = tr O wx (IR.El x .₂)
+  El : ∀ {i} → IIR i → O i
+  El {i} (x , wx) = tr O wx (IREl x .₂)
 
-  -- This F0' is basically just the data contained in an U,
+  -- This F0' is basically just the data contained in an IR,
   -- that we can access by unwrapping the IR.wrap. In the following,
-  -- we'll mostly work with F0' instead of U, because we can do induction on S
+  -- we'll mostly work with F0' instead of IR, because we can do induction on S
   -- to process F0' values.
   F0' : ∀ S I → Set (li ⊔ k)
   F0' S i = Σ (IRF0 S) λ x → IRF1 S x .₁ ≡ i
@@ -119,7 +119,7 @@ module _ (S* : Sig) where
 
     -- I only use fancy copattern matching to make the unfolded goal types smaller, it
     -- doesn't make any real difference in proofs.
-    F0→ : ∀ S → F0 S U El i → F0' S i
+    F0→ : ∀ S → F0 S IIR El i → F0' S i
     F0→ (ι i o)    x       .₁ .lower    = tt
     F0→ (ι i o)    x       .₂           = x .lower
     F0→ (σ A S)    (a , x) .₁ .₁ .lower = a
@@ -130,7 +130,7 @@ module _ (S* : Sig) where
     F0→ (δ A ix S) (f , x) .₁ .₂ .₂     = F0→ (S (El ∘ f)) x .₁
     F0→ (δ A ix S) (f , x) .₂           = F0→ (S (El ∘ f)) x .₂
 
-    F0← : ∀ S → F0' S i → F0 S U El i
+    F0← : ∀ S → F0' S i → F0 S IIR El i
     F0← (ι i o)    (x , w)            .lower  = w
     F0← (σ A S)    ((lift a , x) , w) .₁      = a
     F0← (σ A S)    ((lift a , x) , w) .₂      = F0← (S a) (x , w)
@@ -179,16 +179,16 @@ module _ (S* : Sig) where
     F1→ (σ A S)   (a , x) = F1→ (S a) x
     F1→ (δ A f S) (g , x) = F1→ (S (El ∘ g)) x
 
-  wrap : ∀ {i} → F0 S* U El i → U i
+  wrap : ∀ {i} → F0 S* IIR El i → IIR i
   wrap x = IR.wrap (F0→ S* x .₁) , F0→ S* x .₂
 
   El≡ : ∀ {i} x → El (wrap {i} x) ≡ F1 S* x
   El≡ x = F1→ S* x
 
   -- First let's assume all the invariant inputs to elimination. "met" means "induction method".
-  module _ l (P : ∀ {i} → U i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
+  module _ l (P : ∀ {i} → IIR i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
 
-    P' : IRU → Set (k ⊔ l)
+    P' : IRIR → Set (k ⊔ l)
     P' x = ∀ {i} wx → P {i} (x , wx)
 
     -- converting an IR-encoded induction method data to IIR form
@@ -209,7 +209,7 @@ module _ (S* : Sig) where
     -- mapIH commutes with encoding/decoding
     -- This part and elimβ requires a modest amount of HoTT chops for shuffling
     -- transports.
-    mapIH-trip : ∀ {i} S h (x : F0 S U El i)
+    mapIH-trip : ∀ {i} S h (x : F0 S IIR El i)
                  → tr (IH S P) (F0lr S x)
                    (IH← S (F0→ S x) (IRMapIH S P' h (F0→ S x .₁)))
                  ≡ mapIH S P (λ y → h (y .₁) (y .₂)) x
