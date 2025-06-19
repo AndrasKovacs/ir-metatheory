@@ -189,20 +189,20 @@ module _ (S* : Sig) where
   module _ l (P : ∀ {i} → IIR i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
 
     P' : IRIR → Set (k ⊔ l)
-    P' x = ∀ {i} wx → P {i} (x , wx)
+    P' x = ∀ {i} p → P {i} (x , p)
 
     -- converting an IR-encoded induction method data to IIR form
-    IH← : ∀ S {i} (x : F0' S i) → IRIH S P' (x .₁) → IH S P (F0← S x)
-    IH← (ι i o)   x                  ih .lower      = tt
-    IH← (σ A S)   ((lift a , x) , w) ih             = IH← (S a) (x , w) ih
-    IH← (δ A f S) ((g , gw , x) , w) (gᴾ , ih) .₁ a = gᴾ (lift a) (gw a)
-    IH← (δ A f S) ((g , gw , x) , w) (gᴾ , ih) .₂   = IH← (S _) (x , w) ih
+    IH← : ∀ S {i} {x : F0' S i} → IRIH S P' (x .₁) → IH S P (F0← S x)
+    IH← (ι i o)   {_}{x                 } ih .lower      = tt
+    IH← (σ A S)   {_}{((lift a , x) , w)} ih             = IH← (S a) {_}{x , w} ih
+    IH← (δ A f S) {_}{((g , gw , x) , w)} (gᴾ , ih) .₁ a = gᴾ (lift a) (gw a)
+    IH← (δ A f S) {_}{((g , gw , x) , w)} (gᴾ , ih) .₂   = IH← (S _) {_}{x , w} ih
 
     met' : (x : IR.F0 S*' (IR.IR S*') IR.El) → IR.IH S*' P' x → P' (IR.wrap x)
     met' x ih p =
-       tr (λ x → P (IR.wrap (x .₁) , x .₂))
+       tr (λ {(x , p) → P (IR.wrap x , p)})
           (F0rl S* (x , p))
-          (met (F0← S* (x , p)) (IH← S* (x , p) ih))
+          (met (F0← S* (x , p)) (IH← S* ih))
 
     -- as expected, IIR elim is given by IR induction on well-indexed IR values.
     elim : ∀ {i} x → P {i} x
@@ -212,25 +212,22 @@ module _ (S* : Sig) where
     -- This part and elimβ requires a modest amount of HoTT chops for shuffling
     -- transports.
     mapIH-trip : ∀ {i} S h (x : F0 S IIR El i)
-                 → tr (IH S P) (F0lr S x)
-                   (IH← S (F0→ S x) (IRMapIH S P' h (F0→ S x .₁)))
-                 ≡ mapIH S P (λ y → h (y .₁) (y .₂)) x
+                 → tr (IH S P) (F0lr S x) (IH← S (IRMapIH S P' h (F0→ S x .₁)))
+                 ≡ mapIH S P (λ {(x , p) → h x p}) x
     mapIH-trip (ι i o)   h x       = refl
     mapIH-trip (σ A S)   h (a , x) =
       tr-∘ (IH (σ A S) P) (a ,_) (F0lr (S a) x) _ ◼ mapIH-trip (S a) h x
     mapIH-trip (δ A ix S) h (f , x) =
         tr-∘ (IH (δ A ix S) P) (f ,_) (F0lr (S (El ∘ f)) x) _
-      ◼ tr-Σ (F0lr (S (El ∘ f)) x) (IH← (δ A ix S) (F0→ (δ A ix S) (f , x))
-             (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)))
+      ◼ tr-Σ (F0lr (S (El ∘ f)) x) (IH← (δ A ix S) (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)))
       ◼ Σ≡ (tr-const (F0lr (S (El ∘ f)) x) _)
            (  tr-const (tr-const (F0lr (S (El ∘ f)) x)
-                       (IH← (δ A ix S) (F0→ (δ A ix S) (f , x))
+                       (IH← (δ A ix S) {_}{F0→ (δ A ix S) (f , x)}
                        (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)) .₁)) _
             ◼ tr-∘ (IH (S _) P) ₁
                    (Σ≡ (F0lr (S _) x) refl) _ ⁻¹
             ◼ ap (λ eq → tr (IH (S _) P) eq
-                            (IH← (δ A ix S) (F0→ (δ A ix S) (f , x))
-                               (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)) .₂))
+                            (IH← (δ A ix S) (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)) .₂))
                  (Σ≡₁ (F0lr (S _) x) refl)
             ◼ mapIH-trip (S _) h x)
 
@@ -238,8 +235,8 @@ module _ (S* : Sig) where
     elimβ {i} x =
       (
         -- as before I manually improve on the quality of goal type display
-        let inner = IH← S* (F0→ S* x) (IRMapIH S* P' (λ x wx → elim (x , wx)) (F0→ S* x .₁))
-            lhs   = tr (λ x → P (IR.wrap (x .₁) , x .₂)) (F0rl S* (F0→ S* x))
+        let inner = IH← S* (IRMapIH S* P' (λ x p → elim (x , p)) (F0→ S* x .₁))
+            lhs   = tr (λ {(x , p) → P (IR.wrap x , p)}) (F0rl S* (F0→ S* x))
                        (met (F0← S* (F0→ S* x)) inner)
             rhs   = met x (tr (IH S* P) (F0lr S* x) inner)
 
@@ -249,7 +246,7 @@ module _ (S* : Sig) where
           -- and only have F0lr on both sides.
            ap (λ eq → tr (λ x → P (IR.wrap (x .₁) , x .₂)) eq (met (F0← S* (F0→ S* x)) inner))
               (half-adjoint S* x ⁻¹) -- note the half-adjoint
-         ◼ tr-∘ (λ x → P (IR.wrap (x .₁) , x .₂)) (F0→ S*) (F0lr S* x) _
+         ◼ tr-∘ (λ {(x , p) → P (IR.wrap x , p)}) (F0→ S*) (F0lr S* x) _
          ◼ tr-app-lem {C = P ∘ wrap} met (F0lr S* x)
       )
       ◼ ap (met x) (mapIH-trip S* (λ x p → elim (x , p)) x)

@@ -343,9 +343,8 @@ to the initiality of $(\IR\,S,\,\El)$ as an $S$-algebra \cite{TODO}.
 
 \subsection{IIR Types}\label{sec:iir}
 
-We extend Dybjer and Setzer's general IIR signatures \cite{TODO} with refined universe levels. Since
-IIR is quite similar to IR, we give a more terse presentation of the rules and definitions in the
-following.
+We extend Dybjer and Setzer's general IIR signatures \cite{TODO} with countable universe levels. Since
+IIR is quite similar to IR, we present the rules without much commentary.
 
 \subsubsection{Signatures}\label{sec:iir-signatures} We assume levels $i$, $j$, $k$, an indexing type $I : \U_k$ and a type family
 for the recursive output as $O : I \to \U_j$. Signatures are as follows.
@@ -414,11 +413,7 @@ as follows. We assume a level $l$ for the target type of elimination.
   &\elim\!-\!\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,P\,(\elim\,P\,f)\,x)
 \end{alignat*}
 
-\todo{Examples, fording (if there's space)}
-
 \section{Construction of IIR Types}
-
-\todo{small IR reference}
 
 We proceed to construct IIR types from IR types and other basic type formers. We assume $i$, $j$,
 $k$, $I : \U_k$ and $O : I \to \U_j$, and also assume definitions for IIR signatures and the four
@@ -428,8 +423,9 @@ $\El$, $\elim$ and $\elim\!-\!\!\beta$. We use some abbreviations in the followi
 \item $\Sig_\IIR$ abbreviates the IIR signature type $\Sig_i\,I\,O$.
 \item $\Sig_\IR$ abbreviates the IR signature type $\Sig_{\max(i,\,k)}\,((i : I) \times O\,i)$.
 \end{itemize}
-In a nutshell, the main idea in this section is to represent IIR signatures as IR signatures together
-with a well-indexing predicate on algebras. First, we define the encoding function for signatures:
+In a nutshell, the main idea in this section is to represent IIR signatures as IR signatures
+together with a well-indexing predicate on algebras. First, we define the encoding function for
+signatures:
 \begin{alignat*}{4}
   & \rlap{$\Sigr{\blank} : \Sig_\IIR \to \Sig_\IR$}\\
   & \Sigr{\iota\,i\,o}       &&:\equiv \hspace{0.5em} &&\iota\,(i,\,o)\\
@@ -445,18 +441,18 @@ we cannot recursively proceed with the translation. We solve this by adding an \
 the output signature, which contains a well-indexing witness of type $((a : A) \to \fst\,(f\,(\lup\!a)) = \ix\,a)$.
 This lets us continue the translation for $S$, by fixing up the return type of $f$ by a transport.
 
-\emph{Note on related work.} Hancock et al.\ described the same translation from small IIR
+\emph{Note on prior work.} Hancock et al.\ described the same translation from small IIR
 signatures to small IR signatures \cite{TODO}. However, they did not present anything more about the
 reduction of IIR types to IR types.
 
-\subsubsection{Type and term formers} We can already define the $\IIR$ and $\El$ rules for IIR types. Since the encoding of signatures
-already ensures that inductive fields in algebras are well-indexed, it only remains to ensure that
-the ``top-level'' index matches the externally supplied index.
+\subsection{Type and Term Formers} We can already define the $\IIR$ and $\El$ rules for IIR types. Since the encoding of signatures
+already ensures the well-indexing of inductive fields in constructors, it only remains to ensure
+that the ``top-level'' index matches the externally supplied index.
 \begin{alignat*}{3}
   &\IIR : \Sig_\IIR \to I \to \U_{\max(i,\,k)}                         && \El : \IIR\,S\,i \to O\,i \\
   &\IIR\,S\,i :\equiv (x : \IR\,\Sigr{S}) \times \fst\,(\El\,x) = i \hspace{3em}&& \El\,(x,\,p) :\equiv \tr\,O\,p\,(\snd\,(\El\,x))
 \end{alignat*}
-The following shorthand describes the data that we get when we peel off an $\intro$ from an $\IR\,i$ value:
+The following shorthand describes the data that we get when we peel off an $\intro$ from an $\IIR\,S\,i$ value:
 \begin{alignat*}{4}
   &\blank_{\floord{0}} : (S : \Sig_\IR) \to I \to \U_{\max(i,\,k)}\\
   &S_{\floord{0}}\,i :\equiv (x : \floord{S}_0\,(\IR\,S)\,\El) \times \fst\,(S_1\,x) = i
@@ -467,12 +463,12 @@ as follows:
 \begin{alignat*}{4}
   &\ora{S_0} &&: S_0\,(\IIR\,S)\,\El\,i \to S_{\floord{0}}\,i \\
   &\ola{S_0} &&: S_{\floord{0}}\,i \to S_0\,(\IIR\,S)\,\El\,i \\
-  &\eta      &&: \forall x.\, \ola{S_0}\,(\ora{S_0}\,x) = x \\
-  &\epsilon  &&: \forall x.\, \ora{S_0}\,(\ola{S_0}\,x) = x \\
-  &\tau      &&: \forall x.\, \ap\,\ora{S_0}\,(\eta\,x) = \epsilon\,(\ola{S_0}\,x)
+  &\eta      &&: \forall x.\,\,\ola{S_0}\,(\ora{S_0}\,x) = x \\
+  &\epsilon  &&: \forall x.\,\,\ora{S_0}\,(\ola{S_0}\,x) = x \\
+  &\tau      &&: \forall x.\,\,\ap\,\ora{S_0}\,(\eta\,x) = \epsilon\,(\ola{S_0}\,x)
 \end{alignat*}
 This is a half adjoint equivalence \cite{TODO}. The half adjoint coherence witness $\tau$ will be
-necessary at a later step for rearranging some transports.\footnote{In the Agda formalization, we
+necessary shortly for rearranging some transports.\footnote{In the Agda formalization, we
 compute $\tau$ by induction on $S$, although it could also be generically recovered from the other
 four components \cite{TODO}.} Next, we show that the two $\blank_1$ operations are the same, modulo
 the previous equivalence, again by induction on IIR signatures.
@@ -483,37 +479,98 @@ This lets us define the other introduction rules as well.
   &\intro\,x :\equiv (\intro_\IR\,(\fst\,(\ora{S_0}\,x)),\,\snd\,(\ora{S_0}\,x)) \quad\quad\quad&& \msf{El\!\!-\!\!intro} && :\equiv S_{\floord{1}}\,x
 \end{alignat*}
 
-\subsubsection{Elimination}
+\subsection{Elimination}
 
 We assume a level $l$ for the elimination target. Recall the type of $\elim$:
 \begin{alignat*}{3}
   &\elim :\,           &&(P : \{i : I\}\to \IIR\,S\,i \to \U_l)\\
   &                \quad\to && (f : \{i : I\}(x : S_0\,(\IIR\,S)\,\El\,i) \to S_\IH\,P\,x \to P\,(\intro\,x))\\
-  &                \quad\to && (x : \IIR\,S\,i)\\
-  &                \quad\to && P\,x
+  &                \quad\to && (x : \IIR\,S\,i) \to P\,x
 \end{alignat*}
 Also recall that $x : \IIR\,S\,i$ is given as a pair of some $x : \IR\,\Sigr{S}$ and $p : \fst\,(\El\,x) = i$.
 The idea here is to use IR elimination on $x : \IR\,\floord{S}$, while adjusting both $P$ and $f$ to operate
-on the appropriate data. We will use the following induction motive:
+on the appropriate data. We will use the following induction motive. Note that we generalize the induction goal
+over the $p$ witness.
 \begin{alignat*}{3}
   &\floord{P} : \IR\,\floord{S} \to \U_{\max(k,\,l)} \\
   &\floord{P}\,x :\equiv \{i : I\}(p : \fst\,(\El\,x) = i) \to P\,(x,\,p)
 \end{alignat*}
-For the induction method, we need to adjust $f$. Now, $f$ takes an $S_\IH\,P\,x$ as input but we have
+Now, we have
+\begin{alignat*}{3}
+  & \elim_\IR\,\floord{P} : ((x : \floord{S}_0\,(\IR\,\floord{S})\,\El) \to \floord{S}_\IH\,\floord{P}\,x \to \floord{P}\,(\intro\,x))
+       \to (x : \IR\,\floord{S}) \to \floord{P}\,x.
+\end{alignat*}
+We adjust $f$ to obtain the next argument to $\elim_\IR\,\floord{P}$. $f$ takes $S_\IH\,P\,x$ as input,
+so we need a ``backwards'' conversion:
+\begin{alignat*}{3}
+  & \ola{S_\IH} : \{x : S_{\floord{0}}\,i\} \to \floord{S}_\IH\,\floord{P}\,(\fst\,x) \to S_\IH\,P\,(\ola{S_0}\,x)
+\end{alignat*}
+This is again defined by easy induction on $S$. The induction method $\floord{f}$ is as follows.
+\begin{alignat*}{3}
+  &\floord{f} : (x : \floord{S}_0\,(\IR\,\floord{S})\,\El) \to \floord{S}_\IH\,\floord{P}\,x \to \floord{P}\,(\intro\,x)\\
+  &\floord{f}\,x\,\ih\,p :\equiv \tr\,\bigl(\lambda\,(x,\,p).\,P\,(\intro\,x,\,p)\bigr)\,\bigl(\epsilon\,(x,\,p)\bigr)\,
+                                      \bigl(f\,(\ola{S_0}\,(x,\,p))\,(\ola{S_\IH}\,\ih)\bigr)
+\end{alignat*}
+Thus, the definition of elimination is:
+\[ \elim\,P\,f\,(x,\,p) :\equiv \elim_\IR\,\floord{P}\,\floord{f}\,x\,p \]
+Only the $\beta$-rule remains:
+\[ \elim\!-\!\!\beta : \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,P\,(\elim\,P\,f)\,x) \]
+Computing definitions on the \textbf{left hand side}, we get:
+\begin{alignat*}{3}
+  & \tr\, &&(\lambda\,(x,\,p).\,P\,(\intro\,x,\,p))\\
+  &       &&(\epsilon\,(\ora{S_0}\,x))\\
+  &       &&(f\,(\ola{S_0}\,(\ora{S_0}\,x))\,(\ola{S_\IH}\,(\floord{S}_\map\,\floord{P}\,(\lambda\,x\,p.\,\elim\,P\,f\,(x,\,p))\,(\fst\,(\ora{S_0}\,x)))))
+\end{alignat*}
+Next, we prove by induction on $S$ that $\blank_\map$ commutes with $\ora{S_0}$:
+\[ S_{\floord{\map}} : \forall\,f\,x.\,\,S_\map\,P\,(\lambda\,(x,\,p).\,f\,x\,p)\,x = \tr\,\bigl(S_\IH\,P\bigr)\,\bigl(\eta\,x\bigr)\,\bigl(\ola{S_\IH}\,(\floord{S}_\map\,\floord{P}\,f\,(\fst\,(\ora{S_0}\,x)))\bigr)\]
+Using this equation to rewrite the \textbf{right hand side}, we get:
+\begin{alignat*}{3}
+  f\,x\,\Bigl(\tr\,\bigl(S_\IH\,P\bigr)\,\bigl(\eta\,x\bigr)\,\bigl(\ola{S_\IH}\,(\floord{S}_\map\,\floord{P}\,(\lambda\,x\,p.\,\elim\,P\,f\,(x,\,p))\,(\fst\,(\ora{S_0}\,x)))\bigr)\Bigr)
+\end{alignat*}
+This is now promising; on the left hand side we transport the result of $f$, while on the right hand
+side we transport the argument of $f$. Now, the identification on the left is
+$\epsilon\,(\ora{S_0}\,x)$, while we have $\eta\,x$ on the right. However, we have $\tau\,x :
+\ap\,(\ora{S_0})\,(\eta\,x) = \epsilon\,(\ora{S_0}\,x)$, which can be used in conjunction with
+standard transport lemmas to match up the two sides.
+
+\subsection{Strictness}
+Let us briefly analyze the strictness of the constructed IIR types.
 
 
 
-%% We define $\floord{P}$ and $\floord{f}$ as these adjustments:
-%% \begin{alignat*}{3}
-%%   &\floord{P} : \IR\,\floord{S} \to \U_{\max(k,\,l)} \\
-%%   &\floord{P}\,x :\equiv \{i : I\}(p : \fst\,(\El\,x) = i) \to P\,(x,\,p)\\
-%%   & \\
-%%   &\floord{f} : (x : \floord{S}_0\,(\IR\,\floord{S})\,\El) \to \floord{S}_\IH\,\floord{P}\,x \to \floord{P}\,(\intro\,x)\\
-%%   &\floord{f}\,x\,\ih :\equiv\\
-%%   &\quad            \tr\,(\lambda\,(x,\,p).\,P\,(\intro\,x,\,p))\\
-%%   &\quad\quad                 (\epsilon\,(x,\,p))\\
-%%   &\quad\quad                 (f\,(\ola{S_0}\,(x,\,p)) ...)
-%% \end{alignat*}
+    %% half-adjoint : ∀ S x → ap (F0→ S) (F0lr S x) ≡ F0rl S (F0→ S x)
+
+    %% mapIH-trip : ∀ {i} S h (x : F0 S IIR El i)
+    %%              → tr (IH S P) (F0lr S x) (IH← S (IRMapIH S P' h (F0→ S x .₁)))
+    %%              ≡ mapIH S P (λ y → h (y .₁) (y .₂)) x
+
+%% (f (S0← (S0→ x)) (SIH← (mapIR P' (IR.elim P' f') (fst (S0→ x)))))
+
+
+%% elim P f (intro x) = f x (map P (elim P f) x)
+
+%% elim P f (intro x)
+%% elim P f (intro (fst (S0→ x)), snd (S0→ x))
+%% elimIR P' f' (intro (fst (S0→ x))) (snd (S0→ x))
+%% f' (fst (S0→ x)) (map P' (elimIR P' f' (fst (S0→ x)))) (snd (S0→ x))
+%% tr (λ(x, p). P (intro x, p)) (ε (S0→ x)) (f (S0← ((fst (S0→ x)), snd (S0→ x))) (SIH← (map P' (elimIR P' f' (fst (S0→ x))))))
+%% tr (λ(x, p). P (intro x, p)) (ε (S0→ x)) (f (S0← (S0→ x)) (SIH← (mapIR P' (IR.elim P' f') (fst (S0→ x)))))
+
+
+      %% let lhs = tr (λ {(x , p) → P (IR.wrap x , p)}) (F0rl S* (F0→ S* x))
+      %%              (met (F0← S* (F0→ S* x)) (IH← S* (IR.mapIH S*' P' (IR.elim S*' P' met') (F0→ S* x .₁))))
+
+%% f x (map P (elim P f) x)
+
+
+%% f' x ih p = tr (λ(x, p). P (intro x, p)) (ε(x,p)) (f (S0← (x, p)) (SIH← ih))
+
+
+
+
+
+
+
 
     %% met' : (x : IR.F0 S*' (IR.IR S*') IR.El) → IR.IH S*' P' x → P' (IR.wrap x)
     %% met' x ih p =
@@ -524,13 +581,11 @@ For the induction method, we need to adjust $f$. Now, $f$ takes an $S_\IH\,P\,x$
 \section{TODO}
 
 
-\todo{$intro_\IR$ disamb}
-
 \begin{itemize}
-  \item Small IIR paper: reduction of small IIR to IR + identity, similar to mine
-  \item Bove-Capretta: IIR is used to model domains of partial functions.
+  \item Definitions, notations, IR-IRR disambiguation in derivation section
+  \item Rename wrap to intro in Agda. Rename DeriveIndexed F0 equivalence in Agda.
   \item Canonicity metatheory: Loic, Anton says it looks OK
-  \item Rename wrap to intro in Agda
+
 \end{itemize}
 
 \bibliographystyle{ACM-Reference-Format}
