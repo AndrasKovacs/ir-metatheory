@@ -54,10 +54,10 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     S*ᴾ' = Sigᴾ→ S*ᴾ idh
 
     IRᴾ : U → Set i
-    IRᴾ = IIR.IR S*ᴾ'
+    IRᴾ = IIR.IIR S*ᴾ'
 
     Elᴾ : {x : U} → IRᴾ x → Oᴾ (El x)
-    Elᴾ = IIR.El S*ᴾ'
+    Elᴾ = IIR.El
 
     F0ᴾ : ∀ {S} → Sigᴾ S → F0 S → Set i
     F0ᴾ (ι oᴾ)    x       = Lift _ ⊤

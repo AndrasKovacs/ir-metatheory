@@ -174,10 +174,10 @@ module _ (S* : Sig) where
         ◼ ap (ap (λ xw → ((λ a → f (a .lower) .₁) , (λ a → f a .₂) , xw .₁) , xw .₂))
              (half-adjoint (S (El ∘ f)) x)
 
-    F1→ : ∀ S x → tr O (F0→ S x .₂) (IRF1 S (F0→ S x .₁) .₂) ≡ F1 S x
+    F1→ : ∀ S (x : F0 S IIR El i) → tr O (F0→ S x .₂) (IRF1 S (F0→ S x .₁) .₂) ≡ F1 S x
     F1→ (ι i o)   x       = refl
     F1→ (σ A S)   (a , x) = F1→ (S a) x
-    F1→ (δ A f S) (g , x) = F1→ (S (El ∘ g)) x
+    F1→ (δ A ix S) (g , x) = F1→ (S (El ∘ g)) x
 
   wrap : ∀ {i} → F0 S* IIR El i → IIR i
   wrap x = IR.wrap (F0→ S* x .₁) , F0→ S* x .₂

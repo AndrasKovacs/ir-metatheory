@@ -448,7 +448,7 @@ This lets us continue the translation for $S$, by fixing up the return type of $
 signatures to small IR signatures \cite{TODO}. However, they did not present anything more about the
 reduction of IIR types to IR types.
 
-We can already define the $\IIR$ and $\El$ rules for IIR types. Since the encoding of signatures
+\subsubsection{Type and term formers} We can already define the $\IIR$ and $\El$ rules for IIR types. Since the encoding of signatures
 already ensures that inductive fields in algebras are well-indexed, it only remains to ensure that
 the ``top-level'' index matches the externally supplied index.
 \begin{alignat*}{3}
@@ -461,8 +461,8 @@ The following shorthand describes the data that we get when we peel off an $\int
   &S_{\floord{0}}\,i :\equiv (x : \floord{S}_0\,(\IR\,S)\,\El) \times \fst\,(S_1\,x) = i
 \end{alignat*}
 Now, we can show that $S_{\floord{0}}\,i$ is equivalent to $S_0\,(\IIR\,S)\,\El\,i$, by induction on
-$S$. The induction on $S$ is straightforward and we omit it here. We name the components of the
-equivalence as follows:
+$S$. The induction is straightforward and we omit it here. We name the components of the equivalence
+as follows:
 \begin{alignat*}{4}
   &\ora{S_0} &&: S_0\,(\IIR\,S)\,\El\,i \to S_{\floord{0}}\,i \\
   &\ola{S_0} &&: S_{\floord{0}}\,i \to S_0\,(\IIR\,S)\,\El\,i \\
@@ -470,23 +470,40 @@ equivalence as follows:
   &\epsilon  &&: \forall x.\, \ora{S_0}\,(\ola{S_0}\,x) = x \\
   &\tau      &&: \forall x.\, \ap\,\ora{S_0}\,(\eta\,x) = \epsilon\,(\ola{S_0}\,x)
 \end{alignat*}
-This is a half adjoint equivalence, as known from homotopy type theory \cite{TODO}. The half adjoint
-coherence witness $\tau$ will be necessary at a later step for rearranging some transports. In the
-Agda formalization, we compute all components of equivalence by induction on $S$, although $\tau$
-could be also generically recovered from the other four components \cite{TODO}.
+This is a half adjoint equivalence \cite{TODO}. The half adjoint coherence witness $\tau$ will be
+necessary at a later step for rearranging some transports.\footnote{In the Agda formalization, we
+compute $\tau$ by induction on $S$, although it could also be generically recovered from the other
+four components \cite{TODO}.} Next, we show that the two $\blank_1$ operations are the same, modulo
+the previous equivalence, again by induction on IIR signatures.
+\[\blank_{\floord{1}} : (S : \Sig_\IIR)(x : S_0\,(\IIR\,S)\,\El\,i) \to \tr\,O\,(\snd\,(\ora{S_0}\,x))\,(\snd\,(\floord{S}_1\,(\fst\,(\ora{S_0}\,x)))) = S_1\,x\]
+This lets us define the other introduction rules as well.
+\begin{alignat*}{3}
+  &\intro    : S_0\,(\IIR\,S)\,\El\,i \to \IIR\,S\,i && \msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv S_1\,x \\
+  &\intro\,x :\equiv (\intro_\IR\,(\fst\,(\ora{S_0}\,x)),\,\snd\,(\ora{S_0}\,x)) \quad\quad\quad&& \msf{El\!\!-\!\!intro} && :\equiv S_{\floord{1}}\,x
+\end{alignat*}
 
-    %% F1→ : ∀ S x → tr O (F0→ S x .₂) (IRF1 S (F0→ S x .₁) .₂) ≡ F1 S x
-    %% F1→ (ι i o)   x       = refl
-    %% F1→ (σ A S)   (a , x) = F1→ (S a) x
-    %% F1→ (δ A f S) (g , x) = F1→ (S (El ∘ g)) x
+\subsubsection{Elimination}
 
+For the el
 
-%% ap (F0→ S) (F0lr S x) ≡ F0rl S (F0→ S x)
+%% We assume the following:
+%% \begin{itemize}
+%% \item A level $l$.
+%% \item Induction motive $P : \{i : I\} \to \IIR\,S
 
+%% \end{itemize}
 
-    %% F0→ : ∀ S → F0 S IIR El i → F0' S i
+%% We assume the following arguments to elimination:
+
+%% module _ l (P : ∀ {i} → IIR i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
+
+  %% &\elim           &&: (P : \{i : I\}\to \IIR\,S\,i \to \U_l) \to (\{i : I\}(x : S_0\,(\IIR\,S)\,\El\,i) \to S_\IH\,P\,x \to P\,(\intro\,x))\\
+  %% &                && \hspace{0.7em}\to (x : \IIR\,S\,i) \to P\,x \\
 
 \section{TODO}
+
+
+\todo{$intro_\IR$ disamb}
 
 \begin{itemize}
   \item Small IIR paper: reduction of small IIR to IR + identity, similar to mine
