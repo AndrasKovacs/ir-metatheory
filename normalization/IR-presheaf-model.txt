@@ -1,0 +1,134 @@
+
+Summary:
+
+- 1. look at lists in presheaves (is there a problem with List[]?)
+- 2. look at W-types (or skip to Sig)
+- 3. define IR, El, elim + equations
+      we need to define the presheafified IR signature by induction
+      on Sigᴾ!
+
+--------------------------------------------------------------------------------
+
+Describe PSh model for a TT which has IR (see PlainIR.agda)
+Assuming universes with IR in metatheory.
+Formalization in Agda?
+
+1. Just have basic TT PSh model with countable universes and Agda-like
+   rules (for example Π returning in U(i⊔j) + lifting operation)
+
+    CwF + stuff
+
+    -- in the syntax:
+    Con : Set₀
+    Sub : Con → Con → Set₀
+    Ty  : Con → ℕ → Set₀
+    Tm  : ∀ Γ → Ty Γ i → Set₀
+
+    -- in the model (assuming some C : Cat₀)
+
+    Con     := PShω C                 -- PShω = C → Setω
+    Sub Γ Δ := PShω(Γ, Δ)             -- natural transformation
+    Ty Γ i  := DispPSh {ω} Γ i
+
+         -- what is DispPSh?
+         DispPSh : ∀ {i} → PSh i C → ∀ j → Set (i ⊔ j+1)
+         DispPSh {i} Γ j :=
+            if A : DispPSh {i} Γ j, then
+
+            A    : ∀ {c : Ob C} → Γ c → Set j   -- action on objects
+            _<_> : A {c} γ → (f : C(c', c)) → A {c'} γ<f>
+            α<id>  = α
+            α<f∘g> = α<f><g>
+
+     Tm Γ A i := Section of A
+
+     etc.
+
+
+     U i : Ty Γ (i + 1)
+
+       (U i) {c} γ : Set (i + 1)
+       (U i) {c} γ := Ty (Y c) i
+
+       (a : U c γ)<f : c' → c > : U c' γ<f>
+       (a : Ty (Y c) i)<f : c' → c> : Ty (Y c') i
+       a<f> := a[Y f]
+
+1.4 Parameterized list
+
+
+
+
+
+1.5
+  What's a nice definition of W-types in presheaves?
+
+  Assume (S : Ty Γ i)(P : Ty (Γ ▶ S) j)
+
+  W : Ty Γ (i ⊔ j)
+
+
+      -- let's make Wᴾ an indexed inductive type
+
+      data PWᴾ : ∀ c (γ : Γ c) → Set (i ⊔ j) where
+        supᴾ : ∀ {c γ} → (s : S γ) → (∀ c' (f : c' → c) → P (γ<f>, s<f>) → Wᴾ c' γ<f>) → PWᴾ c γ
+
+      _<_> : PWᴾ c γ → (f : c' → c) → Wᴾ c' γ<f>
+      (supᴾ s g)<f> := supᴾ s<f> (λ c'' (h : c'' → c') (p : P (γ<f><h>, s<f><h>)). g c'' (f ∘ h) p)
+
+      wf : Wᴾ c γ → Prop (i ⊔ j)
+      wf (supᴾ s g) := (g commutes with _<_>) × (∀ c' f p. wf (g c' f p))
+
+      wf<> : Wᴾ c γ → (f : c' → c) → Wᴾ c' γ<f>
+      wf<> := ....
+
+      Wᴾ c γ := (w : PWᴾ c γ) × wf w
+
+      w<id> = w
+      w<f∘g> = w<f><g>   -- by induction on w
+
+
+  W c γ : Set (i ⊔ j)
+  W c γ := Wᴾ c γ
+  w<f>  := w<f>
+
+  Another problem:
+    the inductive type PWᴾ is parameterized over S and P
+    and it has "structural" definitional equality
+
+    -- already a problem with just parameterized list type
+
+  W[] : (W S P)[σ] = W S[σ] P[σ↑]
+
+  EXERCISE 1.4: parameterized list type in presheaves
+
+
+2. Have definition of Sig, F0, F1, IH, map in PSh
+
+    - guaranteed to work (because Sig is just an inductive type)
+      but not super easy because of the infinitary constructors
+
+    - Sketching Sig. Assume i, j : Level, O : Ty Γ j
+      Sig : Ty Γ (i+1 ⊔ j)
+
+      Sig : Ty Γ (i + 1 ⊔ j)
+
+      Sig c (γ : Γ c) : Set (i + 1 ⊔ j)
+      Sig c γ := ?    -- define the inductive type in the metatheory
+
+         data Sigᴾ : Set (i + 1 ⊔ j) where
+            ι : O γ → Sigᴾ
+            σ : (A : U i γ) → (U i γ → Sigᴾ) → Sigᴾ     -- complication here already: I need that Sigᴾ supports _<_>
+
+      _<_> :
+
+3. Define IR, El, wrap, El≡, elim, elim≡
+
+
+   IR : (S : Tm Γ Sig) → Ty Γ
+
+   IR c γ : Set
+   IR c γ :=
+
+      1. take "S γ : Sigᴾ γ", which is a presheaf-flavored IR signature
+      2. by induction on (S γ), compute the corresponding IR signature for the presheaf-flavored IR type

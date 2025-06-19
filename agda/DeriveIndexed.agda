@@ -198,13 +198,15 @@ module _ (S* : Sig) where
     IH← (δ A f S) ((g , gw , x) , w) (gᴾ , ih) .₁ a = gᴾ (lift a) (gw a)
     IH← (δ A f S) ((g , gw , x) , w) (gᴾ , ih) .₂   = IH← (S _) (x , w) ih
 
-    met' : ∀ {i} (x : F0' S* i) → IRIH S* P' (x .₁) → P (IR.wrap (x .₁) , x .₂)
-    met' x ih = tr (λ x → P (IR.wrap (x .₁) , x .₂)) (F0rl S* x)
-                   (met (F0← S* x) (IH← S* x ih))
+    met' : (x : IR.F0 S*' (IR.IR S*') IR.El) → IR.IH S*' P' x → P' (IR.wrap x)
+    met' x ih p =
+       tr (λ x → P (IR.wrap (x .₁) , x .₂))
+          (F0rl S* (x , p))
+          (met (F0← S* (x , p)) (IH← S* (x , p) ih))
 
     -- as expected, IIR elim is given by IR induction on well-indexed IR values.
     elim : ∀ {i} x → P {i} x
-    elim (x , wx) = IR.elim S*' P' (λ x ih {i} wx → met' (x , wx) ih) x wx
+    elim (x , p) = IR.elim S*' P' met' x p
 
     -- mapIH commutes with encoding/decoding
     -- This part and elimβ requires a modest amount of HoTT chops for shuffling
@@ -233,19 +235,21 @@ module _ (S* : Sig) where
             ◼ mapIH-trip (S _) h x)
 
     elimβ : ∀ {i} x → elim {i} (wrap x) ≡ met x (mapIH S* P elim x)
-    elimβ {i} x rewrite mapIH-trip S* (λ x wx → elim (x , wx)) x ⁻¹ =
+    elimβ {i} x =
+      (
+        -- as before I manually improve on the quality of goal type display
+        let inner = IH← S* (F0→ S* x) (IRMapIH S* P' (λ x wx → elim (x , wx)) (F0→ S* x .₁))
+            lhs   = tr (λ x → P (IR.wrap (x .₁) , x .₂)) (F0rl S* (F0→ S* x))
+                       (met (F0← S* (F0→ S* x)) inner)
+            rhs   = met x (tr (IH S* P) (F0lr S* x) inner)
 
-      -- as before I manually improve on the quality of goal type display
-      let inner = IH← S* (F0→ S* x) (IRMapIH S* P' (λ x wx → elim (x , wx)) (F0→ S* x .₁))
-          lhs   = tr (λ x → P (IR.wrap (x .₁) , x .₂)) (F0rl S* (F0→ S* x))
-                     (met (F0← S* (F0→ S* x)) inner)
-          rhs   = met x (tr (IH S* P) (F0lr S* x) inner)
-
-      in the (lhs ≡ rhs) $
-        -- The half adjoint lemma is needed because we have an F0rl on one side of the goal
-        -- equation and F0lr on the other side, and we can use half-adjoint to get rid of the F0rl,
-        -- and only have F0lr on both sides.
-         ap (λ eq → tr (P ∘ (λ x₁ → IR.wrap (x₁ .₁) , x₁ .₂))
-            eq (met (F0← S* (F0→ S* x)) inner)) (half-adjoint S* x ⁻¹) -- note the half-adjoint
-       ◼ tr-∘ (λ x₁ → P (IR.wrap (x₁ .₁) , x₁ .₂)) (F0→ S*) (F0lr S* x) _
-       ◼ tr-app-lem {C = P ∘ wrap} met (F0lr S* x)
+        in the (lhs ≡ rhs) $
+          -- The half adjoint lemma is needed because we have an F0rl on one side of the goal
+          -- equation and F0lr on the other side, and we can use half-adjoint to get rid of the F0rl,
+          -- and only have F0lr on both sides.
+           ap (λ eq → tr (λ x → P (IR.wrap (x .₁) , x .₂)) eq (met (F0← S* (F0→ S* x)) inner))
+              (half-adjoint S* x ⁻¹) -- note the half-adjoint
+         ◼ tr-∘ (λ x → P (IR.wrap (x .₁) , x .₂)) (F0→ S*) (F0lr S* x) _
+         ◼ tr-app-lem {C = P ∘ wrap} met (F0lr S* x)
+      )
+      ◼ ap (met x) (mapIH-trip S* (λ x p → elim (x , p)) x)

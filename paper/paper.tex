@@ -81,6 +81,7 @@
 \newcommand{\el}{{el}}
 \newcommand{\ix}{{ix}}
 \newcommand{\IR}{\msf{IR}}
+\newcommand{\ih}{{ih}}
 \newcommand{\intro}{\msf{intro}}
 \newcommand{\IH}{\msf{IH}}
 \newcommand{\map}{\msf{map}}
@@ -484,21 +485,41 @@ This lets us define the other introduction rules as well.
 
 \subsubsection{Elimination}
 
-For the el
+We assume a level $l$ for the elimination target. Recall the type of $\elim$:
+\begin{alignat*}{3}
+  &\elim :\,           &&(P : \{i : I\}\to \IIR\,S\,i \to \U_l)\\
+  &                \quad\to && (f : \{i : I\}(x : S_0\,(\IIR\,S)\,\El\,i) \to S_\IH\,P\,x \to P\,(\intro\,x))\\
+  &                \quad\to && (x : \IIR\,S\,i)\\
+  &                \quad\to && P\,x
+\end{alignat*}
+Also recall that $x : \IIR\,S\,i$ is given as a pair of some $x : \IR\,\Sigr{S}$ and $p : \fst\,(\El\,x) = i$.
+The idea here is to use IR elimination on $x : \IR\,\floord{S}$, while adjusting both $P$ and $f$ to operate
+on the appropriate data. We will use the following induction motive:
+\begin{alignat*}{3}
+  &\floord{P} : \IR\,\floord{S} \to \U_{\max(k,\,l)} \\
+  &\floord{P}\,x :\equiv \{i : I\}(p : \fst\,(\El\,x) = i) \to P\,(x,\,p)
+\end{alignat*}
+For the induction method, we need to adjust $f$. Now, $f$ takes an $S_\IH\,P\,x$ as input but we have
 
-%% We assume the following:
-%% \begin{itemize}
-%% \item A level $l$.
-%% \item Induction motive $P : \{i : I\} \to \IIR\,S
 
-%% \end{itemize}
 
-%% We assume the following arguments to elimination:
+%% We define $\floord{P}$ and $\floord{f}$ as these adjustments:
+%% \begin{alignat*}{3}
+%%   &\floord{P} : \IR\,\floord{S} \to \U_{\max(k,\,l)} \\
+%%   &\floord{P}\,x :\equiv \{i : I\}(p : \fst\,(\El\,x) = i) \to P\,(x,\,p)\\
+%%   & \\
+%%   &\floord{f} : (x : \floord{S}_0\,(\IR\,\floord{S})\,\El) \to \floord{S}_\IH\,\floord{P}\,x \to \floord{P}\,(\intro\,x)\\
+%%   &\floord{f}\,x\,\ih :\equiv\\
+%%   &\quad            \tr\,(\lambda\,(x,\,p).\,P\,(\intro\,x,\,p))\\
+%%   &\quad\quad                 (\epsilon\,(x,\,p))\\
+%%   &\quad\quad                 (f\,(\ola{S_0}\,(x,\,p)) ...)
+%% \end{alignat*}
 
-%% module _ l (P : ∀ {i} → IIR i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
-
-  %% &\elim           &&: (P : \{i : I\}\to \IIR\,S\,i \to \U_l) \to (\{i : I\}(x : S_0\,(\IIR\,S)\,\El\,i) \to S_\IH\,P\,x \to P\,(\intro\,x))\\
-  %% &                && \hspace{0.7em}\to (x : \IIR\,S\,i) \to P\,x \\
+    %% met' : (x : IR.F0 S*' (IR.IR S*') IR.El) → IR.IH S*' P' x → P' (IR.wrap x)
+    %% met' x ih p =
+    %%    tr (λ (x,p) → P (IR.wrap x, p))
+    %%       (F0rl S* (x, p))
+%%       (met (F0← S* (x, p)) (IH← S* (x, p) ih))
 
 \section{TODO}
 
