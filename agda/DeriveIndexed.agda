@@ -186,7 +186,7 @@ module _ (S* : Sig) where
   El≡ x = F1→ S* x
 
   -- First let's assume all the invariant inputs to elimination. "met" means "induction method".
-  module _ l (P : ∀ {i} → IIR i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
+  module _ {l} (P : ∀ {i} → IIR i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
 
     P' : IRIR → Set (k ⊔ l)
     P' x = ∀ {i} p → P {i} (x , p)

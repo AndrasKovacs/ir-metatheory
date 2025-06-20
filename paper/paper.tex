@@ -534,7 +534,53 @@ $\epsilon\,(\ora{S_0}\,x)$, while we have $\eta\,x$ on the right. However, we ha
 standard transport lemmas to match up the two sides.
 
 \subsection{Strictness}
-Let us briefly analyze the strictness of the constructed IIR types.
+We briefly analyze the strictness of computation for constructed IIR types. Clearly, since the
+construction is defined by induction on IIR signatures, we only have propositional
+$\msf{El\!\!-\!\!intro}$ and $\elim\!-\!\!\beta$ in the general case, where an IIR signature can be
+neutral.
+
+However, we still support the same definitional IIR computation rules as Agda and Idris. That is
+because Agda and Idris only have second-class IIR signatures, which cannot be neutral. There,
+signatures consists of constructors, where constructors are disambiguated are canonical names (or
+``tags''). $\El$ applied to a constructor computes definitionally, and so does the elimination
+principle when applied to a constructor. Using our IIR types, we encode Agda IIR types as follows:
+\begin{itemize}
+\item We have $\sigma\,\Tag\,S$ on the top to represent constructor tags.
+\item In $S$, we immediately pattern match on a tag.
+\item All other $\Sig$ subterms are canonical in the rest of the signature.
+\end{itemize}
+In the Agda supplement, we provide length-indexed vectors and the $\Code$ universe as examples
+for constructed IIR types with strict computation rules.
+
+\subsection{Mechanization}
+
+We formalized this section in Agda, using the same definitions and proofs. For the assumption of IR,
+we verbatim reproduced the specification in Section \cite{TODO} in Agda, turning $\IR$ into an
+inductive type and $\El$ and $\elim$ into recursive functions. The functions are not recognized as
+terminating by Agda, so we disable terminating checking for them. Alternatively, we could use
+rewrite rules \cite{TODO}; the two versions are the same except that rewrite rules have a noticeable
+performance cost in evaluation.
+
+Also, our object theory does not have internal universe levels, so we understand level
+quantification to happen in a metatheory, while in Agda we do use native universe polymorphism.
+
+
+%% \begin{enumerate}
+%%   \item $\El$ applied to a constructor
+
+%% \end{enumerate}
+
+
+
+%% \begin{itemize}
+%%   \item Every IIR signature in Agda has
+
+%% \end{itemize}
+
+
+
+
+
 
 
 

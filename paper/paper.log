@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  20 JUN 2025 00:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  20 JUN 2025 13:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -9070,18 +9070,52 @@ LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 533.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 533.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 539.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 539.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 545.
+ [8.8]
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 585.
+ine 548.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 548.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 586.
+ine 549.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 587.
- (./paper.bbl
+ine 549.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 550.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 550.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 552.
+
+
+Package natbib Warning: Citation `TODO' on page 9 undefined on input line 558.
+
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 558.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 559.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 559.
+
+Package natbib Warning: Citation `TODO' on page 9 undefined on input line 561.
+
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 631.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 632.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 633.
+(./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 45.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 52.
- [8.8])
+)
 
 Package natbib Warning: There were undefined citations.
 
@@ -9106,14 +9140,14 @@ LaTeX Font Warning: Size substitutions with differences
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: B7B85C5A4320F40655E30C1D1C1D34CD;1488.
+(rerunfilecheck)             Checksum: 19AE2C4F5CA1212AB56A12708040AA0A;1634.
  ) 
 Here is how much of TeX's memory you used:
- 32717 strings out of 478287
- 593716 string characters out of 5849290
- 920694 words of memory out of 5000000
- 49560 multiletter control sequences out of 15000+600000
- 692330 words of font info for 448 fonts, out of 8000000 for 9000
+ 32728 strings out of 478287
+ 593977 string characters out of 5849290
+ 923130 words of memory out of 5000000
+ 49561 multiletter control sequences out of 15000+600000
+ 693133 words of font info for 454 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  99i,20n,131p,1002b,844s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/us
@@ -9135,10 +9169,10 @@ ertine/LinLibertineTI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lib
 ertine/LinLibertineTZ.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/new
 tx/txexs.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (9 pages, 548220 bytes).
+Output written on paper.pdf (9 pages, 550438 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
- 168 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
- 122997 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 217 PDF objects out of 1000 (max. 8388607)
+ 172 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
+ 123005 words of extra memory for PDF output out of 128383 (max. 10000000)
 
