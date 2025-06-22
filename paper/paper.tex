@@ -119,6 +119,9 @@
 \newcommand{\BoolElim}{\msf{BoolElim}}
 \newcommand{\fun}{\Rightarrow}
 \newcommand{\SigElim}{\msf{SigElim}}
+\newcommand{\Id}{\msf{Id}}
+\newcommand{\refl}{\msf{refl}}
+\newcommand{\J}{\msf{J}}
 
 
 %% --------------------------------------------------------------------------------
@@ -665,17 +668,18 @@ substituting $t : \Tm\,\Gamma\,\U_i$ as a term and then casting to a type is the
 casting and then substituting as a type. Since we omit casts and overload $\blank[\blank]$, this
 rule looks trivial in our notation, but it still has to be assumed.
 
-\subsubsection{Functions} Type formation is $\Pi : (A : \Ty\,\Gamma\,i) \to \Ty\,(\Gamma \ext A)\,j \to \Ty\,\Gamma\,\max(i,\,j)$.
-Terms are specified by $\app : \Tm\,\Gamma\,(\Pi\,A\,B) \to \Tm\,(\Gamma\ext A)\,B$ and its
-definitional inverse $\lam : \Tm\,(\Gamma\ext A)\,B \to \Tm\,\Gamma\,(\Pi\,A\,B)$. This isomorphism
-is natural in $\Gamma$, so we have a substitution rule $(\lam\,t)[\sigma\circ\p,\,\q] =
-\lam\,t[\sigma]$. We derive the traditional binary application operation as follows: $t\,\bapp\,u :=
-(\app\,t)[\id,\,u]$. We use this as a left-associative operator.  We also define non-dependent
-functions: $A \fun B := \Pi\,A\,B[\p]$ where $A : \Ty\,\Gamma\,i$ and $B : \Ty\,\Gamma\,j$.
+\subsubsection{Functions} We have $\Pi : (A : \Ty\,\Gamma\,i) \to \Ty\,(\Gamma \ext A)\,j \to \Ty\,\Gamma\,\max(i,\,j)$
+such that $(\Pi\,A\,B)[\sigma] = \Pi\,A[\sigma]\,B[\sigma\circ\p,\,\q]$.  Terms are specified by
+$\app : \Tm\,\Gamma\,(\Pi\,A\,B) \to \Tm\,(\Gamma\ext A)\,B$ and its definitional inverse $\lam :
+\Tm\,(\Gamma\ext A)\,B \to \Tm\,\Gamma\,(\Pi\,A\,B)$. This isomorphism is natural in $\Gamma$, so we
+have a substitution rule $(\lam\,t)[\sigma\circ\p,\,\q] = \lam\,t[\sigma]$.
+%% We derive the traditional binary application operation as follows: $t\,\bapp\,u :=
+%% (\app\,t)[\id,\,u]$. We use this as a left-associative operator.  We define non-dependent
+%% functions: $A \fun B := \Pi\,A\,B[\p]$ where $A : \Ty\,\Gamma\,i$ and $B : \Ty\,\Gamma\,j$.
 \\
 
 \noindent\emph{Stability under substitution.} In the following we implicitly assume stability under
-substitution for every type and term former and omit the corresponding rules.
+substitution for every type and term former.
 
 \subsubsection{Sigma types} We have $\Sigma : (A : \Ty\,\Gamma\,i) \to \Ty\,(\Gamma \ext A)\,j \to \Ty\,\Gamma\,\max(i,\,j)$.
 Pairing and projection are given as a natural isomorphism between $\Tm\,\Gamma\,(\Sigma\,A\,B)$ and $(t : \Tm\,\Gamma\,A)\times \Tm\,\Gamma\,B[\id,\,t]$. We write $\blank,\blank$ for pairing and $\proj_1$ and $\proj_2$ for projections.
@@ -687,62 +691,143 @@ type is included in every universe. As we explained in Section \ref{TODO}, this 
 
 \subsubsection{Booleans} Type formation is $\Bool : \Ty\,\Gamma\,0$ with constructors $\true$ and $\false$. Elimination is as follows.
 \begin{alignat*}{3}
-  &\BoolElim :\,&&(P : \Ty\,(\Gamma \ext \Bool)\,i) \to \Tm\,\Gamma\,P[\id,\,\true] \to \Tm\,\Gamma\,P[\id,\,\false]\\
-  &             && \to (t : \Tm\,\Gamma\,\Bool) \to \Tm\,\Gamma\,P[\id,\,t]
+  &\BoolElim : (P : \Ty\,(\Gamma \ext \Bool)\,i) \to \Tm\,\Gamma\,P[\id,\,\true] \to \Tm\,\Gamma\,P[\id,\,\false]\\
+  &\hspace{4.5em}             \to (t : \Tm\,\Gamma\,\Bool) \to \Tm\,\Gamma\,P[\id,\,t]\\
+  & \BoolElim\,P\,t\,f\,\true\hspace{0.2em} = t\\
+  & \BoolElim\,P\,t\,f\,\false = f
 \end{alignat*}
+\emph{Notation \& conventions.} At this point we start building conventions
+for notation and desugaring, because raw CwF combinators and De Bruijn indices get very hard to read
+for more complicated specifications like identity elimination or the specification of IR types.
+\begin{itemize}
+\item Assuming $t : \Tm\,\Gamma\,(\Pi\,A\,B)$ and $u : \Tm\,\Gamma\,A$, traditional binary function application
+  can be derived as $(\app\,t)[\id,\,u] : \Tm\,\Gamma\,B[\id,\,u]$. We overload the metatheoretic whitespace
+  operator for this kind of object-level application.
+\item We may give a name to a binder (a binder can be a context extension or a $\Pi$, $\Sigma$ or $\lam$ binder),
+  and in the scope of the binder all occurrence of the name is desugared to the right De Bruijn index.
+  We write $\Pi$-types using the same notation as in the metatheory. For example, $(A :
+  \U_i) \to A \to A$ is desugared to $\Pi\,\U_i\,(\Pi\,\q\,\q[\p])$. We also reuse the notation and
+  behavior of implicit functions. We write object-level lambda abstraction as $\lam\,x.t$.
+\item In term formation rules, we will use a style where each term former is a constant with an
+  iterated $\Pi$-type.  In general, the choice between specifying something with a meta-level or
+  object-level function is arbitrary (i.e.\ the two-versions are inter-derivable). Sticking to
+  object-level functions lets us consistently use the desugaring for named binders.
+\end{itemize}
+
+\subsubsection{Identity types} We start using the previously introduced convention.
+Type and term formation is as follows.
 \begin{alignat*}{3}
-  &\BoolElim\,P\,t\,f\,\true = t \hspace{2em}\BoolElim\,P\,t\,f\,\true = f
+  &\Id   &&: \Tm\,\Gamma\,((A : \U_i) \to A \to A \to \U_i)\\
+  &\refl &&: \Tm\,\Gamma\,(\{A : \U_i\}(t : A) \to \Id\,A\,t\,t)
+\end{alignat*}
+One more example for desugaring: the type of $\refl$ becomes
+$\Tm\,\Gamma\,(\Pi\,\U_i\,(\Pi\,\q\,(\Id\,\q[\p]\,\q\,\q)))$.  Identity elimination is the
+following.
+\begin{alignat*}{3}
+  &\J : \Tm\,\Gamma\,(\{A : \U_i\}\{x : A\}(P : (y : A) \to \Id\,A\,x\,y \to \U_k)\\
+  & \hspace{3.5em}\to P\,(\refl\,x) \to \{y : A\}(p : \Id\,A\,x\,y) \to P\,y\,p)&&
+  &\\
+  &\J\,P\,r\,(\refl\,x) = r
 \end{alignat*}
 
-\subsubsection{IR signatures}
-We specify the type of IR signatures in the following as an inductive type. We assume $i, j : \Nat$ and
-$O : \Ty\,\Gamma\,j$ as parameters.
+\subsubsection{IR types} First, we specify the type of signatures as an inductive type. We assume levels $i$
+and $j$.
 \begin{alignat*}{3}
-  & \Sig_i\,O &&: \Ty\,\Gamma\,\max(i+1,\,j) \\
-  & \iota     &&: \Tm\,\Gamma\,O \to \Tm\,\Gamma\,(\Sig_i\,O)\\
-  & \sigma    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,(A \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)\\
-  & \delta    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,((A \fun O) \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)
+  &\Sig_i  &&: \Tm\,\Gamma\,((O : \U_j) \to \U_{\max(i+1,\,j)})\\
+  &\iota   &&: \Tm\,\Gamma\,(\{O : \U_j\} \to O \to \Sig_i\,O)\\
+  &\sigma  &&: \Tm\,\Gamma\,(\{O : \U_j\}(A : \U_i) \to (A \to \Sig_i\,O) \to \Sig_i\,O)\\
+  &\delta  &&: \Tm\,\Gamma\,(\{O : \U_j\}(A : \U_i) \to ((A \to O) \to \Sig_i\,O) \to \Sig_i\,O)
 \end{alignat*}
-Note that we have some choice whether to represent function arguments as internal function types,
-context extension, or meta-level function types. For example, $\Tm\,\Gamma\,(A \fun \Sig_i\,O)$
-could be represented as $\Tm\,(\Gamma\ext A)\,(\Sig_i\,O[\p])$ as well. Also, since we have
-universes and $\Pi$-types, we could choose to specify all of $\iota$, $\sigma$ and $\delta$ as term
-constants with a function type. All of these choices yield inter-derivable specifications.
+\begin{alignat*}{3}
+  &\SigElim : \Tm\,\Gamma\,(\{O : \U_j\}(P : \Sig_i\,O \to \U_k)\\
+  &           \hspace{2.2em}\to ((o : O) \to P\,(\iota\,o))\\
+  &           \hspace{2.2em}\to ((A : \U_i)(S : A \to \Sig_i\,O) \to ((a : A) \to P\,(S\,a)) \to P\,(\sigma\,A\,S))\\
+  &           \hspace{2.2em}\to ((A : \U_i)(S : (A \to O) \to \Sig_i\,O) \to ((f : A \to O) \to P\,(S\,f)) \to P\,(\delta\,A\,S))\\
+  &           \hspace{2.2em}\to (S : \Sig_i\,O) \to P\,S)\\
+  &\\
+  &\SigElim\,P\,i\,s\,d\,(\iota\,o) \hspace{1.1em} = i\\
+  &\SigElim\,P\,i\,s\,d\,(\sigma\,A\,S) = s\,A\,S\,(\lam\,a.\,\SigElim\,P\,i\,s\,d\,(S\,a))\\
+  &\SigElim\,P\,i\,s\,d\,(\delta\,A\,S) \hspace{0.1em}= d\,A\,S\,(\lam\,f.\,\SigElim\,P\,i\,s\,d\,(S\,f))
+\end{alignat*}
 
-We proceed to the elimination principle. Here, the native CwF notation becomes difficult to read, so
-we introduce some syntactic sugar. We can give names to binders, and we can refer to a variable by
-name in a possibly larger context. Every mention of the variable name is desugared to a De Bruijn
-index.
-\begin{alignat*}{3}
-  &\SigElim_k :\,(P : \Tm\,\Gamma\,(\Sig_i\,O \fun \U_k))\\
-  & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(o : O)\,(P[\p]\,\$\,(\iota\,o)))\\
-  & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))))\\
-  & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : (A \fun O[\p]) \fun \Sig_i\,O[\p^2])\\
-  & \hspace{6.85em}                 ((\Pi\,(f : A \fun O[\p^2])\,(P[\p^3]\,\$\,(S\,\$\,f))) \fun P[\p^2]\,\$\,(\delta\,A\,S))))\\
-  & \hspace{3em}\to (S : \Tm\,\Gamma\,(\Sig_i\,O))\\
-  & \hspace{3em}\to \Tm\,\Gamma\,(P\,\$\,S)
-\end{alignat*}
-\begin{alignat*}{3}
-  &\SigElim_k\,P\,i\,s\,d\,(\iota\,o) && = i\,\$\,o\\
-  &\SigElim_k\,P\,i\,s\,d\,(\sigma\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,a\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,a)))\\
-  &\SigElim_k\,P\,i\,s\,d\,(\delta\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,f\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,f)))
-\end{alignat*}
-For example,
-\[ \Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))) \]
-is desugared to
-\[ \Pi\,\U_i\,(\Pi\,(\q \fun \Sig_i\,O[\p^2])\,((\Pi\,\q[\p]\,(P[\p^3]\,\$\,(\q[\p]\,\$\,\q))) \fun P[\p^2]\,\$\,(\sigma\,\q[\p]\,\q))). \]
-Or, with numeric De Bruijn indices:
-\[ \Pi\,\U_i\,(\Pi\,(0 \fun \Sig_i\,O[\p^2])\,((\Pi\,1\,(P[\p^3]\,\$\,(1\,\$\,0))) \fun P[\p^2]\,\$\,(\sigma\,1\,0))) \]
-Either way, De Bruijn indices are just not readable. Fortunately, as we will see shortly, we can
-avoid De Bruijn indices in the crucial parts of the canonicity proof.
+\todo{Move sugar to right after universes and functions}
 
-\subsubsection{IR types}
+
+  %% SigElim : ∀ {k}(P : Sig → Set k)
+  %%           → ((o : O) → P (ι o))
+  %%           → ((A : Set i) (S : A → Sig) → ((a : A) → P (S a)) → P (σ A S))
+  %%           → ((A : Set i) (S : (A → O) → Sig) → ((f : A → O) → P (S f)) → P (δ A S))
+  %%           → ∀ S → P S
+  %% SigElim P ι' σ' δ' (ι o)   = ι' o
+  %% SigElim P ι' σ' δ' (σ A S) = σ' A S (SigElim P ι' σ' δ' ∘ S)
+  %% SigElim P ι' σ' δ' (δ A S) = δ' A S (SigElim P ι' σ' δ' ∘ S)
+
+  %% data Sig : Set (lsuc i ⊔ j) where
+  %%   ι : O → Sig
+  %%   σ : (A : Set i) → (A → Sig) → Sig
+  %%   δ : (A : Set i) → ((A → O) → Sig) → Sig
+
+
+%% We have $\Id : (A : \Ty\,\Gamma\,i) \to \Tm\,\Gamma\,A \to \Tm\,\Gamma\,A \to \Ty\,\Gamma\,i$
+%% and $\refl : (t : \Tm\,\Gamma\,A) \to \Tm\,\Gamma\,(\Id\,
+
+
+
+
+
+
+
+
+
+%% \subsubsection{IR signatures}
+%% We specify the type of IR signatures in the following as an inductive type. We assume $i, j : \Nat$ and
+%% $O : \Ty\,\Gamma\,j$ as parameters.
+%% \begin{alignat*}{3}
+%%   & \Sig_i\,O &&: \Ty\,\Gamma\,\max(i+1,\,j) \\
+%%   & \iota     &&: \Tm\,\Gamma\,O \to \Tm\,\Gamma\,(\Sig_i\,O)\\
+%%   & \sigma    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,(A \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)\\
+%%   & \delta    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,((A \fun O) \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)
+%% \end{alignat*}
+%% Note that we have some choice whether to represent function arguments as internal function types,
+%% context extension, or meta-level function types. For example, $\Tm\,\Gamma\,(A \fun \Sig_i\,O)$
+%% could be represented as $\Tm\,(\Gamma\ext A)\,(\Sig_i\,O[\p])$ as well. Also, since we have
+%% universes and $\Pi$-types, we could choose to specify all of $\iota$, $\sigma$ and $\delta$ as term
+%% constants with a function type. All of these choices yield inter-derivable specifications.
+
+%% We proceed to the elimination principle. Here, the native CwF notation becomes difficult to read, so
+%% we introduce some syntactic sugar. We can give names to binders, and we can refer to a variable by
+%% name in a possibly larger context. Every mention of the variable name is desugared to a De Bruijn
+%% index.
+%% \begin{alignat*}{3}
+%%   &\SigElim_k :\,(P : \Tm\,\Gamma\,(\Sig_i\,O \fun \U_k))\\
+%%   & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(o : O)\,(P[\p]\,\$\,(\iota\,o)))\\
+%%   & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))))\\
+%%   & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : (A \fun O[\p]) \fun \Sig_i\,O[\p^2])\\
+%%   & \hspace{6.85em}                 ((\Pi\,(f : A \fun O[\p^2])\,(P[\p^3]\,\$\,(S\,\$\,f))) \fun P[\p^2]\,\$\,(\delta\,A\,S))))\\
+%%   & \hspace{3em}\to (S : \Tm\,\Gamma\,(\Sig_i\,O))\\
+%%   & \hspace{3em}\to \Tm\,\Gamma\,(P\,\$\,S)
+%% \end{alignat*}
+%% \begin{alignat*}{3}
+%%   &\SigElim_k\,P\,i\,s\,d\,(\iota\,o) && = i\,\$\,o\\
+%%   &\SigElim_k\,P\,i\,s\,d\,(\sigma\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,a\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,a)))\\
+%%   &\SigElim_k\,P\,i\,s\,d\,(\delta\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,f\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,f)))
+%% \end{alignat*}
+%% For example,
+%% \[ \Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))) \]
+%% is desugared to
+%% \[ \Pi\,\U_i\,(\Pi\,(\q \fun \Sig_i\,O[\p^2])\,((\Pi\,\q[\p]\,(P[\p^3]\,\$\,(\q[\p]\,\$\,\q))) \fun P[\p^2]\,\$\,(\sigma\,\q[\p]\,\q))). \]
+%% Or, with numeric De Bruijn indices:
+%% \[ \Pi\,\U_i\,(\Pi\,(0 \fun \Sig_i\,O[\p^2])\,((\Pi\,1\,(P[\p^3]\,\$\,(1\,\$\,0))) \fun P[\p^2]\,\$\,(\sigma\,1\,0))) \]
+%% Either way, De Bruijn indices are just not readable. Fortunately, as we will see shortly, we can
+%% avoid De Bruijn indices in the crucial parts of the canonicity proof.
+
+%% \subsubsection{IR types}
 %% \begin{alignat*}{3}
 %%   \IR : \Tm\,\Gamma\,\Sig_i\,O \to
 %% \end{alignat*}
 
-QUESTION: encode everything in IR with full function types and named binders, and give some examples
-of desugaring?? This works in the canonicity model.
+%% QUESTION: encode everything in IR with full function types and named binders, and give some examples
+%% of desugaring?? This works in the canonicity model.
 
   %% data IR (S : Sig) : Set i
   %% El : ∀ {S} → IR S → O

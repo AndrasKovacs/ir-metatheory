@@ -50,9 +50,9 @@ module PlainIR (i : Level) (j : Level) (O : Set j) where
   unwrap {S} = elim S _ λ x _ → x
 
   SigElim : ∀ {k}(P : Sig → Set k)
-            → (∀ o → P (ι o))
-            → (∀ A S → (∀ a → P (S a)) → P (σ A S))
-            → (∀ A S → (∀ f → P (S f)) → P (δ A S))
+            → ((o : O) → P (ι o))
+            → ((A : Set i) (S : A → Sig) → ((a : A) → P (S a)) → P (σ A S))
+            → ((A : Set i) (S : (A → O) → Sig) → ((f : A → O) → P (S f)) → P (δ A S))
             → ∀ S → P S
   SigElim P ι' σ' δ' (ι o)   = ι' o
   SigElim P ι' σ' δ' (σ A S) = σ' A S (SigElim P ι' σ' δ' ∘ S)
