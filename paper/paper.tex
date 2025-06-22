@@ -11,7 +11,7 @@
   \providecommand\BibTeX{{%
     Bib\TeX}}}
 
-%% Rights management information.  This information is sent to you
+%% Rights management information.newcomm  This information is sent to you
 %% when you complete the rights form.  These commands have SAMPLE
 %% values in them; it is your responsibility as an author to replace
 %% the commands and values with those provided to you when you
@@ -108,7 +108,17 @@
 \newcommand{\Ty}{\msf{Ty}}
 \newcommand{\Tm}{\msf{Tm}}
 \newcommand{\ext}{\triangleright}
-
+\newcommand{\w}{\bullet}
+\newcommand{\lam}{\msf{lam}}
+\newcommand{\app}{\msf{app}}
+\newcommand{\bapp}{\$}
+\newcommand{\proj}{\msf{proj}}
+\newcommand{\exfalso}{\msf{exfalso}}
+\newcommand{\true}{\msf{true}}
+\newcommand{\false}{\msf{false}}
+\newcommand{\BoolElim}{\msf{BoolElim}}
+\newcommand{\fun}{\Rightarrow}
+\newcommand{\SigElim}{\msf{SigElim}}
 
 
 %% --------------------------------------------------------------------------------
@@ -572,12 +582,12 @@ computation rules.
 
 \subsection{Mechanization}
 
-We formalized this section in Agda, using the same definitions and proofs. For the assumption of IR,
-we verbatim reproduced the specification in Section \cite{TODO} in Agda, turning $\IR$ into an
-inductive type and $\El$ and $\elim$ into recursive functions. The functions are not recognized as
-terminating by Agda, so we disable terminating checking for them. Alternatively, we could use
-rewrite rules \cite{TODO}; the two versions are the same except that rewrite rules have a noticeable
-performance cost in evaluation.
+We formalized Section \ref{TODO} in Agda, using the same definitions and proofs as above. For the
+assumption of IR, we verbatim reproduced the specification in Section \cite{TODO}, turning $\IR$
+into an inductive type and $\El$ and $\elim$ into recursive functions. The functions are not
+recognized as terminating by Agda, so we disable terminating checking for them. Alternatively, we
+could use rewrite rules \cite{TODO}; the two versions are the same except that rewrite rules have a
+noticeable performance cost in evaluation.
 
 Also, our object theory does not have internal universe levels, so we understand level
 quantification to happen in a metatheory, while in Agda we do use native universe polymorphism.
@@ -591,19 +601,22 @@ the metatheory and the object theory in more detail.
 
 \subsubsection{Specification} The metatheory supports the following:
 \begin{itemize}
-  \item The countable universe hierarchy and basic type formers as described in Section \ref{TODO}.
+  \item A countable universe hierarchy and basic type formers as described in Section \ref{TODO}.
+    We write universes as $\Set_i$ instead of $\U_i$, to avoid confusion with object-theoretic
+    universes.
   \item Equality reflection. Hence, in the following we will only use $\blank\!=\!\blank$ to denote
     metatheoretic equality.
-  \item Universe levels $\omega$ and $\omega+1$, where $\U_\omega : \U_{\omega + 1}$ and $\U_{\omega + 1}$
-        is a ``proper type'' that is not contained in any universe. $\U_\omega$ and $\U_{\omega + 1}$ as
+  \item Universe levels $\omega$ and $\omega+1$, where $\Set_\omega : \Set_{\omega + 1}$ and $\Set_{\omega + 1}$
+        is a ``proper type'' that is not contained in any universe. $\Set_\omega$ and $\Set_{\omega + 1}$ are
         also closed under basic type formers.
-  \item IR types in $\U_i$ when $i$ is finite.
+  \item IR types in $\Set_i$ when $i$ is finite.
   \item A reflection principle which says that finite universe levels corresponds to elements of the
-    internal type of natural numbers $\Nat : \U_0$. This is similar to Agda's internal type of
-    finite levels, called $\Level$.  For a more formal specification, see \cite{TODO}. The reason
-    for this feature is the following. The object theory has countable levels represented
-    as natural numbers, so we have to interpret those numbers as metatheoretic levels in the
-    canonicity model, to correctly specify sizes of reducibility predicates.
+    internal type of natural numbers $\Nat : \Set_0$. This is similar to Agda's internal type of
+    finite levels, called $\Level$ \cite{TODO}.  For a more formal specification of this
+    internalization, see \cite{TODO}. The reason for this feature is the following. The object
+    theory has countable levels represented as natural numbers, so we have to interpret those
+    numbers as metatheoretic levels in the canonicity model, to correctly specify sizes of
+    reducibility predicates.
   \item The syntax of the object theory as a quotient inductive-inductive type \cite{TODO}, to be
     described in the following section.
 \end{itemize}
@@ -614,38 +627,135 @@ the metatheory and the object theory in more detail.
 
 \subsection{The Object Theory}\label{sec:object-theory}
 
-Informally, the object theory is a Martin-Löf type theory that supports
-basic type formers as described in Section \ref{TODO} and IR types as described
-in Section \ref{TODO}. We make it a bit more formal in the following.
+Informally, the object theory is a Martin-Löf type theory that supports basic type formers as
+described in Section \ref{TODO} and IR types as described in Section \ref{TODO}. More formally, the
+object theory is given as a quotient inductive-inductive type \cite{TODO}. The sets, operations and
+equations that we give in the following together constitute the inductive signature.
 
 \subsubsection{Core substitution calculus} The basic judgmental structure is given
-as a category with families \cite{TODO} where types are additionally annotated with levels.
+as a category with families (CwF) \cite{TODO} where types are additionally annotated with levels.
 Concretely, we have
 \begin{itemize}
-\item A category of contexts and substitutions. We write $\Con : \U_0$ for contexts and $\Sub : \Con \to \Con \to \U_0$
+\item A category of contexts and substitutions. We have $\Con : \Set_0$ for contexts and $\Sub : \Con \to \Con \to \Set_0$
   for substitutions. The empty context $\emptycon$ is the terminal object with the unique substitution $\epsilon : \Sub\,\Gamma\,\emptycon$.
   We write $\id$ for identity substitutions and $\blank\!\circ\!\blank$ for substitution composition.
-\item Level-indexed types, as $\Ty : \Con \to \Nat \to \U_0$, together with the functorial substitution operation
+\item Level-indexed types, as $\Ty : \Con \to \Nat \to \Set_0$, together with the functorial substitution operation
       $\blank[\blank] : \Ty\,\Delta\,i \to \Sub\,\Gamma\,\Delta \to \Ty\,\Gamma\,i$.
-\item Terms as $\Tm : (\Gamma : \Con) \to \Ty\,\Gamma\,i \to \U_0$, with functorial substitution operation
+\item Terms as $\Tm : (\Gamma : \Con) \to \Ty\,\Gamma\,i \to \Set_0$, with functorial substitution operation
   $\blank[\blank] : \Tm\,\Delta\,A \to (\sigma : \Sub\,\Gamma\,\Delta) \to \Tm\,\Gamma\,A[\sigma]$.
+  \emph{Notation:} both type and term substitution binds stronger than function application, so
+  for example $\Tm\,\Gamma\,A[\sigma]$ means $\Tm\,\Gamma\,(A[\sigma])$.
 \item Context comprehension, consisting of a context extension operation $\blank\!\ext\!\blank : (\Gamma : \Con) \to \Ty\,\Gamma\,i \to \Con$,
-  weakening morphism $\p : \Sub\,(\Gamma\ext A) \Gamma$, zero variable $\q : \Tm\,(\Gamma\ext A)\,A[\p]$ and substitution extension $\blank\!,\!\blank : (\sigma : \Sub\,\Gamma\,\Delta) \to \Tm\,\Gamma\,A[\sigma] \to \Sub\,\Gamma\,(\Delta\ext A)$, such that the following equations hold:
+  weakening morphism $\p : \Sub\,(\Gamma\ext A)\,\Gamma$, zero variable $\q : \Tm\,(\Gamma\ext A)\,A[\p]$ and substitution extension $\blank,\!\blank : (\sigma : \Sub\,\Gamma\,\Delta) \to \Tm\,\Gamma\,A[\sigma] \to \Sub\,\Gamma\,(\Delta\ext A)$, such that the following equations hold:
   \begin{alignat*}{3}
     &\p \circ (\sigma,\,t)     &&= \sigma \\
     &\q[\sigma,\,t]            &&= t \\
     &(\p,\,\q)                 &&= \id \\
     &(\sigma,\,t) \circ \delta &&= (\sigma \circ \delta,\,t[\delta])
   \end{alignat*}
-
-
+  Note that a De Bruijn index $N$ is represented as $\q[\p^N]$, where $\p^N$ is $N$-fold composition
+  of weakening.
 \end{itemize}
 
+\subsubsection{Universes} We have Russell-style universes, where sets of terms of universes are identified with sets of types.
+Concretely, we have $\U : (i : \Nat) \to \Ty\,\Gamma\,(i + 1)$ such that $\U_i[\sigma] = \U_i$ and
+$\Tm\,\Gamma\,\U_i = \Ty\,\Gamma\,i$.  This lets us implicit cast between types and terms of
+universes. Additionally, we specify that this casting operation commutes with substitution, so
+substituting $t : \Tm\,\Gamma\,\U_i$ as a term and then casting to a type is the same as first
+casting and then substituting as a type. Since we omit casts and overload $\blank[\blank]$, this
+rule looks trivial in our notation, but it still has to be assumed.
 
+\subsubsection{Functions} Type formation is $\Pi : (A : \Ty\,\Gamma\,i) \to \Ty\,(\Gamma \ext A)\,j \to \Ty\,\Gamma\,\max(i,\,j)$.
+Terms are specified by $\app : \Tm\,\Gamma\,(\Pi\,A\,B) \to \Tm\,(\Gamma\ext A)\,B$ and its
+definitional inverse $\lam : \Tm\,(\Gamma\ext A)\,B \to \Tm\,\Gamma\,(\Pi\,A\,B)$. This isomorphism
+is natural in $\Gamma$, so we have a substitution rule $(\lam\,t)[\sigma\circ\p,\,\q] =
+\lam\,t[\sigma]$. We derive the traditional binary application operation as follows: $t\,\bapp\,u :=
+(\app\,t)[\id,\,u]$. We use this as a left-associative operator.  We also define non-dependent
+functions: $A \fun B := \Pi\,A\,B[\p]$ where $A : \Ty\,\Gamma\,i$ and $B : \Ty\,\Gamma\,j$.
+\\
 
+\noindent\emph{Stability under substitution.} In the following we implicitly assume stability under
+substitution for every type and term former and omit the corresponding rules.
 
+\subsubsection{Sigma types} We have $\Sigma : (A : \Ty\,\Gamma\,i) \to \Ty\,(\Gamma \ext A)\,j \to \Ty\,\Gamma\,\max(i,\,j)$.
+Pairing and projection are given as a natural isomorphism between $\Tm\,\Gamma\,(\Sigma\,A\,B)$ and $(t : \Tm\,\Gamma\,A)\times \Tm\,\Gamma\,B[\id,\,t]$. We write $\blank,\blank$ for pairing and $\proj_1$ and $\proj_2$ for projections.
 
+\subsubsection{Empty type} We have $\bot : \Ty\,\Gamma\,0$ with elimination $\exfalso : (A : \Ty\,\Gamma\,i) \to \Tm\,\Gamma\,\bot \to \Tm\,\Gamma\,A$.
 
+\subsubsection{Unit} We have $\top_i : \Ty\,\Gamma\,i$ with the unique inhabitant $\ttt$. Note that unlike the empty type, the unit
+type is included in every universe. As we explained in Section \ref{TODO}, this allows us to define a type lifting operation.
+
+\subsubsection{Booleans} Type formation is $\Bool : \Ty\,\Gamma\,0$ with constructors $\true$ and $\false$. Elimination is as follows.
+\begin{alignat*}{3}
+  &\BoolElim :\,&&(P : \Ty\,(\Gamma \ext \Bool)\,i) \to \Tm\,\Gamma\,P[\id,\,\true] \to \Tm\,\Gamma\,P[\id,\,\false]\\
+  &             && \to (t : \Tm\,\Gamma\,\Bool) \to \Tm\,\Gamma\,P[\id,\,t]
+\end{alignat*}
+\begin{alignat*}{3}
+  &\BoolElim\,P\,t\,f\,\true = t \hspace{2em}\BoolElim\,P\,t\,f\,\true = f
+\end{alignat*}
+
+\subsubsection{IR signatures}
+We specify the type of IR signatures in the following as an inductive type. We assume $i, j : \Nat$ and
+$O : \Ty\,\Gamma\,j$ as parameters.
+\begin{alignat*}{3}
+  & \Sig_i\,O &&: \Ty\,\Gamma\,\max(i+1,\,j) \\
+  & \iota     &&: \Tm\,\Gamma\,O \to \Tm\,\Gamma\,(\Sig_i\,O)\\
+  & \sigma    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,(A \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)\\
+  & \delta    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,((A \fun O) \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)
+\end{alignat*}
+Note that we have some choice whether to represent function arguments as internal function types,
+context extension, or meta-level function types. For example, $\Tm\,\Gamma\,(A \fun \Sig_i\,O)$
+could be represented as $\Tm\,(\Gamma\ext A)\,(\Sig_i\,O[\p])$ as well. Also, since we have
+universes and $\Pi$-types, we could choose to specify all of $\iota$, $\sigma$ and $\delta$ as term
+constants with a function type. All of these choices yield inter-derivable specifications.
+
+We proceed to the elimination principle. Here, the native CwF notation becomes difficult to read, so
+we introduce some syntactic sugar. We can give names to binders, and we can refer to a variable by
+name in a possibly larger context. Every mention of the variable name is desugared to a De Bruijn
+index.
+\begin{alignat*}{3}
+  &\SigElim_k :\,(P : \Tm\,\Gamma\,(\Sig_i\,O \fun \U_k))\\
+  & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(o : O)\,(P[\p]\,\$\,(\iota\,o)))\\
+  & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))))\\
+  & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : (A \fun O[\p]) \fun \Sig_i\,O[\p^2])\\
+  & \hspace{6.85em}                 ((\Pi\,(f : A \fun O[\p^2])\,(P[\p^3]\,\$\,(S\,\$\,f))) \fun P[\p^2]\,\$\,(\delta\,A\,S))))\\
+  & \hspace{3em}\to (S : \Tm\,\Gamma\,(\Sig_i\,O))\\
+  & \hspace{3em}\to \Tm\,\Gamma\,(P\,\$\,S)
+\end{alignat*}
+\begin{alignat*}{3}
+  &\SigElim_k\,P\,i\,s\,d\,(\iota\,o) && = i\,\$\,o\\
+  &\SigElim_k\,P\,i\,s\,d\,(\sigma\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,a\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,a)))\\
+  &\SigElim_k\,P\,i\,s\,d\,(\delta\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,f\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,f)))
+\end{alignat*}
+For example,
+\[ \Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))) \]
+is desugared to
+\[ \Pi\,\U_i\,(\Pi\,(\q \fun \Sig_i\,O[\p^2])\,((\Pi\,\q[\p]\,(P[\p^3]\,\$\,(\q[\p]\,\$\,\q))) \fun P[\p^2]\,\$\,(\sigma\,\q[\p]\,\q))). \]
+Or, with numeric De Bruijn indices:
+\[ \Pi\,\U_i\,(\Pi\,(0 \fun \Sig_i\,O[\p^2])\,((\Pi\,1\,(P[\p^3]\,\$\,(1\,\$\,0))) \fun P[\p^2]\,\$\,(\sigma\,1\,0))) \]
+Either way, De Bruijn indices are just not readable. Fortunately, as we will see shortly, we can
+avoid De Bruijn indices in the crucial parts of the canonicity proof.
+
+\subsubsection{IR types}
+%% \begin{alignat*}{3}
+%%   \IR : \Tm\,\Gamma\,\Sig_i\,O \to
+%% \end{alignat*}
+
+QUESTION: encode everything in IR with full function types and named binders, and give some examples
+of desugaring?? This works in the canonicity model.
+
+  %% data IR (S : Sig) : Set i
+  %% El : ∀ {S} → IR S → O
+
+  %% data IR S where
+  %%   wrap : F0 S (IR S) El → IR S
+
+  %% {-# TERMINATING #-}
+  %% El {S} (wrap t) = F1 S t
+
+  %% {-# TERMINATING #-}
+  %% elim : ∀ {k} S (P : IR S → Set k) → (∀ x → IH S P x → P (wrap x)) → ∀ x → P x
+  %% elim S P f (wrap x) = f x (mapIH S P (elim S P f) x)
 
 
 \section{TODO}
