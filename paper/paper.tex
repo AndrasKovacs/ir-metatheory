@@ -823,37 +823,130 @@ $\G$ has the following properties:
 \item It preserves empty and extended contexts up to isomorphism, i.e.\ $\G\,\emptycon \simeq \top_\omega$ and $\G\,(\Gamma \ext A) \simeq ((\gamma : \G\,\Gamma) \times \G\,A\,\gamma)$. \emph{Notation:} we shall omit component of these isomorphisms in the following.
 \item It has lax preservation of universes and function types:
 \begin{alignat*}{3}
-  &\G_\U : \G\,\U_i\,\gamma \to \Set_i\hspace{3em} && \G_\Pi : \G\,(\Pi\,A\,B),\gamma \to (\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)\\
+  &\G_\U : \G\,\U_i\,\gamma \to \Set_i\hspace{3em} && \G_\Pi : \G\,(\Pi\,A\,B)\,\gamma \to (\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)\\
   &\G_\U\,A := \Tm\,\emptycon\,A                   && \G_\Pi\,f\,\alpha := f\,\alpha
 \end{alignat*}
+We do not have functions in the other direction. For $\U$, we cannot represent an arbitrary
+metatheoretic $\Set$ in the object language. For $\Pi$, if we have $(\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)$, that is
+a plain metatheoretic function between closed terms, so we have no way to recover an open term for a $\lam$ body.
+
 \emph{Notation:} we shall also leave $\G_\U$ and $\G_\Pi$ implicit in the following. In particular, leaving $\G_\Pi$ implicit is like
 having overloaded function application for $\G\,(\Pi\,A\,B)\,\gamma$.
 \end{itemize}
 
 \subsubsection{Interpretation of the CwF and the Basic Type Formers}
-
-First, we revisit the specification of the induction motives:
+This has been described in previous literature \cite{TODO}, so we focus on parts which are relevant
+to the interpretation of IR types in Section \ref{TODO}, and also recall some basics to establish
+notation. First, we revisit the specification of the induction motives, now using $\G$:
 \begin{alignat*}{3}
-  &\blank^\w : (\Gamma : \Con)      && \to \G\,\Gamma \to \Set_\omega\\
-  &\blank^\w : (A : \Ty\,\Gamma\,i) && \to (\gamma : \G\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \G\,A\,\gamma \to \Set_i\\
-  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to (\gamma : \G\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\G\,\sigma\,\gamma)\\
-  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to (\gamma : \G\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma\,\gamma^\w\,(\G\,t\,\gamma)
+  &\blank^\w : (\Gamma : \Con)                 && \to \G\,\Gamma \to \Set_\omega\\
+  &\blank^\w : (A : \Ty\,\Gamma\,i)            && \to \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \G\,A\,\gamma \to \Set_i\\
+  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\G\,\sigma\,\gamma)\\
+  &\blank^\w : (t : \Tm\,\Gamma\,A)            && \to \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma^\w\,(\G\,t\,\gamma)
 \end{alignat*}
 The interpretation of empty and extended contexts is as follows.
 \begin{alignat*}{3}
   &\emptycon^\w\,&&\gamma                 &&:= \top \\
-  &(\Gamma\ext A)^\w\,&&(\gamma,\,\alpha) &&:= (\gamma^\w : \Gamma^\w\,\gamma) \times A^\w\,\gamma\,\gamma^\w
+  &(\Gamma\ext A)^\w\,&&(\gamma,\,\alpha) &&:= (\gamma^\w : \Gamma^\w\,\gamma) \times A^\w\,\gamma^\w\,\alpha
 \end{alignat*}
-Note that in the $\Gamma \ext A$ case, the type of the argument is $\G\,(\Gamma \ext A)$, which is
-by definition $\Sub\,\emptycon\,(\Gamma \ext A)$, which is isomorphic to $(\gamma : \G\,\Gamma)
-\times \G\,A\,\gamma$. This justifies the pattern matching notation in $(\gamma,\,\alpha)$; in other words, we have an implicit conversion
-to a $\Sigma$-type.
+This says that the logical predicate holds for a closing substitution if it holds for each term in
+the substitution. Note that in the $\Gamma \ext A$ case, the type of the argument is $\G\,(\Gamma
+\ext A)$, which is equal to $\Sub\,\emptycon\,(\Gamma \ext A)$, which is in turn isomorphic to
+$(\gamma : \G\,\Gamma) \times \G\,A\,\gamma$. This justifies the pattern matching notation in
+$(\gamma,\,\alpha)$. In other words, we implicitly convert to a $\Sigma$-type and match on the
+value. We list the interpretation for the other CwF operations below.
+\begin{alignat*}{4}
+  &\id^\w\,\gamma^\w                   &&:= \gamma^\w                  &&(\sigma,\,t)^\w\,\gamma^\w          &&:= (\sigma^\w\,\gamma^\w,\,t^\w\,\gamma^\w)\\
+  &(\sigma \circ \delta)^\w\,\gamma^\w &&:= \sigma^\w\,(\delta^\w\,\gamma^\w) && \p^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \gamma^\w\\
+  &(A[\sigma]) ^\w\,\gamma^\w\,\alpha  &&:= A^\w\,(\sigma^\w\,\gamma^\w)\,\alpha\hspace{3em} && \q^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \alpha^\w\\
+  &(t[\sigma]) ^\w\,\gamma^\w          &&:= t^\w\,(\sigma^\w\,\gamma^\w) && \epsilon^\w\,\gamma^\w              &&:= \ttt
+\end{alignat*}
+The interpretation of universes is the following.
+\begin{alignat*}{4}
+  &(\U_i)^\w\,\gamma^\w\,\alpha := \Tm\,\emptycon\,\alpha \to \Set_i
+\end{alignat*}
+This definition also supports the Russell universe rules. For illustration, assuming $t :
+\Tm\,\Gamma\,\U_i$, we have $t^\w : \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to
+\Tm\,\emptycon\,A[\gamma] \to \Set_i$. If we first cast $t$ to a type using the syntactic Russell
+universe equation, then $t^\w$ has exactly the same type.
+
+Note that we do not get a canonicity statement about types themselves, i.e.\ we do not get that
+every closed type is definitionally equal to one of the canonical type formers. This could be handled
+as well, but we skip it because it is orthogonal to the focus of this paper.
+
+We interpret functions as follows.
+\begin{alignat*}{4}
+  &(\Pi\,A\,B)^\w\,\{\gamma\}\,\gamma^\w\,f &&:= \{\alpha : \G\,A\,\gamma\}(\alpha^\w : A^\w\,\gamma^\w\,\alpha) \to B^\w\,(\gamma^\w\,\,\alpha^\w)\,(f\,\alpha)\\
+  &(\lam\,t)^\w\,\gamma^\w &&:= \lambda\,\{\alpha\}\,\alpha^\w.\,t^\w\,(\gamma^\w,\,\alpha^\w)\\
+  &(\app\,t)^\w\,(\gamma^\w,\,\alpha^\w) &&:= t^\w\,\gamma^\w\,\alpha^\w
+\end{alignat*}
+In the $\Pi\,A\,B$ case, note that $f : \G\,(\Pi\,A\,B)\,\gamma$, which means that we can apply it
+to $\alpha$ to get $f\,\alpha : \G\,B\,(\gamma,\,\alpha)$.
+
+\todo{stuff}
+
+\subsubsection{Interpretation of IR signatures}
+
+Signatures are given as a particular parameterized inductive type, so in principle there should be
+nothing ``new'' in their logical predicate interpretation. We do detail it here because several
+later constructions depend on it. Recall that $\Sig_i : \Tm\,\Gamma\,((O : \U_j) \to \U_{\max(i+1,\,j)})$. Hence,
+\begin{alignat*}{3}
+  &(\Sig_i)^\w\,\gamma^\w : ((O : \U_j) \to \U_{\max(i+1,\,j)})^\w\,\gamma^\w\,\Sig_i\\
+  &(\Sig_i)^\w\,\gamma^\w : \{O : \G\,\U_j\,\gamma\}(O^\w : (\U_j)^\w\,\gamma^\w\,O) \to (\U_{\max(i+1,\,j)})^\w\,\gamma^\w\,(\Sig_i\,O)\\
+  &(\Sig_i)^\w\,\gamma^\w : \{O : \Tm\,\emptycon\,\U_i\}(O^\w : \Tm\,\emptycon\,O \to \Set_i) \to \Tm\,\emptycon\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}.
+\end{alignat*}
+Hence, we define an inductive type in the metatheory that is parameterized by $O : Tm\,\emptycon\,U_i$ and $O^\w : \Tm\,\emptycon\,\Set_i$ and indexed
+over $\Tm\,\emptycon\,(\Sig_i\,O)$.
+
+
+
+%% ((O : \U_j) \to \U_{\max(i+1,\,j)})^\w\,\gamma^\w\,\Sig_i\\
+
+
+
+
+
+  %% data Sigᴾ : IR.Sig → Set (lsuc i ⊔ lsuc j) where
+  %%   ι : ∀ {o}(oᴾ : Oᴾ o) → Sigᴾ (IR.ι o)
+  %%   σ : ∀ {A} (Aᴾ : A → Set i){S : A → IR.Sig}      (Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)) → Sigᴾ (IR.σ A S)
+  %%   δ : ∀ {A} (Aᴾ : A → Set i){S : (A → O) → IR.Sig}(Sᴾ : ∀ {f} → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)) → Sigᴾ (IR.δ A S)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{TODO}
 
 
 \begin{itemize}
-  \item Definitions, notations, IR-IRR disambiguation in derivation section
+  \item Implicit lifting in metatheory in canonicity section
   \item Rename wrap to intro in Agda. Rename DeriveIndexed F0 equivalence in Agda.
   \item Canonicity metatheory: Loic, Anton says it looks OK
 

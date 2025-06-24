@@ -8,7 +8,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
 
   module IR = PlainIR i j O
 
-  data Sigᴾ : IR.Sig → Set (lsuc i ⊔ lsuc j) where
+  data Sigᴾ : IR.Sig → Set (lsuc i ⊔ j) where
     ι : ∀ {o}(oᴾ : Oᴾ o) → Sigᴾ (IR.ι o)
     σ : ∀ {A} (Aᴾ : A → Set i){S : A → IR.Sig}      (Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)) → Sigᴾ (IR.σ A S)
     δ : ∀ {A} (Aᴾ : A → Set i){S : (A → O) → IR.Sig}(Sᴾ : ∀ {f} → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)) → Sigᴾ (IR.δ A S)
@@ -22,31 +22,31 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     F0 = λ S → IR.F0 S U El
     F1 = λ S → IR.F1 S {U} {El}
 
-    -- subsignature relation as a snoc list
-    data Hom : ∀ {S} → Sigᴾ S → Set (lsuc i ⊔ lsuc j) where
-      idh : Hom S*ᴾ
+    -- subsignatures of S* as snoc lists
+    data Path : ∀ {S} → Sigᴾ S → Set (lsuc i ⊔ lsuc j) where
+      idh : Path S*ᴾ
       σ<  : ∀ {A : Set i}{Aᴾ : A → Set i}{S : A → IR.Sig}{Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)}
-            → Hom (σ Aᴾ Sᴾ)
+            → Path (σ Aᴾ Sᴾ)
             → ∀ a (aᴾ : Aᴾ a)
-            → Hom {S a} (Sᴾ aᴾ)
+            → Path {S a} (Sᴾ aᴾ)
       δ<  : ∀ {A : Set i}{Aᴾ : A → Set i}
               {S : (A → O) → IR.Sig}{Sᴾ : ∀ {f} → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)}
-            → Hom (δ Aᴾ Sᴾ)
+            → Path (δ Aᴾ Sᴾ)
             → ∀ (f : A → U)(fᴾ : ∀ a → Aᴾ a → Oᴾ (El (f a)))
-            → Hom (Sᴾ fᴾ)
+            → Path (Sᴾ fᴾ)
 
-    HomF0 : ∀ {S}{Sᴾ} → Hom {S} Sᴾ → F0 S → F0 S*
-    HomF0 idh           acc = acc
-    HomF0 (σ< hom a aᴾ) acc = HomF0 hom (a , acc)
-    HomF0 (δ< hom f fᴾ) acc = HomF0 hom (f , acc)
+    PathF0 : ∀ {S}{Sᴾ} → Path {S} Sᴾ → F0 S → F0 S*
+    PathF0 idh           acc = acc
+    PathF0 (σ< hom a aᴾ) acc = PathF0 hom (a , acc)
+    PathF0 (δ< hom f fᴾ) acc = PathF0 hom (f , acc)
 
-    HomF1 : ∀ {S}{Sᴾ}(hom : Hom {S} Sᴾ) → ∀ {x} → F1 S x ≡ F1 S* (HomF0 hom x)
-    HomF1 idh           = refl
-    HomF1 (σ< hom a aᴾ) = HomF1 hom
-    HomF1 (δ< hom f fᴾ) = HomF1 hom
+    PathF1 : ∀ {S}{Sᴾ}(hom : Path {S} Sᴾ) → ∀ {x} → F1 S x ≡ F1 S* (PathF0 hom x)
+    PathF1 idh           = refl
+    PathF1 (σ< hom a aᴾ) = PathF1 hom
+    PathF1 (δ< hom f fᴾ) = PathF1 hom
 
-    Sigᴾ→ : ∀ {S}(Sᴾ : Sigᴾ S) → Hom Sᴾ → IIR.Sig
-    Sigᴾ→ (ι oᴾ)            hom = IIR.ι (IR.wrap (HomF0 hom (lift tt))) (tr Oᴾ (HomF1 hom) oᴾ)
+    Sigᴾ→ : ∀ {S}(Sᴾ : Sigᴾ S) → Path Sᴾ → IIR.Sig
+    Sigᴾ→ (ι oᴾ)            hom = IIR.ι (IR.wrap (PathF0 hom (lift tt))) (tr Oᴾ (PathF1 hom) oᴾ)
     Sigᴾ→ (σ {A} Aᴾ {S} Sᴾ) hom = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → Sigᴾ→ (Sᴾ aᴾ) (σ< hom a aᴾ)
     Sigᴾ→ (δ {A} Aᴾ Sᴾ)     hom = IIR.σ (A → U) λ f → IIR.δ (∃ Aᴾ) (λ aaᴾ → f (aaᴾ .₁)) λ fᴾ →
                                   Sigᴾ→ (Sᴾ λ a aᴾ → fᴾ (a , aᴾ)) (δ< hom f (λ a aᴾ → fᴾ (a , aᴾ)))
@@ -69,10 +69,10 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     F1ᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) = F1ᴾ (Sᴾ aᴾ) tᴾ
     F1ᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) = F1ᴾ (Sᴾ _) tᴾ
 
-    F0ᴾ' : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ) (x : U) → Set i
-    F0ᴾ' Sᴾ hom x = ∃ λ x' → IR.wrap (HomF0 hom x') ≡ x × F0ᴾ Sᴾ x'
+    F0ᴾ' : ∀ {S} Sᴾ (hom : Path {S} Sᴾ) (x : U) → Set i
+    F0ᴾ' Sᴾ hom x = ∃ λ x' → IR.wrap (PathF0 hom x') ≡ x × F0ᴾ Sᴾ x'
 
-    F0ᴾ→ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x} → F0ᴾ' Sᴾ hom x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x
+    F0ᴾ→ : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x} → F0ᴾ' Sᴾ hom x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x
     F0ᴾ→ (ι oᴾ)    hom (x , eq , xᴾ) .lower                    = eq
     F0ᴾ→ (σ Aᴾ Sᴾ) hom ((a , x) , eq , (aᴾ , xᴾ)) .₁           = a
     F0ᴾ→ (σ Aᴾ Sᴾ) hom ((a , x) , eq , aᴾ , xᴾ) .₂ .₁          = aᴾ
@@ -81,10 +81,10 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     F0ᴾ→ (δ Aᴾ Sᴾ) hom ((f , x) , eq , fᴾ , xᴾ) .₂ .₁ (a , aᴾ) = fᴾ a aᴾ
     F0ᴾ→ (δ Aᴾ Sᴾ) hom ((f , x) , eq , fᴾ , xᴾ) .₂ .₂          = F0ᴾ→ (Sᴾ λ a aᴾ → Elᴾ (fᴾ a aᴾ)) (δ< hom f λ a aᴾ → Elᴾ (fᴾ a aᴾ)) (x , eq , xᴾ)
 
-    F0ᴾ→' : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x} → F0ᴾ Sᴾ x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ (IR.wrap (HomF0 hom x))
+    F0ᴾ→' : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x} → F0ᴾ Sᴾ x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ (IR.wrap (PathF0 hom x))
     F0ᴾ→' Sᴾ hom {x} xᴾ = F0ᴾ→ Sᴾ hom (x , refl , xᴾ)
 
-    F0ᴾ← : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x} → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x → F0ᴾ' Sᴾ hom x
+    F0ᴾ← : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x} → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x → F0ᴾ' Sᴾ hom x
     F0ᴾ← (ι oᴾ)    hom (lift xᴾ) .₁ .lower         = tt
     F0ᴾ← (ι oᴾ)    hom (lift xᴾ) .₂ .₁             = xᴾ
     F0ᴾ← (ι oᴾ)    hom (lift xᴾ) .₂ .₂ .lower      = tt
@@ -99,13 +99,13 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     F0ᴾ← (δ Aᴾ Sᴾ) hom (f , fᴾ , xᴾ) .₂ .₂ .₁ a aᴾ = fᴾ (a , aᴾ)
     F0ᴾ← (δ Aᴾ Sᴾ) hom (f , fᴾ , xᴾ) .₂ .₂ .₂      = F0ᴾ← (Sᴾ _) (δ< hom f (λ a aᴾ → Elᴾ (fᴾ (_ , aᴾ)))) xᴾ .₂ .₂
 
-    F0ᴾrl : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x}(xᴾ : IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x)
+    F0ᴾrl : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x}(xᴾ : IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x)
             → F0ᴾ→ Sᴾ hom (F0ᴾ← Sᴾ hom xᴾ) ≡ xᴾ
     F0ᴾrl (ι oᴾ)    hom xᴾ            = refl
     F0ᴾrl (σ Aᴾ Sᴾ) hom (a , aᴾ , xᴾ) = ap (λ x → a , aᴾ , x) (F0ᴾrl (Sᴾ aᴾ) (σ< hom a aᴾ) xᴾ)
     F0ᴾrl (δ Aᴾ Sᴾ) hom (f , fᴾ , xᴾ) = ap (λ x → f , fᴾ , x) (F0ᴾrl (Sᴾ _)  (δ< hom f _) xᴾ)
 
-    F0ᴾlr : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ){x}(xᴾ : F0ᴾ' Sᴾ hom x)
+    F0ᴾlr : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x}(xᴾ : F0ᴾ' Sᴾ hom x)
             → F0ᴾ← Sᴾ hom (F0ᴾ→ Sᴾ hom xᴾ) ≡ xᴾ
     F0ᴾlr (ι oᴾ)    hom xᴾ = refl
     F0ᴾlr (σ Aᴾ Sᴾ) hom ((a , x) , eq , aᴾ , xᴾ) =
@@ -116,26 +116,26 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ S*ᴾ x) → IRᴾ (IR.wrap x)
     wrapᴾ {x} xᴾ = IIR.wrap (F0ᴾ→' S*ᴾ idh xᴾ)
 
-    Hom* : ∀ {S}{Sᴾ : Sigᴾ S} → Hom Sᴾ → Set (lsuc i ⊔ lsuc j)
-    Hom* idh                   = Lift _ ⊤
-    Hom* (σ< hom a aᴾ)         = Hom* hom
-    Hom* (δ< {A}{Aᴾ} hom f fᴾ) =
-      Σ (∀ a → Aᴾ a → IRᴾ (f a)) λ fᴾ* → (fᴾ ≡ λ a aᴾ → Elᴾ (fᴾ* _ aᴾ)) × Hom* hom
+    Path* : ∀ {S}{Sᴾ : Sigᴾ S} → Path Sᴾ → Set (lsuc i ⊔ lsuc j)
+    Path* idh                   = Lift _ ⊤
+    Path* (σ< hom a aᴾ)         = Path* hom
+    Path* (δ< {A}{Aᴾ} hom f fᴾ) =
+      Σ (∀ a → Aᴾ a → IRᴾ (f a)) λ fᴾ* → (fᴾ ≡ λ a aᴾ → Elᴾ (fᴾ* _ aᴾ)) × Path* hom
 
-    HomF0ᴾ : ∀ {S}{Sᴾ}(hom : Hom {S} Sᴾ)(homᴾ : Hom* hom){x : F0 S}(xᴾ : F0ᴾ Sᴾ x) → F0ᴾ S*ᴾ (HomF0 hom x)
-    HomF0ᴾ idh           homᴾ                xᴾ = xᴾ
-    HomF0ᴾ (σ< hom a aᴾ) homᴾ                xᴾ = HomF0ᴾ hom homᴾ (aᴾ , xᴾ)
-    HomF0ᴾ (δ< hom f fᴾ) (fᴾ* , refl , homᴾ) xᴾ = HomF0ᴾ hom homᴾ (fᴾ* , xᴾ)
+    PathF0ᴾ : ∀ {S}{Sᴾ}(hom : Path {S} Sᴾ)(homᴾ : Path* hom){x : F0 S}(xᴾ : F0ᴾ Sᴾ x) → F0ᴾ S*ᴾ (PathF0 hom x)
+    PathF0ᴾ idh           homᴾ                xᴾ = xᴾ
+    PathF0ᴾ (σ< hom a aᴾ) homᴾ                xᴾ = PathF0ᴾ hom homᴾ (aᴾ , xᴾ)
+    PathF0ᴾ (δ< hom f fᴾ) (fᴾ* , refl , homᴾ) xᴾ = PathF0ᴾ hom homᴾ (fᴾ* , xᴾ)
 
-    HomF1ᴾ : ∀ {S}{Sᴾ}(hom : Hom {S} Sᴾ)(homᴾ : Hom* hom){x : F0 S}(xᴾ : F0ᴾ Sᴾ x)
-             → tr Oᴾ (HomF1 hom {x}) (F1ᴾ Sᴾ xᴾ) ≡ F1ᴾ  S*ᴾ (HomF0ᴾ hom homᴾ xᴾ)
-    HomF1ᴾ idh           homᴾ              xᴾ = refl
-    HomF1ᴾ (σ< hom a aᴾ) homᴾ              xᴾ = HomF1ᴾ hom homᴾ (aᴾ , xᴾ)
-    HomF1ᴾ (δ< hom f fᴾ) (_ , refl , homᴾ) xᴾ = HomF1ᴾ hom homᴾ (_ , xᴾ)
+    PathF1ᴾ : ∀ {S}{Sᴾ}(hom : Path {S} Sᴾ)(homᴾ : Path* hom){x : F0 S}(xᴾ : F0ᴾ Sᴾ x)
+             → tr Oᴾ (PathF1 hom {x}) (F1ᴾ Sᴾ xᴾ) ≡ F1ᴾ  S*ᴾ (PathF0ᴾ hom homᴾ xᴾ)
+    PathF1ᴾ idh           homᴾ              xᴾ = refl
+    PathF1ᴾ (σ< hom a aᴾ) homᴾ              xᴾ = PathF1ᴾ hom homᴾ (aᴾ , xᴾ)
+    PathF1ᴾ (δ< hom f fᴾ) (_ , refl , homᴾ) xᴾ = PathF1ᴾ hom homᴾ (_ , xᴾ)
 
-    F1ᴾ→ : ∀ {S} Sᴾ (hom : Hom {S} Sᴾ)(homᴾ : Hom* hom){x : F0 S}(xᴾ : F0ᴾ Sᴾ x)
-          → IIR.F1 (Sigᴾ→ Sᴾ hom) (F0ᴾ→' Sᴾ hom xᴾ) ≡ F1ᴾ S*ᴾ (HomF0ᴾ hom homᴾ xᴾ)
-    F1ᴾ→ (ι oᴾ)    hom homᴾ        xᴾ        = HomF1ᴾ hom homᴾ xᴾ
+    F1ᴾ→ : ∀ {S} Sᴾ (hom : Path {S} Sᴾ)(homᴾ : Path* hom){x : F0 S}(xᴾ : F0ᴾ Sᴾ x)
+          → IIR.F1 (Sigᴾ→ Sᴾ hom) (F0ᴾ→' Sᴾ hom xᴾ) ≡ F1ᴾ S*ᴾ (PathF0ᴾ hom homᴾ xᴾ)
+    F1ᴾ→ (ι oᴾ)    hom homᴾ        xᴾ        = PathF1ᴾ hom homᴾ xᴾ
     F1ᴾ→ (σ Aᴾ Sᴾ) hom homᴾ {a , x}(aᴾ , xᴾ) = F1ᴾ→ (Sᴾ aᴾ) (σ< hom a aᴾ) homᴾ xᴾ
     F1ᴾ→ (δ Aᴾ Sᴾ) hom homᴾ {f , x}(fᴾ , xᴾ) = F1ᴾ→ (Sᴾ _) (δ< hom f _) (fᴾ , refl , homᴾ) xᴾ
 
@@ -167,7 +167,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
         Pᴾ'' : (∃ λ x → IRᴾ x × P x) → Set k
         Pᴾ'' (x , xᴾ , w) = Pᴾ xᴾ w
 
-        IHᴾ← : ∀ {S} Sᴾ{x}(hom : Hom {S} Sᴾ){xᴾ : IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x}
+        IHᴾ← : ∀ {S} Sᴾ{x}(hom : Path {S} Sᴾ){xᴾ : IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x}
                  → IIR.IH (Sigᴾ→ Sᴾ hom) Pᴾ' xᴾ
                  → IHᴾ Sᴾ (F0ᴾ← Sᴾ hom xᴾ .₂ .₂) (mapIH S (IR.elim S* P met) (F0ᴾ← Sᴾ hom xᴾ .₁))
         IHᴾ← (ι oᴾ) hom ihᴾ .lower = tt
@@ -186,7 +186,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
                 (metᴾ (F0ᴾ← S*ᴾ idh xᴾ .₂ .₂) (IHᴾ← S*ᴾ idh ih)))
 
         mapIH-trip :
-          ∀ {S} Sᴾ {x} (hom : Hom {S} Sᴾ) (h : ∀ {i}(x : IRᴾ i) → Pᴾ' x)(xᴾ : F0ᴾ Sᴾ x)
+          ∀ {S} Sᴾ {x} (hom : Path {S} Sᴾ) (h : ∀ {i}(x : IRᴾ i) → Pᴾ' x)(xᴾ : F0ᴾ Sᴾ x)
           →
           tr (λ xᴾ → IHᴾ Sᴾ (xᴾ .₂ .₂) (mapIH S (IR.elim S* P met) (xᴾ .₁)))
              (F0ᴾlr Sᴾ hom (x , refl , xᴾ))
