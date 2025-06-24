@@ -108,7 +108,7 @@
 \newcommand{\Ty}{\msf{Ty}}
 \newcommand{\Tm}{\msf{Tm}}
 \newcommand{\ext}{\triangleright}
-\newcommand{\w}{\bullet}
+\newcommand{\w}{\circ}
 \newcommand{\lam}{\msf{lam}}
 \newcommand{\app}{\msf{app}}
 \newcommand{\bapp}{\$}
@@ -122,6 +122,7 @@
 \newcommand{\Id}{\msf{Id}}
 \newcommand{\refl}{\msf{refl}}
 \newcommand{\J}{\msf{J}}
+\newcommand{\G}{\mbb{G}}
 
 
 %% --------------------------------------------------------------------------------
@@ -226,7 +227,7 @@ development is as follows.
 
 In this section we describe the object type theory, focusing on the specification of IR and IIR
 types. We do not yet go into the formal details; instead, we shall mostly work with internal
-definitions in an Agda-like syntax. In Section \ref{TODO} we will give a rigorous specification that
+definitions in an Agda-like syntax. In Section \ref{TODO} we will give a more rigorous specification that
 is based on categories-with-families.
 
 \paragraph{Basic type formers}
@@ -488,7 +489,9 @@ The following shorthand describes the data that we get when we peel off an $\int
 \end{alignat*}
 Now, we can show that $S_{\floord{0}}\,i$ is equivalent to $S_0\,(\IIR\,S)\,\El\,i$, by induction on
 $S$. The induction is straightforward and we omit it here. We name the components of the equivalence
-as follows:
+as follows:\footnote{In the Agda formalization, we
+compute $\tau$ by induction on $S$, although it could be generically recovered from the other
+four components as well \cite{TODO}.}
 \begin{alignat*}{4}
   &\ora{S_0} &&: S_0\,(\IIR\,S)\,\El\,i \to S_{\floord{0}}\,i \\
   &\ola{S_0} &&: S_{\floord{0}}\,i \to S_0\,(\IIR\,S)\,\El\,i \\
@@ -497,9 +500,7 @@ as follows:
   &\tau      &&: \forall x.\,\,\ap\,\ora{S_0}\,(\eta\,x) = \epsilon\,(\ola{S_0}\,x)
 \end{alignat*}
 This is a half adjoint equivalence \cite{TODO}. The half adjoint coherence witness $\tau$ will be
-necessary shortly for rearranging some transports.\footnote{In the Agda formalization, we
-compute $\tau$ by induction on $S$, although it could also be generically recovered from the other
-four components \cite{TODO}.} Next, we show that the two $\blank_1$ operations are the same, modulo
+necessary shortly for rearranging some transports. Next, we show that the two $\blank_1$ operations are the same, modulo
 the previous equivalence, again by induction on IIR signatures.
 \[\blank_{\floord{1}} : (S : \Sig_\IIR)(x : S_0\,(\IIR\,S)\,\El\,i) \to \tr\,O\,(\snd\,(\ora{S_0}\,x))\,(\snd\,(\floord{S}_1\,(\fst\,(\ora{S_0}\,x)))) = S_1\,x\]
 This lets us define the other introduction rules as well.
@@ -542,7 +543,7 @@ This is again defined by easy induction on $S$. The induction method $\floord{f}
 \end{alignat*}
 Thus, the definition of elimination is:
 \[ \elim\,P\,f\,(x,\,p) :\equiv \elim_\IR\,\floord{P}\,\floord{f}\,x\,p \]
-Only the $\beta$-rule remains:
+Only the $\beta$-rule remains to be constructed:
 \[ \elim\!-\!\!\beta : \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(S_\map\,P\,(\elim\,P\,f)\,x) \]
 Computing definitions on the \textbf{left hand side}, we get:
 \begin{alignat*}{3}
@@ -560,7 +561,7 @@ This is now promising; on the left hand side we transport the result of $f$, whi
 side we transport the argument of $f$. Now, the identification on the left is
 $\epsilon\,(\ora{S_0}\,x)$, while we have $\eta\,x$ on the right. However, we have $\tau\,x :
 \ap\,(\ora{S_0})\,(\eta\,x) = \epsilon\,(\ora{S_0}\,x)$, which can be used in conjunction with
-standard transport lemmas to match up the two sides.
+standard transport lemmas to match up the two sides. This concludes the construction of IIR types.
 
 \subsection{Strictness}
 We briefly analyze the strictness of computation for constructed IIR types. Clearly, since the
@@ -662,8 +663,8 @@ Concretely, we have
 
 \subsubsection{Universes} We have Russell-style universes, where sets of terms of universes are identified with sets of types.
 Concretely, we have $\U : (i : \Nat) \to \Ty\,\Gamma\,(i + 1)$ such that $\U_i[\sigma] = \U_i$ and
-$\Tm\,\Gamma\,\U_i = \Ty\,\Gamma\,i$.  This lets us implicit cast between types and terms of
-universes. Additionally, we specify that this casting operation commutes with substitution, so
+$\Tm\,\Gamma\,\U_i = \Ty\,\Gamma\,i$.  This lets us implicitly convert between types and terms with
+universe types. Additionally, we specify that this casting operation commutes with substitution, so
 substituting $t : \Tm\,\Gamma\,\U_i$ as a term and then casting to a type is the same as first
 casting and then substituting as a type. Since we omit casts and overload $\blank[\blank]$, this
 rule looks trivial in our notation, but it still has to be assumed.
@@ -678,51 +679,64 @@ have a substitution rule $(\lam\,t)[\sigma\circ\p,\,\q] = \lam\,t[\sigma]$.
 %% functions: $A \fun B := \Pi\,A\,B[\p]$ where $A : \Ty\,\Gamma\,i$ and $B : \Ty\,\Gamma\,j$.
 \\
 
-\noindent\emph{Stability under substitution.} In the following we implicitly assume stability under
-substitution for every type and term former.
+%% \noindent\emph{Stability under substitution.} In the following we implicitly assume stability under
+%% substitution for every type and term former.
 
-\subsubsection{Sigma types} We have $\Sigma : (A : \Ty\,\Gamma\,i) \to \Ty\,(\Gamma \ext A)\,j \to \Ty\,\Gamma\,\max(i,\,j)$.
-Pairing and projection are given as a natural isomorphism between $\Tm\,\Gamma\,(\Sigma\,A\,B)$ and $(t : \Tm\,\Gamma\,A)\times \Tm\,\Gamma\,B[\id,\,t]$. We write $\blank,\blank$ for pairing and $\proj_1$ and $\proj_2$ for projections.
+\emph{Notation \& conventions.} So far we have used standard definitions, but now we develop some
+notations and conventions that are more tailored to our use case. CwF combinators and De Bruijn
+indices get very hard to read when get to more complicated rules like identity elimination or rules
+in the specification of IR types.
 
-\subsubsection{Empty type} We have $\bot : \Ty\,\Gamma\,0$ with elimination $\exfalso : (A : \Ty\,\Gamma\,i) \to \Tm\,\Gamma\,\bot \to \Tm\,\Gamma\,A$.
+\begin{itemize}
+\item Assuming $t : \Tm\,\Gamma\,(\Pi\,A\,B)$ and $u : \Tm\,\Gamma\,A$, traditional binary function
+  application can be derived as $(\app\,t)[\id,\,u] : \Tm\,\Gamma\,B[\id,\,u]$. We overload the
+  metatheoretic whitespace operator for this kind of object-level application.
+\item We may give a name to a binder (a binder can be a context extension or a $\Pi$, $\Sigma$ or
+  $\lam$ binder), and in the scope of the binder all occurrence of the name is desugared to a De
+  Bruijn index.  We write $\Pi$-types using the same notation as in the metatheory. For example, $(A
+  : \U_i) \to A \to A$ is desugared to $\Pi\,\U_i\,(\Pi\,\q\,\q[\p])$. We also reuse the notation
+  and behavior of implicit functions. We write object-level lambda abstraction as $\lam\,x.t$.
+\item
+  In the following we specify all type and term formers as \emph{term constants with an iterated
+  $\Pi$-type}.  For example, we will specify $\Id : \Tm\,\Gamma\,((A : \U_i) \to A \to A \to \U_i)$,
+  instead of abstracting over $A : \Ty\,\Gamma\,i$ and $t,\,u : \Tm\,\Gamma\,A$. In the general, the
+  two flavors are inter-derivable, but sticking to object-level functions lets us consistently use
+  the sugar for named binders. Also, specifying stability under substitution becomes very simple: a
+  substituted term constant is computed to the same constant (but living in a possibly different
+  implicit context). For example, if $\sigma : \Sub\,\Gamma\,\Delta$, then $\Id[\sigma] = \Id$ specifies
+  stability under substitution. Hence, we shall omit substitution rules in the following.
+\end{itemize}
 
-\subsubsection{Unit} We have $\top_i : \Ty\,\Gamma\,i$ with the unique inhabitant $\ttt$. Note that unlike the empty type, the unit
-type is included in every universe. As we explained in Section \ref{TODO}, this allows us to define a type lifting operation.
-
-\subsubsection{Booleans} Type formation is $\Bool : \Ty\,\Gamma\,0$ with constructors $\true$ and $\false$. Elimination is as follows.
+\subsubsection{Sigma types} We have
 \begin{alignat*}{3}
-  &\BoolElim : (P : \Ty\,(\Gamma \ext \Bool)\,i) \to \Tm\,\Gamma\,P[\id,\,\true] \to \Tm\,\Gamma\,P[\id,\,\false]\\
-  &\hspace{4.5em}             \to (t : \Tm\,\Gamma\,\Bool) \to \Tm\,\Gamma\,P[\id,\,t]\\
+  &\Sigma        &&: \Tm\,\Gamma\,((A : \U_i) \to (A \to \U_j) \to \U_{\max(i,\,j)}) \\
+  &\blank,\blank &&: \Tm\,\Gamma\,(\{A : \U_i\}\{B : A \to \U_j\}(t : A) \to B\,t \to \Sigma\,A\,B)\\
+  &\fst          &&: \Tm\,\Gamma\,(\{A : \U_i\}\{B : A \to \U_j\} \to \Sigma\,A\,B \to A)\\
+  &\snd          &&: \Tm\,\Gamma\,(\{A : \U_i\}\{B : A \to \U_j\}(t : \Sigma\,A\,B) \to B\,(\fst\,t))
+\end{alignat*}
+such that $\fst\,(t,\,u) = t$, $\snd\,(t,\,u) = u$ and $(\fst\,t,\,\snd\,u) = t$.
+
+\subsubsection{Empty type}
+We have $\bot : \Tm\,\Gamma\,\U_0$ with $\exfalso : \Tm\,\Gamma\,((A : \U_i) \to \bot
+\to A)$.
+
+\subsubsection{Unit} We have $\top_i : \Tm\,\Gamma\,\U_i$ with the unique inhabitant $\ttt$. Note that unlike the empty type, the unit
+type is included in every universe. As we explained in Section \ref{TODO}, this allows us to define
+a type lifting operation.
+
+\subsubsection{Booleans} Type formation is $\Bool : \Tm\,\Gamma\,\U_0$ with constructors $\true$ and $\false$. Elimination is as follows.
+\begin{alignat*}{3}
+  &\BoolElim : \Tm\,\Gamma\,((P : \Bool \to \U_i) \to P\,\true \to P\,\false \to (b : \Bool) \to P\,b)\\
   & \BoolElim\,P\,t\,f\,\true\hspace{0.2em} = t\\
   & \BoolElim\,P\,t\,f\,\false = f
 \end{alignat*}
-\emph{Notation \& conventions.} At this point we start building conventions
-for notation and desugaring, because raw CwF combinators and De Bruijn indices get very hard to read
-for more complicated specifications like identity elimination or the specification of IR types.
-\begin{itemize}
-\item Assuming $t : \Tm\,\Gamma\,(\Pi\,A\,B)$ and $u : \Tm\,\Gamma\,A$, traditional binary function application
-  can be derived as $(\app\,t)[\id,\,u] : \Tm\,\Gamma\,B[\id,\,u]$. We overload the metatheoretic whitespace
-  operator for this kind of object-level application.
-\item We may give a name to a binder (a binder can be a context extension or a $\Pi$, $\Sigma$ or $\lam$ binder),
-  and in the scope of the binder all occurrence of the name is desugared to the right De Bruijn index.
-  We write $\Pi$-types using the same notation as in the metatheory. For example, $(A :
-  \U_i) \to A \to A$ is desugared to $\Pi\,\U_i\,(\Pi\,\q\,\q[\p])$. We also reuse the notation and
-  behavior of implicit functions. We write object-level lambda abstraction as $\lam\,x.t$.
-\item In term formation rules, we will use a style where each term former is a constant with an
-  iterated $\Pi$-type.  In general, the choice between specifying something with a meta-level or
-  object-level function is arbitrary (i.e.\ the two-versions are inter-derivable). Sticking to
-  object-level functions lets us consistently use the desugaring for named binders.
-\end{itemize}
 
-\subsubsection{Identity types} We start using the previously introduced convention.
-Type and term formation is as follows.
+
+\subsubsection{Identity types}
 \begin{alignat*}{3}
   &\Id   &&: \Tm\,\Gamma\,((A : \U_i) \to A \to A \to \U_i)\\
   &\refl &&: \Tm\,\Gamma\,(\{A : \U_i\}(t : A) \to \Id\,A\,t\,t)
 \end{alignat*}
-One more example for desugaring: the type of $\refl$ becomes
-$\Tm\,\Gamma\,(\Pi\,\U_i\,(\Pi\,\q\,(\Id\,\q[\p]\,\q\,\q)))$.  Identity elimination is the
-following.
 \begin{alignat*}{3}
   &\J : \Tm\,\Gamma\,(\{A : \U_i\}\{x : A\}(P : (y : A) \to \Id\,A\,x\,y \to \U_k)\\
   & \hspace{3.5em}\to P\,(\refl\,x) \to \{y : A\}(p : \Id\,A\,x\,y) \to P\,y\,p)&&
@@ -746,102 +760,94 @@ and $j$.
   &           \hspace{2.2em}\to (S : \Sig_i\,O) \to P\,S)\\
   &\\
   &\SigElim\,P\,i\,s\,d\,(\iota\,o) \hspace{1.1em} = i\\
-  &\SigElim\,P\,i\,s\,d\,(\sigma\,A\,S) = s\,A\,S\,(\lam\,a.\,\SigElim\,P\,i\,s\,d\,(S\,a))\\
-  &\SigElim\,P\,i\,s\,d\,(\delta\,A\,S) \hspace{0.1em}= d\,A\,S\,(\lam\,f.\,\SigElim\,P\,i\,s\,d\,(S\,f))
+  &\SigElim\,P\,i\,s\,d\,(\sigma\,A\,S) = s\,A\,S\,(\lam\,a.\,\SigElim\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,a))\\
+  &\SigElim\,P\,i\,s\,d\,(\delta\,A\,S) \hspace{0.1em}= d\,A\,S\,(\lam\,f.\,\SigElim\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,f))
 \end{alignat*}
+Note that the $[\p]$ weakenings in the computation rules: $P$, $i$, $s$, $d$, and $S$ are all terms
+quantified in some implicit context $\Gamma$, so when we mention them under an extra $\lam$ binder,
+we have to weaken them. Hence, we cannot fully avoid explicit substitution operations by using named
+binders. We already saw rest of the specification in Section \ref{TODO} so we only give a short summary.
+\begin{itemize}
+\item $\blank_0$, $\blank_1$, $\blank_\map$ and $\blank_\IH$ are defined by $\SigElim$ and they satisfy the same definitional equations
+  that we saw in Section \ref{TODO}.
+\item $\IR$, $\El$, $\intro$, $\elim$ are all specified as term constants that are only parameterized over contexts and some universe levels.
+\end{itemize}
 
-\todo{Move sugar to right after universes and functions}
+\subsection{Canonicity of the Object Theory}\label{sec:canonicity-model}
 
+\emph{Overview.} On a high level, canonicity is proved by induction over the syntax of the object
+theory. Since the syntax is a quotient inductive-inductive type, it supports an induction principle,
+which we do not write out fully here, and only use one particular instance of it. Formally, the
+induction principle takes a \emph{displayed model} as an argument, which corresponds to a bundle of
+induction motives and methods, and proofs that quotient equations are respected. We could present
+the current construction as a displayed model. However, we find it a bit more readable to instead
+use an Agda-like notation, where we specify the resulting \emph{section} of the displayed model,
+which consists of a collection of mutual functions, mapping out from the syntax, which have action on
+constructors and respect all quotient equations.
 
-  %% SigElim : ∀ {k}(P : Sig → Set k)
-  %%           → ((o : O) → P (ι o))
-  %%           → ((A : Set i) (S : A → Sig) → ((a : A) → P (S a)) → P (σ A S))
-  %%           → ((A : Set i) (S : (A → O) → Sig) → ((f : A → O) → P (S f)) → P (δ A S))
-  %%           → ∀ S → P S
-  %% SigElim P ι' σ' δ' (ι o)   = ι' o
-  %% SigElim P ι' σ' δ' (σ A S) = σ' A S (SigElim P ι' σ' δ' ∘ S)
-  %% SigElim P ι' σ' δ' (δ A S) = δ' A S (SigElim P ι' σ' δ' ∘ S)
+We aim to define the following functions by induction:
+\begin{alignat*}{3}
+  &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\emptycon\,\Gamma \to \Set_\omega\\
+  &\blank^\w : (A : \Ty\,\Gamma\,i) && \to (\gamma : \Sub\,\emptycon\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \Tm\,\emptycon\,A[\gamma] \to \Set_i\\
+  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to (\gamma : \Sub\,\emptycon\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\sigma \circ \gamma)\\
+  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to (\gamma : \Sub\,\emptycon\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma\,\gamma^\w\,t[\gamma]
+\end{alignat*}
+\todo{explain}
 
-  %% data Sig : Set (lsuc i ⊔ j) where
-  %%   ι : O → Sig
-  %%   σ : (A : Set i) → (A → Sig) → Sig
-  %%   δ : (A : Set i) → ((A → O) → Sig) → Sig
+This has appeared in different flavors in previous literature. It is a proof-relevant logical
+predicate interpretation, which corresponds to \emph{Artin gluing} \cite{TODO}, i.e.\ categorical
+gluing over the global sections functor \cite{TODO}. The concrete formulation that we use is the
+type-theoretic gluing by Kaposi, Huber and Sattler \cite{TODO}. This is a mild variation which uses
+dependent type families instead of the fibered families of the categorical flavor. The
+type-theoretic style becomes valuable when we get to the interpretation of more complicated type
+formers, where it is easier to use than diagrammatic reasoning.
 
+\subsubsection{The Global Sections Functor}
 
-%% We have $\Id : (A : \Ty\,\Gamma\,i) \to \Tm\,\Gamma\,A \to \Tm\,\Gamma\,A \to \Ty\,\Gamma\,i$
-%% and $\refl : (t : \Tm\,\Gamma\,A) \to \Tm\,\Gamma\,(\Id\,
+Above, note the quantification over closing substitutions. We could continue to explicitly write out
+closing substitutions, but it is more clear and concise to instead refer to the \emph{global
+sections functor} and develop some notation around it. It is a weak CwF morphism between the object
+syntax and the ``standard'' $\Set$-based model of the object theory \cite{TODO}. Concretely, we define
+it as follows.
+\begin{alignat*}{3}
+  &\G : \Con \to \Set_\omega                                        &&\G : (\sigma : \Sub\,\Gamma\,\Delta) \to \G\,\Gamma \to \G\,\Delta\\
+  &\G\,\Gamma := \Sub\,\emptycon\,\Gamma                           &&\G\,\sigma\,\gamma := \sigma \circ \gamma \\
+  & &&\\
+  &\G : (A : \Ty\,\Gamma\,i) \to \G\,\Gamma \to \Set_i\hspace{3em} &&\G : (t : \Tm\,\Gamma\,A) \to (\gamma : \G\,\Gamma) \to \G\,A\,\gamma\\
+  &\G\,A\,\gamma := \Tm\,\emptycon\,A[\gamma]                      && \G\,t\,\gamma := t[\gamma]
+\end{alignat*}
+$\G$ has the following properties:
+\begin{itemize}
+\item It is a functor, so we have $\G\,\id = (\lambda\,\gamma.\,\gamma)$ and $\G\,(\sigma \circ \delta) = \G\,\sigma \circ \G\,\delta$.
+\item It strictly preserves type substitution and term substitution, so $\G\,(A[\sigma]) = \G\,A\,(\G\,\sigma)$ and likewise for terms.
+\item It preserves empty and extended contexts up to isomorphism, i.e.\ $\G\,\emptycon \simeq \top_\omega$ and $\G\,(\Gamma \ext A) \simeq ((\gamma : \G\,\Gamma) \times \G\,A\,\gamma)$. \emph{Notation:} we shall omit component of these isomorphisms in the following.
+\item It has lax preservation of universes and function types:
+\begin{alignat*}{3}
+  &\G_\U : \G\,\U_i\,\gamma \to \Set_i\hspace{3em} && \G_\Pi : \G\,(\Pi\,A\,B),\gamma \to (\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)\\
+  &\G_\U\,A := \Tm\,\emptycon\,A                   && \G_\Pi\,f\,\alpha := f\,\alpha
+\end{alignat*}
+\emph{Notation:} we shall also leave $\G_\U$ and $\G_\Pi$ implicit in the following. In particular, leaving $\G_\Pi$ implicit is like
+having overloaded function application for $\G\,(\Pi\,A\,B)\,\gamma$.
+\end{itemize}
 
+\subsubsection{Interpretation of the CwF and the Basic Type Formers}
 
-
-
-
-
-
-
-
-%% \subsubsection{IR signatures}
-%% We specify the type of IR signatures in the following as an inductive type. We assume $i, j : \Nat$ and
-%% $O : \Ty\,\Gamma\,j$ as parameters.
-%% \begin{alignat*}{3}
-%%   & \Sig_i\,O &&: \Ty\,\Gamma\,\max(i+1,\,j) \\
-%%   & \iota     &&: \Tm\,\Gamma\,O \to \Tm\,\Gamma\,(\Sig_i\,O)\\
-%%   & \sigma    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,(A \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)\\
-%%   & \delta    &&: (A : \Ty\,\Gamma\,\U_i) \to \Tm\,\Gamma\,((A \fun O) \fun \Sig_i\,O) \to \Tm\,\Gamma\,(\Sig_i\,O)
-%% \end{alignat*}
-%% Note that we have some choice whether to represent function arguments as internal function types,
-%% context extension, or meta-level function types. For example, $\Tm\,\Gamma\,(A \fun \Sig_i\,O)$
-%% could be represented as $\Tm\,(\Gamma\ext A)\,(\Sig_i\,O[\p])$ as well. Also, since we have
-%% universes and $\Pi$-types, we could choose to specify all of $\iota$, $\sigma$ and $\delta$ as term
-%% constants with a function type. All of these choices yield inter-derivable specifications.
-
-%% We proceed to the elimination principle. Here, the native CwF notation becomes difficult to read, so
-%% we introduce some syntactic sugar. We can give names to binders, and we can refer to a variable by
-%% name in a possibly larger context. Every mention of the variable name is desugared to a De Bruijn
-%% index.
-%% \begin{alignat*}{3}
-%%   &\SigElim_k :\,(P : \Tm\,\Gamma\,(\Sig_i\,O \fun \U_k))\\
-%%   & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(o : O)\,(P[\p]\,\$\,(\iota\,o)))\\
-%%   & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))))\\
-%%   & \hspace{3em}\to \Tm\,\Gamma\,(\Pi\,(A : \U_i)\,(\Pi\,(S : (A \fun O[\p]) \fun \Sig_i\,O[\p^2])\\
-%%   & \hspace{6.85em}                 ((\Pi\,(f : A \fun O[\p^2])\,(P[\p^3]\,\$\,(S\,\$\,f))) \fun P[\p^2]\,\$\,(\delta\,A\,S))))\\
-%%   & \hspace{3em}\to (S : \Tm\,\Gamma\,(\Sig_i\,O))\\
-%%   & \hspace{3em}\to \Tm\,\Gamma\,(P\,\$\,S)
-%% \end{alignat*}
-%% \begin{alignat*}{3}
-%%   &\SigElim_k\,P\,i\,s\,d\,(\iota\,o) && = i\,\$\,o\\
-%%   &\SigElim_k\,P\,i\,s\,d\,(\sigma\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,a\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,a)))\\
-%%   &\SigElim_k\,P\,i\,s\,d\,(\delta\,A\,S) && = s\,\$\,A\,\$\,S\,\$\,(\lam\,f\,(\SigElim_k\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,\$\,f)))
-%% \end{alignat*}
-%% For example,
-%% \[ \Pi\,(A : \U_i)\,(\Pi\,(S : A \fun \Sig_i\,O[\p^2])\,((\Pi\,(a : A)\,(P[\p^3]\,\$\,(S\,\$\,a))) \fun P[\p^2]\,\$\,(\sigma\,A\,S))) \]
-%% is desugared to
-%% \[ \Pi\,\U_i\,(\Pi\,(\q \fun \Sig_i\,O[\p^2])\,((\Pi\,\q[\p]\,(P[\p^3]\,\$\,(\q[\p]\,\$\,\q))) \fun P[\p^2]\,\$\,(\sigma\,\q[\p]\,\q))). \]
-%% Or, with numeric De Bruijn indices:
-%% \[ \Pi\,\U_i\,(\Pi\,(0 \fun \Sig_i\,O[\p^2])\,((\Pi\,1\,(P[\p^3]\,\$\,(1\,\$\,0))) \fun P[\p^2]\,\$\,(\sigma\,1\,0))) \]
-%% Either way, De Bruijn indices are just not readable. Fortunately, as we will see shortly, we can
-%% avoid De Bruijn indices in the crucial parts of the canonicity proof.
-
-%% \subsubsection{IR types}
-%% \begin{alignat*}{3}
-%%   \IR : \Tm\,\Gamma\,\Sig_i\,O \to
-%% \end{alignat*}
-
-%% QUESTION: encode everything in IR with full function types and named binders, and give some examples
-%% of desugaring?? This works in the canonicity model.
-
-  %% data IR (S : Sig) : Set i
-  %% El : ∀ {S} → IR S → O
-
-  %% data IR S where
-  %%   wrap : F0 S (IR S) El → IR S
-
-  %% {-# TERMINATING #-}
-  %% El {S} (wrap t) = F1 S t
-
-  %% {-# TERMINATING #-}
-  %% elim : ∀ {k} S (P : IR S → Set k) → (∀ x → IH S P x → P (wrap x)) → ∀ x → P x
-  %% elim S P f (wrap x) = f x (mapIH S P (elim S P f) x)
-
+First, we revisit the specification of the induction motives:
+\begin{alignat*}{3}
+  &\blank^\w : (\Gamma : \Con)      && \to \G\,\Gamma \to \Set_\omega\\
+  &\blank^\w : (A : \Ty\,\Gamma\,i) && \to (\gamma : \G\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \G\,A\,\gamma \to \Set_i\\
+  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to (\gamma : \G\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\G\,\sigma\,\gamma)\\
+  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to (\gamma : \G\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma\,\gamma^\w\,(\G\,t\,\gamma)
+\end{alignat*}
+The interpretation of empty and extended contexts is as follows.
+\begin{alignat*}{3}
+  &\emptycon^\w\,&&\gamma                 &&:= \top \\
+  &(\Gamma\ext A)^\w\,&&(\gamma,\,\alpha) &&:= (\gamma^\w : \Gamma^\w\,\gamma) \times A^\w\,\gamma\,\gamma^\w
+\end{alignat*}
+Note that in the $\Gamma \ext A$ case, the type of the argument is $\G\,(\Gamma \ext A)$, which is
+by definition $\Sub\,\emptycon\,(\Gamma \ext A)$, which is isomorphic to $(\gamma : \G\,\Gamma)
+\times \G\,A\,\gamma$. This justifies the pattern matching notation in $(\gamma,\,\alpha)$; in other words, we have an implicit conversion
+to a $\Sigma$-type.
 
 \section{TODO}
 
