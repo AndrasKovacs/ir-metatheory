@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  25 JUN 2025 01:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  25 JUN 2025 16:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1532,9 +1532,6 @@ Package natbib Warning: Citation `TODO' on page 1 undefined on input line 192.
 Package natbib Warning: Citation `TODO' on page 1 undefined on input line 193.
 
 
-Package natbib Warning: Citation `TODO' on page 1 undefined on input line 193.
-
-
 Package natbib Warning: Citation `TODO' on page 1 undefined on input line 195.
 
 
@@ -1589,42 +1586,44 @@ LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 239.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 239.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 239.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 240.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 240.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 241.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 241.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 242.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 244.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 243.
+ne 244.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 245.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 245.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 245.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 245.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 246.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 246.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 247.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 246.
+ne 247.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 248.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 248.
+ne 247.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 248.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 248.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 248.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 248.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 249.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 249.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 249.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 7.3pt on input line 251.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
@@ -1637,12 +1636,9 @@ LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 251.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 251.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
 (Font)              scaled to size 8.0pt on input line 257.
- [2.2]
+[2.2]
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 261.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
@@ -1771,11 +1767,14 @@ LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 278.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 279.
+
+
+Package natbib Warning: Citation `TODO' on page 3 undefined on input line 279.
+
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 279.
+ne 280.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 281.
-
 
 Package natbib Warning: Citation `TODO' on page 3 undefined on input line 284.
 
@@ -9563,23 +9562,79 @@ ne 717.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 717.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 720.
+ne 719.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 719.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 721.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 723.
+ne 721.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 723.
-
-
-LaTeX Warning: Reference `TODO' on page 11 undefined on input line 724.
-
+ne 721.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 727.
+ne 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 727.
+ne 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 727.
+ne 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 726.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
@@ -9594,6 +9649,10 @@ LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 732.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
@@ -9612,12 +9671,16 @@ LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
@@ -9629,823 +9692,777 @@ ine 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 732.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 732.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 732.
+ine 738.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 732.
+ne 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 732.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 732.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 732.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 732.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 732.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
+ne 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
+ne 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
+ne 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
+ne 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
+ne 738.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 738.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 740.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 741.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 739.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 745.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 748.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
+ [11.11]
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 747.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 754.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-[11.11]
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 754.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 758.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 759.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 759.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 759.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 759.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 759.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 759.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 760.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 765.
+ne 760.
+
+
+LaTeX Warning: Reference `TODO' on page 12 undefined on input line 762.
+
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 764.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 764.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 764.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 764.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 765.
+ine 764.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 764.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 764.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 764.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 764.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 764.
+
+LaTeX Warning: Reference `TODO' on page 12 undefined on input line 765.
+
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 766.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 766.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 766.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 766.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 766.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 766.
+ine 787.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 766.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 766.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 766.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 766.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 767.
+ine 787.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 767.
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 787.
 
-
-LaTeX Warning: Reference `TODO' on page 12 undefined on input line 769.
-
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 771.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 771.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 771.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 771.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 771.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 771.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 771.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 771.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 771.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 771.
-
-LaTeX Warning: Reference `TODO' on page 12 undefined on input line 772.
-
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 773.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 773.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 773.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 773.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 773.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 794.
-
-Package natbib Warning: Citation `TODO' on page 12 undefined on input line 798.
+Package natbib Warning: Citation `TODO' on page 12 undefined on input line 791.
 
 
 
-Package natbib Warning: Citation `TODO' on page 12 undefined on input line 799.
+Package natbib Warning: Citation `TODO' on page 12 undefined on input line 792.
 
 
 
-Package natbib Warning: Citation `TODO' on page 12 undefined on input line 800.
+Package natbib Warning: Citation `TODO' on page 12 undefined on input line 793.
 
 
 [12.12]
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 810.
+ne 803.
 
 
-Package natbib Warning: Citation `TODO' on page 13 undefined on input line 810.
+Package natbib Warning: Citation `TODO' on page 13 undefined on input line 803.
 
 
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 818.
+ne 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 818.
+ine 811.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 819.
+ine 812.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 814.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 814.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 814.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 815.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 815.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 816.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 816.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 816.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 816.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 816.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 816.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 816.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 817.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 821.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
@@ -10453,325 +10470,456 @@ ne 821.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 821.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 822.
+ine 821.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 822.
+ine 821.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 821.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 822.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 823.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 823.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 823.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 823.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 823.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 823.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 823.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 823.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 824.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
+ne 824.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 828.
+ne 826.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
+ine 826.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
+ine 826.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 828.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 829.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 830.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 830.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 830.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 831.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 833.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 833.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 833.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 834.
+ine 827.
 
-Package natbib Warning: Citation `TODO' on page 13 undefined on input line 838.
+Package natbib Warning: Citation `TODO' on page 13 undefined on input line 832.
 
 
 
-LaTeX Warning: Reference `TODO' on page 13 undefined on input line 839.
+Package natbib Warning: Citation `TODO' on page 13 undefined on input line 833.
+
 
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 840.
+ine 836.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 846.
+ne 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 846.
+ine 842.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 851.
+ine 847.
 [13.13]
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 847.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 849.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 850.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 850.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 850.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 850.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 850.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 850.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 851.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 853.
+ine 852.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 854.
+ine 852.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 854.
+ne 859.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 854.
+ine 859.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 854.
+ine 859.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 854.
+ine 859.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 854.
+ine 859.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 855.
+ine 859.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 856.
+ine 859.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 856.
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 859.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 863.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 863.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 863.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 863.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 863.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
@@ -10796,84 +10944,8 @@ LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 863.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
 ne 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 863.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
@@ -10897,357 +10969,792 @@ ine 863.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 863.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
+ne 865.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 863.
+ne 866.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 863.
+ine 866.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 866.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 866.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 867.
+ne 866.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 866.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 867.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 867.
+ne 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 867.
+ne 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 867.
+ne 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 867.
+ine 878.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 869.
+ne 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 878.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 879.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 879.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 880.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 880.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 870.
+ne 886.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 870.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 870.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 870.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 870.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 870.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 871.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 882.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 882.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 882.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 882.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 882.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 883.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 883.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 884.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 884.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 892.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 891.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 893.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 893.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 893.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 893.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 893.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 893.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 893.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 893.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 893.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ne 893.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 894.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 894.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 894.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ine 894.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
+ne 894.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 897.
+ne 894.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 897.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
-LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
+ine 907.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 898.
+ne 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
+ine 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
+ine 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 898.
+ine 907.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 898.
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 899.
+ne 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 899.
+ine 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 899.
+ine 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 899.
+ine 907.
 LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
-ne 899.
+ne 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 949.
+ine 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 950.
+ine 907.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
-ine 951.
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 907.
+ [14.14]
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 907.
+LaTeX Font Info:    Undo math alphabet allocation in version normal on input li
+ne 908.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 908.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 966.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 967.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 968.
  (./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 45.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 52.
- [14.14])
+)
 
 Package natbib Warning: There were undefined citations.
 
@@ -11272,14 +11779,14 @@ LaTeX Font Warning: Size substitutions with differences
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 6850DA0F630C32B72B874EC26BB74FFC;2292.
+(rerunfilecheck)             Checksum: 2DF2A57A153D409D106F95F04257BF93;2469.
  ) 
 Here is how much of TeX's memory you used:
- 32884 strings out of 478287
- 596962 string characters out of 5849290
- 922415 words of memory out of 5000000
- 49594 multiletter control sequences out of 15000+600000
- 703888 words of font info for 521 fonts, out of 8000000 for 9000
+ 32896 strings out of 478287
+ 597275 string characters out of 5849289
+ 924002 words of memory out of 5000000
+ 49593 multiletter control sequences out of 15000+600000
+ 705138 words of font info for 531 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  99i,20n,131p,1002b,841s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/us
@@ -11303,10 +11810,10 @@ tx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (15 pages, 593984 bytes).
+Output written on paper.pdf (15 pages, 594208 bytes).
 PDF statistics:
  290 PDF objects out of 1000 (max. 8388607)
  234 compressed objects within 3 object streams
- 67 named destinations out of 1000 (max. 500000)
- 123037 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 65 named destinations out of 1000 (max. 500000)
+ 123045 words of extra memory for PDF output out of 128383 (max. 10000000)
 

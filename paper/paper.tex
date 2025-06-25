@@ -152,7 +152,7 @@ construct IIR types from inductive-recursive (IR) types and other basic type for
 simplify the subsequent canonicity proof. The constructed IIR types support the same definitional
 computation rules that are available in Agda's native IIR implementation. Second, we give a
 canonicity proof for IR types, building on the well-known method of Artin gluing. The main idea is
-to encode the reducibility predicate for each IR type using a metatheoretic IIR type.
+to encode the canonicity predicate for each IR type using a metatheoretic IIR type.
 \end{abstract}
 
 %% \begin{CCSXML}
@@ -188,9 +188,9 @@ $\Code$ over some type, which lets us define inductive-recursive predicates \cit
 
 One application of IR has been to develop semantics for object theories that support universe
 hierarchies. IR has been used in normalization proofs \cite{TODO}, in modeling first-class universe
-levels \cite{TODO} and proving canonicity for them \cite{TODO}, and in characterizing domains of
-partial functions \cite{TODO}. Another application is to do generic programming over universes of
-type descriptions \cite{TODO} or data layout descriptions \cite{TODO}.
+levels \cite{TODO} and proving canonicity for them \cite{TODO}. Other applications are in
+characterizing domains of partial functions \cite{TODO} and in generic programming over universes of
+type descriptions or data layout descriptions \cite{TODO}.
 
 IIR has been supported in Agda 2 since the early days of the system \cite{TODO}, and it is also
 available in Idris 1 and Idris 2 \cite{TODO}. In these systems, IR has been implemented in the
@@ -230,24 +230,24 @@ types. We do not yet go into the formal details; instead, we shall mostly work w
 definitions in an Agda-like syntax. In Section \ref{TODO} we will give a more rigorous specification that
 is based on categories-with-families.
 
-\paragraph{Basic type formers}
+\subsection{Basic Type Formers}
 We have a countable hierarchy of Russell-style universes, written as $\U_i$, where $i$ is an
 external natural number. We have $\U_i : \U_{i + 1}$. We have $\Pi$-types as $(x : A) \to B\,x$,
 which has type $\U_{\max(i,\,j)}$ when $A : \U_i$ and $B : A \to \U_j$. We use Agda-style implicit
 function types for convenience, as $\{x : A\} \to B\,x$, to mark that a function argument should be
 inferred from context. We have $\Sigma$-types, written as $(x : A) \times B\,x$, which also has type
-$\U_{\max(i,\,j)}$. We have $\bot : \U_0$ for the empty type. We have $\top : \U_i$ for every $i$
-level, with unique inhabitant $\ttt$. We have $\Bool : \U_0$ for Booleans. We have intensional
-identity types, as $t = u : \U_i$ for $t : A : \U_i$, with a transport operation $\tr : \{A :
-\U_i\}(P : A \to \U_j)\{x\,y : A\} \to x = y \to P\,x \to P\,y$. We will also sometimes use the
-path application operation $\ap : (f : A \to B) \to x = y \to f\,x = f\,y$.
-
-We note some derivable type formers. First, finite sum types are derivable from $\bot$, $\Sigma$,
-$\Bool$ and large elimination on $\Bool$. They are useful as ``constructor tags'' in
-inductive definitions. Second, we can define a universe lifting operation $\Lift : \U_i \to
-\U_{\max(i,\,j)}$ such that $\Lift\,A$ is definitionally isomorphic to $A$, by setting $\Lift\,A$
-to $A \times \top_j$. We write the wrapping operation as $\lup\,:\,A \to \Lift\,A$ with inverse $\ldown$.
-
+$\U_{\max(i,\,j)}$. We have the unity type $\top : \U_i$ with unique inhabitant $\ttt$. We have
+$\Bool : \U_0$ for Booleans. We have intensional identity types, as $t = u : \U_i$ for $t : A :
+\U_i$. We define (by identity elimination) a transport operation $\tr : \{A : \U_i\}(P : A \to
+\U_j)\{x\,y : A\} \to x = y \to P\,x \to P\,y$. We derive some other type formers below.
+\begin{itemize}
+  \item We define a universe lifting operation $\Lift : \U_i \to \U_{\max(i,\,j)}$ such that
+    $\Lift\,A$ is definitionally isomorphic to $A$, by setting $\Lift\,A$ to $A \times \top_j$. We
+    write the wrapping operation as $\lup\,:\,A \to \Lift\,A$ with inverse $\ldown$.
+  \item We define the empty type $\bot : \U_0$ as $\true = \false$.
+  \item We can define finite sum types from $\bot$, $\Sigma$ and $\Bool$. These are useful
+    as ``constructor tags'' in inductive types.
+\end{itemize}
 We write $\blank\!\!\equiv\!\!\blank$ for definitional equality, and give definitions using $:\equiv$.
 
 \subsection{IR Types}
@@ -258,7 +258,7 @@ of the following.
   functions on signatures which are required in the specification of other rules.
 \item Rules for type formation, term formation and the recursive function, with a computation rule
   for the recursive function.
-\item The induction principle with a $\beta$ rule.
+\item The induction principle with a $\beta$-rule.
 \end{enumerate}
 
 \subsubsection{IR signatures}\label{sec:ir-signatures}
@@ -276,9 +276,9 @@ since $j$ is inferable from $O$.
   &\quad \sigma               : (A : \U_i) \to (A \to \Sig_i\,O) \to \Sig_i\,O \\
   &\quad \delta\hspace{0.1em} : (A : \U_i) \to ((A \to O) \to \Sig_i\,O) \to \Sig_i\,O
 \end{alignat*}
-Formally, we can view $\Sig$ in two ways. We can either view it as just a particular family of $\msf{W}$-types,
-or as an inductive type that is primitively part of the object theory. The choice is not important, since inductive
-families are constructible from $\msf{W}$-types \cite{whynotw}.
+Formally, we can view $\Sig$ in two ways: it is either a primitive inductive family \cite{TODO} or
+it is defined as a $\msf{W}$-type \cite{whynotw}. The choice is not crucial, but in this paper
+we treat $\Sig$ as a native inductive type, in order to avoid encoding overheads.
 
 \begin{example}
 We can reproduce the Agda example from Figure \cite{TODO}. First, we need an enumeration type to
@@ -716,13 +716,7 @@ in the specification of IR types.
 \end{alignat*}
 such that $\fst\,(t,\,u) = t$, $\snd\,(t,\,u) = u$ and $(\fst\,t,\,\snd\,u) = t$.
 
-\subsubsection{Empty type}
-We have $\bot : \Tm\,\Gamma\,\U_0$ with $\exfalso : \Tm\,\Gamma\,((A : \U_i) \to \bot
-\to A)$.
-
-\subsubsection{Unit} We have $\top_i : \Tm\,\Gamma\,\U_i$ with the unique inhabitant $\ttt$. Note that unlike the empty type, the unit
-type is included in every universe. As we explained in Section \ref{TODO}, this allows us to define
-a type lifting operation.
+\subsubsection{Unit} We have $\top_i : \Tm\,\Gamma\,\U_i$ with the unique inhabitant $\ttt$.
 
 \subsubsection{Booleans} Type formation is $\Bool : \Tm\,\Gamma\,\U_0$ with constructors $\true$ and $\false$. Elimination is as follows.
 \begin{alignat*}{3}
@@ -731,8 +725,7 @@ a type lifting operation.
   & \BoolElim\,P\,t\,f\,\false = f
 \end{alignat*}
 
-
-\subsubsection{Identity types}
+\subsubsection{Identity type}
 \begin{alignat*}{3}
   &\Id   &&: \Tm\,\Gamma\,((A : \U_i) \to A \to A \to \U_i)\\
   &\refl &&: \Tm\,\Gamma\,(\{A : \U_i\}(t : A) \to \Id\,A\,t\,t)
@@ -835,9 +828,12 @@ having overloaded function application for $\G\,(\Pi\,A\,B)\,\gamma$.
 \end{itemize}
 
 \subsubsection{Interpretation of the CwF and the Basic Type Formers}
-This has been described in previous literature \cite{TODO}, so we focus on parts which are relevant
-to the interpretation of IR types in Section \ref{TODO}, and also recall some basics to establish
-notation. First, we revisit the specification of the induction motives, now using $\G$:
+
+This has been described in previous literature \cite{TODO}; in particular the code supplement to
+\cite{TODO} has an Agda formalization of the canonicity model with the same universe setup and basic
+type formers that we use. Therefore we only present parts here which are relevant to the IR type
+interpretation, which are the CwF, universes and functions. First, we revisit the specification of
+the induction motives, now using $\G$:
 \begin{alignat*}{3}
   &\blank^\w : (\Gamma : \Con)                 && \to \G\,\Gamma \to \Set_\omega\\
   &\blank^\w : (A : \Ty\,\Gamma\,i)            && \to \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \G\,A\,\gamma \to \Set_i\\
@@ -883,20 +879,41 @@ We interpret functions as follows.
 In the $\Pi\,A\,B$ case, note that $f : \G\,(\Pi\,A\,B)\,\gamma$, which means that we can apply it
 to $\alpha$ to get $f\,\alpha : \G\,B\,(\gamma,\,\alpha)$.
 
-\todo{stuff}
-
 \subsubsection{Interpretation of IR signatures}
 
 Signatures are given as a particular parameterized inductive type, so in principle there should be
 nothing ``new'' in their logical predicate interpretation. We do detail it here because several
-later constructions depend on it. Recall that $\Sig_i : \Tm\,\Gamma\,((O : \U_j) \to \U_{\max(i+1,\,j)})$. Hence,
+later constructions depend on it. Recall that $\Sig_i : \Tm\,\Gamma\,((O : \U_j) \to \U_{\max(i+1,\,j)})$, so we have
 \begin{alignat*}{3}
   &(\Sig_i)^\w\,\gamma^\w : ((O : \U_j) \to \U_{\max(i+1,\,j)})^\w\,\gamma^\w\,\Sig_i\\
   &(\Sig_i)^\w\,\gamma^\w : \{O : \G\,\U_j\,\gamma\}(O^\w : (\U_j)^\w\,\gamma^\w\,O) \to (\U_{\max(i+1,\,j)})^\w\,\gamma^\w\,(\Sig_i\,O)\\
   &(\Sig_i)^\w\,\gamma^\w : \{O : \Tm\,\emptycon\,\U_i\}(O^\w : \Tm\,\emptycon\,O \to \Set_i) \to \Tm\,\emptycon\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}.
 \end{alignat*}
-Hence, we define an inductive type in the metatheory that is parameterized by $O : Tm\,\emptycon\,U_i$ and $O^\w : \Tm\,\emptycon\,\Set_i$ and indexed
-over $\Tm\,\emptycon\,(\Sig_i\,O)$.
+Hence, we define an inductive type in the metatheory that is parameterized by $O :
+\Tm\,\emptycon\,U_i$ and $O^\w : \Tm\,\emptycon\,O \to \Set_i$ and indexed over
+$\Tm\,\emptycon\,(\Sig_i\,O)$. We name this inductive type $\Sig^\w$, which risks some confusion,
+but we shall take the risk.
+\begin{alignat*}{4}
+  &\rlap{$\data\,\Sig^\w  : \Tm\,\emptycon\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}$}\\
+  &\quad \iota^\w  &&:\,&&\{o &&: \Tm\,\emptycon\,O\}(o^\w : O^\w\,o) \to \Sig^\w\,(\iota\,o)\\
+  &\quad \sigma^\w &&:\,&&\{A &&: \Tm\,\emptycon\,\U_i\}(A^\w : \Tm\,\emptycon\,A \to \Set_i)\\
+  &               && &&\{S &&: \Tm\,\emptycon\,(A \to \Sig_i\,O)\}\\
+  &               && && (S^\w &&: \{a : \Tm\,\emptycon\,A\} \to A^\w\,a \to \Sig^\w\,(S\,a))\\
+  &               && && \to &&\,\Sig^\w\,(\sigma\,A\,S)\\
+  &\quad \delta^\w &&:\,&&\{A &&: \Tm\,\emptycon\,\U_i\}(A^\w : \Tm\,\emptycon\,A \to \Set_i)\\
+  &               &&   && \{S &&: \Tm\,\emptycon\,((A \to O) \to \Sig_i\,O)\}\\
+  &               &&   && (S^\w &&: \{f : \Tm\,\emptycon\,(A \to O)\} \to (\{a : \Tm\,\emptycon\,A\} \to A^\w\,a \to O^\w\,(f\,a)) \to \Sig^\w\,(S\,f))\\
+  &\quad          &&   && \to &&\,\Sig^\w\,(\delta\,S\,f)
+\end{alignat*}
+$\Sig^\w\,t$ witnesses that $t$ is canonical and only contains inductively canonical data.
+
+
+
+
+
+
+
+
 
 
 
@@ -906,7 +923,7 @@ over $\Tm\,\emptycon\,(\Sig_i\,O)$.
 
 
 
-  %% data Sigᴾ : IR.Sig → Set (lsuc i ⊔ lsuc j) where
+  %% data Sigᴾ : IR.Sig → Set (lsuc i ⊔ j) where
   %%   ι : ∀ {o}(oᴾ : Oᴾ o) → Sigᴾ (IR.ι o)
   %%   σ : ∀ {A} (Aᴾ : A → Set i){S : A → IR.Sig}      (Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)) → Sigᴾ (IR.σ A S)
   %%   δ : ∀ {A} (Aᴾ : A → Set i){S : (A → O) → IR.Sig}(Sᴾ : ∀ {f} → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)) → Sigᴾ (IR.δ A S)
