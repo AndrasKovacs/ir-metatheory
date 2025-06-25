@@ -586,15 +586,15 @@ computation rules.
 
 \subsection{Mechanization}
 
-We formalized Section \ref{TODO} in Agda, using the same definitions and proofs as above. For the
-assumption of IR, we verbatim reproduced the specification in Section \cite{TODO}, turning $\IR$
-into an inductive type and $\El$ and $\elim$ into recursive functions. The functions are not
-recognized as terminating by Agda, so we disable terminating checking for them. Alternatively, we
-could use rewrite rules \cite{TODO}; the two versions are the same except that rewrite rules have a
-noticeable performance cost in evaluation.
+We formalized Section \ref{TODO} in Agda. For the assumption of IR, we verbatim reproduced the
+specification in Section \cite{TODO}, turning $\IR$ into an inductive type and $\El$ and $\elim$
+into recursive functions. The functions are not recognized as terminating by Agda, so we disable
+terminating checking for them. Alternatively, we could use rewrite rules \cite{TODO}; the two
+versions are the same except that rewrite rules have a noticeable performance cost in evaluation.
 
-Also, our object theory does not have internal universe levels, so we understand level
-quantification to happen in a metatheory, while in Agda we do use native universe polymorphism.
+One small difference is that our object theory does not have internal universe levels, so we
+understand level quantification to happen in a metatheory, while in Agda we use native universe
+polymorphism.
 
 \section{Canonicity}\label{sec:canonicity}
 
@@ -756,10 +756,11 @@ and $j$.
   &\SigElim\,P\,i\,s\,d\,(\sigma\,A\,S) = s\,A\,S\,(\lam\,a.\,\SigElim\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,a))\\
   &\SigElim\,P\,i\,s\,d\,(\delta\,A\,S) \hspace{0.1em}= d\,A\,S\,(\lam\,f.\,\SigElim\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,f))
 \end{alignat*}
-Note that the $[\p]$ weakenings in the computation rules: $P$, $i$, $s$, $d$, and $S$ are all terms
-quantified in some implicit context $\Gamma$, so when we mention them under an extra $\lam$ binder,
-we have to weaken them. Hence, we cannot fully avoid explicit substitution operations by using named
-binders. We already saw rest of the specification in Section \ref{TODO} so we only give a short summary.
+Note the $[\p]$ weakenings in the computation rules: $P$, $i$, $s$, $d$, and $S$ are all terms
+quantified in some implicit context $\Gamma$, so when we mention them under an extra binder, we have
+to weaken them. Hence, we cannot fully avoid explicit substitution operations by using named
+binders. We already saw rest of the specification in Section \ref{TODO} so we only give a short
+summary.
 \begin{itemize}
 \item $\blank_0$, $\blank_1$, $\blank_\map$ and $\blank_\IH$ are defined by $\SigElim$ and they satisfy the same definitional equations
   that we saw in Section \ref{TODO}.
@@ -768,24 +769,28 @@ binders. We already saw rest of the specification in Section \ref{TODO} so we on
 
 \subsection{Canonicity of the Object Theory}\label{sec:canonicity-model}
 
-\emph{Overview.} On a high level, canonicity is proved by induction over the syntax of the object
+On a high level, canonicity is proved by induction over the syntax of the object
 theory. Since the syntax is a quotient inductive-inductive type, it supports an induction principle,
 which we do not write out fully here, and only use one particular instance of it. Formally, the
 induction principle takes a \emph{displayed model} as an argument, which corresponds to a bundle of
 induction motives and methods, and proofs that quotient equations are respected. We could present
 the current construction as a displayed model. However, we find it a bit more readable to instead
 use an Agda-like notation, where we specify the resulting \emph{section} of the displayed model,
-which consists of a collection of mutual functions, mapping out from the syntax, which have action on
-constructors and respect all quotient equations.
+which consists of a collection of mutual functions, mapping out from the syntax, which have action
+on constructors and respect all quotient equations.
 
-We aim to define the following functions by induction:
+\emph{Notation:} In the following, we may write $\Tm\,A$ to mean $\Tm\,\emptycon\,A$, and
+$\Sub\,\Gamma$ to mean $\Sub\,\emptycon\,\Gamma$. This will reduce clutter since we will mostly work
+with closed terms and substitutions.
+
+Using the above notation, we aim to define the following functions by induction on object syntax.
+
 \begin{alignat*}{3}
-  &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\emptycon\,\Gamma \to \Set_\omega\\
-  &\blank^\w : (A : \Ty\,\Gamma\,i) && \to (\gamma : \Sub\,\emptycon\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \Tm\,\emptycon\,A[\gamma] \to \Set_i\\
-  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to (\gamma : \Sub\,\emptycon\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\sigma \circ \gamma)\\
-  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to (\gamma : \Sub\,\emptycon\,\Gamma)(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma\,\gamma^\w\,t[\gamma]
+  &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\Gamma \to \Set_\omega\\
+  &\blank^\w : (A : \Ty\,\Gamma\,i) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Tm\,A[\gamma] \to \Set_i\\
+  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\sigma \circ \gamma)\\
+  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma^\w\,t[\gamma]
 \end{alignat*}
-\todo{explain}
 
 This has appeared in different flavors in previous literature. It is a proof-relevant logical
 predicate interpretation, which corresponds to \emph{Artin gluing} \cite{TODO}, i.e.\ categorical
@@ -795,62 +800,57 @@ dependent type families instead of the fibered families of the categorical flavo
 type-theoretic style becomes valuable when we get to the interpretation of more complicated type
 formers, where it is easier to use than diagrammatic reasoning.
 
-\subsubsection{The Global Sections Functor}
 
-Above, note the quantification over closing substitutions. We could continue to explicitly write out
-closing substitutions, but it is more clear and concise to instead refer to the \emph{global
-sections functor} and develop some notation around it. It is a weak CwF morphism between the object
-syntax and the ``standard'' $\Set$-based model of the object theory \cite{TODO}. Concretely, we define
-it as follows.
-\begin{alignat*}{3}
-  &\G : \Con \to \Set_\omega                                        &&\G : (\sigma : \Sub\,\Gamma\,\Delta) \to \G\,\Gamma \to \G\,\Delta\\
-  &\G\,\Gamma := \Sub\,\emptycon\,\Gamma                           &&\G\,\sigma\,\gamma := \sigma \circ \gamma \\
-  & &&\\
-  &\G : (A : \Ty\,\Gamma\,i) \to \G\,\Gamma \to \Set_i\hspace{3em} &&\G : (t : \Tm\,\Gamma\,A) \to (\gamma : \G\,\Gamma) \to \G\,A\,\gamma\\
-  &\G\,A\,\gamma := \Tm\,\emptycon\,A[\gamma]                      && \G\,t\,\gamma := t[\gamma]
-\end{alignat*}
-$\G$ has the following properties:
-\begin{itemize}
-\item It is a functor, so we have $\G\,\id = (\lambda\,\gamma.\,\gamma)$ and $\G\,(\sigma \circ \delta) = \G\,\sigma \circ \G\,\delta$.
-\item It strictly preserves type substitution and term substitution, so $\G\,(A[\sigma]) = \G\,A\,(\G\,\sigma)$ and likewise for terms.
-\item It preserves empty and extended contexts up to isomorphism, i.e.\ $\G\,\emptycon \simeq \top_\omega$ and $\G\,(\Gamma \ext A) \simeq ((\gamma : \G\,\Gamma) \times \G\,A\,\gamma)$. \emph{Notation:} we shall omit component of these isomorphisms in the following.
-\item It has lax preservation of universes and function types:
-\begin{alignat*}{3}
-  &\G_\U : \G\,\U_i\,\gamma \to \Set_i\hspace{3em} && \G_\Pi : \G\,(\Pi\,A\,B)\,\gamma \to (\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)\\
-  &\G_\U\,A := \Tm\,\emptycon\,A                   && \G_\Pi\,f\,\alpha := f\,\alpha
-\end{alignat*}
-We do not have functions in the other direction. For $\U$, we cannot represent an arbitrary
-metatheoretic $\Set$ in the object language. For $\Pi$, if we have $(\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)$, that is
-a plain metatheoretic function between closed terms, so we have no way to recover an open term for a $\lam$ body.
 
-\emph{Notation:} we shall also leave $\G_\U$ and $\G_\Pi$ implicit in the following. In particular, leaving $\G_\Pi$ implicit is like
-having overloaded function application for $\G\,(\Pi\,A\,B)\,\gamma$.
-\end{itemize}
+
+
+%% \subsubsection{The Global Sections Functor}
+
+%% Above, note the quantification over closing substitutions. We could continue to explicitly write out
+%% closing substitutions, but it is more clear and concise to instead refer to the \emph{global
+%% sections functor} and develop some notation around it. It is a weak CwF morphism between the object
+%% syntax and the ``standard'' $\Set$-based model of the object theory \cite{TODO}. Concretely, we define
+%% it as follows.
+%% \begin{alignat*}{3}
+%%   &\G : \Con \to \Set_\omega                                        &&\G : (\sigma : \Sub\,\Gamma\,\Delta) \to \G\,\Gamma \to \G\,\Delta\\
+%%   &\G\,\Gamma := \Sub\,\emptycon\,\Gamma                           &&\G\,\sigma\,\gamma := \sigma \circ \gamma \\
+%%   & &&\\
+%%   &\G : (A : \Ty\,\Gamma\,i) \to \G\,\Gamma \to \Set_i\hspace{3em} &&\G : (t : \Tm\,\Gamma\,A) \to (\gamma : \G\,\Gamma) \to \G\,A\,\gamma\\
+%%   &\G\,A\,\gamma := \Tm\,\emptycon\,A[\gamma]                      && \G\,t\,\gamma := t[\gamma]
+%% \end{alignat*}
+%% $\G$ has the following properties:
+%% \begin{itemize}
+%% \item It is a functor, so we have $\G\,\id = (\lambda\,\gamma.\,\gamma)$ and $\G\,(\sigma \circ \delta) = \G\,\sigma \circ \G\,\delta$.
+%% \item It strictly preserves type substitution and term substitution, so $\G\,(A[\sigma]) = \G\,A\,(\G\,\sigma)$ and likewise for terms.
+%% \item It preserves empty and extended contexts up to isomorphism, i.e.\ $\G\,\emptycon \simeq \top_\omega$ and $\G\,(\Gamma \ext A) \simeq ((\gamma : \G\,\Gamma) \times \G\,A\,\gamma)$. \emph{Notation:} we shall omit component of these isomorphisms in the following.
+%% \item It has lax preservation of universes and function types:
+%% \begin{alignat*}{3}
+%%   &\G_\U : \G\,\U_i\,\gamma \to \Set_i\hspace{3em} && \G_\Pi : \G\,(\Pi\,A\,B)\,\gamma \to (\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)\\
+%%   &\G_\U\,A := \Tm\,\emptycon\,A                   && \G_\Pi\,f\,\alpha := f\,\alpha
+%% \end{alignat*}
+%% We do not have functions in the other direction. For $\U$, we cannot represent an arbitrary
+%% metatheoretic $\Set$ in the object language. For $\Pi$, if we have $(\alpha : \G\,A\,\gamma) \to \G\,B\,(\gamma,\,\alpha)$, that is
+%% a plain metatheoretic function between closed terms, so we have no way to recover an open term for a $\lam$ body.
+
+%% \emph{Notation:} we shall also leave $\G_\U$ and $\G_\Pi$ implicit in the following. In particular, leaving $\G_\Pi$ implicit is like
+%% having overloaded function application for $\G\,(\Pi\,A\,B)\,\gamma$.
+%% \end{itemize}
 
 \subsubsection{Interpretation of the CwF and the Basic Type Formers}
 
 This has been described in previous literature \cite{TODO}; in particular the code supplement to
 \cite{TODO} has an Agda formalization of the canonicity model with the same universe setup and basic
 type formers that we use. Therefore we only present parts here which are relevant to the IR type
-interpretation, which are the CwF, universes and functions. First, we revisit the specification of
-the induction motives, now using $\G$:
-\begin{alignat*}{3}
-  &\blank^\w : (\Gamma : \Con)                 && \to \G\,\Gamma \to \Set_\omega\\
-  &\blank^\w : (A : \Ty\,\Gamma\,i)            && \to \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \G\,A\,\gamma \to \Set_i\\
-  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\G\,\sigma\,\gamma)\\
-  &\blank^\w : (t : \Tm\,\Gamma\,A)            && \to \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma^\w\,(\G\,t\,\gamma)
-\end{alignat*}
-The interpretation of empty and extended contexts is as follows.
+interpretation, which are the CwF, universes and functions. The interpretation of empty and extended
+contexts is as follows.
 \begin{alignat*}{3}
   &\emptycon^\w\,&&\gamma                 &&:= \top \\
   &(\Gamma\ext A)^\w\,&&(\gamma,\,\alpha) &&:= (\gamma^\w : \Gamma^\w\,\gamma) \times A^\w\,\gamma^\w\,\alpha
 \end{alignat*}
 This says that the logical predicate holds for a closing substitution if it holds for each term in
-the substitution. Note that in the $\Gamma \ext A$ case, the type of the argument is $\G\,(\Gamma
-\ext A)$, which is equal to $\Sub\,\emptycon\,(\Gamma \ext A)$, which is in turn isomorphic to
-$(\gamma : \G\,\Gamma) \times \G\,A\,\gamma$. This justifies the pattern matching notation in
-$(\gamma,\,\alpha)$. In other words, we implicitly convert to a $\Sigma$-type and match on the
-value. We list the interpretation for the other CwF operations below.
+the substitution. Note the pattern matching notation in $(\gamma,\,\alpha)$: this is justified,
+since all values of $\Sub\,(\Gamma\ext A)$ are uniquely given as a pairing (similarly to pattern
+matching notation for plain $\Sigma$-types). The other CwF operations are as follows.
 \begin{alignat*}{4}
   &\id^\w\,\gamma^\w                   &&:= \gamma^\w                  &&(\sigma,\,t)^\w\,\gamma^\w          &&:= (\sigma^\w\,\gamma^\w,\,t^\w\,\gamma^\w)\\
   &(\sigma \circ \delta)^\w\,\gamma^\w &&:= \sigma^\w\,(\delta^\w\,\gamma^\w) && \p^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \gamma^\w\\
@@ -859,11 +859,11 @@ value. We list the interpretation for the other CwF operations below.
 \end{alignat*}
 The interpretation of universes is the following.
 \begin{alignat*}{4}
-  &(\U_i)^\w\,\gamma^\w\,\alpha := \Tm\,\emptycon\,\alpha \to \Set_i
+  &(\U_i)^\w\,\gamma^\w\,\alpha := \Tm\,\alpha \to \Set_i
 \end{alignat*}
 This definition also supports the Russell universe rules. For illustration, assuming $t :
-\Tm\,\Gamma\,\U_i$, we have $t^\w : \{\gamma : \G\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to
-\Tm\,\emptycon\,A[\gamma] \to \Set_i$. If we first cast $t$ to a type using the syntactic Russell
+\Tm\,\Gamma\,\U_i$, we have $t^\w : \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to
+\Tm\,t[\gamma] \to \Set_i$. If we first cast $t$ to a type using the syntactic Russell
 universe equation, then $t^\w$ has exactly the same type.
 
 Note that we do not get a canonicity statement about types themselves, i.e.\ we do not get that
@@ -872,12 +872,12 @@ as well, but we skip it because it is orthogonal to the focus of this paper.
 
 We interpret functions as follows.
 \begin{alignat*}{4}
-  &(\Pi\,A\,B)^\w\,\{\gamma\}\,\gamma^\w\,f &&:= \{\alpha : \G\,A\,\gamma\}(\alpha^\w : A^\w\,\gamma^\w\,\alpha) \to B^\w\,(\gamma^\w\,\,\alpha^\w)\,(f\,\alpha)\\
+  &(\Pi\,A\,B)^\w\,\{\gamma\}\,\gamma^\w\,f &&:= \{\alpha : \Tm\,A[\gamma]\}(\alpha^\w : A^\w\,\gamma^\w\,\alpha) \to B^\w\,(\gamma^\w\,\,\alpha^\w)\,(f\,\alpha)\\
   &(\lam\,t)^\w\,\gamma^\w &&:= \lambda\,\{\alpha\}\,\alpha^\w.\,t^\w\,(\gamma^\w,\,\alpha^\w)\\
   &(\app\,t)^\w\,(\gamma^\w,\,\alpha^\w) &&:= t^\w\,\gamma^\w\,\alpha^\w
 \end{alignat*}
-In the $\Pi\,A\,B$ case, note that $f : \G\,(\Pi\,A\,B)\,\gamma$, which means that we can apply it
-to $\alpha$ to get $f\,\alpha : \G\,B\,(\gamma,\,\alpha)$.
+In the $\Pi\,A\,B$ case, note that $f : \Tm\,(\Pi\,A\,B)[\gamma]$, which means that we can apply it
+to $\alpha$ to get $f\,\alpha : \Tm\,B[\gamma,\,\alpha]$.
 
 \subsubsection{Interpretation of IR signatures}
 
@@ -886,26 +886,30 @@ nothing ``new'' in their logical predicate interpretation. We do detail it here 
 later constructions depend on it. Recall that $\Sig_i : \Tm\,\Gamma\,((O : \U_j) \to \U_{\max(i+1,\,j)})$, so we have
 \begin{alignat*}{3}
   &(\Sig_i)^\w\,\gamma^\w : ((O : \U_j) \to \U_{\max(i+1,\,j)})^\w\,\gamma^\w\,\Sig_i\\
-  &(\Sig_i)^\w\,\gamma^\w : \{O : \G\,\U_j\,\gamma\}(O^\w : (\U_j)^\w\,\gamma^\w\,O) \to (\U_{\max(i+1,\,j)})^\w\,\gamma^\w\,(\Sig_i\,O)\\
-  &(\Sig_i)^\w\,\gamma^\w : \{O : \Tm\,\emptycon\,\U_i\}(O^\w : \Tm\,\emptycon\,O \to \Set_i) \to \Tm\,\emptycon\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}.
+  &(\Sig_i)^\w\,\gamma^\w : \{O : \Tm\,\U_j\}(O^\w : (\U_j)^\w\,\gamma^\w\,O) \to (\U_{\max(i+1,\,j)})^\w\,\gamma^\w\,(\Sig_i\,O)\\
+  &(\Sig_i)^\w\,\gamma^\w : \{O : \Tm\,\U_i\}(O^\w : \Tm\,O \to \Set_i) \to \Tm\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}.
 \end{alignat*}
-Hence, we define an inductive type in the metatheory that is parameterized by $O :
-\Tm\,\emptycon\,U_i$ and $O^\w : \Tm\,\emptycon\,O \to \Set_i$ and indexed over
-$\Tm\,\emptycon\,(\Sig_i\,O)$. We name this inductive type $\Sig^\w$, which risks some confusion,
-but we shall take the risk.
+Hence, we define an inductive type in the metatheory that is parameterized by $O : \Tm\,U_i$ and
+$O^\w : \Tm\,O \to \Set_i$ and indexed over $\Tm\,(\Sig_i\,O)$. We name this inductive type
+$\Sig^\w$; the naming risks some confusion, but we shall take the risk.
 \begin{alignat*}{4}
-  &\rlap{$\data\,\Sig^\w  : \Tm\,\emptycon\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}$}\\
-  &\quad \iota^\w  &&:\,&&\{o &&: \Tm\,\emptycon\,O\}(o^\w : O^\w\,o) \to \Sig^\w\,(\iota\,o)\\
-  &\quad \sigma^\w &&:\,&&\{A &&: \Tm\,\emptycon\,\U_i\}(A^\w : \Tm\,\emptycon\,A \to \Set_i)\\
-  &               && &&\{S &&: \Tm\,\emptycon\,(A \to \Sig_i\,O)\}\\
-  &               && && (S^\w &&: \{a : \Tm\,\emptycon\,A\} \to A^\w\,a \to \Sig^\w\,(S\,a))\\
-  &               && && \to &&\,\Sig^\w\,(\sigma\,A\,S)\\
-  &\quad \delta^\w &&:\,&&\{A &&: \Tm\,\emptycon\,\U_i\}(A^\w : \Tm\,\emptycon\,A \to \Set_i)\\
-  &               &&   && \{S &&: \Tm\,\emptycon\,((A \to O) \to \Sig_i\,O)\}\\
-  &               &&   && (S^\w &&: \{f : \Tm\,\emptycon\,(A \to O)\} \to (\{a : \Tm\,\emptycon\,A\} \to A^\w\,a \to O^\w\,(f\,a)) \to \Sig^\w\,(S\,f))\\
-  &\quad          &&   && \to &&\,\Sig^\w\,(\delta\,S\,f)
+  &\rlap{$\data\,\Sig^\w\,\{O : \Tm\,U_j\}\,(O^\w : \Tm\,O \to \Set_i)  : \Tm\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}$}\\
+  &\quad \iota^\w  &&:\,&&\{o &&: \Tm\,O\}(o^\w : O^\w\,o) \to \Sig^\w\,O^\w\,(\iota\,o)\\
+  &\quad \sigma^\w &&:\,&&\{A &&: \Tm\,\U_i\}(A^\w : \Tm\,A \to \Set_i)\\
+  &               && &&\{S &&: \Tm\,(A \to \Sig_i\,O)\}\\
+  &               && && (S^\w &&: \{a : \Tm\,A\} \to A^\w\,a \to \Sig^\w\,O^\w\,(S\,a))\\
+  &               && && \to &&\,\Sig^\w\,O^\w\,(\sigma\,A\,S)\\
+  &\quad \delta^\w &&:\,&&\{A &&: \Tm\,\U_i\}(A^\w : \Tm\,A \to \Set_i)\\
+  &               &&   && \{S &&: \Tm\,((A \to O) \to \Sig_i\,O)\}\\
+  &               &&   && (S^\w &&: \{f : \Tm\,(A \to O)\} \to (\{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(f\,a)) \to \Sig^\w\,O^\w\,(S\,f))\\
+  &\quad          &&   && \to &&\,\Sig^\w\,O^\w\,(\delta\,S\,f)
 \end{alignat*}
-$\Sig^\w\,t$ witnesses that $t$ is canonical and only contains inductively canonical data.
+A witness of $\Sig^\w\,O^\w\,t$ tells us that $t$ is a canonical constructor and it only contains
+canonical data, inductively. Now, we define $(\Sig_i)^\w\,\gamma^\w\,O^\w\,t$ to be
+$\Sig^\w\,O^\w\,t$. To fully interpret the object-theoretic $\Sig$, we also need to interpret the constructors
+and the eliminator.
+
+
 
 
 
