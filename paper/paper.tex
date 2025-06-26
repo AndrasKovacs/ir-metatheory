@@ -57,6 +57,7 @@
 \newcommand{\msf}[1]{{\mathsf{#1}}}
 \newcommand{\mbf}[1]{{\mathbf{#1}}}
 \newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\push}{\mathsf{push}}
 \newcommand{\p}{\mathsf{p}}
 \newcommand{\q}{\mathsf{q}}
 \newcommand{\data}{\mbf{data}}
@@ -945,23 +946,83 @@ In the following,
 We assume the following parameters: $O : \Tm\,U_j$, $O^\w : \Tm\,O \to \Set_j$, $S^* :
 \Tm\,(\Sig_i\,O)$ and $S^{*\w} : \Sig^\w\,O^\w\,S^*$. We view $S^*$ as a ``fixed'' top-level
 signature, in contrast to ``varying'' $S$ signatures that we will encounter in constructions. More
-concretely, we will do most constructions by induction on \emph{canonical sub-signatures} of $S^*$,
-and sub-signatures will be denoted as $S$.
+concretely, we will do most constructions by induction on \emph{canonical sub-signatures} of $S^*$.
 
-\begin{definition}[Canonical sub-signatures of $S^*$] We define an inductive family indexed
-over $S$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$; in other
-words, a subtree relation specialized to $S^*$. It is represented as a left-associated
-\emph{snoc-list} of data that can be plugged into $\sigma$ and $\delta$ constructors.
-
+\paragraph{Canonical sub-signatures of $S^*$.} We define an inductive family indexed
+over $S$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$, as a
+subtree.  Also, the subtree and all data in the path must be canonical (have $\blank^\w$
+witnesses). The path is represented as a left-associated \emph{snoc-list} of data that can be
+plugged into $\sigma$ and $\delta$ constructors. Moreover, we restrict the $\delta$ case, only
+allowing $f : \Tm\,(A \to \IR\,S^*)$ functions instead of functions of type $\Tm\,(A \to O)$.
 \begin{alignat*}{4}
-  &\data\,\Path : \{S : \Tm\,(\Sig_i\,O)\} \to Sig^\w\,O^\w\,S \to \Set_{\max(i+1,\,j+1)}\\
-  &\quad \here    : \Path\,\Ssw\\
-  &\quad \insigma : \Path\,(\sigma^\w\,A^\w\,S^\w) \to (a^\w : A^\w\,a) \to \Path\,(S^\w\,a^\w) \\
-  &\quad \indelta : \Path\,(\delta^\w\,A^\w\,S^\w) \to (f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a))) \to
+  &\rlap{$\data\,\Path : \{S : \Tm\,(\Sig_i\,O)\} \to \Sig^\w\,O^\w\,S \to \Set_{\max(i+1,\,j+1)}$}\\
+  &\quad \here    &&: \Path\,\Ssw\\
+  &\quad \insigma &&: \Path\,(\sigma^\w\,A^\w\,S^\w) \to (a^\w : A^\w\,a) \to \Path\,(S^\w\,a^\w) \\
+  &\quad \indelta &&: \Path\,(\delta^\w\,A^\w\,S^\w) \to \{f : \Tm\,(A \to \IR\,S^*)\}(f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a)))\\
+  &               && \hspace{0.6em} \to \Path\,(S^\w\,f^\w)
 \end{alignat*}
 
+If we have a path to $S^\w : \Sig^\w\,O^\w\,S$, we can push the terms contained in the path onto a
+term of $S_0\,(\IR\,S^*)\,\El$:
+\begin{alignat*}{4}
+  & \hspace{-6em}\rlap{$\push_0 : \Path\,S^\w \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)$}\\
+  & \hspace{-6em}\push_0\,\here\,                     &&t := t\\
+  & \hspace{-6em}\push_0\,(\insigma\,p\,\{a\}\,a^\w)\,&&t := \push_0\,p\,(a,\,t)\\
+  & \hspace{-6em}\push_0\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push_0\,p\,(f,\,t)
+\end{alignat*}
+Also, this operation preserves $\blank_1$, so we have $S_1\,t = (S^*)_1\,(\push_0\,p\,t)$.
 
-\end{definition}
+\paragraph{Encoding for signatures.} Next, we define an encoding function for signatures, somewhat
+similarly to how we did in in Section \ref{TODO}. The idea is to compute a metatheoretical IIR
+signature which represents the logical predicate for a syntactic IR type.  Note that this
+computation is only possible by induction on $\Sig^\w\,O^\w\,S$ \--- we have no appropriate
+induction principle for $\Tm\,(\Sig_i\,O)$.
+
+
+
+
+
+
+
+
+
+
+%% Now, we
+
+%% Now, $\Path$ and $\push_0$ are  prerequisites to defining an encoding operation on signatures.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    %% PathF0 : ∀ {S}{Sᴾ} → Path {S} Sᴾ → F0 S → F0 S*
+    %% PathF0 idh           acc = acc
+    %% PathF0 (σ< hom a aᴾ) acc = PathF0 hom (a , acc)
+    %% PathF0 (δ< hom f fᴾ) acc = PathF0 hom (f , acc)
+
+    %% PathF1 : ∀ {S}{Sᴾ}(hom : Path {S} Sᴾ) → ∀ {x} → F1 S x ≡ F1 S* (PathF0 hom x)
+    %% PathF1 idh           = refl
+    %% PathF1 (σ< hom a aᴾ) = PathF1 hom
+    %% PathF1 (δ< hom f fᴾ) = PathF1 hom
+
+    %% Sigᴾ→ : ∀ {S}(Sᴾ : Sigᴾ S) → Path Sᴾ → IIR.Sig
+    %% Sigᴾ→ (ι oᴾ)            hom = IIR.ι (IR.wrap (PathF0 hom (lift tt))) (tr Oᴾ (PathF1 hom) oᴾ)
+    %% Sigᴾ→ (σ {A} Aᴾ {S} Sᴾ) hom = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → Sigᴾ→ (Sᴾ aᴾ) (σ< hom a aᴾ)
+    %% Sigᴾ→ (δ {A} Aᴾ Sᴾ)     hom = IIR.σ (A → U) λ f → IIR.δ (∃ Aᴾ) (λ aaᴾ → f (aaᴾ .₁)) λ fᴾ →
+    %%                               Sigᴾ→ (Sᴾ λ a aᴾ → fᴾ (a , aᴾ)) (δ< hom f (λ a aᴾ → fᴾ (a , aᴾ)))
 
 
 
