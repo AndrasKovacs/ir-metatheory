@@ -123,6 +123,13 @@
 \newcommand{\refl}{\msf{refl}}
 \newcommand{\J}{\msf{J}}
 \newcommand{\G}{\mbb{G}}
+\newcommand{\Path}{\msf{Path}}
+\newcommand{\here}{\msf{here}}
+\newcommand{\Ssw}{S^{*\w}}
+
+\newcommand{\insigma}{\msf{in}\!\!-\!\!\sigma}
+\newcommand{\indelta}{\msf{in}\!\!-\!\!\delta}
+
 
 
 %% --------------------------------------------------------------------------------
@@ -341,9 +348,9 @@ understood to happen in the metatheory. The introduction rules are the following
 Above, we leave some rule arguments implicit, like $S$ in $\El$, $\intro$ and
 $\msf{El\!\!-\!\!intro}$. The rule $\msf{El\!\!-\!\!intro}$ specifies a definitional equality.  Note
 that these rules are not internal definitions but part of the specification of the object
-theory. Hence, they are also assumed to be stable under object-theoretic substitution, formally
-speaking. On a high level, the introduction rules express the existence of an $S$-algebra where we
-view $S$ as an endofunctor on $\U_i/O$.
+theory. Hence, they are also assumed to be stable under object-theoretic substitution. On a high
+level, the introduction rules express the existence of an $S$-algebra where we view $S$ as an
+endofunctor on $\U_i/O$.
 
 \subsubsection{Elimination}\label{sec:ir-elimination}
 
@@ -373,8 +380,8 @@ to the initiality of $(\IR\,S,\,\El)$ as an $S$-algebra \cite{TODO}.
 
 \subsection{IIR Types}\label{sec:iir}
 
-We extend Dybjer and Setzer's general IIR signatures \cite{TODO} with countable universe levels. Since
-IIR is quite similar to IR, we present the rules without much commentary.
+In IIR signatures, the sole deviation from Dybjer and Setzer is again our use of countable universe
+levels \cite{TODO}. Since IIR is quite similar to IR, we present the rules without much commentary.
 
 \subsubsection{Signatures}\label{sec:iir-signatures} We assume levels $i$, $j$, $k$, an indexing type $I : \U_k$ and a type family
 for the recursive output as $O : I \to \U_j$. Signatures are as follows.
@@ -401,7 +408,7 @@ the inductive field using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that t
 \end{example}
 
 \subsubsection{Type and term formation}\label{sec:iir-type-and-term-formation}
-The signature actions $\blank_0$ and $\blank_1$ are similar to before:
+$\blank_0$ and $\blank_1$ are similar to before:
 \begin{alignat*}{4}
   &\hspace{-6em}\rlap{$\blank_0 : \Sig_i\,I\,O \to (\ir : I \to \U_{\max(i,\,k)}) \to (\{i : I\} \to \ir\,i \to O\,i) \to I \to \U_{\max(i,\,k)}$} \\
   &\hspace{-6em}S_0\,(\iota\,i'\,o)     \,&&\ir\,\el\,i && :\equiv \Lift\,(i' = i)\\
@@ -454,7 +461,7 @@ $\El$, $\elim$ and $\elim\!-\!\!\beta$. We use some abbreviations in the followi
 \item $\Sig_\IR$ abbreviates the IR signature type $\Sig_{\max(i,\,k)}\,((i : I) \times O\,i)$.
 \end{itemize}
 In a nutshell, the main idea in this section is to represent IIR signatures as IR signatures
-together with a well-indexing predicate on algebras. First, we define the encoding function for
+together with a well-indexing predicate on algebras. First, we define an encoding function for
 signatures:
 \begin{alignat*}{4}
   & \rlap{$\Sigr{\blank} : \Sig_\IIR \to \Sig_\IR$}\\
@@ -841,8 +848,8 @@ formers, where it is easier to use than diagrammatic reasoning.
 This has been described in previous literature \cite{TODO}; in particular the code supplement to
 \cite{TODO} has an Agda formalization of the canonicity model with the same universe setup and basic
 type formers that we use. Therefore we only present parts here which are relevant to the IR type
-interpretation, which are the CwF, universes and functions. The interpretation of empty and extended
-contexts is as follows.
+interpretation, which are the CwF, universes, sigma types, functions and the unit type. The
+interpretation of empty and extended contexts is as follows.
 \begin{alignat*}{3}
   &\emptycon^\w\,&&\gamma                 &&:= \top \\
   &(\Gamma\ext A)^\w\,&&(\gamma,\,\alpha) &&:= (\gamma^\w : \Gamma^\w\,\gamma) \times A^\w\,\gamma^\w\,\alpha
@@ -857,7 +864,7 @@ matching notation for plain $\Sigma$-types). The other CwF operations are as fol
   &(A[\sigma]) ^\w\,\gamma^\w\,\alpha  &&:= A^\w\,(\sigma^\w\,\gamma^\w)\,\alpha\hspace{3em} && \q^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \alpha^\w\\
   &(t[\sigma]) ^\w\,\gamma^\w          &&:= t^\w\,(\sigma^\w\,\gamma^\w) && \epsilon^\w\,\gamma^\w              &&:= \ttt
 \end{alignat*}
-The interpretation of universes is the following.
+The interpretation of \textbf{universes} is the following.
 \begin{alignat*}{4}
   &(\U_i)^\w\,\gamma^\w\,\alpha := \Tm\,\alpha \to \Set_i
 \end{alignat*}
@@ -870,14 +877,21 @@ Note that we do not get a canonicity statement about types themselves, i.e.\ we 
 every closed type is definitionally equal to one of the canonical type formers. This could be handled
 as well, but we skip it because it is orthogonal to the focus of this paper.
 
-We interpret functions as follows.
+We interpret \textbf{functions} as follows.
 \begin{alignat*}{4}
-  &(\Pi\,A\,B)^\w\,\{\gamma\}\,\gamma^\w\,f &&:= \{\alpha : \Tm\,A[\gamma]\}(\alpha^\w : A^\w\,\gamma^\w\,\alpha) \to B^\w\,(\gamma^\w\,\,\alpha^\w)\,(f\,\alpha)\\
+  &(\Pi\,A\,B)^\w\,\{\gamma\}\,\gamma^\w\,f &&:= \{\alpha : \Tm\,A[\gamma]\}(\alpha^\w : A^\w\,\gamma^\w\,\alpha) \to B^\w\,(\gamma^\w,\,\alpha^\w)\,(f\,\alpha)\\
   &(\lam\,t)^\w\,\gamma^\w &&:= \lambda\,\{\alpha\}\,\alpha^\w.\,t^\w\,(\gamma^\w,\,\alpha^\w)\\
   &(\app\,t)^\w\,(\gamma^\w,\,\alpha^\w) &&:= t^\w\,\gamma^\w\,\alpha^\w
 \end{alignat*}
 In the $\Pi\,A\,B$ case, note that $f : \Tm\,(\Pi\,A\,B)[\gamma]$, which means that we can apply it
 to $\alpha$ to get $f\,\alpha : \Tm\,B[\gamma,\,\alpha]$.
+
+For \textbf{$\Sigma$-types}, we have
+\begin{alignat*}{4}
+  &\Sigma^\w\,\gamma^\w\,A^\w\,B^\w\,(t,\,u)   &&:= (t^\w : A^\w\,t) \times B^\w\,t^\w\,u\hspace{2em}  && \fst^\w\,\gamma^\w\,(t^\w,\,u^\w) &&:= t^\w \\
+  &(\blank,\blank)^\w\,\gamma^\w\,t^\w\,u^\w   &&:= (t^\w,\,u^\w)                                     && \snd^\w\,\gamma^\w\,(t^\w,\,u^\w) &&:= u^\w
+\end{alignat*}
+For the \textbf{unit type}, we have $\top^\w\,\gamma^\w\,t := \top$ and $\ttt^\w\,\gamma^\w := \ttt$.
 
 \subsubsection{Interpretation of IR signatures}
 
@@ -891,7 +905,8 @@ later constructions depend on it. Recall that $\Sig_i : \Tm\,\Gamma\,((O : \U_j)
 \end{alignat*}
 Hence, we define an inductive type in the metatheory that is parameterized by $O : \Tm\,U_i$ and
 $O^\w : \Tm\,O \to \Set_i$ and indexed over $\Tm\,(\Sig_i\,O)$. We name this inductive type
-$\Sig^\w$; the naming risks some confusion, but we shall take the risk.
+$\Sig^\w$; the naming risks some confusion, but we shall take the risk and we will shortly
+explain the rationale.
 \begin{alignat*}{4}
   &\rlap{$\data\,\Sig^\w\,\{O : \Tm\,U_j\}\,(O^\w : \Tm\,O \to \Set_i)  : \Tm\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}$}\\
   &\quad \iota^\w  &&:\,&&\{o &&: \Tm\,O\}(o^\w : O^\w\,o) \to \Sig^\w\,O^\w\,(\iota\,o)\\
@@ -906,61 +921,81 @@ $\Sig^\w$; the naming risks some confusion, but we shall take the risk.
 \end{alignat*}
 A witness of $\Sig^\w\,O^\w\,t$ tells us that $t$ is a canonical constructor and it only contains
 canonical data, inductively. Now, we define $(\Sig_i)^\w\,\gamma^\w\,O^\w\,t$ to be
-$\Sig^\w\,O^\w\,t$. To fully interpret the object-theoretic $\Sig$, we also need to interpret the constructors
-and the eliminator.
+$\Sig^\w\,O^\w\,t$. Each syntactic $\Sig$ constructor is interpreted using the corresponding
+semantic constructor. For instance:
+\begin{alignat*}{4}
+  &\iota^\w : \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma)\{O : \Tm\,\U_j\}\{O^\w : \Tm\,O \to \Set_j\}\{o : \Tm\,O\} \to O^\w\,o \to \Sig^\w\,O^\w\,(\iota\,o)\\
+  &\iota^\w\,\gamma^\w\,o^\w := \iota^\w\,o^\w
+\end{alignat*}
+We skip the interpretation of the other constructors and the eliminator here. Above on the left side
+we use $\iota^\w$ for specifying the action of $\blank^\w$ on the syntactic $\iota$, while on the
+right side we use the metatheoretic $\Sig^\w$ constructor $\iota^\w$. In general, the difference is
+always just an extra parameterization over contexts in the interpretation of syntactic objects. In
+this section, the bulk of the work in interpreting IR types only needs to refer to closed terms, and
+the final step of ``contextualization'' is fairly trivial. Hence, we optimize our notation for
+working with closed terms.
+
+\subsubsection{IR types}
+
+In the following,
+\begin{enumerate}
+\item we first define the semantic operations that only act on closed terms,
+\item then define the contextualized interpretation of object type and term formers.
+\end{enumerate}
+We assume the following parameters: $O : \Tm\,U_j$, $O^\w : \Tm\,O \to \Set_j$, $S^* :
+\Tm\,(\Sig_i\,O)$ and $S^{*\w} : \Sig^\w\,O^\w\,S^*$. We view $S^*$ as a ``fixed'' top-level
+signature, in contrast to ``varying'' $S$ signatures that we will encounter in constructions. More
+concretely, we will do most constructions by induction on \emph{canonical sub-signatures} of $S^*$,
+and sub-signatures will be denoted as $S$.
+
+\begin{definition}[Canonical sub-signatures of $S^*$] We define an inductive family indexed
+over $S$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$; in other
+words, a subtree relation specialized to $S^*$. It is represented as a left-associated
+\emph{snoc-list} of data that can be plugged into $\sigma$ and $\delta$ constructors.
+
+\begin{alignat*}{4}
+  &\data\,\Path : \{S : \Tm\,(\Sig_i\,O)\} \to Sig^\w\,O^\w\,S \to \Set_{\max(i+1,\,j+1)}\\
+  &\quad \here    : \Path\,\Ssw\\
+  &\quad \insigma : \Path\,(\sigma^\w\,A^\w\,S^\w) \to (a^\w : A^\w\,a) \to \Path\,(S^\w\,a^\w) \\
+  &\quad \indelta : \Path\,(\delta^\w\,A^\w\,S^\w) \to (f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a))) \to
+\end{alignat*}
+
+
+\end{definition}
 
 
 
+    %% -- subsignatures of S* as snoc lists
+    %% data Path : ∀ {S} → Sigᴾ S → Set (lsuc i ⊔ lsuc j) where
+    %%   idh : Path S*ᴾ
+    %%   σ<  : ∀ {A : Set i}{Aᴾ : A → Set i}{S : A → IR.Sig}{Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)}
+    %%         → Path (σ Aᴾ Sᴾ)
+    %%         → ∀ a (aᴾ : Aᴾ a)
+    %%         → Path {S a} (Sᴾ aᴾ)
+    %%   δ<  : ∀ {A : Set i}{Aᴾ : A → Set i}
+    %%           {S : (A → O) → IR.Sig}{Sᴾ : ∀ {f} → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)}
+    %%         → Path (δ Aᴾ Sᴾ)
+    %%         → ∀ (f : A → U)(fᴾ : ∀ a → Aᴾ a → Oᴾ (El (f a)))
+    %%         → Path (Sᴾ fᴾ)
 
 
 
+%% For now, the relevant
+%% part is that $\blank_0$ and $\blank_1$ have semantic counterparts operating on $\Sig^\w$, as instances
+%% of $\SigElim^\w$:
+%% \begin{alignat*}{4}
+%%   &\blank_0   &&:\,&& \{S : \Tm\,(\Sig_i\,O)\} \to \Sig^\w\,O^\w\,S \to \Tm\,S_0 \to \Set_i\\
+%%   &\blank_1   &&:\,&& \{S : \Tm\,(\Sig_i\,O)\}(S^\w : \Sig^\w\,O^\w\,S)\{x : \Tm\,S_0\}(x^\w : S^\w_0\,x) \to O^\w\,(S_1\,x)
+%% \end{alignat*}
+%% \emph{Notation.} At this point, our general convention should be apparent:
+%% \begin{itemize}
 
+%% \end{itemize}
 
-
-
-
-
-
-%% ((O : \U_j) \to \U_{\max(i+1,\,j)})^\w\,\gamma^\w\,\Sig_i\\
-
-
-
-
-
-  %% data Sigᴾ : IR.Sig → Set (lsuc i ⊔ j) where
-  %%   ι : ∀ {o}(oᴾ : Oᴾ o) → Sigᴾ (IR.ι o)
-  %%   σ : ∀ {A} (Aᴾ : A → Set i){S : A → IR.Sig}      (Sᴾ : ∀ {a} → Aᴾ a → Sigᴾ (S a)) → Sigᴾ (IR.σ A S)
-  %%   δ : ∀ {A} (Aᴾ : A → Set i){S : (A → O) → IR.Sig}(Sᴾ : ∀ {f} → (∀ a → Aᴾ a → Oᴾ (f a)) → Sigᴾ (S f)) → Sigᴾ (IR.δ A S)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%% in which we pair implicit
+%% arguments for closed terms with explicit arguments for $\blank^\w$ witnesses. In the following we
+%% will mostly omit the closed term components from types, making the implicit quantification itself
+%% implicit too.
 
 
 \section{TODO}
