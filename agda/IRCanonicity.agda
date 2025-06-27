@@ -46,9 +46,9 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     PathF1 (δ< hom f fᴾ) = PathF1 hom
 
     Sigᴾ→ : ∀ {S}(Sᴾ : Sigᴾ S) → Path Sᴾ → IIR.Sig
-    Sigᴾ→ (ι oᴾ)            hom = IIR.ι (IR.wrap (PathF0 hom (lift tt))) (tr Oᴾ (PathF1 hom) oᴾ)
+    Sigᴾ→ (ι oᴾ)            hom = the {!IIR.ι!} $ IIR.ι (IR.wrap (PathF0 hom (lift tt))) (tr Oᴾ (PathF1 hom) oᴾ)
     Sigᴾ→ (σ {A} Aᴾ {S} Sᴾ) hom = IIR.σ A λ a → IIR.σ (Aᴾ a) λ aᴾ → Sigᴾ→ (Sᴾ aᴾ) (σ< hom a aᴾ)
-    Sigᴾ→ (δ {A} Aᴾ Sᴾ)     hom = IIR.σ (A → U) λ f → IIR.δ (∃ Aᴾ) (λ aaᴾ → f (aaᴾ .₁)) λ fᴾ →
+    Sigᴾ→ (δ {A} Aᴾ Sᴾ)     hom = IIR.σ (A → U) λ f → IIR.δ (∃ Aᴾ) (λ{(a , _) → f a}) λ fᴾ →
                                   Sigᴾ→ (Sᴾ λ a aᴾ → fᴾ (a , aᴾ)) (δ< hom f (λ a aᴾ → fᴾ (a , aᴾ)))
 
     S*ᴾ' = Sigᴾ→ S*ᴾ idh
