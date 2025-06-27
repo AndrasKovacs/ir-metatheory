@@ -792,11 +792,11 @@ use an Agda-like notation, where we specify the resulting \emph{section} of the 
 which consists of a collection of mutual functions, mapping out from the syntax, which have action
 on constructors and respect all quotient equations.
 
-\emph{Notation:} In the following, we may write $\Tm\,A$ to mean $\Tm\,\emptycon\,A$, and
+\emph{Notation:} in the following we write $\Tm\,A$ to mean $\Tm\,\emptycon\,A$, and
 $\Sub\,\Gamma$ to mean $\Sub\,\emptycon\,\Gamma$. This will reduce clutter since we will mostly work
 with closed terms and substitutions.
 
-Using the above notation, we aim to define the following functions by induction on object syntax.
+We aim to define the following functions by induction on object syntax.
 
 \begin{alignat*}{3}
   &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\Gamma \to \Set_\omega\\
@@ -946,77 +946,9 @@ phase.
 
 \subsubsection{Interpretation of IR types}
 
-In the following, we follow the above recipe, first defining semantics with closed terms,
-then getting context-dependent interpretations for type and term formers.
-We assume the following parameters: $O : \Tm\,U_j$, $O^\w : \Tm\,O \to \Set_j$, $S^* :
-\Tm\,(\Sig_i\,O)$ and $S^{*\w} : \Sig^\w\,O^\w\,S^*$. \emph{Abbreviation:} we write $\Sig^\w\,S$ in
-the following, omitting the fixed $O^\w$ parameter from the type.
-We view $S^*$ as a ``fixed'' top-level signature, in contrast to ``varying'' $S$ signatures that we
-will encounter in constructions. More concretely, we will do most constructions by induction on
-\emph{canonical sub-signatures} of $S^*$.
-
-\paragraph{Canonical sub-signatures of $S^*$.} We define an inductive family indexed
-over $S$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$, viewing
-$S$ as a subtree. Also, the subtree and all data in the path must be canonical (i.e.\ have $\blank^\w$
-witnesses). The path is represented as a left-associated \emph{snoc-list} of data that can be
-plugged into $\sigma$ and $\delta$ constructors. Moreover, we restrict the $\delta$ case, only
-allowing $f : \Tm\,(A \to \IR\,S^*)$ functions instead of functions of type $\Tm\,(A \to O)$.
-\begin{alignat*}{4}
-  &\rlap{$\data\,\Path : \{S : \Tm\,(\Sig_i\,O)\} \to \Sig^\w\,S \to \Set_{\max(i+1,\,j+1)}$}\\
-  &\quad \here    &&: \Path\,\Ssw\\
-  &\quad \insigma &&: \Path\,(\sigma^\w\,A^\w\,S^\w) \to (a^\w : A^\w\,a) \to \Path\,(S^\w\,a^\w) \\
-  &\quad \indelta &&: \Path\,(\delta^\w\,A^\w\,S^\w) \to \{f : \Tm\,(A \to \IR\,S^*)\}(f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a)))\\
-  &               && \hspace{0.6em} \to \Path\,(S^\w\,f^\w)
-\end{alignat*}
-
-If we have a path to $S^\w : \Sig^\w\,S$, we can push the terms contained in the path onto a
-term of $S_0\,(\IR\,S^*)\,\El$:
-\begin{alignat*}{4}
-  & \hspace{-6em}\rlap{$\push_0 : \Path\,S^\w \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)$}\\
-  & \hspace{-6em}\push_0\,\here\,                     &&t := t\\
-  & \hspace{-6em}\push_0\,(\insigma\,p\,\{a\}\,a^\w)\,&&t := \push_0\,p\,(a,\,t)\\
-  & \hspace{-6em}\push_0\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push_0\,p\,(f,\,t)
-\end{alignat*}
-We also show that this operation preserves $\blank_1$, so we have $S_1\,t = (S^*)_1\,(\push_0\,p\,t)$.
-
-\paragraph{Encoding for signatures.} Next, we define an encoding function for signatures, somewhat
-similarly to how we did in in Section \ref{TODO}. The idea is to compute a metatheoretical IIR
-signature which represents the logical predicate for a syntactic IR type.  Note that this
-computation is only possible by induction on $\Sig^\w\,S$ \--- we have no appropriate
-induction principle for $\Tm\,(\Sig_i\,O)$.
-%% We fix notation for IIR types.
-%% \begin{itemize}
-%% \item Recall from Section \ref{TODO} that IIR signatures are parameterized by $I$ and $O$.
-%%       In the following, we set $I$ to be $\Tm\,(\IR\,S^*)$ and $O$ to be $O^\w \circ \El$.
-%%       We write $\Sig_\IIR : \Set_j$ for the type of IIR signatures, parameterized by the
-%%       specified $I$ and $O$.
-%% \item We shall overload the $\Sig_\IIR$ constructors and other IIR operations, i.e.\
-%%       we use $\iota$, $\sigma$, $\delta$ and so on.
-%% \end{itemize}
-As we
-recurse into a signature, we have to store the data that we have seen in a $\Path$,
-and when we hit the base case $\iota^\w$, we use the $\Path$ to build up the correct
-term for the constructor index.
-\begin{alignat*}{5}
-  &\rlap{$\floord{\blank} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El)$}\\
-  &\floord{\iota^\w\,o^\w}\,&&p               &&:=\,&&\iota\,(\intro\,(\push_0\,p\,\ttt))\,o^\w\\
-  &\floord{\sigma^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,A)\,\$\,\lambda\,a.\,\sigma\,(A^\w\,a)\,\$\,\lambda\,a^\w.\,\floord{S^\w\,a^\w}\,(\insigma\,p\,a^\w)\\
-  &\floord{\delta^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,(A \to \IR\,S^*))\,\$\,\lambda\,f.\,\delta\,((a : \Tm\,A) \times A^\w\,a) (\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.\\
-  &                       &&              &&   &&\hspace{0.8em}\floord{S^\w\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w))}\,(\indelta\,p\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w)))
-\end{alignat*}
-\begin{itemize}
-  \item The metatheoretic IIR type is indexed over $\Tm\,(\IR\,S^*)$, and the recursive output type
-    is given by $O^\w\circ \El : \Tm\,(\IR\,S^*) \to \Set_j$. Here, we implicitly cast the syntactic
-    function $\El : \Tm\,(\IR\,S^* \to O)$ to $\Tm\,(\IR\,S^*) \to \Tm\,O$.
-  \item In the $\iota^\w$ case, we have $o^\w : O^\w\,o$ and
-    \[ \iota : (t : \Tm\,(\IR\,S^*)) \to O^\w\,(\El\,t) \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El). \]
-    We have $\intro\,(\push_0\,p\,\ttt) : \Tm\,(\IR\,S^*)$. If we apply $\El$ to this term, it computes
-    to $(S^*)_1\,(\push_0\,p\,\ttt)$, which is the same as $(\iota\,o)_1\,\ttt$, which is the same
-    as $o$, which makes $o^\w : O^\w\,o$ well-typed for the second argument.
-  \item In the $\sigma^\w$ case, we use two $\sigma$-s to abstract over a term and a canonicity witness for it.
-  \item In the $\delta^\w$ case, we abstract over $f : \Tm\,(A \to \IR\,S^*)$, then we use $\delta$ to specify inductive
-        witnesses for all ``subtrees'' that are obtained by applying $f$ to canonical terms.
-\end{itemize}
+The basic idea is that for each IR type, the corresponding canonicity predicate should be defined as
+a metatheoretic IIR type. This gets rather technical, so first let us look at an informal example
+for a concrete IR type.
 
 \begin{example}
 Consider the Agda IR example in \ref{TODO}. We present the logical predicate interpretation for the
@@ -1034,63 +966,92 @@ We assume $\Nat^\w : \Tm\,\Nat \to \Set_0$. The canonicity interpretation is giv
   &\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
   &\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\{B : \Tm\,(\El\,A \to \Code)\}\\
   &         &&  && (B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a)) \to \Code^\w\,(\Pi'\,A\,B)\\
-  &\rlap{$\El^\w\,\Nat'^\w = \Nat^\w$}  \\
+  &\rlap{}\\
+  &\rlap{$\El^\w\,\Nat'^\w\,t \hspace{2.55em}= \Nat^\w\,t$}  \\
   &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,f = \{a : \Tm\,A\} \to \El^\w\,A^\w\,a \to \El^\w\,B^\w\,(f\,a)$}
 \end{alignat*}
-
-
-%% \begin{alignat*}{4}
-%%   &\Code^\w &&:\,&& \Tm\,\Code \to \Set_0\quad && \El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)\\
-%%   &\Nat'^\w &&:\,&& \Code^\w\,\Nat' && \El^\w\,\Nat'^\w = \Nat^\w\\
-%% \end{alignat*}
-%% \begin{alignat*}{4}
-%%   &\Pi'^\w  :\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\{B : \Tm\,(\El\,A \to \Code)\}\\
-%%   & \hspace{2.25em} (B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a)) \to \Code^\w\,(\Pi'\,A\,B)\\
-%%   & \El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,f = \{a : \Tm\,A\} \to A^\w\,a \to B^\w\,(f\,a)
-%% \end{alignat*}
-
+We could also extend this with elimination for $\Code$ and then use $\Code^\w$-elimination to show
+that it preserves predicates. In other words, the above definition is sufficient to prove canonicity
+for $\Code$ as a concrete IR type. The task in this section is to do the same construction generically
+for all IR types.
 \end{example}
 
+We proceed to the semantic definitions. We assume the following parameters: $O : \Tm\,U_j$, $O^\w :
+\Tm\,O \to \Set_j$, $S^* : \Tm\,(\Sig_i\,O)$ and $S^{*\w} :
+\Sig^\w\,O^\w\,S^*$. \emph{Abbreviation:} we write $\Sig^\w\,S$ in the following, omitting the fixed
+$O^\w$ parameter from the type.  We view $S^*$ as a ``fixed'' top-level signature, in contrast to
+``varying'' signatures that we will encounter in constructions. More concretely, we will do most
+constructions by induction on \emph{canonical sub-signatures} of $S^*$.
 
+\paragraph{Canonical sub-signatures of $S^*$.} We define an inductive family indexed
+over $S$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$, viewing
+$S$ as a subtree. Also, the subtree $S$ and all data in the path must be canonical (i.e.\ have $\blank^\w$
+witnesses). The path is represented as a left-associated \emph{snoc-list} of data that can be
+plugged into $\sigma$ and $\delta$ constructors. Moreover, we restrict the $\delta$ case, only
+allowing $f : \Tm\,(A \to \IR\,S^*)$ functions instead of functions of type $\Tm\,(A \to O)$.
+\begin{alignat*}{4}
+  &\rlap{$\data\,\Path : \{S : \Tm\,(\Sig_i\,O)\} \to \Sig^\w\,S \to \Set_{\max(i+1,\,j+1)}$}\\
+  &\quad \here    &&: \Path\,\Ssw\\
+  &\quad \insigma &&: \Path\,(\sigma^\w\,A^\w\,S^\w) \to \{a : \Tm\,A\}(a^\w : A^\w\,a) \to \Path\,(S^\w\,a^\w) \\
+  &\quad \indelta &&: \Path\,(\delta^\w\,A^\w\,S^\w) \to \{f : \Tm\,(A \to \IR\,S^*)\}(f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a)))\\
+  &               && \hspace{0.6em} \to \Path\,(S^\w\,f^\w)
+\end{alignat*}
 
+If we have a path to $S^\w : \Sig^\w\,S$, we can push the terms contained in the path onto a
+term of $S_0\,(\IR\,S^*)\,\El$:
+\begin{alignat*}{4}
+  & \hspace{-6em}\rlap{$\push_0 : \Path\,S^\w \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)$}\\
+  & \hspace{-6em}\push_0\,\here\,                     &&t := t\\
+  & \hspace{-6em}\push_0\,(\insigma\,p\,\{a\}\,a^\w)\,&&t := \push_0\,p\,(a,\,t)\\
+  & \hspace{-6em}\push_0\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push_0\,p\,(f,\,t)
+\end{alignat*}
+We also show that this operation preserves $\blank_1$, so we have $S_1\,t = (S^*)_1\,(\push_0\,p\,t)$.
 
-%% Let $S^*$ be the signature in Example \ref{TODO}. We present the encoded signature
-%% $\floord{S^*}\,\here$ in an informal but hopefully readable way.
+\paragraph{Encoding for signatures.} Next, we define the encoding function for signatures.
+Note that this computation is only possible by induction on $\Sig^\w\,S$ \--- we have no appropriate
+induction principle for $\Tm\,(\Sig_i\,O)$.  As we recurse into a signature, we store the
+data that we have seen in a $\Path$, and when we hit the base case $\iota^\w$, we use the $\Path$ to
+build up the correct term for the constructor index.
+\begin{alignat*}{5}
+  &\rlap{$\floord{\blank} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El)$}\\
+  &\floord{\iota^\w\,o^\w}\,&&p               &&:=\,&&\iota\,(\intro\,(\push_0\,p\,\ttt))\,o^\w\\
+  &\floord{\sigma^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,A)\,\$\,\lambda\,a.\,\sigma\,(A^\w\,a)\,\$\,\lambda\,a^\w.\,\floord{S^\w\,a^\w}\,(\insigma\,p\,a^\w)\\
+  &\floord{\delta^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,(A \to \IR\,S^*))\,\$\,\lambda\,f.\,\delta\,((a : \Tm\,A) \times A^\w\,a) (\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.\\
+  &                       &&              &&   &&\hspace{0.8em}\floord{S^\w\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w))}\,(\indelta\,p\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w)))
+\end{alignat*}
+Remarks.
+\begin{itemize}
+  \item The metatheoretic IIR type is indexed over $\Tm\,(\IR\,S^*)$, and the recursive output type
+    is given by $O^\w\circ \El : \Tm\,(\IR\,S^*) \to \Set_j$. Here, we implicitly cast the syntactic
+    $\El : \Tm\,(\IR\,S^* \to O)$ to the funtion type $\Tm\,(\IR\,S^*) \to \Tm\,O$.
+  \item In the $\iota^\w$ case, we have $o^\w : O^\w\,o$ and
+    \[ \iota : (t : \Tm\,(\IR\,S^*)) \to O^\w\,(\El\,t) \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El). \]
+    We have $\intro\,(\push_0\,p\,\ttt) : \Tm\,(\IR\,S^*)$. If we apply $\El$ to this term, it computes
+    to $(S^*)_1\,(\push_0\,p\,\ttt)$, which is the same as $(\iota\,o)_1\,\ttt$, which is the same
+    as $o$, which makes $o^\w : O^\w\,o$ well-typed for the second argument.
+  \item In the $\sigma^\w$ case, we use two $\sigma$-s to abstract over a term and a canonicity witness for it.
+  \item In the $\delta^\w$ case, we abstract over $f : \Tm\,(A \to \IR\,S^*)$, then we use $\delta$ to specify inductive
+        witnesses for all ``subtrees'' that are obtained by applying $f$ to canonical terms.
+\end{itemize}
 
+\begin{example} Let $S^*$ be the signature from Example \ref{TODO}. It depends on the $\Tag$ and $\Nat$ types,
+so we assume evident $\blank^\w$ interpretations for them. Now, $S^* : \Tm\,(\Sig_0\,\U_0)$ is a closed term
+that does not refer to any IR type/term former, so we can already fully compute the $\blank^\w$
+operation on it, obtaining $\Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^*$. Then, we compute the following.
+\begin{alignat*}{4}
+  & \floord{\Ssw}\,\here : \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(\lambda\,t.\,\Tm\,(\El\,t) \to \Set_0)\\
+  & \floord{\Ssw}\,\here = \sigma\,(\Tm\,\Tag)\,\$\,\lambda\,t.\,\sigma\,(\Tag^\w\,t)\,\$\,\lambda\,t^\w.\,\case\,t^\w\,\of\\
+  & \quad \Nat'^\w \to \iota\,(\intro\,(\Nat',\,\ttt))\,\Nat^\w\\
+  & \quad \Pi'^\w\hspace{0.8em} \to \sigma\,(\Tm\,(\top \to \IR\,S^*))\hspace{1.75em}\$\,\lambda\,A.\,
+                      \delta\,((a : \Tm\,\top) \times \top)\hspace{4.4em}(\fst \circ A)\,\$\,\lambda\,\{{ElA}\}\,{ElA}^\w.\\
+  & \hspace{4.8em} \sigma\,(\Tm\,({ElA}\,\ttt \to \IR\,S^*))\,\$\,\lambda\,B.\,
+                      \delta\,((a : \Tm\,({ElA}\,\ttt)) \times {ElA}^\w\,a)\,(\fst \circ B)\,\$\,\lambda\,\{{ElB}\}\,{ElB}^\w.\\
+  & \hspace{4.8em} \iota\,\,(\Pi'\,A\,B)\,(\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\} \to {ElA}^\w\,a \to {ElB}^\w\,(f\,a))
+\end{alignat*}
+This is essentially the same signature that we had in Example \ref{TODO}, with some extra noise in the first argument of $\Pi'$,
+which is represented as a function with $\top$ domain.
+\end{example}
 
-
-
-%%   we look at a logical predicate
-%% interpretation of $\IR\,S^*$, using Agda-like IIsyntax to give
-
-
-
-
-%%   It depends on a $\Tag$ type and $\Nat$, so we
-%% shall assume $\blank^\w$ interpretations for them. Now, $S^* : \Tm\,(\Sig_0\,\U_0)$ is closed term
-%% that does not refer to any IR type/term former, so we can already fully compute the $\blank^\w$
-%% operation on it, to get $\Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^*$. Then, we compute $\floord{\Ssw}\,\here$:
-%% \begin{alignat*}{4}
-%%   & \floord{\Ssw}\,\here : \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(\lambda\,t.\,\Tm\,(\El\,t) \to \Set_0)\\
-%%   & \floord{\Ssw}\,\here = \sigma\,(\Tm\,\Tag)\,\$\,\lambda\,t.\,\sigma\,(\Tag^\w\,t)\,\lambda\,t^\w.\,\case\,t^\w\,\of\\
-%%   & \quad \Nat'^\w \to \iota\,(\intro\,(\Nat',\,\ttt))\,\Nat^\w\\
-%%   & \quad \Pi'^\w \to \sigma\,(\Tm\,(\top \to \IR\,S^*))\,\$\,\lambda\,A.\,
-%%                       \delta\,((a : \Tm\,\top) \times \top)\,(\lambda\,(a,\,\_).\,A\,a)\,\$\,\lambda\,A^\w.\\
-%%   & \hspace{4em} \sigma\,(\Tm\,(\top \to \IR\,S^*))\,\$\,\lambda\,f.\,
-%%                       \delta\,((a : \Tm\,\top) \times \top)\,(\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.
-%% \end{alignat*}
-
-  %% \sigma\,(\Tm\,\top)\,\$\,\lambda\,t.\,\sigma\,\top\,\$\,\lambda\,t^\w.\,\sigma\,(\Tm\,(\top \to \IR\,S^*))\,\$\,\lambda\,f.\\
-  %% & \hspace{4em} \delta\,((a : \Tm\,\top) \times \top)\,(\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.\\
-
-%% \begin{alignat*}{4}
-%%   & S : \Sig_0\,\U_0\\
-%%   & S :\equiv \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
-%%   & \quad \Nat' \to \iota\,\Nat \\
-%%   & \quad \Pi'\hspace{0.85em} \to \delta\,\top\,\$\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\$\,\lambda\,{ElB}.\,
-%%       \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
-%% \end{alignat*}
-%% \end{example}
 
 \section{TODO}
 
