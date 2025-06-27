@@ -181,7 +181,7 @@ choice of type formers:
 \begin{alignat*}{3}
   & \mbf{mutual} \\
   & \quad\data\,\Code : \Set_0\,\where \\
-  & \quad\quad \Nat' : \U\\
+  & \quad\quad \Nat' : \Code\\
   & \quad\quad \Pi' \hspace{0.8em} : (A : \Code) \to (\El\,A \to \Code) \to \Code
   & \\
   & \\
@@ -977,7 +977,7 @@ term of $S_0\,(\IR\,S^*)\,\El$:
   & \hspace{-6em}\push_0\,(\insigma\,p\,\{a\}\,a^\w)\,&&t := \push_0\,p\,(a,\,t)\\
   & \hspace{-6em}\push_0\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push_0\,p\,(f,\,t)
 \end{alignat*}
-This operation preserves $\blank_1$, so we have $S_1\,t = (S^*)_1\,(\push_0\,p\,t)$.
+We also show that this operation preserves $\blank_1$, so we have $S_1\,t = (S^*)_1\,(\push_0\,p\,t)$.
 
 \paragraph{Encoding for signatures.} Next, we define an encoding function for signatures, somewhat
 similarly to how we did in in Section \ref{TODO}. The idea is to compute a metatheoretical IIR
@@ -999,7 +999,7 @@ and when we hit the base case $\iota^\w$, we use the $\Path$ to build up the cor
 term for the constructor index.
 \begin{alignat*}{5}
   &\rlap{$\floord{\blank} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El)$}\\
-  &\floord{\iota^\w\,o^\w}\,&&p               &&:=\,&&\iota\,(\intro\,(\push_0\,p\,(\lup\ttt)))\,o^\w\\
+  &\floord{\iota^\w\,o^\w}\,&&p               &&:=\,&&\iota\,(\intro\,(\push_0\,p\,\ttt))\,o^\w\\
   &\floord{\sigma^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,A)\,\$\,\lambda\,a.\,\sigma\,(A^\w\,a)\,\$\,\lambda\,a^\w.\,\floord{S^\w\,a^\w}\,(\insigma\,p\,a^\w)\\
   &\floord{\delta^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,(A \to \IR\,S^*))\,\$\,\lambda\,f.\,\delta\,((a : \Tm\,A) \times A^\w\,a) (\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.\\
   &                       &&              &&   &&\hspace{0.8em}\floord{S^\w\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w))}\,(\indelta\,p\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w)))
@@ -1010,28 +1010,94 @@ term for the constructor index.
     function $\El : \Tm\,(\IR\,S^* \to O)$ to $\Tm\,(\IR\,S^*) \to \Tm\,O$.
   \item In the $\iota^\w$ case, we have $o^\w : O^\w\,o$ and
     \[ \iota : (t : \Tm\,(\IR\,S^*)) \to O^\w\,(\El\,t) \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El). \]
-    We have $\intro\,(\push_0\,p\,(\lup\!\ttt)) : \Tm\,(\IR\,S^*)$. If we apply $\El$ to this term, it computes
-    to $(S^*)_1\,(\push_0\,p\,(\lup\!\ttt))$, which is the same as $(\iota\,o)_1\,(\lup\!\ttt)$, which is the same
+    We have $\intro\,(\push_0\,p\,\ttt) : \Tm\,(\IR\,S^*)$. If we apply $\El$ to this term, it computes
+    to $(S^*)_1\,(\push_0\,p\,\ttt)$, which is the same as $(\iota\,o)_1\,\ttt$, which is the same
     as $o$, which makes $o^\w : O^\w\,o$ well-typed for the second argument.
   \item In the $\sigma^\w$ case, we use two $\sigma$-s to abstract over a term and a canonicity witness for it.
   \item In the $\delta^\w$ case, we abstract over $f : \Tm\,(A \to \IR\,S^*)$, then we use $\delta$ to specify inductive
         witnesses for all ``subtrees'' that are obtained by applying $f$ to canonical terms.
 \end{itemize}
 
-\begin{example} We compute $\floord{\blank}$ for the signature in Example \ref{TODO}.
+\begin{example}
+Consider the Agda IR example in \ref{TODO}. We present the logical predicate interpretation for the
+IR type in an informal Agda-like syntax, focusing on readability. We assume the same IR type in the object
+theory, in Agda's style, disregarding elimination for now:
+\begin{alignat*}{4}
+  &\Code &&: \Tm\,\U_0 && \El : \Tm\,(\Code \to \U_0) \\
+  &\Nat' &&: \Tm\,\Code && \El\,\Nat'\hspace{1.5em} = \Nat \\
+  &\Pi'  &&: \Tm\,((A : \Code) \to (\El\,A \to \Code) \to \Code)\hspace{1em} && \El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
+\end{alignat*}
+We assume $\Nat^\w : \Tm\,\Nat \to \Set_0$. The canonicity interpretation is given by the following IIR type.
+\begin{alignat*}{4}
+  &\Code^\w &&: \,\,&& \Tm\,\Code \to \Set_0\quad\\
+  &\El^\w   &&: \,\,&& \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)\\
+  &\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
+  &\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\{B : \Tm\,(\El\,A \to \Code)\}\\
+  &         &&  && (B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a)) \to \Code^\w\,(\Pi'\,A\,B)\\
+  &\rlap{$\El^\w\,\Nat'^\w = \Nat^\w$}  \\
+  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,f = \{a : \Tm\,A\} \to \El^\w\,A^\w\,a \to \El^\w\,B^\w\,(f\,a)$}
+\end{alignat*}
 
 
+%% \begin{alignat*}{4}
+%%   &\Code^\w &&:\,&& \Tm\,\Code \to \Set_0\quad && \El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)\\
+%%   &\Nat'^\w &&:\,&& \Code^\w\,\Nat' && \El^\w\,\Nat'^\w = \Nat^\w\\
+%% \end{alignat*}
+%% \begin{alignat*}{4}
+%%   &\Pi'^\w  :\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\{B : \Tm\,(\El\,A \to \Code)\}\\
+%%   & \hspace{2.25em} (B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a)) \to \Code^\w\,(\Pi'\,A\,B)\\
+%%   & \El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,f = \{a : \Tm\,A\} \to A^\w\,a \to B^\w\,(f\,a)
+%% \end{alignat*}
 
 \end{example}
+
+
+
+
+%% Let $S^*$ be the signature in Example \ref{TODO}. We present the encoded signature
+%% $\floord{S^*}\,\here$ in an informal but hopefully readable way.
+
+
+
+
+%%   we look at a logical predicate
+%% interpretation of $\IR\,S^*$, using Agda-like IIsyntax to give
+
+
+
+
+%%   It depends on a $\Tag$ type and $\Nat$, so we
+%% shall assume $\blank^\w$ interpretations for them. Now, $S^* : \Tm\,(\Sig_0\,\U_0)$ is closed term
+%% that does not refer to any IR type/term former, so we can already fully compute the $\blank^\w$
+%% operation on it, to get $\Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^*$. Then, we compute $\floord{\Ssw}\,\here$:
+%% \begin{alignat*}{4}
+%%   & \floord{\Ssw}\,\here : \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(\lambda\,t.\,\Tm\,(\El\,t) \to \Set_0)\\
+%%   & \floord{\Ssw}\,\here = \sigma\,(\Tm\,\Tag)\,\$\,\lambda\,t.\,\sigma\,(\Tag^\w\,t)\,\lambda\,t^\w.\,\case\,t^\w\,\of\\
+%%   & \quad \Nat'^\w \to \iota\,(\intro\,(\Nat',\,\ttt))\,\Nat^\w\\
+%%   & \quad \Pi'^\w \to \sigma\,(\Tm\,(\top \to \IR\,S^*))\,\$\,\lambda\,A.\,
+%%                       \delta\,((a : \Tm\,\top) \times \top)\,(\lambda\,(a,\,\_).\,A\,a)\,\$\,\lambda\,A^\w.\\
+%%   & \hspace{4em} \sigma\,(\Tm\,(\top \to \IR\,S^*))\,\$\,\lambda\,f.\,
+%%                       \delta\,((a : \Tm\,\top) \times \top)\,(\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.
+%% \end{alignat*}
+
+  %% \sigma\,(\Tm\,\top)\,\$\,\lambda\,t.\,\sigma\,\top\,\$\,\lambda\,t^\w.\,\sigma\,(\Tm\,(\top \to \IR\,S^*))\,\$\,\lambda\,f.\\
+  %% & \hspace{4em} \delta\,((a : \Tm\,\top) \times \top)\,(\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.\\
+
+%% \begin{alignat*}{4}
+%%   & S : \Sig_0\,\U_0\\
+%%   & S :\equiv \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
+%%   & \quad \Nat' \to \iota\,\Nat \\
+%%   & \quad \Pi'\hspace{0.85em} \to \delta\,\top\,\$\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\$\,\lambda\,{ElB}.\,
+%%       \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
+%% \end{alignat*}
+%% \end{example}
 
 \section{TODO}
 
 
 \begin{itemize}
-  \item Implicit lifting in metatheory in canonicity section
-  \item Rename wrap to intro in Agda. Rename DeriveIndexed F0 equivalence in Agda.
-  \item Canonicity metatheory: Loic, Anton says it looks OK
-
+  \item Agda sync: rename wrap to intro, unit type in every univ, naming/notation, postulate a Tm universe for IRCanonicity.
+  \item metatheory: Loic, Anton say it looks OK
 \end{itemize}
 
 \bibliographystyle{ACM-Reference-Format}
