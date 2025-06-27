@@ -64,15 +64,10 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     F0ᴾ (σ Aᴾ Sᴾ) (a , t) = Σ (Aᴾ a) λ aᴾ → F0ᴾ (Sᴾ aᴾ) t
     F0ᴾ (δ Aᴾ Sᴾ) (f , t) = Σ (∀ a → Aᴾ a → IRᴾ (f a)) λ fᴾ → F0ᴾ (Sᴾ λ a aᴾ → Elᴾ (fᴾ a aᴾ)) t
 
-    F1ᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → Oᴾ (F1 S x)
-    F1ᴾ (ι oᴾ)    xᴾ        = oᴾ
-    F1ᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) = F1ᴾ (Sᴾ aᴾ) tᴾ
-    F1ᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) = F1ᴾ (Sᴾ _) tᴾ
-
     F0ᴾ' : ∀ {S} Sᴾ (hom : Path {S} Sᴾ) (x : U) → Set i
     F0ᴾ' Sᴾ hom x = ∃ λ x' → IR.wrap (PathF0 hom x') ≡ x × F0ᴾ Sᴾ x'
 
-    F0ᴾ→ : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x} → F0ᴾ' Sᴾ hom x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x
+    F0ᴾ→ : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x : U} → F0ᴾ' Sᴾ hom x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x
     F0ᴾ→ (ι oᴾ)    hom (x , eq , xᴾ) .lower                    = eq
     F0ᴾ→ (σ Aᴾ Sᴾ) hom ((a , x) , eq , (aᴾ , xᴾ)) .₁           = a
     F0ᴾ→ (σ Aᴾ Sᴾ) hom ((a , x) , eq , aᴾ , xᴾ) .₂ .₁          = aᴾ
@@ -112,6 +107,11 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
       ap (λ x → (a , x .₁) , x .₂ .₁ , aᴾ , x .₂ .₂) (F0ᴾlr (Sᴾ aᴾ) (σ< hom a aᴾ) (x , eq , xᴾ))
     F0ᴾlr (δ Aᴾ Sᴾ) hom ((f , x) , eq , fᴾ , xᴾ) =
       ap (λ x → (f , x .₁) , x .₂ .₁ , fᴾ , x .₂ .₂) (F0ᴾlr (Sᴾ _) (δ< hom f _) (x , eq , xᴾ))
+
+    F1ᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → Oᴾ (F1 S x)
+    F1ᴾ (ι oᴾ)    xᴾ        = oᴾ
+    F1ᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) = F1ᴾ (Sᴾ aᴾ) tᴾ
+    F1ᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) = F1ᴾ (Sᴾ _) tᴾ
 
     wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ S*ᴾ x) → IRᴾ (IR.wrap x)
     wrapᴾ {x} xᴾ = IIR.wrap (F0ᴾ→' S*ᴾ idh xᴾ)

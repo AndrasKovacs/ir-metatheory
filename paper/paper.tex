@@ -131,7 +131,10 @@
 \newcommand{\insigma}{\msf{in}\!\!-\!\!\sigma}
 \newcommand{\indelta}{\msf{in}\!\!-\!\!\delta}
 
-
+\newcommand{\Sb}{S^{*\circ}}
+\newcommand{\Sbe}{{\floord{S^{*\circ}}\,\here}}
+\newcommand{\PSbe}{{(\floord{S^{*\circ}}\,\here)}}
+\newcommand{\Elintro}{\msf{El\!\!-\!\!intro}}
 
 %% --------------------------------------------------------------------------------
 
@@ -621,22 +624,19 @@ the metatheory and the object theory in more detail.
   \item Universe levels $\omega$ and $\omega+1$, where $\Set_\omega : \Set_{\omega + 1}$ and $\Set_{\omega + 1}$
         is a ``proper type'' that is not contained in any universe. $\Set_\omega$ and $\Set_{\omega + 1}$ are
         also closed under basic type formers.
-  \item Each $\Set_i$ supports IR types when $i$ is finite. Hence, $\Set_i$ also supports IIR types.
-  \item A reflection principle which says that finite universe levels corresponds to elements of the
-    internal type of natural numbers $\Nat : \Set_0$. This is similar to Agda's internal type of
-    finite levels, called $\Level$ \cite{TODO}.  For a more formal specification of this
-    internalization, see \cite{TODO}. The reason for this feature is the following. The object
-    theory has countable levels represented as natural numbers, so we have to interpret those
-    numbers as metatheoretic levels in the canonicity model, to correctly specify sizes of
+  \item IR types (thus IIR types as well) in $\Set_i$ when $i$ is finite.
+  \item An internal type of finite universe levels. This is similar to Agda's internal type of
+    finite levels, called $\Level$ \cite{TODO}. The reason for this feature is the following. The
+    object theory has countable levels represented as natural numbers, and we have to interpret
+    those numbers as metatheoretic levels in the canonicity model, to correctly specify sizes of
     reducibility predicates.
   \item The syntax of the object theory as a quotient inductive-inductive type \cite{TODO}, to be
     described in the following section.
-  \item \emph{Notation:} $\Lift$ is derivable the same way as we have seen, but we will make all
-    lifting implicit in the metatheory. In the object theory, explicit lifting is advisable, because
-    we talk about strict computation and canonicty, so we want to be precise about definitional
-    content. In the metatheory, we have equality reflection, so we can be more loose.
-
 \end{itemize}
+\emph{Notation:} $\Lift$ is derivable the same way as we have seen, but we will make all
+lifting implicit in the metatheory. In the object theory, explicit lifting is advisable, because
+we talk about strict computation and canonicty, so we want to be precise about definitional
+content. In the metatheory, we have equality reflection, so we can be more loose.
 
 \subsubsection{Consistency of the metatheory}
 
@@ -1052,8 +1052,81 @@ This is essentially the same signature that we had in Example \ref{TODO}, with s
 which is represented as a function with $\top$ domain.
 \end{example}
 
+\paragraph{Interpretation of $\IR$ and $\El$.}
+This time around, encoded signatures get us precisely what we want:
+\begin{alignat*}{4}
+  &\IR^\w : \Tm\,(\IR\,S^*) \to \Set_i \quad\quad && \El^\w : \{t : \Tm\,(\IR\,S^*)\} \to \IR^\w\,t \to O^\w\,(\El\,t)\\
+  &\IR^\w := \IIR_\PSbe                            && \El^\w := \El_\IIR
+\end{alignat*}
+
+\paragraph{Interpretation of $\intro$ and $\Elintro$.}
+For this, we need to show an equivalence between two representations of $\IR^\w$'s data, somewhat
+similarly to as in Section \ref{TODO}. First, we define the predicate interpretations of $\blank_0$
+and $\blank_1$:
+\begin{alignat*}{3}
+  & \blank_0 : \Sig^\w\,S \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Set_i\\
+  & \blank_1 : (S^\w : \Sig^\w\,S)\{t : \Tm\,(S_0\,(\IR\,S^*)\,\El)\} \to (S^\w)_0\,t \to O^\w\,(S_1\,t)
+\end{alignat*}
+Second, we define
+\begin{alignat*}{3}
+  &\blank_{\floord{0}} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Tm\,(\IR\,S^*) \to \Set_i\\
+  &(S^\w)_{\floord{0}}\,p\,t := (t' : \Tm\,(S_0\,(\IR\,S^*)\,\El)) \times (\intro\,(\push_0\,p\,t') = t) \times (S^\w)_0\,t'.
+\end{alignat*}
+Next, we show the following equivalence by induction on $S^\w$:
+\[  (S^\w : \Sig^\w\,S)(p : \Path\,S^\w)\{t : \Tm\,(\IR\,S^*)\} \to (S^\w)_{\floord{0}}\,p\,t \simeq (\floord{S^\w}\,p)_0\,\IR^\w\,\El^\w\,t \]
+We write $\ora{(S^\w)_0}\,p$ for the map with type $(S^\w)_{\floord{0}}\,p\,t \to (\floord{S^\w}\,p)_0\,\IR^\w\,\El^\w\,t$ and
+$\ola{(S^\w)_0}\,p$ for its inverse. Now we can interpret $\intro$.
+\begin{alignat*}{4}
+  & \intro^\w : \{t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)\} \to (\Ssw)_0\,t \to \IR^\w\,(\intro\,t)\\
+  & \intro^\w\,\{t\}\,t^\w := \intro_\IIR\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))
+\end{alignat*}
+
+
+    %% wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ S*ᴾ x) → IRᴾ (IR.wrap x)
+    %% wrapᴾ {x} xᴾ = IIR.wrap (F0ᴾ→' S*ᴾ idh xᴾ)
+
+%% Now, we have two types that should mean the same thing, $\PSbe_0\,\IR^\w\,\El^\w\,t$ and
+
+
+
+%% Now, we have two types that specify the data contained in $\IR^\w\,t$, and we have to prove them equivalent to
+%% interpret the other IR rules.
+
+%% The \textbf{first type} is  $\PSbe_0\,\IR^\w\,\El^\w\,t$ which we directly get from the IIR rules.
+
+%% For the \textbf{second type} we need some auxilliary definitions. We define predicate interpretations of $\blank_0$ and $\blank_1$:
+%% \begin{alignat*}{3}
+%%   & \blank_0 : \Sig^\w\,S \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Set_i\\
+%%   & \blank_1 : (S^\w : \Sig^\w\,S)\{t : \Tm\,(S_0\,(\IR\,S^*)\,\El)\} \to (S^\w)_0\,t \to O^\w\,(S_1\,t)
+%% \end{alignat*}
+%% We define the other type as follows.
+%% \begin{alignat*}{3}
+%%   &\floord{\blank} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Tm\,(\IR\,S^*) \to \Set_i\\
+%%   &\floord{S^\w}\,p\,t := (t' : \Tm\,(\IR\,S^*)) \times (\intro\,(\push_0\,p\,t') = t) \times (S^\w)_0\,t'
+%% \end{alignat*}
+
+
+
+%% However, to interpret the other rules, we have to again show an equivalence between two descriptions of the data
+%% that is contained in $\IR^\w\,t$. First, we have $\PSbe_0\,\IR^\w\,\El^\w\,t$. The second representation
+
+
+
+
+
+
+
+
+
+
+
 
 \section{TODO}
+
+    %% F0ᴾ' : ∀ {S} Sᴾ (hom : Path {S} Sᴾ) (x : U) → Set i
+    %% F0ᴾ' Sᴾ hom x = ∃ λ x' → IR.wrap (PathF0 hom x') ≡ x × F0ᴾ Sᴾ x'
+
+    %% F0ᴾ→ : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x} → F0ᴾ' Sᴾ hom x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x
 
 
 \begin{itemize}
