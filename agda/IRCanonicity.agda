@@ -108,11 +108,6 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     F0ᴾlr (δ Aᴾ Sᴾ) hom ((f , x) , eq , fᴾ , xᴾ) =
       ap (λ x → (f , x .₁) , x .₂ .₁ , fᴾ , x .₂ .₂) (F0ᴾlr (Sᴾ _) (δ< hom f _) (x , eq , xᴾ))
 
-    F1ᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → Oᴾ (F1 S x)
-    F1ᴾ (ι oᴾ)    xᴾ        = oᴾ
-    F1ᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) = F1ᴾ (Sᴾ aᴾ) tᴾ
-    F1ᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) = F1ᴾ (Sᴾ _) tᴾ
-
     wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ S*ᴾ x) → IRᴾ (IR.wrap x)
     wrapᴾ {x} xᴾ = IIR.wrap (F0ᴾ→' S*ᴾ idh xᴾ)
 
@@ -126,6 +121,11 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
     PathF0ᴾ idh           homᴾ                xᴾ = xᴾ
     PathF0ᴾ (σ< hom a aᴾ) homᴾ                xᴾ = PathF0ᴾ hom homᴾ (aᴾ , xᴾ)
     PathF0ᴾ (δ< hom f fᴾ) (fᴾ* , refl , homᴾ) xᴾ = PathF0ᴾ hom homᴾ (fᴾ* , xᴾ)
+
+    F1ᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → Oᴾ (F1 S x)
+    F1ᴾ (ι oᴾ)    xᴾ        = oᴾ
+    F1ᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) = F1ᴾ (Sᴾ aᴾ) tᴾ
+    F1ᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) = F1ᴾ (Sᴾ _) tᴾ
 
     PathF1ᴾ : ∀ {S}{Sᴾ}(hom : Path {S} Sᴾ)(homᴾ : Path* hom){x : F0 S}(xᴾ : F0ᴾ Sᴾ x)
              → tr Oᴾ (PathF1 hom {x}) (F1ᴾ Sᴾ xᴾ) ≡ F1ᴾ  S*ᴾ (PathF0ᴾ hom homᴾ xᴾ)
@@ -153,7 +153,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
       IHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) (g , w) =
         (∀ a aᴾ → Pᴾ (fᴾ a aᴾ) (g a)) × IHᴾ (Sᴾ (λ a aᴾ → Elᴾ (fᴾ a aᴾ))) tᴾ w
 
-      mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x){f}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S f x)
+      mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x : F0 S}(xᴾ : F0ᴾ Sᴾ x){f : ∀ x → P x}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S f x)
       mapIHᴾ (ι oᴾ)    tᴾ        fᴾ = lift tt
       mapIHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) gᴾ = mapIHᴾ (Sᴾ aᴾ) tᴾ gᴾ
       mapIHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) gᴾ = (λ a aᴾ → gᴾ (fᴾ a aᴾ)) , mapIHᴾ (Sᴾ _) tᴾ gᴾ

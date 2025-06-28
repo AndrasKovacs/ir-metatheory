@@ -1059,13 +1059,17 @@ This time around, encoded signatures get us precisely what we want:
   &\IR^\w := \IIR_\PSbe                            && \El^\w := \El_\IIR
 \end{alignat*}
 
-\paragraph{Interpretation of $\intro$ and $\Elintro$.}
+\paragraph{Interpretation of $\intro$.}
 For this, we need to show an equivalence between two representations of $\IR^\w$'s data, somewhat
-similarly to as in Section \ref{TODO}. First, we define the predicate interpretations of $\blank_0$
-and $\blank_1$:
+similarly to as in Section \ref{TODO}. For $\intro$, we only need one component map of the
+equivalence, but later we will need all of it.
+
+First, we define the predicate interpretations of $\blank_0$ and $\blank_1$. The general form states
+that $\blank_0$ and $\blank_1$ preserve predicates, but we will only need the special case when the
+$\ir$ and $\el$ arguments are $\IR\,S$ and $\El$ respectively.
 \begin{alignat*}{3}
-  & \blank_0 : \Sig^\w\,S \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Set_i\\
-  & \blank_1 : (S^\w : \Sig^\w\,S)\{t : \Tm\,(S_0\,(\IR\,S^*)\,\El)\} \to (S^\w)_0\,t \to O^\w\,(S_1\,t)
+  & \blank_{0^\w} : \Sig^\w\,S \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Set_i\\
+  & \blank_{1^\w} : (S^\w : \Sig^\w\,S)\{t : \Tm\,(S_0\,(\IR\,S^*)\,\El)\} \to (S^\w)_{0^\w}\,t \to O^\w\,(S_1\,t)
 \end{alignat*}
 Second, we define
 \begin{alignat*}{3}
@@ -1073,60 +1077,96 @@ Second, we define
   &(S^\w)_{\floord{0}}\,p\,t := (t' : \Tm\,(S_0\,(\IR\,S^*)\,\El)) \times (\intro\,(\push_0\,p\,t') = t) \times (S^\w)_0\,t'.
 \end{alignat*}
 Next, we show the following equivalence by induction on $S^\w$:
-\[  (S^\w : \Sig^\w\,S)(p : \Path\,S^\w)\{t : \Tm\,(\IR\,S^*)\} \to (S^\w)_{\floord{0}}\,p\,t \simeq (\floord{S^\w}\,p)_0\,\IR^\w\,\El^\w\,t \]
-We write $\ora{(S^\w)_0}\,p$ for the map with type $(S^\w)_{\floord{0}}\,p\,t \to (\floord{S^\w}\,p)_0\,\IR^\w\,\El^\w\,t$ and
-$\ola{(S^\w)_0}\,p$ for its inverse. Now we can interpret $\intro$.
+\[  (S^\w : \Sig^\w\,S)(p : \Path\,S^\w)\{t : \Tm\,(\IR\,S^*)\} \to (S^\w)_{\floord{0}}\,p\,t \simeq (\floord{S^\w}\,p)_0\,t \]
+We write $\ora{(S^\w)_0}\,p$ for the map with type $(S^\w)_{\floord{0}}\,p\,t \to (\floord{S^\w}\,p)_0\,t$ and
+$\ola{(S^\w)_0}\,p$ for its inverse. This lets us interpret $\intro$.
 \begin{alignat*}{4}
-  & \intro^\w : \{t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)\} \to (\Ssw)_0\,t \to \IR^\w\,(\intro\,t)\\
-  & \intro^\w\,\{t\}\,t^\w := \intro_\IIR\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))
+  & \intro^\w : \{t : \Tm\,((S^*)_{0^\w}\,(\IR\,S^*)\,\El)\} \to (\Ssw)_{0^\w}\,t \to \IR^\w\,(\intro\,t)\\
+  & \intro^\w\,\{t\}\,t^\w := \intro_\IIR\,(\ora{(\Ssw)_{0^\w}}\,\,\here\,(t,\,\refl,\,t^\w))
 \end{alignat*}
 
+\paragraph{Interpretation of $\Elintro$.}
+Similarly as in Section \ref{TODO}, we need to show that $\blank_1$ commutes with signature
+encoding. For this, we need to annotate $\Path$ with additional information.  Recall that the
+current definition of $\Path$ is not quite the most general notion of ``path'' in signatures,
+because the $\indelta$ constructor restricts the stored syntactic functions to the form $\El \circ f
+: \Tm\,(A \to O)$, only storing $f : \Tm\,(A \to \IR\,S^*)$. This restriction is required for the
+definition of $\push_0$, where we need to produce $\Tm\,((S^*)_0\,(\IR\,S^*)\,\El)$ as output.
 
-    %% wrapᴾ : {x : F0 S*}(xᴾ : F0ᴾ S*ᴾ x) → IRᴾ (IR.wrap x)
-    %% wrapᴾ {x} xᴾ = IIR.wrap (F0ᴾ→' S*ᴾ idh xᴾ)
+Now we also need to restrict the $f^\w$ witnesses in $\indelta$ to the form $f^\w \circ \El^\w$,
+where $f^\w : \{a : \Tm\,A\} \to A^\w\,a \to \IR^\w\,(f\,a)$. We define a predicate over $\Path$
+that expresses this:
+\[ \msf{restrict} : \Path\,S^\w \to \Set_{\max(i+1,\,j+1)} \]
+This is required for the predicate interpretation of $\push_0$, which is defined by induction on $\Path$:
+\[ \push_{0^\w} : (p : \Path\,S^\w) \to \msf{restrict}\,p \to (S^\w)_{0^\w}\,t \to (\Ssw)_{0^\w}\,(\push_0\,p\,t) \]
+This operation preserves $\blank_{1^\w}$:
+\[ (S^\w)_{1^\w}\,t^\w = (\Ssw)_{1^\w}\,(\push_{0^\w}\,p\,q\,t^\w)  \]
+We use $\push_{0^\w}$ in the statement of $\blank_{\floord{1}}$, which we prove by induction on
+$S^\w$:
+\[ \blank_{\floord{1}} : \forall\,S^\w\,p\,q\,t^\w.\,(\floord{S^\w}\,p)_1\,(\ora{(S^\w)_{0^\w}}\,p\,t^\w) = (\Ssw)_{1^\w}\,(\push_{0^\w}\,p\,q\,t^\w) \]
+Finally, we define $\Elintro^\w$:
+\begin{alignat*}{3}
+    &\Elintro^\w : \{t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)\}(t^\w : (\Ssw)_{0^\w}\,t) \to \El^\w\,(\intro^\w\,t^\w) = (\Ssw)_{1^\w}\,t^\w\\
+    &\Elintro^\w\,t^\w := (\Ssw)_{\floord{1}}\,\here\,\ttt\,t^\w
+\end{alignat*}
+Above, $\ttt$ witnesses the restriction of $\here$, which is trivial (since $\here$ does not contain $\indelta$).
 
-%% Now, we have two types that should mean the same thing, $\PSbe_0\,\IR^\w\,\El^\w\,t$ and
+\paragraph{Interpretation of $\elim$.}
+We assume the following parameters to elimination:
+\begin{alignat*}{4}
+  &k    &&:\,\,&&\Nat\\
+  &P    &&:&& \Tm\,(\IR\,S^* \to \U_k)\\
+  &P^\w &&:&& \{t : \Tm\,(\IR\,S^*)\} \to \IR^\w\,t \to \Tm\,(P\,t) \to \Set_k
+\end{alignat*}
+We define the predicate interpretations for $\blank_\IH$ and $\blank_\map$ first,
+specializing the $\ir$ and $\el$ arguments to $\IR\,S^*$ and $\El$ and the target level to $k$.
+\begin{alignat*}{3}
+  &\blank_{\IH^\w}  &&:\,\,&& (S^\w : \Sig^\w\,S)\to (S^\w)_{0^\w}\,t \to \Tm\,(S_\IH\,t) \to \Set_{\max(i,\,k)}\\
+  &\blank_{\map^\w} &&:\,\,&& (S^\w : \Sig^\w\,S)(t^\w : (S^\w)_{0^\w}\,t)\{f : \Tm\,((x : \IR\,S^*) \to P\,x)\}\\
+  &               &&  \,\,&&(f^\w : \{t : \Tm\,(\IR\,S^*)\}(t^\w : (S^\w)_{0^\w}\,t) \to P^\w\,t^\w\,(f\,t))\\
+  &               &&      &&\to (S^\w)_{\IH^\w}\,S^\w\,t^\w\,(S_\map\,f\,t)
+\end{alignat*}
 
+ %%   mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x){f}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S f x)
 
+  %% &f    &&:&& \Tm\,((t : (S^*)_0\,(\IR\,S^*)\,\El) \to (S^*)_\IH\,t \to P\,(\intro\,t))\\
+  %% &f^\w &&:&& \{t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)\}(t^\w : (\Ssw)_{0^\w}\,t)\{\ih : \Tm\,((S^*)_\IH\,t) \}\\
+  %% &    &&  &&\to (\Ssw)_{\IH^\w}\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
 
-%% Now, we have two types that specify the data contained in $\IR^\w\,t$, and we have to prove them equivalent to
-%% interpret the other IR rules.
-
-%% The \textbf{first type} is  $\PSbe_0\,\IR^\w\,\El^\w\,t$ which we directly get from the IIR rules.
-
-%% For the \textbf{second type} we need some auxilliary definitions. We define predicate interpretations of $\blank_0$ and $\blank_1$:
+%% We define the predicate interpretations for $\blank_\IH$ and $\blank_\map$ first, again
+%% specializing the $\ir$ and $\el$ arguments to $\IR\,S$ and $\El$.
 %% \begin{alignat*}{3}
-%%   & \blank_0 : \Sig^\w\,S \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Set_i\\
-%%   & \blank_1 : (S^\w : \Sig^\w\,S)\{t : \Tm\,(S_0\,(\IR\,S^*)\,\El)\} \to (S^\w)_0\,t \to O^\w\,(S_1\,t)
-%% \end{alignat*}
-%% We define the other type as follows.
-%% \begin{alignat*}{3}
-%%   &\floord{\blank} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Tm\,(\IR\,S^*) \to \Set_i\\
-%%   &\floord{S^\w}\,p\,t := (t' : \Tm\,(\IR\,S^*)) \times (\intro\,(\push_0\,p\,t') = t) \times (S^\w)_0\,t'
+%%   &\blank_{\IH^\w} : (S^\w : \Sig^\w\,S) \to (S^\w)_{0^\w}\,t \to \Tm\,(S_\IH\,t) \to \Set_{\max(i,\,k)}
 %% \end{alignat*}
 
+%% We aim to interpret $\elim$, which amounts to showing that $\elim$ preserves $\blank^\w$.
+%% \[ \elim^\w : \{t : \Tm\,(\IR\,S^*)\}(t^\w : \IR^\w\,t \to) \to P^\w\,t^\w\,(\elim\,S^*\,P\,
 
 
-%% However, to interpret the other rules, we have to again show an equivalence between two descriptions of the data
-%% that is contained in $\IR^\w\,t$. First, we have $\PSbe_0\,\IR^\w\,\El^\w\,t$. The second representation
+%%           (metᴾ : ∀ {x}(xᴾ : F0ᴾ S*ᴾ x){ih}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ {IR.wrap x} (wrapᴾ xᴾ) (met x ih)) where
 
-
-
-
-
-
+        %% elimᴾ : ∀ {x}(xᴾ : IRᴾ x) → Pᴾ xᴾ (IR.elim S* P met x)
 
 
 
+    %% module _ {k}(P : U → Set k)(Pᴾ : ∀ {x} → IRᴾ x → P x → Set k) where
 
+    %%   IH    = λ S → IR.IH S {U} {El} P
+    %%   mapIH = λ S → IR.mapIH S {U} {El} P
+
+    %%   IHᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → IH S x → Set (i ⊔ k)
+    %%   IHᴾ (ι oᴾ)    xᴾ        w       = Lift _ ⊤
+    %%   IHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) w       = IHᴾ (Sᴾ aᴾ) tᴾ w
+    %%   IHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) (g , w) =
+    %%     (∀ a aᴾ → Pᴾ (fᴾ a aᴾ) (g a)) × IHᴾ (Sᴾ (λ a aᴾ → Elᴾ (fᴾ a aᴾ))) tᴾ w
+
+    %%   mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x){f}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S f x)
+    %%   mapIHᴾ (ι oᴾ)    tᴾ        fᴾ = lift tt
+    %%   mapIHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) gᴾ = mapIHᴾ (Sᴾ aᴾ) tᴾ gᴾ
+    %%   mapIHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) gᴾ = (λ a aᴾ → gᴾ (fᴾ a aᴾ)) , mapIHᴾ (Sᴾ _) tᴾ gᴾ
 
 
 \section{TODO}
-
-    %% F0ᴾ' : ∀ {S} Sᴾ (hom : Path {S} Sᴾ) (x : U) → Set i
-    %% F0ᴾ' Sᴾ hom x = ∃ λ x' → IR.wrap (PathF0 hom x') ≡ x × F0ᴾ Sᴾ x'
-
-    %% F0ᴾ→ : ∀ {S} Sᴾ (hom : Path {S} Sᴾ){x} → F0ᴾ' Sᴾ hom x → IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x
 
 
 \begin{itemize}
