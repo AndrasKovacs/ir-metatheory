@@ -135,6 +135,7 @@
 \newcommand{\Sbe}{{\floord{S^{*\circ}}\,\here}}
 \newcommand{\PSbe}{{(\floord{S^{*\circ}}\,\here)}}
 \newcommand{\Elintro}{\msf{El\!\!-\!\!intro}}
+\newcommand{\elimbeta}{\elim\!-\!\!\beta}
 
 %% --------------------------------------------------------------------------------
 
@@ -1074,7 +1075,7 @@ $\ir$ and $\el$ arguments are $\IR\,S$ and $\El$ respectively.
 Second, we define
 \begin{alignat*}{3}
   &\blank_{\floord{0}} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Tm\,(\IR\,S^*) \to \Set_i\\
-  &(S^\w)_{\floord{0}}\,p\,t := (t' : \Tm\,(S_0\,(\IR\,S^*)\,\El)) \times (\intro\,(\push_0\,p\,t') = t) \times (S^\w)_{0^\w}\,t'.
+  &(S^\w)_{\floord{0}}\,p\,t := (t' : \Tm\,(S_0\,(\IR\,S^*)\,\El)) \times ((\intro\,(\push_0\,p\,t') = t) \times (S^\w)_{0^\w}\,t').
 \end{alignat*}
 Next, we show the following equivalence by induction on $S^\w$:
 \[  (S^\w : \Sig^\w\,S)(p : \Path\,S^\w)\{t : \Tm\,(\IR\,S^*)\} \to (S^\w)_{\floord{0}}\,p\,t \simeq (\floord{S^\w}\,p)_0\,t \]
@@ -1116,100 +1117,50 @@ We assume the following parameters to elimination:
 \begin{alignat*}{4}
   &k    &&:\,\,&&\Nat\\
   &P    &&:&& \Tm\,(\IR\,S^* \to \U_k)\\
-  &P^\w &&:&& \{t : \Tm\,(\IR\,S^*)\} \to \IR^\w\,t \to \Tm\,(P\,t) \to \Set_k
+  &P^\w &&:&& \{t\} \to \IR^\w\,t \to \Tm\,(P\,t) \to \Set_k
 \end{alignat*}
 We define the predicate interpretations for $\blank_\IH$ and $\blank_\map$ first,
 specializing the $\ir$ and $\el$ arguments to $\IR\,S^*$ and $\El$ and the target level to $k$.
 \begin{alignat*}{3}
-  &\blank_{\IH^\w}  &&:\,\,&& (S^\w : \Sig^\w\,S)\to (S^\w)_{0^\w}\,t \to \Tm\,(S_\IH\,t) \to \Set_{\max(i,\,k)}\\
-  &\blank_{\map^\w} &&:\,\,&& (S^\w : \Sig^\w\,S)(t^\w : (S^\w)_{0^\w}\,t)\{f : \Tm\,((x : \IR\,S^*) \to P\,x)\}\\
-  &               &&  \,\,&&(f^\w : \{t : \Tm\,(\IR\,S^*)\}(t^\w : (S^\w)_{0^\w}\,t) \to P^\w\,t^\w\,(f\,t))\\
+  &\blank_{\IH^\w}  &&:\,\,&& \{S\}(S^\w : \Sig^\w\,S)\{t\} \to (S^\w)_{0^\w}\,t \to \Tm\,(S_\IH\,t) \to \Set_{\max(i,\,k)}\\
+  &\blank_{\map^\w} &&:\,\,&& \{S\}(S^\w : \Sig^\w\,S)\{t\}(t^\w : (S^\w)_{0^\w}\,t)\{f\}(f^\w : \{t\}(t^\w : (S^\w)_{0^\w}\,t) \to P^\w\,t^\w\,(f\,t))\\
   &               &&      &&\to (S^\w)_{\IH^\w}\,S^\w\,t^\w\,(S_\map\,f\,t)
 \end{alignat*}
 We also assume the induction method and its canonicity witness as parameters:
 \begin{alignat*}{3}
-  &f    &&:\,\,&& \Tm\,((t : (S^*)_0\,(\IR\,S^*)\,\El) \to (S^*)_\IH\,t \to P\,(\intro\,t))\\
-  &f^\w &&:\,\,&& \{t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)\}(t^\w : (\Ssw)_{0^\w}\,t)\{\ih : \Tm\,((S^*)_\IH\,t) \}\\
-  &    &&  &&\to (\Ssw)_{\IH^\w}\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
+  &f    &&:\,\,&& (t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El) \to (S^*)_\IH\,t \to P\,(\intro\,t))\\
+  &f^\w &&:\,\,&& \{t\}(t^\w : (\Ssw)_{0^\w}\,t)\{\ih\} \to (\Ssw)_{\IH^\w}\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
 \end{alignat*}
 The goal is the following:
-\[ \elim^\w : \{t : \Tm\,(\IR\,S^*)\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(\elim\,S^*\,P\,f\,t)  \]
+\[ \elim^\w : \{t\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(\elim\,S^*\,P\,f\,t)  \]
 We shall use IIR elimination on $t^\w$ to give the definition. Again like in Section \ref{TODO}, we
 have to massage $P^\w$ and $f^\w$ to be able to pass them to $\elim_\IIR$. For the former, we have
 \begin{alignat*}{4}
-  &\floord{P^\w} : \{t : \Tm\,(\IR\,S^*\,\El)\} \to \IR^\w\,t \to \Set_k\\
+  &\floord{P^\w} : \{t\} \to \IR^\w\,t \to \Set_k\\
   &\floord{P^\w}\,\{t\}\,t^\w := P^\w\,x^\w\,(\elim\,S^*\,P\,f\,t).
 \end{alignat*}
 For the latter, we first define decoding for induction hypotheses, by induction
 on $S^\w$:
 \begin{alignat*}{4}
-  &\ola{(S^\w)_{\IH^\w}} : (\floord{S^\w}\,p)_\IH\,\floord{P^\w}\,t^\p \to (S^\w)_{\IH^\w}\,\ola{(S^\w)}
+  &\ola{(S^\w)_\IH} &&\,\,:&&(\floord{S^\w}\,p)_\IH\,\floord{P^\w}\,t^\w\\
+  & &&\to\,\,&&(S^\w)_{\IH^\w}\,(\snd\,(\snd\,(\ola{(S^\w)_0}\,p\,t^\w)))\,(S_\map\,(\elim\,S^*\,P\,f)\,(\fst\,(\ola{(S^\w)_0}\,p\,t^\w)))
 \end{alignat*}
+And define
+\begin{alignat*}{4}
+  &\floord{f^\w} : \{t\}(t^\w : \PSbe_0\,\IR^\w\,\El^\w\,t) \to \PSbe_\IH\,\floord{P^\w}\,t^\w \to \floord{P^\w}\,(\intro\,t^\w)\\
+  &\floord{f^\w}\,t^\w\,\ih^\w := f^\w\,(\snd\,(\snd\,(\ola{(S^\w)_0}\,p\,t^\w)))\,(\ola{(S^{*\w})_{\IH}}\,\,\here\,\ih^\w).
+\end{alignat*}
+Hence, elimination is interpreted as follows:
+\[ \elim^\w\,t^\w := \elim_\IIR\,\PSbe\,\floord{P^\w}\,\floord{f^\w}\,t^\w \]
+
+\paragraph{Interpretation of $\elimbeta$.}
+The goal is the following:
+\[ \elimbeta^\w : \{t\}(t^\w : (\Ssw)_{0^\w}\,t) \to \elim^\w\,(\intro^\w\,t^\w) = f^\w\,t^\w\,((\Ssw)_{\map^\w}\,\elim^\w\,t^\w) \]
 
 
-
-        %% IHᴾ← : ∀ {S} Sᴾ{x}(hom : Path {S} Sᴾ){xᴾ : IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x}
-        %%          → IIR.IH (Sigᴾ→ Sᴾ hom) Pᴾ' xᴾ
-        %%          → IHᴾ Sᴾ (F0ᴾ← Sᴾ hom xᴾ .₂ .₂) (mapIH S (IR.elim S* P met) (F0ᴾ← Sᴾ hom xᴾ .₁))
-        %% IHᴾ← (ι oᴾ) hom ihᴾ .lower = tt
-        %% IHᴾ← (σ Aᴾ Sᴾ) hom {a , aᴾ , xᴾ} ihᴾ = IHᴾ← (Sᴾ aᴾ) (σ< hom a aᴾ) ihᴾ
-        %% IHᴾ← (δ Aᴾ Sᴾ) hom {f , fᴾ , xᴾ} ihᴾ .₁ a aᴾ = ihᴾ .₁ (a , aᴾ)
-        %% IHᴾ← (δ Aᴾ Sᴾ) hom {f , fᴾ , xᴾ} ihᴾ .₂ = IHᴾ← (Sᴾ _) (δ< hom f _) (ihᴾ .₂)
-
-
-        %% metᴾ' : ∀ {x} (xᴾ : IIR.F0 (Sigᴾ→ S*ᴾ idh) IRᴾ Elᴾ x) → IIR.IH (Sigᴾ→ S*ᴾ idh) Pᴾ' xᴾ
-        %%          → Pᴾ' (IIR.wrap xᴾ)
-        %% metᴾ' {x} xᴾ ih =
-        %%   tr (λ xᴾ → Pᴾ' (IIR.wrap xᴾ))
-        %%      (F0ᴾrl S*ᴾ idh xᴾ)
-        %%      (J (λ _ eq → Pᴾ' (IIR.wrap (F0ᴾ→ S*ᴾ idh (F0ᴾ← S*ᴾ idh xᴾ .₁ , eq , F0ᴾ← S*ᴾ idh xᴾ .₂ .₂))))
-        %%         (F0ᴾ← S*ᴾ idh xᴾ .₂ .₁)
-        %%         (metᴾ (F0ᴾ← S*ᴾ idh xᴾ .₂ .₂) (IHᴾ← S*ᴾ idh ih)))
-
-        %% Pᴾ' : ∀ {x} → IRᴾ x → Set k
-        %% Pᴾ' {x} xᴾ = Pᴾ xᴾ (IR.elim S* P met x)
-
-
-
-        %% elimᴾ : ∀ {x}(xᴾ : IRᴾ x) → Pᴾ xᴾ (IR.elim S* P met x)
-
- %%   mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x){f}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S f x)
-
-  %% &f    &&:&& \Tm\,((t : (S^*)_0\,(\IR\,S^*)\,\El) \to (S^*)_\IH\,t \to P\,(\intro\,t))\\
-  %% &f^\w &&:&& \{t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)\}(t^\w : (\Ssw)_{0^\w}\,t)\{\ih : \Tm\,((S^*)_\IH\,t) \}\\
-  %% &    &&  &&\to (\Ssw)_{\IH^\w}\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
-
-%% We define the predicate interpretations for $\blank_\IH$ and $\blank_\map$ first, again
-%% specializing the $\ir$ and $\el$ arguments to $\IR\,S$ and $\El$.
-%% \begin{alignat*}{3}
-%%   &\blank_{\IH^\w} : (S^\w : \Sig^\w\,S) \to (S^\w)_{0^\w}\,t \to \Tm\,(S_\IH\,t) \to \Set_{\max(i,\,k)}
-%% \end{alignat*}
-
-%% We aim to interpret $\elim$, which amounts to showing that $\elim$ preserves $\blank^\w$.
-%% \[ \elim^\w : \{t : \Tm\,(\IR\,S^*)\}(t^\w : \IR^\w\,t \to) \to P^\w\,t^\w\,(\elim\,S^*\,P\,
-
-
-%%           (metᴾ : ∀ {x}(xᴾ : F0ᴾ S*ᴾ x){ih}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ {IR.wrap x} (wrapᴾ xᴾ) (met x ih)) where
-
-        %% elimᴾ : ∀ {x}(xᴾ : IRᴾ x) → Pᴾ xᴾ (IR.elim S* P met x)
-
-
-
-    %% module _ {k}(P : U → Set k)(Pᴾ : ∀ {x} → IRᴾ x → P x → Set k) where
-
-    %%   IH    = λ S → IR.IH S {U} {El} P
-    %%   mapIH = λ S → IR.mapIH S {U} {El} P
-
-    %%   IHᴾ : ∀ {S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x) → IH S x → Set (i ⊔ k)
-    %%   IHᴾ (ι oᴾ)    xᴾ        w       = Lift _ ⊤
-    %%   IHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) w       = IHᴾ (Sᴾ aᴾ) tᴾ w
-    %%   IHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) (g , w) =
-    %%     (∀ a aᴾ → Pᴾ (fᴾ a aᴾ) (g a)) × IHᴾ (Sᴾ (λ a aᴾ → Elᴾ (fᴾ a aᴾ))) tᴾ w
-
-    %%   mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x}(xᴾ : F0ᴾ Sᴾ x){f}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S f x)
-    %%   mapIHᴾ (ι oᴾ)    tᴾ        fᴾ = lift tt
-    %%   mapIHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) gᴾ = mapIHᴾ (Sᴾ aᴾ) tᴾ gᴾ
-    %%   mapIHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) gᴾ = (λ a aᴾ → gᴾ (fᴾ a aᴾ)) , mapIHᴾ (Sᴾ _) tᴾ gᴾ
+        %% elimβᴾ : ∀ {x : F0 S*} (xᴾ : F0ᴾ S*ᴾ x)
+        %%          → elimᴾ (wrapᴾ xᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
+        %% elimβᴾ {x} xᴾ =
 
 
 \section{TODO}

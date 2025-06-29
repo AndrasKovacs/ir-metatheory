@@ -153,10 +153,10 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
       IHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) (g , w) =
         (∀ a aᴾ → Pᴾ (fᴾ a aᴾ) (g a)) × IHᴾ (Sᴾ (λ a aᴾ → Elᴾ (fᴾ a aᴾ))) tᴾ w
 
-      mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){x : F0 S}(xᴾ : F0ᴾ Sᴾ x){f : ∀ x → P x}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)) → IHᴾ Sᴾ xᴾ (mapIH S f x)
-      mapIHᴾ (ι oᴾ)    tᴾ        fᴾ = lift tt
-      mapIHᴾ (σ Aᴾ Sᴾ) (aᴾ , tᴾ) gᴾ = mapIHᴾ (Sᴾ aᴾ) tᴾ gᴾ
-      mapIHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) gᴾ = (λ a aᴾ → gᴾ (fᴾ a aᴾ)) , mapIHᴾ (Sᴾ _) tᴾ gᴾ
+      mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){f : ∀ x → P x}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)){x : F0 S}(xᴾ : F0ᴾ Sᴾ x) → IHᴾ Sᴾ xᴾ (mapIH S f x)
+      mapIHᴾ (ι oᴾ)    fᴾ tᴾ         = lift tt
+      mapIHᴾ (σ Aᴾ Sᴾ) gᴾ (aᴾ , tᴾ)  = mapIHᴾ (Sᴾ aᴾ) gᴾ tᴾ
+      mapIHᴾ (δ Aᴾ Sᴾ) gᴾ (fᴾ , tᴾ)  = (λ a aᴾ → gᴾ (fᴾ a aᴾ)) , mapIHᴾ (Sᴾ _) gᴾ tᴾ
 
       module _  (met  : ∀ (x : F0 S*) → IH S* x → P (IR.wrap x))
                 (metᴾ : ∀ {x}(xᴾ : F0ᴾ S*ᴾ x){ih}(ihᴾ : IHᴾ S*ᴾ xᴾ ih) → Pᴾ {IR.wrap x} (wrapᴾ xᴾ) (met x ih)) where
@@ -169,7 +169,8 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
 
         IHᴾ← : ∀ {S} Sᴾ{x}(hom : Path {S} Sᴾ){xᴾ : IIR.F0 (Sigᴾ→ Sᴾ hom) IRᴾ Elᴾ x}
                  → IIR.IH (Sigᴾ→ Sᴾ hom) Pᴾ' xᴾ
-                 → IHᴾ Sᴾ (F0ᴾ← Sᴾ hom xᴾ .₂ .₂) (mapIH S (IR.elim S* P met) (F0ᴾ← Sᴾ hom xᴾ .₁))
+                 → let (t' , _ , tᴾ') = F0ᴾ← Sᴾ hom xᴾ in
+                   IHᴾ Sᴾ tᴾ' (mapIH S (IR.elim S* P met) t')
         IHᴾ← (ι oᴾ) hom ihᴾ .lower = tt
         IHᴾ← (σ Aᴾ Sᴾ) hom {a , aᴾ , xᴾ} ihᴾ = IHᴾ← (Sᴾ aᴾ) (σ< hom a aᴾ) ihᴾ
         IHᴾ← (δ Aᴾ Sᴾ) hom {f , fᴾ , xᴾ} ihᴾ .₁ a aᴾ = ihᴾ .₁ (a , aᴾ)
@@ -191,7 +192,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
           tr (λ xᴾ → IHᴾ Sᴾ (xᴾ .₂ .₂) (mapIH S (IR.elim S* P met) (xᴾ .₁)))
              (F0ᴾlr Sᴾ hom (x , refl , xᴾ))
              (IHᴾ← Sᴾ hom (IIR.mapIH (Sigᴾ→ Sᴾ hom) Pᴾ' h (F0ᴾ→' Sᴾ hom xᴾ)))
-          ≡ mapIHᴾ Sᴾ xᴾ h
+          ≡ mapIHᴾ Sᴾ h xᴾ
         mapIH-trip (ι oᴾ) hom xᴾ f = refl
 
         mapIH-trip (σ {A} Aᴾ {S} Sᴾ) {a , x} hom h (aᴾ , xᴾ) =
@@ -251,11 +252,11 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
            refl
 
         elimβᴾ : ∀ {x : F0 S*} (xᴾ : F0ᴾ S*ᴾ x)
-                 → elimᴾ (wrapᴾ xᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
+                 → elimᴾ (wrapᴾ xᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ elimᴾ xᴾ)
         elimβᴾ {x} xᴾ =
 
           let lhs = metᴾ' (F0ᴾ→' S*ᴾ idh xᴾ) (IIR.mapIH S*ᴾ' Pᴾ' (IIR.elim S*ᴾ' Pᴾ' metᴾ') (F0ᴾ→' S*ᴾ idh xᴾ))
-              rhs = metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
+              rhs = metᴾ xᴾ (mapIHᴾ S*ᴾ elimᴾ xᴾ)
 
           in the (lhs ≡ rhs) $
                  coe-coe
