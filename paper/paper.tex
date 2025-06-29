@@ -487,9 +487,25 @@ This lets us continue the translation for $S$, by fixing up the return type of $
 signatures to small IR signatures \cite{TODO}. However, they did not present anything more about the
 reduction of IIR types to IR types.
 
-\subsection{Type and Term Formers} We can already define the $\IIR$ and $\El$ rules for IIR types. Since the encoding of signatures
+\begin{example} We compute the translation of the length-indexed vector signature from Example \ref{TODO}.
+\begin{alignat*}{4}
+  & \floord{S} : \Sig\,(\Nat \times \top)\\
+  & \floord{S} \equiv \sigma\,(\Lift\,\Tag)\,\$\,\lambda\,t.\,\case \ldown\!t\,\of \\
+  & \quad \Nil'\hspace{0.85em} \to \iota\,(\zero,\,\ttt) \\
+  & \quad \Cons'\to \sigma\,(\Lift\,\Nat)\,\$\,\lambda\,n.\,\sigma\,(\Lift\,A)\,\$\,\lambda\,\_.\\
+  & \quad \hspace{4em}  \delta\,(\Lift\,\top)\,\$\,\lambda\,f.\,\sigma\,((x : \top) \to \fst\,(f\,(\lup\!x)) = n)\,\$\,\lambda\,p.\\
+  & \quad \hspace{4em}  \iota\,(\suc\,(\ldown\!n),\,\ttt)
+\end{alignat*}
+Here the first component $\Nat$ of the recursive result serves as the index. In the $\Cons'$ case we
+have a single inductive field whose length is enforced with the extra $\sigma\,((x : \top) \to
+\fst\,(f\,(\lup\!x)) = n)$.
+
+\end{example}
+
+\subsection{Type and Term Formers} Since the encoding of signatures
 already ensures the well-indexing of inductive fields in constructors, it only remains to ensure
-that the ``top-level'' index matches the externally supplied index.
+that the ``top-level'' index matches the externally supplied index. We define the $\IIR$ and $\El$
+rules as follows.
 \begin{alignat*}{3}
   &\IIR : \Sig_\IIR \to I \to \U_{\max(i,\,k)}                         && \El : \IIR\,S\,i \to O\,i \\
   &\IIR\,S\,i :\equiv (x : \IR\,\Sigr{S}) \times \fst\,(\El\,x) = i \hspace{3em}&& \El\,(x,\,p) :\equiv \tr\,O\,p\,(\snd\,(\El\,x))
@@ -1172,18 +1188,58 @@ The left hand side computes to the following:
   &f^\w\,&&\Big(\snd\,\big(\snd\,\big(\ola{(S^{*\w})_0}\,\here\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))\big)\big)\Big)\\
   &      &&\Big(\ola{(S^{*\w})_{\IH}}\,\,\here\,\Big(\PSbe_\map\,\floord{P^\w}\,\elim^\w\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))\Big)\Big)
 \end{alignat*}
-The first argument to $\floord{f^\w}$ simplifies to just $t^\w$ by canceling the $\ola{(S^{*\w})_0}$
+The first argument to $\floord{f^\w}$ simplifies to $t^\w$ by canceling the $\ola{(S^{*\w})_0}$
 isomorphism. For the second argument of $\floord{f^\w}$, like in Section \ref{TODO}, we show that
 $\PSbe_\map$ appropriately commutes with the $\ola{(S^{*\w})_0)}$ isomorphism, by induction on $S^\w$.
+
+\emph{Remark.} In the Agda formalization of $\beta$-rules, we use uniqueness of identity proofs
+(UIP) instead of trying to shuffle transports by homotopical reasoning. We do this mainly because it
+is easier. However, we conjecture that it is possible to get rid of UIP. In that case, the above
+definitions could be reformulated as part of a \emph{syntactic parametricity translation} that maps
+from the object theory to itself. Also, we might imagine a binary parametricity variant of our
+interpretation \cite{TODO}. In other words, we conjecture that our IR interpretation can serve as a
+blueprint for other kinds of parametric interpretations of IR types.
 \end{definition}
 
-\emph{Remark.} In the Agda formalization of the above definitions, we use uniqueness of identity
-proofs (UIP) instead of trying to shuffle transports by homotopical reasoning. We do this mainly
-because it is easier. However, we conjecture that it is possible to get rid of UIP. In that case,
-the above definitions could be reformulated as part of a \emph{syntactic parametricity translation}
-that maps from the object theory to itself. Also, we might imagine a binary parametricity variant of
-our interpretation \cite{TODO}. In other words, we conjecture that our IR interpretation can serve
-as a blueprint for other kinds of parametric interpretations of IR types.
+\begin{definition}[Interpretation of object-theoretic IR rules]
+At this point we have semantics for IR rules that only mention closed syntactic terms. The final
+step is to generalize them to arbitrary contexts, thereby interpreting object-theoretic IR rules.
+
+In the object theory we have $\IIR : \Tm\,\Gamma\,(\{O : \U_j\} \to \Sig_i\,O \to \U_i)$, hence by the specification
+of $\blank^\w$ in Section \ref{TODO}, we need
+\begin{alignat*}{4}
+  & \IIR^\w &&:\,\,&& \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma)\{O : \Tm\,\U_j\}(O^\w : \Tm\,O \to \Set_j)\\
+  &         &&     && \{S : \Tm\,(\Sig_i\,O)\}(S^\w : \Sig^\w\,S) \to \Tm\,(\IIR\,S) \to \Set_i
+\end{alignat*}
+In this section we defined a different $\IR^\w$ with the following type (including all parameters):
+\begin{alignat*}{4}
+  & \IIR^\w : \{O : \Tm\,\U_j\}(O^\w : \Tm\,O \to \Set_j)\{S : \Tm\,(\Sig_i\,O)\}(S^\w : \Sig^\w\,S) \to \Tm\,(\IIR\,S) \to \Set_i
+\end{alignat*}
+Hence, the contextual definition is just a constant function, i.e.\ $\IIR^\w\,\{\gamma\}\,\gamma^\w
+:= \IIR^\w$.
+
+We also need to interpret stability under substitution. In the object theory we have
+$(\IIR\,\{\Gamma\})[\sigma] = \IIR\,\{\Delta\}$ when $\sigma : \Sub\,\Delta\,\Gamma$. Hence, we need
+to show $((\IIR\,\{\Gamma\})[\sigma])^\w = (\IIR\,\{\Delta\})^\w$ here. Computing this type further
+and applying function extensionality, we have the goal $\IIR^\w\,(\sigma^\w\,\gamma^\w) =
+\IIR^\w\,\gamma^\w$, which is by definition $\IIR^\w = \IIR^\w$ for the non-contextual $\IIR^\w$
+definition, and thus holds trivially.
+
+Every other IR rule and substitution rule is interpreted similarly, as constant functions and
+trivial equations. Also, $\Elintro$, and $\elimbeta$ are dispatched by direct appeal to the
+equations that we have already proved. Hence, we omit these proofs here.
+
+\todo{Let's have just one equation example which justifies putting the Pi and Sigma parametricity
+  interpretations in the section}
+
+This concludes the
+canonicity interpretation for the object theory.
+
+\subsubsection{Canonicity}
+
+\end{definition}
+
+
 
 
 \section{TODO}
