@@ -984,7 +984,8 @@ $O^\w$ parameter from the type.  We view $S^*$ as a ``fixed'' top-level signatur
 ``varying'' signatures that we will encounter in constructions. More concretely, we will do most
 constructions by induction on \emph{canonical sub-signatures} of $S^*$.
 
-\paragraph{Canonical sub-signatures of $S^*$.} We define an inductive family indexed
+\begin{definition}[Canonical sub-signatures of $S^*$]
+We define an inductive family indexed
 over $S$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$, viewing
 $S$ as a subtree. Also, the subtree $S$ and all data in the path must be canonical (i.e.\ have $\blank^\w$
 witnesses). The path is represented as a left-associated \emph{snoc-list} of data that can be
@@ -1007,8 +1008,10 @@ term of $S_0\,(\IR\,S^*)\,\El$:
   & \hspace{-6em}\push_0\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push_0\,p\,(f,\,t)
 \end{alignat*}
 We also show that this operation preserves $\blank_1$, so we have $S_1\,t = (S^*)_1\,(\push_0\,p\,t)$.
+\end{definition}
 
-\paragraph{Encoding for signatures.} Next, we define the encoding function for signatures.
+\begin{definition}[Encoding for signatures]
+Next, we define the encoding function for signatures.
 Note that this computation is only possible by induction on $\Sig^\w\,S$ \--- we have no appropriate
 induction principle for $\Tm\,(\Sig_i\,O)$.  As we recurse into a signature, we store the
 data that we have seen in a $\Path$, and when we hit the base case $\iota^\w$, we use the $\Path$ to
@@ -1020,7 +1023,7 @@ build up the correct term for the constructor index.
   &\floord{\delta^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,(A \to \IR\,S^*))\,\$\,\lambda\,f.\,\delta\,((a : \Tm\,A) \times A^\w\,a) (\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.\\
   &                       &&              &&   &&\hspace{0.8em}\floord{S^\w\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w))}\,(\indelta\,p\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w)))
 \end{alignat*}
-Remarks.
+Some remarks:
 \begin{itemize}
   \item The metatheoretic IIR type is indexed over $\Tm\,(\IR\,S^*)$, and the recursive output type
     is given by $O^\w\circ \El : \Tm\,(\IR\,S^*) \to \Set_j$. Here, we implicitly cast the syntactic
@@ -1034,6 +1037,7 @@ Remarks.
   \item In the $\delta^\w$ case, we abstract over $f : \Tm\,(A \to \IR\,S^*)$, then we use $\delta$ to specify inductive
         witnesses for all ``subtrees'' that are obtained by applying $f$ to canonical terms.
 \end{itemize}
+\end{definition}
 
 \begin{example} Let $S^*$ be the signature from Example \ref{TODO}. It depends on the $\Tag$ and $\Nat$ types,
 so we assume evident $\blank^\w$ interpretations for them. Now, $S^* : \Tm\,(\Sig_0\,\U_0)$ is a closed term
@@ -1053,14 +1057,15 @@ This is essentially the same signature that we had in Example \ref{TODO}, with s
 which is represented as a function with $\top$ domain.
 \end{example}
 
-\paragraph{Interpretation of $\IR$ and $\El$.}
+\begin{definition}[Interpretation of $\IR$ and $\El$]
 This time around, encoded signatures get us precisely what we want:
 \begin{alignat*}{4}
   &\IR^\w : \Tm\,(\IR\,S^*) \to \Set_i \quad\quad && \El^\w : \{t : \Tm\,(\IR\,S^*)\} \to \IR^\w\,t \to O^\w\,(\El\,t)\\
   &\IR^\w := \IIR_\PSbe                            && \El^\w := \El_\IIR
 \end{alignat*}
+\end{definition}
 
-\paragraph{Interpretation of $\intro$.}
+\begin{definition}[Interpretation of $\intro$]
 For this, we need to show an equivalence between two representations of $\IR^\w$'s data, somewhat
 similarly to as in Section \ref{TODO}. For $\intro$, we only need one component map of the
 equivalence, but later we will need all of it.
@@ -1085,8 +1090,9 @@ $\ola{(S^\w)_0}\,p$ for its inverse. This lets us interpret $\intro$.
   & \intro^\w : \{t : \Tm\,((S^*)_{0^\w}\,(\IR\,S^*)\,\El)\} \to (\Ssw)_{0^\w}\,t \to \IR^\w\,(\intro\,t)\\
   & \intro^\w\,\{t\}\,t^\w := \intro_\IIR\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))
 \end{alignat*}
+\end{definition}
 
-\paragraph{Interpretation of $\Elintro$.}
+\begin{definition}[Interpretation of $\Elintro$]
 Similarly as in Section \ref{TODO}, we need to show that $\blank_1$ commutes with signature
 encoding. For this, we need to annotate $\Path$ with additional information.  Recall that the
 current definition of $\Path$ is not quite the most general notion of ``path'' in signatures,
@@ -1111,8 +1117,9 @@ Finally, we define $\Elintro^\w$:
     &\Elintro^\w\,t^\w := (\Ssw)_{\floord{1}}\,\here\,\ttt\,t^\w
 \end{alignat*}
 Above, $\ttt$ witnesses the restriction of $\here$, which is trivial (since $\here$ does not contain $\indelta$).
+\end{definition}
 
-\paragraph{Interpretation of $\elim$.}
+\begin{definition}[Interpretation of $\elim$]
 We assume the following parameters to elimination:
 \begin{alignat*}{4}
   &k    &&:\,\,&&\Nat\\
@@ -1123,7 +1130,7 @@ We define the predicate interpretations for $\blank_\IH$ and $\blank_\map$ first
 specializing the $\ir$ and $\el$ arguments to $\IR\,S^*$ and $\El$ and the target level to $k$.
 \begin{alignat*}{3}
   &\blank_{\IH^\w}  &&:\,\,&& \{S\}(S^\w : \Sig^\w\,S)\{t\} \to (S^\w)_{0^\w}\,t \to \Tm\,(S_\IH\,t) \to \Set_{\max(i,\,k)}\\
-  &\blank_{\map^\w} &&:\,\,&& \{S\}(S^\w : \Sig^\w\,S)\{t\}(t^\w : (S^\w)_{0^\w}\,t)\{f\}(f^\w : \{t\}(t^\w : (S^\w)_{0^\w}\,t) \to P^\w\,t^\w\,(f\,t))\\
+  &\blank_{\map^\w} &&:\,\,&& \{S\}(S^\w : \Sig^\w\,S)\{f\}(f^\w : \{t\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(f\,t))\{t\}(t^\w : (S^\w)_{0^\w}\,t)\\
   &               &&      &&\to (S^\w)_{\IH^\w}\,S^\w\,t^\w\,(S_\map\,f\,t)
 \end{alignat*}
 We also assume the induction method and its canonicity witness as parameters:
@@ -1143,24 +1150,40 @@ For the latter, we first define decoding for induction hypotheses, by induction
 on $S^\w$:
 \begin{alignat*}{4}
   &\ola{(S^\w)_\IH} &&\,\,:&&(\floord{S^\w}\,p)_\IH\,\floord{P^\w}\,t^\w\\
-  & &&\to\,\,&&(S^\w)_{\IH^\w}\,(\snd\,(\snd\,(\ola{(S^\w)_0}\,p\,t^\w)))\,(S_\map\,(\elim\,S^*\,P\,f)\,(\fst\,(\ola{(S^\w)_0}\,p\,t^\w)))
+  & &&\to\,\,&&(S^\w)_{\IH^\w}\,\big(\snd\,(\snd\,(\ola{(S^\w)_0}\,p\,t^\w))\big)\,\big(S_\map\,(\elim\,S^*\,P\,f)\,(\fst\,(\ola{(S^\w)_0}\,p\,t^\w))\big)
 \end{alignat*}
 And define
 \begin{alignat*}{4}
   &\floord{f^\w} : \{t\}(t^\w : \PSbe_0\,\IR^\w\,\El^\w\,t) \to \PSbe_\IH\,\floord{P^\w}\,t^\w \to \floord{P^\w}\,(\intro\,t^\w)\\
-  &\floord{f^\w}\,t^\w\,\ih^\w := f^\w\,(\snd\,(\snd\,(\ola{(S^\w)_0}\,p\,t^\w)))\,(\ola{(S^{*\w})_{\IH}}\,\,\here\,\ih^\w).
+  &\floord{f^\w}\,t^\w\,\ih^\w := f^\w\,\big(\snd\,(\snd\,(\ola{(S^\w)_0}\,\here\,t^\w))\big)\,\big(\ola{(S^{*\w})_{\IH}}\,\,\here\,\ih^\w\big).
 \end{alignat*}
 Hence, elimination is interpreted as follows:
 \[ \elim^\w\,t^\w := \elim_\IIR\,\PSbe\,\floord{P^\w}\,\floord{f^\w}\,t^\w \]
+\end{definition}
 
-\paragraph{Interpretation of $\elimbeta$.}
+\begin{definition}[Interpretation of $\elimbeta$]
 The goal is the following:
 \[ \elimbeta^\w : \{t\}(t^\w : (\Ssw)_{0^\w}\,t) \to \elim^\w\,(\intro^\w\,t^\w) = f^\w\,t^\w\,((\Ssw)_{\map^\w}\,\elim^\w\,t^\w) \]
+%% \begin{alignat*}{4}
+%%   & \floord{f^\w}\,&&\Big(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w)\Big)\,\Big(\PSbe_\map\,\floord{P^\w}\,\elim^\w\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w)\Big)
+%% \end{alignat*}
+The left hand side computes to the following:
+\begin{alignat*}{4}
+  &f^\w\,&&\Big(\snd\,\big(\snd\,\big(\ola{(S^{*\w})_0}\,\here\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))\big)\big)\Big)\\
+  &      &&\Big(\ola{(S^{*\w})_{\IH}}\,\,\here\,\Big(\PSbe_\map\,\floord{P^\w}\,\elim^\w\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))\Big)\Big)
+\end{alignat*}
+The first argument to $\floord{f^\w}$ simplifies to just $t^\w$ by canceling the $\ola{(S^{*\w})_0}$
+isomorphism. For the second argument of $\floord{f^\w}$, like in Section \ref{TODO}, we show that
+$\PSbe_\map$ appropriately commutes with the $\ola{(S^{*\w})_0)}$ isomorphism, by induction on $S^\w$.
+\end{definition}
 
-
-        %% elimβᴾ : ∀ {x : F0 S*} (xᴾ : F0ᴾ S*ᴾ x)
-        %%          → elimᴾ (wrapᴾ xᴾ) ≡ metᴾ xᴾ (mapIHᴾ S*ᴾ xᴾ elimᴾ)
-        %% elimβᴾ {x} xᴾ =
+\emph{Remark.} In the Agda formalization of the above definitions, we use uniqueness of identity
+proofs (UIP) instead of trying to shuffle transports by homotopical reasoning. We do this mainly
+because it is easier. However, we conjecture that it is possible to get rid of UIP. In that case,
+the above definitions could be reformulated as part of a \emph{syntactic parametricity translation}
+that maps from the object theory to itself. Also, we might imagine a binary parametricity variant of
+our interpretation \cite{TODO}. In other words, we conjecture that our IR interpretation can serve
+as a blueprint for other kinds of parametric interpretations of IR types.
 
 
 \section{TODO}

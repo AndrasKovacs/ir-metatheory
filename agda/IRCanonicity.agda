@@ -153,7 +153,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
       IHᴾ (δ Aᴾ Sᴾ) (fᴾ , tᴾ) (g , w) =
         (∀ a aᴾ → Pᴾ (fᴾ a aᴾ) (g a)) × IHᴾ (Sᴾ (λ a aᴾ → Elᴾ (fᴾ a aᴾ))) tᴾ w
 
-      mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){f : ∀ x → P x}(fᴾ : ∀ {x} xᴾ → Pᴾ xᴾ (f x)){x : F0 S}(xᴾ : F0ᴾ Sᴾ x) → IHᴾ Sᴾ xᴾ (mapIH S f x)
+      mapIHᴾ : ∀{S}(Sᴾ : Sigᴾ S){f : ∀ x → P x}(fᴾ : ∀ {x : U} (xᴾ : IRᴾ x) → Pᴾ xᴾ (f x)){x : F0 S}(xᴾ : F0ᴾ Sᴾ x) → IHᴾ Sᴾ xᴾ (mapIH S f x)
       mapIHᴾ (ι oᴾ)    fᴾ tᴾ         = lift tt
       mapIHᴾ (σ Aᴾ Sᴾ) gᴾ (aᴾ , tᴾ)  = mapIHᴾ (Sᴾ aᴾ) gᴾ tᴾ
       mapIHᴾ (δ Aᴾ Sᴾ) gᴾ (fᴾ , tᴾ)  = (λ a aᴾ → gᴾ (fᴾ a aᴾ)) , mapIHᴾ (Sᴾ _) gᴾ tᴾ
