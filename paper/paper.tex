@@ -814,7 +814,6 @@ $\Sub\,\Gamma$ to mean $\Sub\,\emptycon\,\Gamma$. This will reduce clutter since
 with closed terms and substitutions.
 
 We aim to define the following functions by induction on object syntax.
-
 \begin{alignat*}{3}
   &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\Gamma \to \Set_\omega\\
   &\blank^\w : (A : \Ty\,\Gamma\,i) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Tm\,A[\gamma] \to \Set_i\\
@@ -907,7 +906,8 @@ We interpret \textbf{functions} as follows.
   &(\app\,t)^\w\,(\gamma^\w,\,\alpha^\w) &&:= t^\w\,\gamma^\w\,\alpha^\w
 \end{alignat*}
 In the $\Pi\,A\,B$ case, note that $f : \Tm\,(\Pi\,A\,B)[\gamma]$, which means that we can apply it
-to $\alpha$ to get $f\,\alpha : \Tm\,B[\gamma,\,\alpha]$.
+to $\alpha$ to get $f\,\alpha : \Tm\,B[\gamma,\,\alpha]$. We can also derive the interpretation of
+binary applications: $(t\,u)^\w\,\gamma^\w$ is computed to $t^\w\,\gamma^\w\,(u^\w\,\gamma^\w)$.
 
 For \textbf{$\Sigma$-types}, we have
 \begin{alignat*}{4}
@@ -1067,7 +1067,7 @@ operation on it, obtaining $\Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^
                       \delta\,((a : \Tm\,\top) \times \top)\hspace{4.4em}(\fst \circ A)\,\$\,\lambda\,\{{ElA}\}\,{ElA}^\w.\\
   & \hspace{4.8em} \sigma\,(\Tm\,({ElA}\,\ttt \to \IR\,S^*))\,\$\,\lambda\,B.\,
                       \delta\,((a : \Tm\,({ElA}\,\ttt)) \times {ElA}^\w\,a)\,(\fst \circ B)\,\$\,\lambda\,\{{ElB}\}\,{ElB}^\w.\\
-  & \hspace{4.8em} \iota\,\,(\Pi'\,A\,B)\,(\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\} \to {ElA}^\w\,a \to {ElB}^\w\,(f\,a))
+  & \hspace{4.8em} \iota\,\,(\intro\,(\Pi',\,A,\,B,\,\ttt))\,(\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\} \to {ElA}^\w\,a \to {ElB}^\w\,(f\,a))
 \end{alignat*}
 This is essentially the same signature that we had in Example \ref{TODO}, with some extra noise in the first argument of $\Pi'$,
 which is represented as a function with $\top$ domain.
@@ -1077,7 +1077,7 @@ which is represented as a function with $\top$ domain.
 This time around, encoded signatures get us precisely what we want:
 \begin{alignat*}{4}
   &\IR^\w : \Tm\,(\IR\,S^*) \to \Set_i \quad\quad && \El^\w : \{t : \Tm\,(\IR\,S^*)\} \to \IR^\w\,t \to O^\w\,(\El\,t)\\
-  &\IR^\w := \IIR_\PSbe                            && \El^\w := \El_\IIR
+  &\IR^\w := \IIR\,\PSbe                          && \El^\w := \El_\IIR
 \end{alignat*}
 \end{definition}
 
@@ -1223,23 +1223,39 @@ $(\IIR\,\{\Gamma\})[\sigma] = \IIR\,\{\Delta\}$ when $\sigma : \Sub\,\Delta\,\Ga
 to show $((\IIR\,\{\Gamma\})[\sigma])^\w = (\IIR\,\{\Delta\})^\w$ here. Computing this type further
 and applying function extensionality, we have the goal $\IIR^\w\,(\sigma^\w\,\gamma^\w) =
 \IIR^\w\,\gamma^\w$, which is by definition $\IIR^\w = \IIR^\w$ for the non-contextual $\IIR^\w$
-definition, and thus holds trivially.
+definition, and thus holds trivially. Every other IR rule and substitution rule is interpreted
+similarly, as constant functions and trivial equations. Also, $\Elintro$, and $\elimbeta$ are
+dispatched by direct appeal to the equations that we have already proved.
 
-Every other IR rule and substitution rule is interpreted similarly, as constant functions and
-trivial equations. Also, $\Elintro$, and $\elimbeta$ are dispatched by direct appeal to the
-equations that we have already proved. Hence, we omit these proofs here.
-
-\todo{Let's have just one equation example which justifies putting the Pi and Sigma parametricity
-  interpretations in the section}
-
-This concludes the
-canonicity interpretation for the object theory.
-
-\subsubsection{Canonicity}
+For an example, we look at $\Elintro$. In the object theory, we have $\Elintro : \El\,(\intro\,x) =
+S_1\,x$, so we need to show $(\El\,(\intro\,x))^\w\,\gamma^\w = (S_1\,x)^\w\,\gamma^\w$. Using the
+definition of $\blank^\w$ of functions and the definitions of $\El^\w\,\gamma^\w$,
+$\intro^\w\,\gamma^\w$ and $(S_1)^\w\,\gamma^\w$, this is computed to
+\[ (\El^\w\,(\intro^\w\,(x^\w\,\gamma^\w))) = (S^\w\,\gamma^\w)_{1^\w}\,(x^\w\,\gamma^\w) \]
+which is an instance of Definition \ref{TODO}. We omit describing the contextualization of
+the other rules. This concludes the canonicity interpretation of the object theory.
 
 \end{definition}
 
+\begin{example}
+Now that we have fully defined the $\blank^\w$ functions acting on contexts, types, subtitutions and
+terms, we can look at an example for a canonicity statement. Recall $S$ from Example \ref{TODO} and
+also the corresponding IIR predicate from Example \ref{TODO}. Assuming $t :
+\Tm\,\emptycon\,(\IR\,S)$, we have
+\begin{alignat*}{3}
+  &t^\w\,\{\id\}\,\ttt &&: (\IR\,S)^\w\,\ttt\,\,t[\id]\\
+  &t^\w\,\{\id\}\,\ttt &&: \IR^\w\,(S^\w\,\ttt)\,t\\
+  &t^\w\,\{\id\}\,\ttt &&: \IIR\,(\floord{S^\w\,\ttt}\,\here)\,t
+\end{alignat*}
+Now, $\IIR_{(\floord{S^\w\,\ttt}\,\here)}\,t$ expresses that $t$ is either definitionally equal to $\intro\,(\Nat',\,\ttt)$
+or to $\intro\,(\Pi',\,A,\,B,\,\ttt)$ for some canonical $A$ and $B$.
+\end{example}
 
+\subsection{Mechanization}
+
+\section{Related Work}
+
+\section{Conclusion and Future Work}
 
 
 \section{TODO}
@@ -1247,6 +1263,7 @@ canonicity interpretation for the object theory.
 
 \begin{itemize}
   \item Agda sync: rename wrap to intro, unit type in every univ, naming/notation, postulate a Tm universe for IRCanonicity.
+  \item Check paper defs while syncing.
   \item metatheory: Loic, Anton say it looks OK
 \end{itemize}
 
