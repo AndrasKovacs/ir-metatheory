@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{31}
+\begin{thebibliography}{32}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -62,18 +62,6 @@
   \bibinfo{pages}{23:1--23:29}.
 \newblock
 \href{https://doi.org/10.1145/3158111}{doi:\nolinkurl{10.1145/3158111}}
-
-
-\bibitem[{Agda developers}(2025)]%
-        {agdadocs}
-\bibfield{author}{\bibinfo{person}{{Agda developers}}.}
-  \bibinfo{year}{2025}\natexlab{}.
-\newblock \bibinfo{title}{Agda documentation}.
-\newblock
-\urldef\tempurl%
-\url{https://agda.readthedocs.io/en/v2.8.0-rc2/}
-\showURL{%
-\tempurl}
 
 
 \bibitem[Altenkirch and Kaposi(2016)]%
@@ -250,6 +238,21 @@
   \bibinfo{number}{4} (\bibinfo{year}{1994}), \bibinfo{pages}{440--465}.
 \newblock
 \href{https://doi.org/10.1007/BF01211308}{doi:\nolinkurl{10.1007/BF01211308}}
+
+
+\bibitem[Dybjer(1995)]%
+        {Dybjer96internaltype}
+\bibfield{author}{\bibinfo{person}{Peter Dybjer}.}
+  \bibinfo{year}{1995}\natexlab{}.
+\newblock \showarticletitle{Internal Type Theory}. In
+  \bibinfo{booktitle}{\emph{Types for Proofs and Programs, International
+  Workshop TYPES'95, Torino, Italy, June 5-8, 1995, Selected Papers}}
+  \emph{(\bibinfo{series}{Lecture Notes in Computer Science},
+  Vol.~\bibinfo{volume}{1158})}, \bibfield{editor}{\bibinfo{person}{Stefano
+  Berardi} {and} \bibinfo{person}{Mario Coppo}} (Eds.).
+  \bibinfo{publisher}{Springer}, \bibinfo{pages}{120--134}.
+\newblock
+\href{https://doi.org/10.1007/3-540-61780-9\_66}{doi:\nolinkurl{10.1007/3-540-61780-9\_66}}
 
 
 \bibitem[Dybjer(2000)]%
@@ -443,6 +446,18 @@
   \bibinfo{pages}{2171--2196}.
 \newblock
 \href{https://doi.org/10.1145/3571739}{doi:\nolinkurl{10.1145/3571739}}
+
+
+\bibitem[{The Agda Team}(2025)]%
+        {agdadocs}
+\bibfield{author}{\bibinfo{person}{{The Agda Team}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{Agda documentation}.
+\newblock
+\urldef\tempurl%
+\url{https://agda.readthedocs.io/en/v2.8.0-rc2/}
+\showURL{%
+\tempurl}
 
 
 \bibitem[{Univalent Foundations Program}(2013)]%

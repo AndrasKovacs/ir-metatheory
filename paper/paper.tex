@@ -43,15 +43,15 @@
 
 %% --------------------------------------------------------------------------------
 
-\usepackage{xcolor}
-\usepackage{mathpartir}
+%% \usepackage{xcolor}
+%% \usepackage{mathpartir}
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{}
 \usepackage{scalerel}
-\usepackage{bm}
-\usepackage{mathtools}
-\usepackage{stmaryrd}
-\usepackage[title]{appendix}
+%% \usepackage{bm}
+%% \usepackage{mathtools}
+%% \usepackage{stmaryrd}
+%% \usepackage[title]{appendix}
 
 \newcommand{\mit}[1]{{\mathsf{#1}}}
 \newcommand{\msf}[1]{{\mathsf{#1}}}
@@ -178,12 +178,13 @@ metatheoretic IIR type.
 
 \section{Introduction}\label{sec:introduction}
 
-Instances of inductive-recursive (IR) definitions were first used by Martin-Löf \cite{martin1975intuitionistic,martinlof84sambin}. General
-definitions of IR types were formalized by Dybjer \cite{DBLP:journals/jsyml/Dybjer00} and Dybjer \&
-Setzer \cite{dybjer99finite,DBLP:journals/jlp/DybjerS06,DBLP:journals/apal/DybjerS03}, who also
-developed set-theoretic, realizability and categorical semantics. A common application of IR is to
-define custom universe hierarchies inside a type theory. In the proof assistant Agda, we can use IR
-to define a universe that is closed under our choice of type formers:
+Instances of inductive-recursive (IR) definitions were first used by
+\citet{martin1975intuitionistic,martinlof84sambin}. General definitions of IR types were formalized
+by \citet{DBLP:journals/jsyml/Dybjer00} and
+\citet{dybjer99finite,DBLP:journals/jlp/DybjerS06,DBLP:journals/apal/DybjerS03}, who also developed
+set-theoretic, realizability and categorical semantics. A common application of IR is to define
+custom universe hierarchies inside a type theory. In the proof assistant Agda, we can use IR to
+define a universe that is closed under our choice of type formers:
 \begin{alignat*}{3}
   & \mbf{mutual} \\
   & \quad\data\,\Code : \Set_0\,\where \\
@@ -328,7 +329,7 @@ represent the corresponding recursive output. Finally, $\iota\, ((x : {ElA}\,\tt
 specifies the output of the recursive function for a $\Pi'$ constructor.
 \end{example}
 
-Our signatures are identical to Dybjer and Setzer's \cite{DBLP:journals/apal/DybjerS03}, except for
+Our signatures are identical to those in \cite{DBLP:journals/apal/DybjerS03}, except for
 one difference.  We have countable universe levels, while Dybjer and Setzer use a logical framework
 presentation with only three universes, $\msf{set}$, $\msf{stype}$ and $\msf{type}$, where
 $\msf{set}$ contains the inductively specified type, $\msf{stype}$ contains the non-inductive
@@ -374,7 +375,7 @@ endofunctor on $\U_i/O$.
 
 \subsubsection{Elimination}\label{sec:ir-elimination}
 
-We again follow Dybjer and Setzer \cite{DBLP:journals/apal/DybjerS03}. We assume a universe level
+We again follow \citet{DBLP:journals/apal/DybjerS03}. We assume a universe level
 $k$ that specifies the size of the type into which we eliminate. We define two additional functions
 on signatures:
 \begin{alignat*}{3}
@@ -689,7 +690,7 @@ inductive-inductive type. The sets, operations and equations that we give in the
 constitute the inductive signature.
 
 \subsubsection{Core substitution calculus} The basic judgmental structure is given
-as a category with families (CwF) \cite{cwfs} where types are additionally annotated with levels.
+as a category with families (CwF) \cite{Dybjer96internaltype,cwfs} where types are additionally annotated with levels.
 Concretely, we have
 \begin{itemize}
 \item A category of contexts and substitutions. We have $\Con : \Set_0$ for contexts and $\Sub : \Con \to \Con \to \Set_0$
@@ -840,12 +841,12 @@ We aim to define the following functions by induction on object syntax.
 
 It is a proof-relevant logical predicate interpretation, which corresponds to \emph{Artin gluing}
 \cite[Exposé~4,~Section~9.5]{SGA4}, i.e.\ categorical gluing over the global sections functor. The
-concrete formulation that we use is the type-theoretic gluing by Kaposi, Huber and Sattler
-\cite{gluing}, which is the same as Coquand's version \cite{coquand2018canonicity} when gluing along
-the global sections functor. This is a variation of gluing which uses dependent type families
-instead of the fibered families of the categorical flavor. The type-theoretic style becomes valuable
-when we get to the interpretation of more complicated type formers, where it is easier to use than
-diagrammatic reasoning.
+concrete formulation that we use is the type-theoretic gluing by \citet{gluing}, which is the same
+as Coquand's version \cite{coquand2018canonicity} when gluing along the global sections
+functor. This is a variation of gluing which uses dependent type families instead of the fibered
+families of the categorical flavor. The type-theoretic style becomes valuable when we get to the
+interpretation of more complicated type formers, where it is easier to use than diagrammatic
+reasoning.
 
 \subsubsection{Interpretation of the CwF and the basic type formers}
 
@@ -937,12 +938,12 @@ We skip the interpretation of the other constructors and the eliminator here. Ab
 we use $\iota^\w$ for specifying the action of $\blank^\w$ on the syntactic $\iota$, while on the
 right side we use the metatheoretic $\Sig^\w$ constructor $\iota^\w$. In general, the recipe is:
 \begin{enumerate}
-\item We first give semantic interpretation of object constructions while only referring to closed terms.
+\item We first give semantic definitions that only refer to closed terms.
 \item Then, we ``contextualize'' the definitions to get interpretations of object-theoretic rules.
 \end{enumerate}
 In this section, the bulk of the work is phase (1) and phase (2) is fairly trivial. In phase (1), we
 use $\blank^\w$ to mark semantic definitions and we do not need to refer to $\blank^\w$ as a family
-of interpretation functions on the object syntax. In phase (2) we do overload $\blank^\w$ and but
+of interpretation functions on the object syntax. In phase (2) we do overload $\blank^\w$ but
 hope that it does not generate too much confusion.
 
 \subsubsection{Interpretation of IR types}
@@ -1246,6 +1247,8 @@ or to $\intro\,(\Pi',\,A,\,B,\,\ttt)$ for some $A$ and $B$.
 
 
 \section{TODO}
+
+foo
 
 
 \begin{itemize}

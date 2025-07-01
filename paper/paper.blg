@@ -30,6 +30,7 @@ Warning--empty address in DBLP:conf/tphol/BoveDN09
 Warning--empty address in DBLP:conf/ecoop/Brady21
 Warning--page numbers missing in both pages and numpages fields in cwfs
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/corr/abs-2502-20485
+Warning--empty address in Dybjer96internaltype
 Warning--empty address in dybjer99finite
 Warning--empty address in DBLP:conf/tlca/HancockMGMA13
 Warning--empty address in whynotw
@@ -38,45 +39,45 @@ Warning--empty address in DBLP:conf/mpc/KaposiKK19
 Warning--empty address in first-class-univ
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/corr/abs-2302-08837
 Warning--empty address in martinlof84sambin
-You've used 31 entries,
+You've used 32 entries,
             6273 wiz_defined-function locations,
-            1784 strings with 25911 characters,
-and the built_in function-call counts, 34774 in all, are:
-= -- 4766
-> -- 866
+            1794 strings with 26192 characters,
+and the built_in function-call counts, 35970 in all, are:
+= -- 4903
+> -- 891
 < -- 1
-+ -- 278
-- -- 313
-* -- 2371
-:= -- 3215
-add.period$ -- 160
-call.type$ -- 31
-change.case$ -- 186
-chr.to.int$ -- 29
-cite$ -- 49
-duplicate$ -- 3156
-empty$ -- 2229
-format.name$ -- 383
-if$ -- 8619
++ -- 284
+- -- 322
+* -- 2450
+:= -- 3325
+add.period$ -- 165
+call.type$ -- 32
+change.case$ -- 191
+chr.to.int$ -- 30
+cite$ -- 51
+duplicate$ -- 3280
+empty$ -- 2315
+format.name$ -- 392
+if$ -- 8903
 int.to.chr$ -- 4
 int.to.str$ -- 1
-missing$ -- 117
-newline$ -- 313
-num.names$ -- 235
-pop$ -- 1080
+missing$ -- 122
+newline$ -- 321
+num.names$ -- 244
+pop$ -- 1121
 preamble$ -- 1
-purify$ -- 430
+purify$ -- 443
 quote$ -- 0
-skip$ -- 1144
+skip$ -- 1193
 stack$ -- 0
-substring$ -- 2849
-swap$ -- 321
+substring$ -- 2959
+swap$ -- 335
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 677
-warning$ -- 18
-while$ -- 250
+type$ -- 707
+warning$ -- 19
+while$ -- 261
 width$ -- 0
-write$ -- 681
+write$ -- 703
 (There were 2 error messages)
