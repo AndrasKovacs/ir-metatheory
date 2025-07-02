@@ -19,9 +19,9 @@ _₀          (σ A S    ) ir el ix = Σ A λ a → (S a ₀) ir el ix
 _₀          (δ A ix' S) ir el ix = Σ (∀ a → ir (ix' a)) λ f → (S (el ∘ f)₀) ir el ix
 
 _₁ : ∀ (S : Sig i {j}{k} I O){ir : I → Set (i ⊔ k)}{el : ∀ {i} → ir i → O i} → ∀ {ix} → _₀ S ir el ix → O ix
-_₁ {O = O}(ι ix o)            (lift x) = tr O x o
-_₁        (σ A S)             (a , x)  = (S a ₁) x
-_₁        (δ A ix S) {ir}{el} (f , x)  = (S (el ∘ f)₁) x
+_₁ {O = O}(ι ix o)            (↑ x)   = tr O x o
+_₁        (σ A S)             (a , x) = (S a ₁) x
+_₁        (δ A ix S) {ir}{el} (f , x) = (S (el ∘ f)₁) x
 
 _ᵢₕ : ∀ (S : Sig i {j}{k} I O){ir : I → Set (i ⊔ k)}{el : ∀{ix} → ir ix → O ix}
         (P : ∀ {ix} → ir ix → Set l) → ∀ {ix} → (S ₀) ir el ix → Set (i ⊔ l)
@@ -47,3 +47,14 @@ mutual
 elim : ∀ {S : Sig i {j}{k} I O}(P : ∀ {ix} → IIR S ix → Set l)
        → (∀ {ix} x → (S ᵢₕ) P {ix} x → P (intro x)) → ∀ {ix} x → P {ix} x
 elim {S = S} P f (intro x) = f x ((S ₘₐₚ) P (elim P f) x)
+
+module Ex-2-2 where
+
+  import Data.Nat as N
+
+  data Tag : Set where Nil' Cons' : Tag
+
+  S : (A : Set) → Sig zero {zero}{zero} N.ℕ (λ _ → ⊤)
+  S A = σ Tag λ where
+    Nil'  → ι N.zero tt
+    Cons' → σ N.ℕ λ n → σ A λ _ → δ ⊤ (λ _ → n) λ _ → ι (N.suc n) tt

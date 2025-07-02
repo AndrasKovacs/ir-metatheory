@@ -10,7 +10,8 @@ open import Relation.Binary.PropositionalEquality
   public
 open import Data.Product hiding (map) renaming (proj₁ to fst; proj₂ to snd)
   public
-open import Level using (Lift; lift; lower)
+open import Level using (Lift)
+  renaming (lift to ↑; lower to ↓)
   public
 open import Function
   public

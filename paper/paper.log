@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  2 JUL 2025 15:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  2 JUL 2025 18:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1308,25 +1308,22 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
 (Font)              scaled to size 10.0pt on input line 292.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 10.0pt on input line 310.
- [3.3] [4.4] [5.5] [6.6]
+ [3.3] [4.4] [5.5] [6.6] [7.7]
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 8.0pt on input line 543.
+(Font)              scaled to size 8.0pt on input line 547.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 6.2pt on input line 543.
+(Font)              scaled to size 6.2pt on input line 547.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 543.
+(Font)              scaled to size 6.2pt on input line 547.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 543.
- [7.7]
-[8.8] [9.9] [10.10] [11.11] [12.12] [13.13]
-Underfull \vbox (badness 1210) has occurred while \output is active []
+(Font)              scaled to size 6.2pt on input line 547.
 
- [14.14]
-Underfull \vbox (badness 2111) has occurred while \output is active []
+[8.8] [9.9] [10.10] [11.11]
+Underfull \vbox (badness 2435) has occurred while \output is active []
 
- [15.15]
-[16.16]
-Overfull \hbox (22.37204pt too wide) in paragraph at lines 1038--1042
+ [12.12]
+[13.13] [14.14] [15.15] [16.16]
+Overfull \hbox (22.37204pt too wide) in paragraph at lines 1042--1046
 \T1/LinuxLibertineT-TLF/m/n/10 (-20) We have $[] \LMS/ntxsy/m/n/10 ¹[][] \OML/n
 xlmi/m/it/10 p []\LMS/ntxsy/m/n/10 º \OT1/LinuxLibertineT-TLF/m/n/10 (-20) : []
  \LMS/ntxsy/m/n/10 ¹[] \OML/nxlmi/m/it/10 S[]\LMS/ntxsy/m/n/10 º$\T1/LinuxLiber
@@ -1338,6 +1335,9 @@ ntxsy/m/n/10 ¹\OML/nxlmi/m/it/10 S[]\LMS/ntxsy/m/n/10 º[] ¹[][] \OML/nxlmi/m/it
 [17.17] [18.18] [19.19] [20.20] (./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 46.
+
+Underfull \vbox (badness 4316) has occurred while \output is active []
+
  [21.21]
 LaTeX Info: Redefining \tempurl on input line 366.
 LaTeX Info: Redefining \tempurl on input line 458.
@@ -1359,11 +1359,11 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 60E8F5D9C767F701E58103BA166863D2;2931.
  ) 
 Here is how much of TeX's memory you used:
- 31885 strings out of 478287
- 581528 string characters out of 5849289
- 911969 words of memory out of 5000000
+ 31882 strings out of 478287
+ 581450 string characters out of 5849289
+ 913576 words of memory out of 5000000
  48535 multiletter control sequences out of 15000+600000
- 696460 words of font info for 530 fonts, out of 8000000 for 9000
+ 696187 words of font info for 528 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  99i,20n,131p,1002b,947s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/us
@@ -1386,7 +1386,7 @@ ertine/LinLibertineTZ.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/new
 tx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (22 pages, 648885 bytes).
+Output written on paper.pdf (22 pages, 649354 bytes).
 PDF statistics:
  527 PDF objects out of 1000 (max. 8388607)
  464 compressed objects within 5 object streams

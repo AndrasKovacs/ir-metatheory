@@ -2,251 +2,205 @@
 
 open import Lib
 
-module DeriveIndexed {li j k : Level}(I : Set k)(O : I → Set j) where
 
-{-
-We want to derive IIR types from IR. Now, everything from "Sig" to "mapIH" in the
-following are just ordinary MLTT definitions, so we just define them. The non-trivial part is to define
-
-- U
-- El
-- wrap
-- El-β
-- elim
-- elim-β
-
-which we do using IR.
--}
-
-data Sig : Set (lsuc li ⊔ j ⊔ k) where
-  ι : ∀ i → O i → Sig
-  σ : (A : Set li) → (A → Sig) → Sig
-  δ : (A : Set li)(f : A → I) → ((∀ a → O (f a)) → Sig) → Sig
-
-F0 : Sig → (ir : I → Set (li ⊔ k)) → (∀ {i} → ir i → O i) → I → Set (li ⊔ k)
-F0 (ι i' _)  ir el i = Lift (li ⊔ k) (i' ≡ i)
-F0 (σ A S)   ir el i = Σ A λ a → F0 (S a) ir el i
-F0 (δ A f S) ir el i = Σ (∀ a → ir (f a)) λ g → F0 (S (el ∘ g)) ir el i
-
-F1 : ∀ (S : Sig){ir : I → Set (li ⊔ k)}{el : ∀ {i} → ir i → O i} → ∀ {i} → F0 S ir el i → O i
-F1 (ι _ o)             (lift x) = tr O x o
-F1 (σ A S)             (a , x)  = F1 (S a) x
-F1 (δ A ix S) {ir}{el} (f , x)  = F1 (S (el ∘ f)) x
-
-IH : ∀ {l}(S : Sig){ir : I → Set (li ⊔ k)}{el : ∀{i} → ir i → O i}
-          (P : ∀ {i} → ir i → Set l) → ∀ {i} → F0 S ir el i → Set (li ⊔ l)
-IH (ι _ _)             P _       = Lift _ ⊤
-IH (σ A S)             P (a , x) = IH (S a) P x
-IH (δ A ix S) {ir}{el} P (f , x) = (∀ a → P (f a)) × IH (S (el ∘ f)) P x
-
-mapIH : ∀ {l}(S : Sig){ir : I → Set (li ⊔ k)}{el : {i : I} → ir i → O i} (P : ∀ {i} → ir i → Set l)
-        → (∀ {i} x → P {i} x) → ∀ {i} (x : F0 S ir el i) → IH S P x
-mapIH (ι i' o)            P h t       = lift tt
-mapIH (σ A S)             P h (a , x) = mapIH (S a) P h x
-mapIH (δ A ix S) {ir}{el} P h (g , x) = h ∘ g , mapIH (S (el ∘ g)) P h x
-
-
+-- Section 3
 --------------------------------------------------------------------------------
 
-{-
-We have to map IIR signature to IR signatures somehow.
-The obvious idea is to take a Σ of the indexing type and
-the recursive output type.
--}
+module DeriveIndexed {i j k : Level}(I : Set k)(O : I → Set j) where
 
-import PlainIR (li ⊔ k) (j ⊔ k) (∃ O) as IR
+data Sig : Set (suc i ⊔ j ⊔ k) where
+  ι : ∀ i → O i → Sig
+  σ : (A : Set i) → (A → Sig) → Sig
+  δ : (A : Set i)(f : A → I) → ((∀ a → O (f a)) → Sig) → Sig
 
-Sig→ : Sig → IR.Sig
-Sig→ (ι i o)    = IR.ι (i , o)
-Sig→ (σ A S)    = IR.σ (Lift (li ⊔ k) A) λ a → Sig→ (S (lower a))
-Sig→ (δ A ix S) = IR.δ (Lift (li ⊔ k) A) λ f → IR.σ ((a : A) → f (lift a) .₁ ≡ ix a)
-                        λ f* → Sig→ (S (λ a → tr O (f* a) (f (lift a) .₂)))
+_₀ : Sig → (ir : I → Set (i ⊔ k)) → (∀ {ix} → ir ix → O ix) → I → Set (i ⊔ k)
+_₀ (ι ix' o  ) ir el ix = Lift (i ⊔ k) (ix' ≡ ix)
+_₀ (σ A S    ) ir el ix = Σ A λ a → (S a ₀) ir el ix
+_₀ (δ A ix' S) ir el ix = Σ (∀ a → ir (ix' a)) λ f → (S (el ∘ f)₀) ir el ix
 
-{-
-The only interesting part is in "Sig→ (δ A ix S)", where we hit a complication, namely
-that the recursive call only works if already know that the recursive subtrees (of
-the eventual IR type) are well-indexed, meaning that the first projection of their
-El is the same that's being selected by the IIR signature's "f" function.
+_₁ : ∀ S {ir : I → Set (i ⊔ k)}{el : ∀ {i} → ir i → O i} → ∀ {ix} → _₀ S ir el ix → O ix
+_₁ (ι ix o)            (↑ x)   = tr O x o
+_₁ (σ A S)             (a , x) = (S a ₁) x
+_₁ (δ A ix S) {ir}{el} (f , x) = (S (el ∘ f)₁) x
 
-So we put this extra constraint into the signature immediately
-as an extra equation.
+_ᵢₕ : ∀ S {ir : I → Set (i ⊔ k)}{el : ∀{ix} → ir ix → O ix}
+        (P : ∀ {ix} → ir ix → Set l) → ∀ {ix} → (S ₀) ir el ix → Set (i ⊔ l)
+_ᵢₕ (ι ix o)            P _       = ⊤
+_ᵢₕ (σ A S)             P (a , x) = (S a ᵢₕ) P x
+_ᵢₕ (δ A ix S) {ir}{el} P (f , x) = (∀ a → P (f a)) × (S (el ∘ f) ᵢₕ) P x
 
-Thus, "Sig→ S" already enforces in the IR type that *recursive*
-subterms are well-indexed. So for full well-indexing, we only need to enforce
-in addition that the *top-level* of an IR value is well-indexed.
--}
+_ₘₐₚ : ∀ S {ir : I → Set (i ⊔ k)}{el : {ix : I} → ir ix → O ix} (P : ∀ {ix} → ir ix → Set l)
+        → (∀ {ix} x → P {ix} x) → ∀ {ix} (x : (S ₀) ir el ix) → (S ᵢₕ) P x
+_ₘₐₚ (ι ix' o)           P h t       = tt
+_ₘₐₚ (σ A S)             P h (a , x) = (S a ₘₐₚ) P h x
+_ₘₐₚ (δ A ix S) {ir}{el} P h (f , x) = (h ∘ f , (S (el ∘ f)ₘₐₚ) P h x)
 
+import PlainIR as IR
+open import PlainIR using (IR)
+
+Sigᵢᵣ  = IR.Sig (i ⊔ k) (Σ I O)
+Elᵢᵣ   = IR.El
+_₀ᵢᵣ   = IR._₀
+_₁ᵢᵣ   = IR._₁
+_ᵢₕᵢᵣ  = IR._ᵢₕ
+_ₘₐₚᵢᵣ  = IR._ₘₐₚ
+
+introᵢᵣ : {S : Sigᵢᵣ} → (S ₀ᵢᵣ) (IR S) Elᵢᵣ → IR S
+introᵢᵣ {S} = IR.intro {S = S}
+
+⌞_⌟ : Sig → Sigᵢᵣ
+⌞ ι ix o   ⌟ = IR.ι (ix , o)
+⌞ σ A S    ⌟ = IR.σ (Lift (i ⊔ k) A) λ a → ⌞ S (↓ a) ⌟
+⌞ δ A ix S ⌟ = IR.δ (Lift (i ⊔ k) A) λ f →
+               IR.σ ((a : A) → fst (f (↑ a)) ≡ ix a) λ p →
+               ⌞ S (λ a → tr O (p a) (snd (f (↑ a)))) ⌟
+
+module Example-3-1 where
+
+   import Data.Nat as N
+   data Tag : Set where Nil' Cons' : Tag
+
+   ⌞S⌟ : Set → IR.Sig zero (N.ℕ × ⊤ {zero})
+   ⌞S⌟ A = IR.σ (Lift zero Tag) λ where
+     (↑ Nil')  → IR.ι (N.zero , tt)
+     (↑ Cons') → IR.σ (Lift zero N.ℕ) λ n → IR.σ (Lift zero A) λ _ →
+                 IR.δ (Lift zero (⊤ {zero})) λ f → IR.σ (∀ x → fst (f (↑ x)) ≡ (↓ n)) λ p →
+                 IR.ι ((N.suc (↓ n)) , tt)
+
+
+-- Section 3.1
 --------------------------------------------------------------------------------
 
 module _ (S* : Sig) where
 
-  S*'  = Sig→ S*
+  ⌞S*⌟ = ⌞ S* ⌟
 
-  -- abbreviations for readability
-  IRIR = IR.IR S*'
-  IREl = IR.El
-  IRF0 = λ S → IR.F0 (Sig→ S) IRIR IREl
-  IRF1 = λ S → IR.F1 (Sig→ S) {IRIR} {IREl}
-  IRIH = λ {l} S → IR.IH {l} (Sig→ S) {IRIR} {IREl}
-  IRMapIH = λ {l} S → IR.mapIH {l} (Sig→ S) {IRIR} {IREl}
+  private variable
+    S  : Sig
+    ix : I
 
-  -- Here's the necessary extra restriction:
-  -- the first projection of the El result must be the given "i".
-  IIR : I → Set (li ⊔ k)
-  IIR i = Σ (IR.IR S*') λ x → IREl x .₁ ≡ i
+  IIR : I → Set (i ⊔ k)
+  IIR ix = Σ (IR ⌞S*⌟) λ x → fst (Elᵢᵣ x) ≡ ix
 
-  El : ∀ {i} → IIR i → O i
-  El {i} (x , wx) = tr O wx (IREl x .₂)
+  El : IIR ix → O ix
+  El (x , p) = tr O p (snd (Elᵢᵣ x))
 
-  -- This F0' is basically just the data contained in an IR,
-  -- that we can access by unwrapping the IR.wrap. In the following,
-  -- we'll mostly work with F0' instead of IR, because we can do induction on S
-  -- to process F0' values.
-  F0' : ∀ S I → Set (li ⊔ k)
-  F0' S i = Σ (IRF0 S) λ x → IRF1 S x .₁ ≡ i
+  _⌞₀⌟ : Sig → I → Set (i ⊔ k)
+  _⌞₀⌟ S ix = Σ ((⌞ S ⌟ ₀ᵢᵣ) (IR ⌞S*⌟) Elᵢᵣ) λ x → fst ((⌞ S ⌟ ₁ᵢᵣ) x) ≡ ix
 
-  module _ {i : I} where
+  0→ : ∀ S → (S ₀) IIR El ix → (S ⌞₀⌟) ix
+  0→ (ι i o)    x       .fst             = tt
+  0→ (ι i o)    x       .snd             = x .↓
+  0→ (σ A S)    (a , x) .fst .fst .↓     = a
+  0→ (σ A S)    (a , x) .fst .snd        = 0→ (S a) x .fst
+  0→ (σ A S)    (a , x) .snd             = 0→ (S a) x .snd
+  0→ (δ A ix S) (f , x) .fst .fst    a   = f (a .↓) .fst
+  0→ (δ A ix S) (f , x) .fst .snd .fst a = f a .snd
+  0→ (δ A ix S) (f , x) .fst .snd .snd   = 0→ (S (El ∘ f)) x .fst
+  0→ (δ A ix S) (f , x) .snd             = 0→ (S (El ∘ f)) x .snd
 
-    {-
-    What we have here is an equivalence of types in the standard type-theoretic sense,
-    between F0 and F0'. I define the back and forth maps and the roundtrip equations.
+  0← : ∀ S → (S ⌞₀⌟) ix → (S ₀) IIR El ix
+  0← (ι i o)    (x , w)            .↓          = w
+  0← (σ A S)    ((↑ a , x) , w)    .fst        = a
+  0← (σ A S)    ((↑ a , x) , w)    .snd        = 0← (S a) (x , w)
+  0← (δ A ix S) ((f , fw , x) , w) .fst a .fst = f (↑ a)
+  0← (δ A ix S) ((f , fw , x) , w) .fst a .snd = fw a
+  0← (δ A ix S) ((f , fw , x) , w) .snd        = 0← (S (El ∘ 0← (δ A ix S) ((f , fw , x) , w) .fst)) (x , w)
 
-    How do I know that I need this equivalence? Well,
-       - This equivalence is pretty obvious and we don't have any more lying around.
-       - Having an equivalence is *much* more useful/flexible than only having some maps going
-         in one direction or back-and-forth; see the "half-adjoint" later.
-    -}
+  η : ∀ S x → 0← {ix} S (0→ S x) ≡ x
+  η (ι i o)    (↑ p)    = refl
+  η (σ A S)    (a , x)  = ap (a ,_) (η (S a) x)
+  η (δ A ix S) (g , x)  = ap (g ,_) (η (S _) x)
 
-    -- I only use fancy copattern matching to make the unfolded goal types smaller, it
-    -- doesn't make any real difference in proofs.
-    F0→ : ∀ S → F0 S IIR El i → F0' S i
-    F0→ (ι i o)    x       .₁ .lower    = tt
-    F0→ (ι i o)    x       .₂           = x .lower
-    F0→ (σ A S)    (a , x) .₁ .₁ .lower = a
-    F0→ (σ A S)    (a , x) .₁ .₂        = F0→ (S a) x .₁
-    F0→ (σ A S)    (a , x) .₂           = F0→ (S a) x .₂
-    F0→ (δ A ix S) (f , x) .₁ .₁    a   = f (a .lower) .₁
-    F0→ (δ A ix S) (f , x) .₁ .₂ .₁ a   = f a .₂
-    F0→ (δ A ix S) (f , x) .₁ .₂ .₂     = F0→ (S (El ∘ f)) x .₁
-    F0→ (δ A ix S) (f , x) .₂           = F0→ (S (El ∘ f)) x .₂
+  ε : ∀ S x → 0→ {ix} S (0← S x) ≡ x
+  ε (ι i o)    (x , w)            = refl
+  ε (σ A S)    ((↑ a , x) , w)    = ap (λ xw → ((↑ a , xw .fst) , xw .snd)) (ε (S a) (x , w))
+  ε (δ A ix S) ((f , fw , x) , w) = ap (λ xw → (f , fw , xw .fst) , xw .snd) (ε (S _) (x , w))
 
-    F0← : ∀ S → F0' S i → F0 S IIR El i
-    F0← (ι i o)    (x , w)            .lower  = w
-    F0← (σ A S)    ((lift a , x) , w) .₁      = a
-    F0← (σ A S)    ((lift a , x) , w) .₂      = F0← (S a) (x , w)
-    F0← (δ A ix S) ((f , fw , x) , w) .₁ a .₁ = f (lift a)
-    F0← (δ A ix S) ((f , fw , x) , w) .₁ a .₂ = fw a
-    F0← (δ A ix S) ((f , fw , x) , w) .₂      = F0← (S (El ∘ F0← (δ A ix S) ((f , fw , x) , w) .₁)) (x , w)
+  τ : ∀ S x → ap (0→ {ix} S) (η S x) ≡ ε S (0→ S x)
+  τ (ι i o)   x       = refl
+  τ (σ A S)   (a , x) =
+       J (λ x eq → ap (0→ (σ A S)) (ap (a ,_) eq)
+                 ≡ ap (λ xw → (↑ a , xw .fst) , xw .snd) (ap (0→ (S a)) eq))
+         (η (S a) x)
+         refl
+     ◼ ap (ap (λ xw → (↑ a , xw .fst) , xw .snd)) (τ (S a) x)
+  τ (δ A ix S) (f , x) =
+    let lhs = ap (0→ (δ A ix S)) (ap (f ,_) (η (S (El ∘ f)) x))
+        rhs = ap (λ xw → ((λ a → f (a .↓) .fst) , (λ a → f a .snd) , xw .fst) , xw .snd)
+                 (ε (S (El ∘ f)) (0→ (S (El ∘ f)) x))
+    in the (lhs ≡ rhs) $
+        J (λ x eq → ap (0→ (δ A ix S)) (ap (f ,_) eq)
+                  ≡ ap (λ xw → ((λ a → f (a .↓) .fst) , (λ a → f a .snd) , xw .fst) , xw .snd)
+                       (ap (0→ (S _)) eq))
+          (η (S _) x)
+          refl
+      ◼ ap (ap (λ xw → ((λ a → f (a .↓) .fst) , (λ a → f a .snd) , xw .fst) , xw .snd))
+           (τ (S (El ∘ f)) x)
 
-    F0lr : ∀ S x → F0← S (F0→ S x) ≡ x
-    F0lr (ι i o)   (lift p) = refl
-    F0lr (σ A S)   (a , x)  = ap (a ,_) (F0lr (S a) x)
-    F0lr (δ A f S) (g , x)  = ap (g ,_) (F0lr (S _) x)
+  _⌞₁⌟ : ∀ S (x : (S ₀) IIR El ix) → tr O (snd (0→ S x)) (snd ((⌞ S ⌟ ₁ᵢᵣ) (fst (0→ S x)))) ≡ (S ₁) x
+  (ι i o ⌞₁⌟)    x       = refl
+  (σ A S ⌞₁⌟)    (a , x) = (S a ⌞₁⌟) x
+  (δ A ix S ⌞₁⌟) (f , x) = (S (El ∘ f) ⌞₁⌟) x
 
-    F0rl : ∀ S x → F0→ S (F0← S x) ≡ x
-    F0rl (ι i o)    (x , w)            = refl
-    F0rl (σ A S)    ((lift a , x) , w) = ap (λ xw → ((lift a , xw .₁) , xw .₂)) (F0rl (S a) (x , w))
-    F0rl (δ A ix S) ((f , fw , x) , w) = ap (λ xw → (f , fw , xw .₁) , xw .₂) (F0rl (S _) (x , w))
+  intro : (S* ₀) IIR El ix → IIR ix
+  intro x = introᵢᵣ (fst (0→ S* x)) , snd (0→ S* x)
 
-    -- We need a "half adjoint" coherence condition on the F0 iso, which makes it a proper
-    -- equivalence. See Section 4.2 in HoTT book. Technically, we can get it for free just from the iso,
-    -- as shown in the HoTT book, but here I get it by quick and dirty induction on signatures.
-    half-adjoint : ∀ S x → ap (F0→ S) (F0lr S x) ≡ F0rl S (F0→ S x)
-    half-adjoint (ι i o)   x       = refl
-    half-adjoint (σ A S)   (a , x) =
-         J (λ x eq → ap (F0→ (σ A S)) (ap (a ,_) eq)
-                   ≡ ap (λ xw → (lift a , xw .₁) , xw .₂) (ap (F0→ (S a)) eq))
-           (F0lr (S a) x)
-           refl
-       ◼ ap (ap (λ xw → (lift a , xw .₁) , xw .₂)) (half-adjoint (S a) x)
-    half-adjoint (δ A ix S) (f , x) =
-      -- I do some manual definitions of the goal type, to get a better displayed
-      -- goal type in the following
-      let lhs = ap (F0→ (δ A ix S)) (ap (f ,_) (F0lr (S (El ∘ f)) x))
-          rhs = ap (λ xw → ((λ a → f (a .lower) .₁) , (λ a → f a .₂) , xw .₁) , xw .₂)
-                   (F0rl (S (El ∘ f)) (F0→ (S (El ∘ f)) x))
-      in the (lhs ≡ rhs) $
-          J (λ x eq → ap (F0→ (δ A ix S)) (ap (f ,_) eq)
-                    ≡ ap (λ xw → ((λ a → f (a .lower) .₁) , (λ a → f a .₂) , xw .₁) , xw .₂)
-                         (ap (F0→ (S _)) eq))
-            (F0lr (S _) x)
-            refl
-        ◼ ap (ap (λ xw → ((λ a → f (a .lower) .₁) , (λ a → f a .₂) , xw .₁) , xw .₂))
-             (half-adjoint (S (El ∘ f)) x)
+  El≡ : ∀ x → El (intro {ix} x) ≡ (S* ₁) x
+  El≡ = (S* ⌞₁⌟)
 
-    F1→ : ∀ S (x : F0 S IIR El i) → tr O (F0→ S x .₂) (IRF1 S (F0→ S x .₁) .₂) ≡ F1 S x
-    F1→ (ι i o)   x       = refl
-    F1→ (σ A S)   (a , x) = F1→ (S a) x
-    F1→ (δ A ix S) (g , x) = F1→ (S (El ∘ g)) x
 
-  wrap : ∀ {i} → F0 S* IIR El i → IIR i
-  wrap x = IR.wrap (F0→ S* x .₁) , F0→ S* x .₂
+-- Section 3.2
+--------------------------------------------------------------------------------
 
-  El≡ : ∀ {i} x → El (wrap {i} x) ≡ F1 S* x
-  El≡ x = F1→ S* x
+  module _ {l} (P : ∀ {i} → IIR i → Set l)(f : ∀ {ix} x → (S* ᵢₕ) P {ix} x → P (intro x)) where
 
-  -- First let's assume all the invariant inputs to elimination. "met" means "induction method".
-  module _ {l} (P : ∀ {i} → IIR i → Set l)(met : ∀ {i} x → IH S* P {i} x → P (wrap x)) where
+    ⌞P⌟ : IR ⌞ S* ⌟ → Set (k ⊔ l)
+    ⌞P⌟ x = ∀ {ix} p → P {ix} (x , p)
 
-    P' : IRIR → Set (k ⊔ l)
-    P' x = ∀ {i} p → P {i} (x , p)
+    IH← : ∀ S {x : (S ⌞₀⌟) ix} → (⌞ S ⌟ ᵢₕᵢᵣ) ⌞P⌟ (x .fst) → (S ᵢₕ) P (0← S x)
+    IH← (ι i o)   {x}                  ih               = tt
+    IH← (σ A S)   {((↑ a , x) , w)}    ih               = IH← (S a) {x , w} ih
+    IH← (δ A f S) {((g , gw , x) , w)} (gᴾ , ih) .fst a = gᴾ (↑ a) (gw a)
+    IH← (δ A f S) {((g , gw , x) , w)} (gᴾ , ih) .snd   = IH← (S _) {x , w} ih
 
-    -- converting an IR-encoded induction method data to IIR form
-    IH← : ∀ S {i} {x : F0' S i} → IRIH S P' (x .₁) → IH S P (F0← S x)
-    IH← (ι i o)   {_}{x                 } ih .lower      = tt
-    IH← (σ A S)   {_}{((lift a , x) , w)} ih             = IH← (S a) {_}{x , w} ih
-    IH← (δ A f S) {_}{((g , gw , x) , w)} (gᴾ , ih) .₁ a = gᴾ (lift a) (gw a)
-    IH← (δ A f S) {_}{((g , gw , x) , w)} (gᴾ , ih) .₂   = IH← (S _) {_}{x , w} ih
+    ⌞f⌟ : (x : (⌞S*⌟ ₀ᵢᵣ) (IR ⌞S*⌟) Elᵢᵣ) →  (⌞S*⌟ ᵢₕᵢᵣ) ⌞P⌟ x → ⌞P⌟ (introᵢᵣ x)
+    ⌞f⌟ x ih p = tr (λ {(x , p) → P (IR.intro x , p)})
+                    (ε S* (x , p))
+                    (f (0← S* (x , p)) (IH← S* ih))
 
-    met' : (x : IR.F0 S*' (IR.IR S*') IR.El) → IR.IH S*' P' x → P' (IR.wrap x)
-    met' x ih p =
-       tr (λ {(x , p) → P (IR.wrap x , p)})
-          (F0rl S* (x , p))
-          (met (F0← S* (x , p)) (IH← S* ih))
+    elim : ∀ {ix} x → P {ix} x
+    elim (x , p) = IR.elim ⌞P⌟ ⌞f⌟ x p
 
-    -- as expected, IIR elim is given by IR induction on well-indexed IR values.
-    elim : ∀ {i} x → P {i} x
-    elim (x , p) = IR.elim S*' P' met' x p
+    ⌞ₘₐₚ⌟ : ∀ S f (x : (S ₀) IIR El ix) →
+                     tr ((S ᵢₕ) P) (η S x) (IH← S ((⌞ S ⌟ ₘₐₚᵢᵣ) ⌞P⌟ f (fst (0→ S x))))
+                   ≡ (S ₘₐₚ) P (λ {(x , p) → f x p}) x
+    ⌞ₘₐₚ⌟ (ι ix o)   f x       = refl
+    ⌞ₘₐₚ⌟ (σ A S)    f (a , x) = tr-∘ ((σ A S ᵢₕ) P) (a ,_) (η (S a) x) _ ◼ ⌞ₘₐₚ⌟ (S a) f x
+    ⌞ₘₐₚ⌟ (δ A ix S) f (g , x) =
+             tr-∘ ((δ A ix S ᵢₕ) P) (g ,_) (η (S (El ∘ g)) x) _
+           ◼ tr-Σ (η (S (El ∘ g)) x) _
+           ◼ Σ≡ (tr-const (η (S (El ∘ g)) x) _)
+                (
+                   tr-const (tr-const (η (S (El ∘ g)) x) _) _
+                 ◼ tr-∘ ((S (El ∘ g) ᵢₕ) P) fst (Σ≡ (η (S (El ∘ g)) x) refl) _ ⁻¹
+                 ◼ ap (λ eq → tr ((S (El ∘ g) ᵢₕ) P) eq
+                                 (IH← (δ A ix S) ((⌞ δ A ix S ⌟ ₘₐₚᵢᵣ) ⌞P⌟ f (0→ (δ A ix S) (g , x) . fst)) .snd))
+                      (Σ≡₁ (η (S _) x) refl)
+                 ◼ ⌞ₘₐₚ⌟ (S _) f x
+                )
 
-    -- mapIH commutes with encoding/decoding
-    -- This part and elimβ requires a modest amount of HoTT chops for shuffling
-    -- transports.
-    mapIH-trip : ∀ {i} S h (x : F0 S IIR El i)
-                 → tr (IH S P) (F0lr S x) (IH← S (IRMapIH S P' h (F0→ S x .₁)))
-                 ≡ mapIH S P (λ {(x , p) → h x p}) x
-    mapIH-trip (ι i o)   h x       = refl
-    mapIH-trip (σ A S)   h (a , x) =
-      tr-∘ (IH (σ A S) P) (a ,_) (F0lr (S a) x) _ ◼ mapIH-trip (S a) h x
-    mapIH-trip (δ A ix S) h (f , x) =
-        tr-∘ (IH (δ A ix S) P) (f ,_) (F0lr (S (El ∘ f)) x) _
-      ◼ tr-Σ (F0lr (S (El ∘ f)) x) (IH← (δ A ix S) (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)))
-      ◼ Σ≡ (tr-const (F0lr (S (El ∘ f)) x) _)
-           (  tr-const (tr-const (F0lr (S (El ∘ f)) x)
-                       (IH← (δ A ix S) {_}{F0→ (δ A ix S) (f , x)}
-                       (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)) .₁)) _
-            ◼ tr-∘ (IH (S _) P) ₁
-                   (Σ≡ (F0lr (S _) x) refl) _ ⁻¹
-            ◼ ap (λ eq → tr (IH (S _) P) eq
-                            (IH← (δ A ix S) (IRMapIH (δ A ix S) P' h (F0→ (δ A ix S) (f , x) .₁)) .₂))
-                 (Σ≡₁ (F0lr (S _) x) refl)
-            ◼ mapIH-trip (S _) h x)
-
-    elimβ : ∀ {i} x → elim {i} (wrap x) ≡ met x (mapIH S* P elim x)
-    elimβ {i} x =
-      (
-        -- as before I manually improve on the quality of goal type display
-        let inner = IH← S* (IRMapIH S* P' (λ x p → elim (x , p)) (F0→ S* x .₁))
-            lhs   = tr (λ {(x , p) → P (IR.wrap x , p)}) (F0rl S* (F0→ S* x))
-                       (met (F0← S* (F0→ S* x)) inner)
-            rhs   = met x (tr (IH S* P) (F0lr S* x) inner)
-
-        in the (lhs ≡ rhs) $
-          -- The half adjoint lemma is needed because we have an F0rl on one side of the goal
-          -- equation and F0lr on the other side, and we can use half-adjoint to get rid of the F0rl,
-          -- and only have F0lr on both sides.
-           ap (λ eq → tr (λ x → P (IR.wrap (x .₁) , x .₂)) eq (met (F0← S* (F0→ S* x)) inner))
-              (half-adjoint S* x ⁻¹) -- note the half-adjoint
-         ◼ tr-∘ (λ {(x , p) → P (IR.wrap x , p)}) (F0→ S*) (F0lr S* x) _
-         ◼ tr-app-lem {C = P ∘ wrap} met (F0lr S* x)
-      )
-      ◼ ap (met x) (mapIH-trip S* (λ x p → elim (x , p)) x)
+    elim-β : ∀ x → elim {ix} (intro x) ≡ f x ((S* ₘₐₚ) P elim x)
+    elim-β {ix} x =
+       (
+       let inner = IH← S* ((⌞S*⌟ ₘₐₚᵢᵣ) ⌞P⌟ (λ x p → elim (x , p)) (0→ S* x .fst))
+           lhs   = tr (λ {(x , p) → P (introᵢᵣ x , p)}) (ε S* (0→ S* x))
+                      (f (0← S* (0→ S* x)) inner)
+           rhs   = f x (tr ((S* ᵢₕ) P) (η S* x) inner)
+       in the (lhs ≡ rhs) $
+             ap (λ eq → tr (λ {(x , p) → P (introᵢᵣ x , p)}) eq (f (0← S* (0→ S* x)) inner))
+                (τ S* x ⁻¹)
+           ◼ tr-∘ (λ {(x , p) → P (introᵢᵣ x , p)}) (0→ S*) (η S* x) _
+           ◼ tr-app-lem {C = P ∘ intro} f (η S* x)
+       )
+       ◼ ap (f x) (⌞ₘₐₚ⌟ S* (λ x p → elim (x , p)) x)

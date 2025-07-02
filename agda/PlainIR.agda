@@ -13,25 +13,21 @@ data Sig i {j} (O : Set j) : Set (suc i ⊔ j) where
   σ : (A : Set i) → (A → Sig i O) → Sig i O
   δ : (A : Set i) → ((A → O) → Sig i O) → Sig i O
 
-infix 20 _₀
 _₀ : Sig i O → (ir : Set i) → (ir → O) → Set i
 (ι _   ₀) ir el = ⊤
 (σ A S ₀) ir el = Σ A λ a → (S a ₀) ir el
 (δ A S ₀) ir el = Σ (A → ir) λ f → (S (el ∘ f)₀) ir el
 
-infix 20 _₁
 _₁ : ∀ (S : Sig i O){ir el} → (S ₀) ir el → O
 (ι o   ₁)        x       = o
 (σ A S ₁)        (a , x) = (S a ₁) x
 (δ A S ₁){ir}{el}(f , x) = (S (el ∘ f)₁) x
 
-infix 20 _ᵢₕ
 _ᵢₕ : ∀ S {ir : Set i} {el : ir → O} (P : ir → Set k) → (S ₀) ir el → Set (i ⊔ k)
 (ι o   ᵢₕ)          P x       = ⊤
 (σ A S ᵢₕ)          P (a , x) = (S a ᵢₕ) P x
 (δ A S ᵢₕ) {ir}{el} P (f , x) = (∀ a → P (f a)) × (S (el ∘ f)ᵢₕ) P x
 
-infix 20 _ₘₐₚ
 _ₘₐₚ : ∀ S {ir : Set i}{el : ir → O}(P : ir → Set k) → (∀ x → P x) → (x : (S ₀) ir el) → (S ᵢₕ) P x
 (ι o   ₘₐₚ)          P h x       = tt
 (σ A S ₘₐₚ)          P h (a , x) = (S a ₘₐₚ) P h x
