@@ -839,14 +839,18 @@ We aim to define the following functions by induction on object syntax.
   &\blank^\w : (t : \Tm\,\Gamma\,A) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma^\w\,t[\gamma]
 \end{alignat*}
 
-It is a proof-relevant logical predicate interpretation, which corresponds to \emph{Artin gluing}
-\cite[Exposé~4,~Section~9.5]{SGA4}, i.e.\ categorical gluing over the global sections functor. The
-concrete formulation that we use is the type-theoretic gluing by \citet{gluing}, which is the same
-as Coquand's version \cite{coquand2018canonicity} when gluing along the global sections
-functor. This is a variation of gluing which uses dependent type families instead of the fibered
-families of the categorical flavor. The type-theoretic style becomes valuable when we get to the
-interpretation of more complicated type formers, where it is easier to use than diagrammatic
-reasoning.
+It is a proof-relevant logical predicate interpretation, an instance of a construction called
+\emph{Artin gluing} \cite[Exposé~4,~Section~9.5]{SGA4} or \emph{categorical gluing}. The concrete
+formulation that we use is the type-theoretic gluing by \citet{gluing}. This is parameterized by a
+weak morphism between models of the object type theory. In our case, we take this morphism to be the
+global sections functor between the syntax and a standard $\Set$ model. This means that we build
+predicates over closed substitutions and closed terms. Coquand's canonicity proof also uses the same
+definitions as ours \cite{coquand2018canonicity}.
+
+The type-theoretic gluing is a variation of gluing which uses dependent type families
+instead of the fibered families of the categorical flavor. The type-theoretic style becomes valuable
+when we get to the interpretation of more complicated type formers, where it is easier to use than
+diagrammatic reasoning.
 
 \subsubsection{Interpretation of the CwF and the basic type formers}
 
