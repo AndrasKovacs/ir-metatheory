@@ -308,7 +308,7 @@ it is defined as a $\msf{W}$-type \cite{whynotw}. The choice is not crucial, but
 we treat $\Sig$ as a native inductive type, in order to avoid encoding overheads.
 
 \begin{example}\label{ex:code-signature}
-We can reproduce the Agda example from Section \ref{sec:introduction}. First, we need an enumeration
+We reproduce the Agda example from Section \ref{sec:introduction}. First, we need an enumeration
 type to represent the constructor labels of $\Code$. We assume this as $\Tag : \U_0$ with
 constructors $\Nat'$ and $\Pi'$. We also assume $\Nat : \U_0$ for natural numbers and a
 right-associative $\blank\!\$\!\blank$ operator for function application.
@@ -347,14 +347,14 @@ endofunctor on the slice category $\U_i/O$, but in the following we only need th
 objects. We split this action to two functions, to aid readability:
 \begin{alignat*}{3}
   &\rlap{$\blank_0 : \Sig_i\,O \to (\ir : \U_i) \to (\ir \to O) \to \U_i$} \\
-  &S_0\,(\iota\,o)    \,&&\ir\,\el && \hspace{-0.7em}:\equiv \top\\
-  &S_0\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (a : A) \times (S\,a)_0\,\ir\,\el\\
-  &S_0\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (f : A \to \ir) \times (S\,(\el \circ f))_0\,\ir\,\el\\
+  &(\iota\,o)_0    \,&&\ir\,\el && \hspace{-0.7em}:\equiv \top\\
+  &(\sigma\,A\,S)_0\,&&\ir\,\el && \hspace{-0.7em}:\equiv (a : A) \times (S\,a)_0\,\ir\,\el\\
+  &(\delta\,A\,S)_0\,&&\ir\,\el && \hspace{-0.7em}:\equiv (f : A \to \ir) \times (S\,(\el \circ f))_0\,\ir\,\el\\
   & && &&\\
   &\rlap{$\blank_1 : (S : \Sig_i\,O) \to S_0\,\ir\,\el \to O$} \\
-  &S_1\,(\iota\,o)    \,&&x       && :\equiv o\\
-  &S_1\,(\sigma\,A\,S)\,&&(a,\,x) && :\equiv (S\,i)_1\,x\\
-  &S_1\,(\delta\,A\,S)\,&&(f,\,x) && :\equiv (S\,(\el \circ f))_1\,x
+  &(\iota\,o)_1    \,&&x       && :\equiv o\\
+  &(\sigma\,A\,S)_1\,&&(a,\,x) && :\equiv (S\,a)_1\,x\\
+  &(\delta\,A\,S)_1\,&&(f,\,x) && :\equiv (S\,(\el \circ f))_1\,x
 \end{alignat*}
 Although we use Agda-like pattern matching notation above, these functions are formally defined by
 the elimination principle of $\Sig$. Also note the quantification of the $i$ and $j$ universe
@@ -434,15 +434,15 @@ the inductive field using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that t
 $\blank_0$ and $\blank_1$ are similar to before:
 \begin{alignat*}{4}
   &\hspace{-6em}\rlap{$\blank_0 : \Sig_i\,I\,O \to (\ir : I \to \U_{\max(i,\,k)}) \to (\{i : I\} \to \ir\,i \to O\,i) \to I \to \U_{\max(i,\,k)}$} \\
-  &\hspace{-6em}S_0\,(\iota\,i'\,o)     \,&&\ir\,\el\,i && :\equiv \Lift\,(i' = i)\\
-  &\hspace{-6em}S_0\,(\sigma\,A\,S)     \,&&\ir\,\el\,i && :\equiv (a : A) \times (S\,a)_0\,\ir\,\el\,i\\
-  &\hspace{-6em}S_0\,(\delta\,A\,\ix\,S)\,&&\ir\,\el\,i && :
-                     \equiv (f : (a : A) \to \ir\,(\ix\,a)) \times (S\,(\el \circ f))_0\,\ir\,\el\,i\\
+  &\hspace{-6em}(\iota\,i'\,o)     _0\,&&\ir\,\el\,i &&\hspace{-0.2em} :\equiv \Lift\,(i' = i)\\
+  &\hspace{-6em}(\sigma\,A\,S)     _0\,&&\ir\,\el\,i &&\hspace{-0.2em} :\equiv (a : A) \times (S\,a)_0\,\ir\,\el\,i\\
+  &\hspace{-6em}(\delta\,A\,\ix\,S)_0\,&&\ir\,\el\,i &&\hspace{-0.2em} :\equiv
+              (f : (a : A) \to \ir\,(\ix\,a)) \times (S\,(\el \circ f))_0\,\ir\,\el\,i\\
   &\hspace{-6em} && &&\\
   &\hspace{-6em}\rlap{$\blank_1 : (S : \Sig_i\,I\,O) \to S_0\,\ir\,\el\,i \to O\,i$} \\
-  &\hspace{-6em}S_1\,(\iota\,i'\,o)\,&&\hspace{-0.8em}(\lup x) && \hspace{-0.6em}:\equiv \tr\,O\,x\,o\\
-  &\hspace{-6em}S_1\,(\sigma\,A\,S)\,&&\hspace{-0.8em}(a,\,x)  && \hspace{-0.6em}:\equiv (S\,i)_1\,x\\
-  &\hspace{-6em}S_1\,(\delta\,A\,S)\,&&\hspace{-0.8em}(f,\,x)  && \hspace{-0.6em}:\equiv (S\,(\el \circ f))_1\,x
+  &\hspace{-6em}(\iota\,i'\,o)_1\,     &&\hspace{-0.1em}(\lup x) && \hspace{-0.2em}:\equiv \tr\,O\,x\,o\\
+  &\hspace{-6em}(\sigma\,A\,S)_1\,     &&\hspace{-0.1em}(a,\,x)  && \hspace{-0.2em}:\equiv (S\,i)_1\,x\\
+  &\hspace{-6em}(\delta\,A\,\ix\,S)_1\,&&\hspace{-0.1em}(f,\,x)  && \hspace{-0.2em}:\equiv (S\,(\el \circ f))_1\,x
 \end{alignat*}
 Note the transport in $\tr\,O\,x\,o$: this is necessary, since $o$ has type $O\,i'$ while the
 required type is $O\,i$. The type and term formation rules are the following.

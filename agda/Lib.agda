@@ -3,18 +3,26 @@
 module Lib where
 
 open import Agda.Primitive public
+  renaming (lsuc to suc; lzero to zero)
 open import Relation.Binary.PropositionalEquality
   renaming (cong to ap; trans to infixr 5 _◼_; sym to infix 6 _⁻¹)
   hiding (J)
   public
-open import Data.Product hiding (map) renaming (proj₁ to ₁; proj₂ to ₂)
-  public
-open import Data.Unit
+open import Data.Product hiding (map) renaming (proj₁ to fst; proj₂ to snd)
   public
 open import Level using (Lift; lift; lower)
   public
 open import Function
   public
+
+record ⊤ {i} : Set i where
+  constructor tt
+
+variable
+  i j k l : Level
+
+lvlOf : ∀ {i}{A : Set i} → A → Level
+lvlOf {i} x = i
 
 coe : ∀ {i}{A B : Set i} → A ≡ B → A → B
 coe refl x = x
@@ -30,7 +38,7 @@ contr refl = refl
 
 J : ∀ {i j}{A : Set i} {x : A} (B : (y : A) → x ≡ y → Set j)
     {y : A} (p : x ≡ y) → B x refl → B y p
-J {x = x} B {y} p b = tr (λ x → B (x .₁) (x .₂)) (contr p) b
+J {x = x} B {y} p b = tr (λ x → B (x .fst) (x .snd)) (contr p) b
 
 apd : ∀ {i j}{A : Set i}{B : A → Set j}(f : ∀ a → B a){x y : A}(p : x ≡ y) → tr B p (f x) ≡ f y
 apd f refl = refl
@@ -45,27 +53,27 @@ tr-∘ P f refl x = refl
 
 Σ≡₁ : ∀ {i j}{A : Set i}{B : A → Set j}{a₀ a₁ : A}(a₂ : a₀ ≡ a₁)
         {b₀ : B a₀}{b₁ : B a₁}(b₂ : tr B a₂ b₀ ≡ b₁)
-        → ap ₁ (Σ≡ a₂ b₂) ≡ a₂
+        → ap fst (Σ≡ a₂ b₂) ≡ a₂
 Σ≡₁ refl refl = refl
 
 tr-Σ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : ∀ a → B a → Set k}
          {x y : A}(p : x ≡ y)(s : Σ (B x) (C x))
-       → tr (λ x → Σ (B x) (C x)) p s ≡ (tr B p (s .₁) , tr (λ x → C (x .₁) (x .₂)) (Σ≡ p refl) (s .₂))
+       → tr (λ x → Σ (B x) (C x)) p s ≡ (tr B p (s .fst) , tr (λ x → C (x .fst) (x .snd)) (Σ≡ p refl) (s .snd))
 tr-Σ refl s = refl
 
 tr-Σ₁ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : ∀ a → B a → Set k}
          {x y : A}(p : x ≡ y)(s : Σ (B x) (C x))
-       → tr (λ x → Σ (B x) (C x)) p s .₁ ≡ tr B p (s .₁)
+       → tr (λ x → Σ (B x) (C x)) p s .fst ≡ tr B p (s .fst)
 tr-Σ₁ refl s = refl
 
 tr-×₁ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : A → Set k}
          {x y : A}(p : x ≡ y)(s : B x × C x)
-       → tr (λ x → B x × C x) p s .₁ ≡ tr B p (s .₁)
+       → tr (λ x → B x × C x) p s .fst ≡ tr B p (s .fst)
 tr-×₁ refl s = refl
 
 tr-×₂ : ∀ {i j k}{A : Set i}{B : A → Set j}{C : A → Set k}
          {x y : A}(p : x ≡ y)(s : B x × C x)
-       → tr (λ x → B x × C x) p s .₂ ≡ tr C p (s .₂)
+       → tr (λ x → B x × C x) p s .snd ≡ tr C p (s .snd)
 tr-×₂ refl s = refl
 
 tr-const : ∀ {i j}{A : Set i}{B : Set j}{x y : A}(p : x ≡ y)(b : B) → tr (λ _ → B) p b ≡ b

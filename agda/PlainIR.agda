@@ -2,58 +2,77 @@
 
 open import Lib
 
-module PlainIR (i : Level) (j : Level) (O : Set j) where
+-- Section 2.2
+module PlainIR where
 
-  data Sig : Set (lsuc i ⊔ j) where
-    ι : O → Sig
-    σ : (A : Set i) → (A → Sig) → Sig
-    δ : (A : Set i) → ((A → O) → Sig) → Sig
+private variable
+  O : Set j
 
-  F0 : Sig → (ir : Set i) → (ir → O) → Set i
-  F0 (ι _)   ir el = Lift _ ⊤
-  F0 (σ A Γ) ir el = Σ A λ a → F0 (Γ a) ir el
-  F0 (δ A Γ) ir el = Σ (A → ir) λ f → F0 (Γ (el ∘ f)) ir el
+data Sig i {j} (O : Set j) : Set (suc i ⊔ j) where
+  ι : O → Sig i O
+  σ : (A : Set i) → (A → Sig i O) → Sig i O
+  δ : (A : Set i) → ((A → O) → Sig i O) → Sig i O
 
-  F1 : ∀ S {ir el} → F0 S ir el → O
-  F1 (ι o)          x       = o
-  F1 (σ A Γ)        (a , x) = F1 (Γ a) x
-  F1 (δ A Γ){ir}{el}(f , x) = F1 (Γ (el ∘ f)) x
+infix 20 _₀
+_₀ : Sig i O → (ir : Set i) → (ir → O) → Set i
+(ι _   ₀) ir el = ⊤
+(σ A S ₀) ir el = Σ A λ a → (S a ₀) ir el
+(δ A S ₀) ir el = Σ (A → ir) λ f → (S (el ∘ f)₀) ir el
 
-  IH : ∀ {k} S {ir : Set i} {el : ir → O} (P : ir → Set k) → F0 S ir el → Set (i ⊔ k)
-  IH (ι o)            P x       = Lift _ ⊤
-  IH (σ A S)          P (a , x) = IH (S a) P x
-  IH (δ A S) {ir}{el} P (f , x) = (∀ a → P (f a)) × IH (S (el ∘ f)) P x
+infix 20 _₁
+_₁ : ∀ (S : Sig i O){ir el} → (S ₀) ir el → O
+(ι o   ₁)        x       = o
+(σ A S ₁)        (a , x) = (S a ₁) x
+(δ A S ₁){ir}{el}(f , x) = (S (el ∘ f)₁) x
 
-  mapIH : ∀ {k} Γ {ir : Set i}{el : ir → O}(P : ir → Set k) → (∀ x → P x) → (x : F0 Γ ir el) → IH Γ P x
-  mapIH (ι o)            P h x       = lift tt
-  mapIH (σ A Γ)          P h (a , x) = mapIH (Γ a) P h x
-  mapIH (δ A Γ) {ir}{el} P h (f , x) = h ∘ f , mapIH (Γ (el ∘ f)) P h x
+infix 20 _ᵢₕ
+_ᵢₕ : ∀ S {ir : Set i} {el : ir → O} (P : ir → Set k) → (S ₀) ir el → Set (i ⊔ k)
+(ι o   ᵢₕ)          P x       = ⊤
+(σ A S ᵢₕ)          P (a , x) = (S a ᵢₕ) P x
+(δ A S ᵢₕ) {ir}{el} P (f , x) = (∀ a → P (f a)) × (S (el ∘ f)ᵢₕ) P x
 
-  data IR (S : Sig) : Set i
-  El : ∀ {S} → IR S → O
+infix 20 _ₘₐₚ
+_ₘₐₚ : ∀ S {ir : Set i}{el : ir → O}(P : ir → Set k) → (∀ x → P x) → (x : (S ₀) ir el) → (S ᵢₕ) P x
+(ι o   ₘₐₚ)          P h x       = tt
+(σ A S ₘₐₚ)          P h (a , x) = (S a ₘₐₚ) P h x
+(δ A S ₘₐₚ) {ir}{el} P h (f , x) = (h ∘ f , (S (el ∘ f)ₘₐₚ) P h x)
 
-  data IR S where
-    wrap : F0 S (IR S) El → IR S
+data IR (S : Sig i O) : Set i
+El : {S : Sig i O} → IR S → O
 
-  {-# TERMINATING #-}
-  El {S} (wrap t) = F1 S t
+data IR S where
+  intro : (S ₀) (IR S) El → IR S
 
-  {-# TERMINATING #-}
-  elim : ∀ {k} S (P : IR S → Set k) → (∀ x → IH S P x → P (wrap x)) → ∀ x → P x
-  elim S P f (wrap x) = f x (mapIH S P (elim S P f) x)
+{-# TERMINATING #-}
+El {S = S} (intro t) = (S ₁) t
 
+{-# TERMINATING #-}
+elim : {S : Sig i O} (P : IR S → Set k) → (∀ x → (S ᵢₕ) P x → P (intro x)) → ∀ x → P x
+elim {S = S} P f (intro x) = f x ((S ₘₐₚ) P (elim P f) x)
 
-  -- misc definitions
-  ------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-  unwrap : ∀ {S} → IR S → F0 S (IR S) El
-  unwrap {S} = elim S _ λ x _ → x
+outro : {S : Sig i O} → IR S → (S ₀) (IR S) El
+outro {S = S} = elim _ λ x _ → x
 
-  SigElim : ∀ {k}(P : Sig → Set k)
-            → ((o : O) → P (ι o))
-            → ((A : Set i) (S : A → Sig) → ((a : A) → P (S a)) → P (σ A S))
-            → ((A : Set i) (S : (A → O) → Sig) → ((f : A → O) → P (S f)) → P (δ A S))
-            → ∀ S → P S
-  SigElim P ι' σ' δ' (ι o)   = ι' o
-  SigElim P ι' σ' δ' (σ A S) = σ' A S (SigElim P ι' σ' δ' ∘ S)
-  SigElim P ι' σ' δ' (δ A S) = δ' A S (SigElim P ι' σ' δ' ∘ S)
+SigElim :   (P : Sig i O → Set k)
+          → ((o : O) → P (ι o))
+          → ((A : Set i) (S : A → Sig i O) → ((a : A) → P (S a)) → P (σ A S))
+          → ((A : Set i) (S : (A → O) → Sig i O) → ((f : A → O) → P (S f)) → P (δ A S))
+          → ∀ S → P S
+SigElim P ι' σ' δ' (ι o)   = ι' o
+SigElim P ι' σ' δ' (σ A S) = σ' A S (SigElim P ι' σ' δ' ∘ S)
+SigElim P ι' σ' δ' (δ A S) = δ' A S (SigElim P ι' σ' δ' ∘ S)
+
+module Example-2-1 where
+
+  open import Data.Nat using (ℕ)
+
+  data Tag : Set where
+    Nat' : Tag
+    Π'   : Tag
+
+  Example-2-1 : Sig zero Set₀
+  Example-2-1 = σ Tag λ where
+    Nat' → ι ℕ
+    Π'   → δ ⊤ λ ElA → δ (ElA tt) λ ElB → ι ((x : ElA tt) → ElB x)
