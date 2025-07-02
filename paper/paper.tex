@@ -639,13 +639,14 @@ computation rules.
 
 \subsection{Mechanization}
 
-We formalized Section \ref{sec:iir-construction} in Agda, using the same definitions as in this
-section, and the same notation, as far as Agda's syntax allows. For the assumption of IR, we
-verbatim reproduced the specification in Section \ref{sec:ir-specification}, turning $\IR$ into an
-inductive type and $\El$ and $\elim$ into recursive functions. The functions are not recognized as
-terminating by Agda, so we disable terminating checking for them. Alternatively, we could use
-rewrite rules \cite{DBLP:journals/pacmpl/CockxTW21}; the two versions are the same except that
-rewrite rules have a performance cost in type checking and evaluation that we prefer to avoid.
+We formalized Section \ref{sec:iir-construction} in roughly 250 lines of Agda, using the same
+definitions as in this section, and the same notation, as far as Agda's syntax allows. For the
+assumption of IR, we verbatim reproduced the specification in Section \ref{sec:ir-specification},
+turning $\IR$ into an inductive type and $\El$ and $\elim$ into recursive functions. The functions
+are not recognized as terminating by Agda, so we disable terminating checking for
+them. Alternatively, we could use rewrite rules \cite{DBLP:journals/pacmpl/CockxTW21}; the two
+versions are the same except that rewrite rules have a performance cost in type checking and
+evaluation that we prefer to avoid.
 
 One small difference is that our object theory does not have internal universe levels, so we
 understand level quantification to happen in a metatheory, while in Agda we use native universe
