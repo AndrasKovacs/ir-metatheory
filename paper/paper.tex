@@ -201,23 +201,23 @@ universe, unlike the ambient $\Set_0$ universe, supports an induction principle 
 define type-generic functions. Indexed induction-recursion (IIR) additionally allows indexing
 $\Code$ over some type, which lets us define inductive-recursive predicates \cite{DBLP:journals/jlp/DybjerS06}.
 
-An important application of IR has been to develop semantics for object theories that support
-universe hierarchies. IR has been used in normalization proofs
+An important application of (I)IR has been to develop semantics for object theories that support
+universe hierarchies. It has been used in normalization proofs
 \cite{DBLP:journals/pacmpl/0001OV18,DBLP:journals/pacmpl/PujetT23,DBLP:journals/pacmpl/AbelDE23}, in
 modeling first-class universe levels \cite{first-class-univ} and proving canonicity for them
 \cite{DBLP:journals/corr/abs-2502-20485}. Other applications are in characterizing domains of
-partial functions \cite{DBLP:conf/tphol/BoveC01} and in generic programming over type
-descriptions \cite{diehl2017fully}.
+partial functions \cite{DBLP:conf/tphol/BoveC01} and in generic programming over type descriptions
+\cite{diehl2017fully}.
 
 IIR has been supported in Agda 2 since the early days of the system \cite{DBLP:conf/tphol/BoveDN09},
 and it is also available in Idris 1 \cite{DBLP:journals/jfp/Brady13} and Idris 2
-\cite{DBLP:conf/ecoop/Brady21}. In these systems, IR has been implemented in the ``obvious'' way,
+\cite{DBLP:conf/ecoop/Brady21}. In these systems, IIR has been implemented in the ``obvious'' way,
 supporting closed program execution in compiler backends and normalization during type checking, but
 without any formal justification.
 
-Our \textbf{main contribution} is to \textbf{show canonicity} for a Martin-Löf type theory that
+Our \textbf{main contribution} is to \emph{show canonicity for a Martin-Löf type theory that
 supports a countable universe hierarchy, where each universe supports indexed inductive-recursive
-types. Canonicity means that every closed term is definitionally equal to a canonical
+types}. Canonicity means that every closed term is definitionally equal to a canonical
 term. Canonical terms are built only from constructors; for instance, a canonical natural number
 term is a numeral. Hence, canonicity justifies evaluation for closed terms. The outline of our
 development is as follows.
@@ -246,9 +246,9 @@ development is as follows.
 \section{Specification for (I)IR Types}\label{sec:specification}
 
 In this section we describe the object type theory, focusing on the specification of IR and IIR
-types. We do not yet go into the formal details; instead, we shall mostly work with internal
-definitions in an Agda-like syntax. In Section \ref{sec:object-theory} we will give a more rigorous
-specification that is based on categories-with-families.
+types. We shall mostly work with internal definitions in an Agda-like syntax. In Section
+\ref{sec:object-theory} we will give a more rigorous specification that is based on
+categories-with-families.
 
 \subsection{Basic Type Formers}\label{sec:basic-type-formers}
 We have a countable hierarchy of Russell-style universes, written as $\U_i$, where $i$ is an
@@ -425,9 +425,9 @@ and a type $\Tag : \U_0$ with inhabitants $\Nil'$ and $\Cons'$.
 \end{alignat*}
 We set $O$ to be constant $\top$ because vectors do not have an associated recursive function. In
 the $\Nil'$ case, we simply set the constructor index to $\zero$. In the $\Cons'$ case, we introduce
-a non-inductive field, binding $n$ for the length of the tail of the vector. Then, when we introduce
-the inductive field using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that the length of the
-(single) inductive field is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$.
+a non-inductive argument, binding $n$ for the length of the tail of the vector. Then, when we
+introduce the inductive argument using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that index of
+the argument is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$.
 \end{example}
 
 \subsubsection{Type and term formation}\label{sec:iir-type-and-term-formation}
@@ -676,7 +676,7 @@ the metatheory and the object theory in more detail.
     those numbers as metatheoretic levels in the canonicity model, to correctly specify sizes of
     reducibility predicates.
   \item The syntax of the object theory as a quotient inductive-inductive type \cite{ttintt,DBLP:journals/corr/abs-2302-08837}, to be
-    described in the following section.
+    described in Section \ref{sec:object-theory}.
 \end{itemize}
 \emph{Notation:} $\Lift$ is derivable the same way as we have seen, but we will make all
 lifting implicit in the metatheory. In the object theory, explicit lifting is advisable, because
@@ -934,7 +934,7 @@ explain the rationale.
   &\quad \delta^\w &&:\,&&\{A &&: \Tm\,\U_i\}(A^\w : \Tm\,A \to \Set_i)\\
   &               &&   && \{S &&: \Tm\,((A \to O) \to \Sig_i\,O)\}\\
   &               &&   && (S^\w &&: \{f : \Tm\,(A \to O)\} \to (\{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(f\,a)) \to \Sig^\w\,O^\w\,(S\,f))\\
-  &\quad          &&   && \to &&\,\Sig^\w\,O^\w\,(\delta\,S\,f)
+  &\quad          &&   && \to &&\,\Sig^\w\,O^\w\,(\delta\,f\,S)
 \end{alignat*}
 A witness of $\Sig^\w\,O^\w\,t$ tells us that $t$ is a canonical constructor and it only contains
 canonical data, inductively. Now, we define $(\Sig_i)^\w\,\gamma^\w\,O^\w\,t$ to be
@@ -1192,11 +1192,14 @@ $\PSbe_\map$ appropriately commutes with the $\ola{(S^{*\w})_0)}$ isomorphism, b
 
 \emph{Remark.} In the Agda formalization of $\beta$-rules, we use uniqueness of identity proofs
 (UIP) instead of trying to shuffle transports by homotopical reasoning. We do this mainly because it
-is easier. However, we conjecture that it is possible to get rid of UIP. In that case, the above
-definitions could be reformulated as part of a \emph{syntactic parametricity translation} that maps
-from the object theory to itself. Also, we might imagine a binary parametricity variant of our
-interpretation \cite{bernardy2010parametricity}. In other words, we conjecture that our IR interpretation can serve as a
-blueprint for other kinds of parametric interpretations of IR types.
+is easier. However, we conjecture that is possible skip UIP, and that might be useful in future applications
+and variations of our construction; see Section \ref{TODO} for more discussion of this.
+
+%% However, we conjecture that it is possible to get rid of UIP. In that case, the above
+%% definitions could be reformulated as part of a \emph{syntactic parametricity translation} that maps
+%% from the object theory to itself. Also, we might imagine a binary parametricity variant of our
+%% interpretation \cite{bernardy2010parametricity}. In other words, we conjecture that our IR interpretation can serve as a
+%% blueprint for other kinds of parametric interpretations of IR types.
 \end{definition}
 
 \begin{definition}[Interpretation of object-theoretic IR rules]
@@ -1230,13 +1233,13 @@ S_1\,x$, so we need to show $(\El\,(\intro\,x))^\w\,\gamma^\w = (S_1\,x)^\w\,\ga
 definition of $\blank^\w$ of functions and the definitions of $\El^\w\,\gamma^\w$,
 $\intro^\w\,\gamma^\w$ and $(S_1)^\w\,\gamma^\w$, this is computed to
 \[ (\El^\w\,(\intro^\w\,(x^\w\,\gamma^\w))) = (S^\w\,\gamma^\w)_{1^\w}\,(x^\w\,\gamma^\w) \]
-which is an instance of Definition \ref{sec:canonicity-elintro}. We omit describing the contextualization of
-the other rules. This concludes the canonicity interpretation of the object theory.
+which is an instance of Definition \ref{sec:canonicity-elintro}. We omit describing the other
+rules. This concludes the canonicity interpretation of the object theory.
 
 \end{definition}
 
 \begin{example}
-Now that we have fully defined the $\blank^\w$ functions acting on contexts, types, subtitutions and
+Now that we have fully defined the $\blank^\w$ functions that act on contexts, types, subtitutions and
 terms, we can look at an example for a canonicity statement. Recall $S$ from Example \ref{ex:code-signature} and
 also the corresponding IIR predicate from Example \ref{ex:code-canonicity-signature}. Assuming $t :
 \Tm\,\emptycon\,(\IR\,S)$, we have
@@ -1262,7 +1265,7 @@ foo
 
 
 \begin{itemize}
-  \item references
+  \item Cite specific pages of the Agda docs
   \item Agda sync: rename wrap to intro, unit type in every univ, naming/notation, postulate a Tm universe for IRCanonicity.
   \item Check paper defs while syncing.
   \item metatheory: Loic, Anton say it looks OK
