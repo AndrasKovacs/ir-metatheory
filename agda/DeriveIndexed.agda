@@ -95,17 +95,17 @@ module _ (S* : Sig) where
   E← {δ A ix S} ((f , fw , x) , w) .fst a .snd = fw a
   E← {δ A ix S} ((f , fw , x) , w) .snd        = E← (x , w)
 
-  η : ∀ {S ix} x → E← {S}{ix} (E→ {S} x) ≡ x
+  η : ∀ {S ix} (x : E S IIR El ix) → E← {S}{ix} (E→ {S} x) ≡ x
   η {ι i o   } (↑ p)    = refl
   η {σ A S   } (a , x)  = ap (a ,_) (η {S = S a} x)
   η {δ A ix S} (g , x)  = ap (g ,_) (η {S = S (El ∘ g)} x)
 
-  ε : ∀ {S ix} x → E→ {S} {ix} (E← {S} x) ≡ x
+  ε : ∀ {S ix} (x : ⌞E⌟ S ix) → E→ {S} {ix} (E← {S} x) ≡ x
   ε {ι i o   } (x , w)            = refl
   ε {σ A S   } ((↑ a , x) , w)    = ap (λ xw → ((↑ a , xw .fst) , xw .snd)) (ε (x , w))
   ε {δ A ix S} ((f , fw , x) , w) = ap (λ xw → (f , fw , xw .fst) , xw .snd) (ε (x , w))
 
-  τ : ∀ {S ix} x → ap (E→ {S}{ix}) (η {S = S} x) ≡ ε (E→ x)
+  τ : ∀ {S ix} (x : E S IIR El ix) → ap (E→ {S}{ix}) (η {S = S} x) ≡ ε (E→ x)
   τ {ι i o}   x       = refl
   τ {σ A S}   (a , x) =
        J (λ x eq → ap (E→ {σ A S}) (ap (a ,_) eq) ≡ ap (λ xw → (↑ a , xw .fst) , xw .snd) (ap (E→ {S a}) eq))

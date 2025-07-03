@@ -1455,6 +1455,9 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newtx/stxscr.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/libertine/LinBiolinumTI-tlf-t1.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/public/libertine/LinBiolinumTI-tlf-t1.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/libertine/LinBiolinumTI-tlf-t1--base.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/public/newtx/ntxsym.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/txfonts/txsyb.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/txfonts/txsya.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/public/libertine/LinBiolinumT-tlf-t1.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/libertine/LinBiolinumT-tlf-t1--base.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/libertine/LinLibertineTZ-tlf-ot1.tfm
@@ -1516,4 +1519,5 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineTZ.
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb
