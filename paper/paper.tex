@@ -1017,22 +1017,22 @@ allowing $f : \Tm\,(A \to \IR\,S^*)$ functions instead of functions with type $\
 If we have a path to $S^\w : \Sig^\w\,S$, we can push the terms contained in the path onto a
 term of $\E\,S\,(\IR\,S^*)\,\El$:
 \begin{alignat*}{4}
-  & \hspace{-6em}\rlap{$\push_0 : \Path\,S^\w \to \Tm\,(\E\,S\,(\IR\,S^*)\,\El) \to \Tm\,(\E\,S^*\,(\IR\,S^*)\,\El)$}\\
-  & \hspace{-6em}\push_0\,\here\,                     &&t := t\\
-  & \hspace{-6em}\push_0\,(\insigma\,p\,\{a\}\,a^\w)\,&&t := \push_0\,p\,(a,\,t)\\
-  & \hspace{-6em}\push_0\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push_0\,p\,(f,\,t)
+  & \hspace{-6em}\rlap{$\push : \Path\,S^\w \to \Tm\,(\E\,S\,(\IR\,S^*)\,\El) \to \Tm\,(\E\,S^*\,(\IR\,S^*)\,\El)$}\\
+  & \hspace{-6em}\push\,\here\,                     &&t := t\\
+  & \hspace{-6em}\push\,(\insigma\,p\,\{a\}\,a^\w)\,&&t := \push\,p\,(a,\,t)\\
+  & \hspace{-6em}\push\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push\,p\,(f,\,t)
 \end{alignat*}
-We also show that this operation preserves $\F$, so we have $\F\,(\push_0\,p\,t) = \F\,t$.
+We also show that this operation preserves $\F$, so we have $\F\,(\push\,p\,t) = \F\,t$.
 \end{definition}
 
 \begin{definition}[Encoding for signatures]
-Next, we define the encoding function for signatures. Note that this computation is only possible
-by induction on $\Sig^\w\,S$, as we have no appropriate induction principle for $\Tm\,(\Sig_i\,O)$.
-As we recurse into a signature, we store the data that we have seen in a $\Path$, and when we hit
-the base case $\iota^\w$, we use the $\Path$ to build up the correct term for the constructor index.
+This is only possible by induction on $\Sig^\w\,S$, as we have no appropriate induction principle
+for $\Tm\,(\Sig_i\,O)$.  As we recurse into a signature, we store the data that we have seen in a
+$\Path$, and when we hit the base case $\iota^\w$, we use the $\Path$ to build up the correct term
+for the constructor index.
 \begin{alignat*}{5}
   &\rlap{$\floord{\blank} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El)$}\\
-  &\floord{\iota^\w\,o^\w}\,&&p               &&:=\,&&\iota\,(\intro\,(\push_0\,p\,\ttt))\,o^\w\\
+  &\floord{\iota^\w\,o^\w}\,&&p               &&:=\,&&\,\iota\,(\intro\,(\push\,p\,\ttt))\,o^\w\\
   &\floord{\sigma^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,A)\,\$\,\lambda\,a.\,\sigma\,(A^\w\,a)\,\$\,\lambda\,a^\w.\,\floord{S^\w\,a^\w}\,(\insigma\,p\,a^\w)\\
   &\floord{\delta^\w\,\{A\}\,A^\w\,S^\w}\,&&p &&:=\,&&\sigma\,(\Tm\,(A \to \IR\,S^*))\,\$\,\lambda\,f.\,\delta\,((a : \Tm\,A) \times A^\w\,a) (\lambda\,(a,\,\_).\,f\,a)\,\$\,\lambda\,f^\w.\\
   &                       &&              &&   &&\hspace{0.8em}\floord{S^\w\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w))}\,(\indelta\,p\,(\lambda\,\{a\}\,a^\w.\,f^\w\,(a,\,a^\w)))
@@ -1044,8 +1044,8 @@ Some remarks:
     $\El : \Tm\,(\IR\,S^* \to O)$ to the funtion type $\Tm\,(\IR\,S^*) \to \Tm\,O$.
   \item In the $\iota^\w$ case, we have $o^\w : O^\w\,o$ and
     \[ \iota : (t : \Tm\,(\IR\,S^*)) \to O^\w\,(\El\,t) \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El). \]
-    We have $\intro\,(\push_0\,p\,\ttt) : \Tm\,(\IR\,S^*)$. If we apply $\El$ to this term, it computes
-    to $(S^*)_1\,(\push_0\,p\,\ttt)$, which is the same as $(\iota\,o)_1\,\ttt$, which is the same
+    We have $\intro\,(\push\,p\,\ttt) : \Tm\,(\IR\,S^*)$. If we apply $\El$ to this term, it computes
+    to $\F\,(\push\,p\,\ttt)$, which is the same as $\F\,\{\iota\,o\}\,\ttt$, which is the same
     as $o$, which makes $o^\w : O^\w\,o$ well-typed for the second argument.
   \item In the $\sigma^\w$ case, we use two $\sigma$-s to abstract over a term and a canonicity witness for it.
   \item In the $\delta^\w$ case, we abstract over $f : \Tm\,(A \to \IR\,S^*)$, then we use $\delta$ to specify inductive
@@ -1086,55 +1086,55 @@ For this, we need to show an equivalence between two representations of $\IR^\w$
 similarly to as in Section \ref{sec:iir-construction-type-term}. For $\intro$, we only need one
 component map of the equivalence, but later we will need all of it.
 
-First, we define the predicate interpretations of $\blank_0$ and $\blank_1$. The general form states
-that $\blank_0$ and $\blank_1$ preserve predicates, but we will only need the special case when the
-$\ir$ and $\el$ arguments are $\IR\,S$ and $\El$ respectively.
+First, we define the predicate interpretations of $\E$ and $\F$. The general form states that
+$\E$ and $\F$ preserve predicates, but we will only need the special case when the $\ir$
+and $\el$ arguments are $\IR\,S^*$ and $\El$ respectively.
 \begin{alignat*}{3}
-  & \blank_{0^\w} : \Sig^\w\,S \to \Tm\,(S_0\,(\IR\,S^*)\,\El) \to \Set_i\\
-  & \blank_{1^\w} : (S^\w : \Sig^\w\,S)\{t : \Tm\,(S_0\,(\IR\,S^*)\,\El)\} \to (S^\w)_{0^\w}\,t \to O^\w\,(S_1\,t)
+  & \E^\w : \Sig^\w\,S \to \Tm\,(\E\,S\,(\IR\,S^*)\,\El) \to \Set_i\\
+  & \F^\w : \{S^\w : \Sig^\w\,S\}\{t : \Tm\,(\E\,S\,(\IR\,S^*)\,\El)\} \to \E^\w\,S^\w\,t \to O^\w\,(\F\,t)
 \end{alignat*}
 Second, we define
 \begin{alignat*}{3}
-  &\blank_{\floord{0}} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Tm\,(\IR\,S^*) \to \Set_i\\
-  &(S^\w)_{\floord{0}}\,p\,t := (t' : \Tm\,(S_0\,(\IR\,S^*)\,\El)) \times ((\intro\,(\push_0\,p\,t') = t) \times (S^\w)_{0^\w}\,t').
+  &\floord{\E} : \{S^\w : \Sig^\w\,S\} \to \Path\,S^\w \to \Tm\,(\IR\,S^*) \to \Set_i\\
+  &\floord{\E}\,p\,t := (t' : \Tm\,(\E\,S\,(\IR\,S^*)\,\El)) \times ((\intro\,(\push\,p\,t') = t) \times \E^\w\,S^\w\,t').
 \end{alignat*}
 Next, we show the following equivalence by induction on $S^\w$:
-\[  (S^\w : \Sig^\w\,S)(p : \Path\,S^\w)\{t : \Tm\,(\IR\,S^*)\} \to (S^\w)_{\floord{0}}\,p\,t \simeq (\floord{S^\w}\,p)_0\,t \]
-We write $\ora{(S^\w)_0}\,p$ for the map with type $(S^\w)_{\floord{0}}\,p\,t \to (\floord{S^\w}\,p)_0\,t$ and
-$\ola{(S^\w)_0}\,p$ for its inverse. This lets us interpret $\intro$.
+\[  \floord{\E}\,\{S^\w\}\,p\,t \simeq \E\,\floord{S^\w}\,\IR^\w\,\El^\w \]
+We write $\ora{\E}\,p$ for the map with type $\floord{\E}\,\{S^\w\}\,p\,t \to
+\E\,\floord{S^\w}\,\IR^\w\,\El^\w$ and $\ola{\E}\,p$ for its inverse. This lets us interpret
+$\intro$.
 \begin{alignat*}{4}
-  & \intro^\w : \{t : \Tm\,((S^*)_{0^\w}\,(\IR\,S^*)\,\El)\} \to (\Ssw)_{0^\w}\,t \to \IR^\w\,(\intro\,t)\\
-  & \intro^\w\,\{t\}\,t^\w := \intro_\IIR\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))
+  & \intro^\w : \{t : \Tm\,(\E\,S^*\,(\IR\,S^*)\,\El)\} \to \E^\w\,S^{*\w}\,t \to \IR^\w\,(\intro\,t)\\
+  & \intro^\w\,\{t\}\,t^\w := \intro_\IIR\,(\ora{\E}\,\here\,(t,\,\refl,\,t^\w))
 \end{alignat*}
 \end{definition}
 
 \begin{definition}[Interpretation of $\Elintro$]\label{sec:canonicity-elintro}
-Similarly as in Section \ref{sec:iir-construction-type-term}, we need to show that $\blank_1$ commutes with signature
-encoding. For this, we need to annotate $\Path$ with additional information. Recall that the
-current definition of $\Path$ is not quite the most general notion of paths in signatures,
+Similarly as in Section \ref{sec:iir-construction-type-term}, we need to show that $\F$ is preserved
+by signature encoding. For this, we need to annotate $\Path$ with additional information. Recall
+that the current definition of $\Path$ is not quite the most general notion of paths in signatures,
 because the $\indelta$ constructor restricts the stored syntactic functions to the form $\El \circ f
 : \Tm\,(A \to O)$, only storing $f : \Tm\,(A \to \IR\,S^*)$. This restriction is required for the
-definition of $\push_0$, where we need to produce $\Tm\,((S^*)_0\,(\IR\,S^*)\,\El)$ as output.
+definition of $\push$, where we need to produce $\Tm\,(\E\,S^*\,(\IR\,S^*)\,\El)$ as output.
 
 Now we also need to restrict the $f^\w$ witnesses in $\indelta$ to the form $f^\w \circ \El^\w$,
 where $f^\w : \{a : \Tm\,A\} \to A^\w\,a \to \IR^\w\,(f\,a)$. We define a predicate over $\Path$
 that expresses this:
 \[ \msf{restrict} : \Path\,S^\w \to \Set_{\max(i+1,\,j+1)} \]
-This is required for the predicate interpretation of $\push_0$, which is defined by induction on $\Path$:
-\[ \push_{0^\w} : (p : \Path\,S^\w) \to \msf{restrict}\,p \to (S^\w)_{0^\w}\,t \to (\Ssw)_{0^\w}\,(\push_0\,p\,t) \]
-This operation preserves $\blank_{1^\w}$:
-\[ (S^\w)_{1^\w}\,t^\w = (\Ssw)_{1^\w}\,(\push_{0^\w}\,p\,q\,t^\w)  \]
-We use $\push_{0^\w}$ in the statement of $\blank_{\floord{1}}$, which we prove by induction on
+This is required for the predicate interpretation of $\push$, which is defined by induction on $\Path$:
+\[ \push^\w : (p : \Path\,S^\w) \to \msf{restrict}\,p \to \E^\w\,S^\w\,t \to E^\w\,S^{*\w}\,(\push\,p\,t) \]
+This operation preserves $\F^\w$:
+\[ \F^\w\,(\push^\w\,p\,q\,t^\w) = \F^\w\,t^\w \]
+We use $\push^\w$ in the statement of $\floord{\F}$, which we prove by induction on
 $S^\w$:
-\[ \blank_{\floord{1}} : \forall\,S^\w\,p\,q\,t^\w.\,(\floord{S^\w}\,p)_1\,(\ora{(S^\w)_0}\,p\,t^\w) = (\Ssw)_{1^\w}\,(\push_{0^\w}\,p\,q\,t^\w) \]
+\[ \floord{\F} : \F\,(\ora{\E}\,p\,t^\w) = \F^\w\,\{S^\w\}\,(\push^\w\,p\,q\,t^\w) \]
 Finally, we define $\Elintro^\w$:
 \begin{alignat*}{3}
-    &\Elintro^\w : \{t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El)\}(t^\w : (\Ssw)_{0^\w}\,t) \to \El^\w\,(\intro^\w\,t^\w) = (\Ssw)_{1^\w}\,t^\w\\
-    &\Elintro^\w\,t^\w := (\Ssw)_{\floord{1}}\,\here\,\ttt\,t^\w
+    &\Elintro^\w : \{t : \Tm\,(\E\,S^*\,(\IR\,S^*)\,\El)\}(t^\w : \E^\w\,S^{*\w}\,t) \to \El^\w\,(\intro^\w\,t^\w) = \F^\w\,t^\w\\
+    &\Elintro^\w\ := \floord{\F}\,\here\,\ttt
 \end{alignat*}
 Above, $\ttt$ witnesses the restriction of $\here$, which is trivial (since $\here$ does not contain $\indelta$).
 \end{definition}
-
 \begin{definition}[Interpretation of $\elim$]
 We assume the following parameters to elimination:
 \begin{alignat*}{4}
@@ -1142,51 +1142,50 @@ We assume the following parameters to elimination:
   &P    &&:&& \Tm\,(\IR\,S^* \to \U_k)\\
   &P^\w &&:&& \{t\} \to \IR^\w\,t \to \Tm\,(P\,t) \to \Set_k
 \end{alignat*}
-We define the predicate interpretations for $\blank_\IH$ and $\blank_\map$ first,
-specializing the $\ir$ and $\el$ arguments to $\IR\,S^*$ and $\El$ and the target level to $k$.
+We define the predicate interpretations for $\IH$ and $\map$ first, specializing the $\ir$ and $\el$
+arguments to $\IR\,S^*$ and $\El$ and the target level to $k$.
 \begin{alignat*}{3}
-  &\blank_{\IH^\w}  &&:\,\,&& \{S\}(S^\w : \Sig^\w\,S)\{t\} \to (S^\w)_{0^\w}\,t \to \Tm\,(S_\IH\,t) \to \Set_{\max(i,\,k)}\\
-  &\blank_{\map^\w} &&:\,\,&& \{S\}(S^\w : \Sig^\w\,S)\{f\}(f^\w : \{t\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(f\,t))\{t\}(t^\w : (S^\w)_{0^\w}\,t)\\
-  &               &&      &&\to (S^\w)_{\IH^\w}\,S^\w\,t^\w\,(S_\map\,f\,t)
+  &\IH^\w  &&:\,\,&& \E^\w\,S^\w\,t \to \Tm\,(\IH\,P\,t) \to \Set_{\max(i,\,k)}\\
+  &\map^\w &&:\,\,&& \{f : \Tm\,((x : \IR\,S^*) \to P\,x)\}(f^\w : \{t\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(f\,t))\{t\}(t^\w : \E^\w\,S^\w\,t)\\
+  &        &&    &&  \to \IH^\w\,t^\w\,(\map\,f\,t)
 \end{alignat*}
 We also assume the induction method and its canonicity witness as parameters:
 \begin{alignat*}{3}
-  &f    &&:\,\,&& (t : \Tm\,((S^*)_0\,(\IR\,S^*)\,\El) \to (S^*)_\IH\,t \to P\,(\intro\,t))\\
-  &f^\w &&:\,\,&& \{t\}(t^\w : (\Ssw)_{0^\w}\,t)\{\ih\} \to (\Ssw)_{\IH^\w}\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
+  &f    &&:\,\,&& \Tm\,((x : \E\,S^*\,(\IR\,S^*)\,\El) \to \IH\,P\,x \to P\,(\intro\,x))\\
+  &f^\w &&:\,\,&& \{t\}(t^\w : \E^\w\,S^{*\w}\,t)\{\ih\} \to (\Ssw)_{\IH^\w}\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
 \end{alignat*}
 The goal is the following:
-\[ \elim^\w : \{t\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(\elim\,S^*\,P\,f\,t)  \]
+\[ \elim^\w : \{t : \Tm\,(\IR\,S^*)\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(\elim\,P\,f\,t)  \]
 We shall use IIR elimination on $t^\w$ to give the definition. Again like in Section \ref{sec:iir-construction-elimination}, we
 have to massage $P^\w$ and $f^\w$ to be able to pass them to $\elim_\IIR$. For the former, we have
 \begin{alignat*}{4}
   &\floord{P^\w} : \{t\} \to \IR^\w\,t \to \Set_k\\
-  &\floord{P^\w}\,\{t\}\,t^\w := P^\w\,x^\w\,(\elim\,S^*\,P\,f\,t).
+  &\floord{P^\w}\,\{t\}\,t^\w := P^\w\,x^\w\,(\elim\,P\,f\,t).
 \end{alignat*}
 For the latter, we first define decoding for induction hypotheses, by induction
 on $S^\w$:
-\begin{alignat*}{4}
-  &\ola{(S^\w)_\IH} &&\,\,:&&(\floord{S^\w}\,p)_\IH\,\floord{P^\w}\,t^\w\\
-  & &&\to\,\,&&(S^\w)_{\IH^\w}\,\big(\snd\,(\snd\,(\ola{(S^\w)_0}\,p\,t^\w))\big)\,\big(S_\map\,(\elim\,S^*\,P\,f)\,(\fst\,(\ola{(S^\w)_0}\,p\,t^\w))\big)
-\end{alignat*}
+\[ \ola{\IH} : \IH\,\floord{P^\w}\,t^\w \to
+      \IH^\w\,\big(\snd\,(\snd\,(\ola{\E}\,p\,t^\w))\big)\,\big(\map\,(\elim\,P\,f)\,(\fst\,(\ola{\E}\,p\,t^\w))\big) \]
 And define
 \begin{alignat*}{4}
-  &\floord{f^\w} : \{t\}(t^\w : \PSbe_0\,\IR^\w\,\El^\w\,t) \to \PSbe_\IH\,\floord{P^\w}\,t^\w \to \floord{P^\w}\,(\intro\,t^\w)\\
-  &\floord{f^\w}\,t^\w\,\ih^\w := f^\w\,\big(\snd\,(\snd\,(\ola{(S^\w)_0}\,\here\,t^\w))\big)\,\big(\ola{(S^{*\w})_{\IH}}\,\,\here\,\ih^\w\big).
+  &\floord{f^\w} : \{t\}(t^\w : \E\,(\floord{S^*}\,\here)\,\IR^\w\,\El^\w\,t) \to \IH\,\floord{P^\w}\,t^\w \to \floord{P^\w}\,(\intro\,t^\w)\\
+  &\floord{f^\w}\,t^\w\,\ih^\w := f^\w\,\big(\snd\,(\snd\,(\ola{\E}\,\here\,t^\w))\big)\,\big(\ola{\IH}\,\,\here\,\ih^\w\big).
 \end{alignat*}
 Hence, elimination is interpreted as follows:
 \[ \elim^\w\,t^\w := \elim_\IIR\,\PSbe\,\floord{P^\w}\,\floord{f^\w}\,t^\w \]
 \end{definition}
 
+
 \begin{definition}[Interpretation of $\elimbeta$]
 The goal is the following:
 \[ \elimbeta^\w : \{t\}(t^\w : (\Ssw)_{0^\w}\,t) \to \elim^\w\,(\intro^\w\,t^\w) = f^\w\,t^\w\,((\Ssw)_{\map^\w}\,\elim^\w\,t^\w) \]
 %% \begin{alignat*}{4}
-%%   & \floord{f^\w}\,&&\Big(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w)\Big)\,\Big(\PSbe_\map\,\floord{P^\w}\,\elim^\w\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w)\Big)
+%%   & \floord{f^\w}\,&&\Big(\ora{\E}\,\,\here\,(t,\,\refl,\,t^\w)\Big)\,\Big(\PSbe_\map\,\floord{P^\w}\,\elim^\w\,(\ora{\E}\,\,\here\,(t,\,\refl,\,t^\w)\Big)
 %% \end{alignat*}
 The left hand side computes to the following:
 \begin{alignat*}{4}
-  &f^\w\,&&\Big(\snd\,\big(\snd\,\big(\ola{(S^{*\w})_0}\,\here\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))\big)\big)\Big)\\
-  &      &&\Big(\ola{(S^{*\w})_{\IH}}\,\,\here\,\Big(\PSbe_\map\,\floord{P^\w}\,\elim^\w\,(\ora{(\Ssw)_0}\,\,\here\,(t,\,\refl,\,t^\w))\Big)\Big)
+  &f^\w\,&&\Big(\snd\,\big(\snd\,\big(\ola{(S^{*\w})_0}\,\here\,(\ora{\E}\,\,\here\,(t,\,\refl,\,t^\w))\big)\big)\Big)\\
+  &      &&\Big(\ola{(S^{*\w})_{\IH}}\,\,\here\,\Big(\PSbe_\map\,\floord{P^\w}\,\elim^\w\,(\ora{\E}\,\,\here\,(t,\,\refl,\,t^\w))\Big)\Big)
 \end{alignat*}
 The first argument to $\floord{f^\w}$ simplifies to $t^\w$ by canceling the $\ola{(S^{*\w})_0}$
 isomorphism. For the second argument of $\floord{f^\w}$, like in Section \ref{sec:iir-construction-elimination}, we show that

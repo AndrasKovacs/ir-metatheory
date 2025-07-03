@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  3 JUL 2025 21:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  4 JUL 2025 01:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1325,19 +1325,9 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 Underfull \vbox (badness 1102) has occurred while \output is active []
 
  [10.10]
-[11.11] [12.12] [13.13] [14.14] [15.15] [16.16]
-Overfull \hbox (22.37204pt too wide) in paragraph at lines 1046--1050
-\T1/LinuxLibertineT-TLF/m/n/10 (-20) We have $[] \LMS/ntxsy/m/n/10 ¹[][] \OML/n
-xlmi/m/it/10 p []\LMS/ntxsy/m/n/10 º \OT1/LinuxLibertineT-TLF/m/n/10 (-20) : []
- \LMS/ntxsy/m/n/10 ¹[] \OML/nxlmi/m/it/10 S[]\LMS/ntxsy/m/n/10 º$\T1/LinuxLiber
-tineT-TLF/m/n/10 (-20) . If we ap-ply $[]$ to this term, it com-putes to $\LMS/
-ntxsy/m/n/10 ¹\OML/nxlmi/m/it/10 S[]\LMS/ntxsy/m/n/10 º[] ¹[][] \OML/nxlmi/m/it
-/10 p []\LMS/ntxsy/m/n/10 º$\T1/LinuxLibertineT-TLF/m/n/10 (-20) ,
- []
+[11.11] [12.12] [13.13] [14.14] [15.15] [16.16] [17.17] [18.18]
 
-[17.17] [18.18]
-
-LaTeX Warning: Reference `TODO' on page 19 undefined on input line 1198.
+LaTeX Warning: Reference `TODO' on page 19 undefined on input line 1197.
 
 [19.19] (./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
@@ -1370,11 +1360,11 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 60E8F5D9C767F701E58103BA166863D2;2931.
  ) 
 Here is how much of TeX's memory you used:
- 31871 strings out of 478287
- 581090 string characters out of 5849290
- 914895 words of memory out of 5000000
+ 31868 strings out of 478287
+ 581018 string characters out of 5849290
+ 914894 words of memory out of 5000000
  48533 multiletter control sequences out of 15000+600000
- 695449 words of font info for 524 fonts, out of 8000000 for 9000
+ 695274 words of font info for 522 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  99i,22n,131p,1002b,947s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/us
@@ -1398,7 +1388,7 @@ tx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (22 pages, 651466 bytes).
+Output written on paper.pdf (22 pages, 650788 bytes).
 PDF statistics:
  531 PDF objects out of 1000 (max. 8388607)
  466 compressed objects within 5 object streams
