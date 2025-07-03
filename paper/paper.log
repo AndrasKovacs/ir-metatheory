@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  3 JUL 2025 12:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  3 JUL 2025 16:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1362,13 +1362,16 @@ Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 60E8F5D9C767F701E58103BA166863D2;2931.
  ) 
 Here is how much of TeX's memory you used:
  31880 strings out of 478287
  581354 string characters out of 5849290
- 911785 words of memory out of 5000000
+ 911786 words of memory out of 5000000
  48533 multiletter control sequences out of 15000+600000
  696208 words of font info for 529 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
