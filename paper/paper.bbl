@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{32}
+\begin{thebibliography}{31}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -89,17 +89,6 @@
   Schemas {I}, {II}, {III}}}. \bibinfo{series}{Lecture Notes in Mathematics},
   Vol.~\bibinfo{volume}{269, 270, 305}.
 \newblock \bibinfo{publisher}{Springer}.
-\newblock
-
-
-\bibitem[Bernardy et~al\mbox{.}(2010)]%
-        {bernardy2010parametricity}
-\bibfield{author}{\bibinfo{person}{Jean-Philippe Bernardy},
-  \bibinfo{person}{Patrik Jansson}, {and} \bibinfo{person}{Ross Paterson}.}
-  \bibinfo{year}{2010}\natexlab{}.
-\newblock \showarticletitle{Parametricity and dependent types}. In
-  \bibinfo{booktitle}{\emph{ACM Sigplan Notices}}, Vol.~\bibinfo{volume}{45}.
-  ACM, \bibinfo{pages}{345--356}.
 \newblock
 
 

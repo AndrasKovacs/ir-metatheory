@@ -2,14 +2,6 @@ This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
 The style file: ACM-Reference-Format.bst
-Illegal, another \bibstyle command---line 157 of file paper.aux
- : \bibstyle
- :          {ACM-Reference-Format}
-I'm skipping whatever remains of this command
-Illegal, another \bibdata command---line 158 of file paper.aux
- : \bibdata
- :         {references}
-I'm skipping whatever remains of this command
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
@@ -30,9 +22,6 @@ Reallocated glb_str_end (elt_size=4) to 20 items from 10.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Warning--empty address in ttintt
 Warning--empty address in SGA4
-Warning--can't use both volume and number fields in bernardy2010parametricity
-Warning--empty publisher in bernardy2010parametricity
-Warning--empty address in bernardy2010parametricity
 Warning--empty address in DBLP:conf/tphol/BoveC01
 Warning--empty address in DBLP:conf/tphol/BoveDN09
 Warning--empty address in DBLP:conf/ecoop/Brady21
@@ -47,45 +36,45 @@ Warning--empty address in DBLP:conf/mpc/KaposiKK19
 Warning--empty address in first-class-univ
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/corr/abs-2302-08837
 Warning--empty address in martinlof84sambin
-You've used 32 entries,
+You've used 31 entries,
             6273 wiz_defined-function locations,
-            1794 strings with 26192 characters,
-and the built_in function-call counts, 35970 in all, are:
-= -- 4903
-> -- 891
+            1786 strings with 26036 characters,
+and the built_in function-call counts, 34735 in all, are:
+= -- 4767
+> -- 860
 < -- 1
-+ -- 284
-- -- 322
-* -- 2450
-:= -- 3325
-add.period$ -- 165
-call.type$ -- 32
-change.case$ -- 191
-chr.to.int$ -- 30
-cite$ -- 51
-duplicate$ -- 3280
-empty$ -- 2315
-format.name$ -- 392
-if$ -- 8903
++ -- 274
+- -- 313
+* -- 2364
+:= -- 3216
+add.period$ -- 160
+call.type$ -- 31
+change.case$ -- 184
+chr.to.int$ -- 29
+cite$ -- 47
+duplicate$ -- 3153
+empty$ -- 2227
+format.name$ -- 379
+if$ -- 8604
 int.to.chr$ -- 4
 int.to.str$ -- 1
-missing$ -- 122
-newline$ -- 321
-num.names$ -- 244
-pop$ -- 1121
+missing$ -- 117
+newline$ -- 314
+num.names$ -- 237
+pop$ -- 1070
 preamble$ -- 1
-purify$ -- 443
+purify$ -- 428
 quote$ -- 0
-skip$ -- 1193
+skip$ -- 1145
 stack$ -- 0
-substring$ -- 2959
-swap$ -- 335
+substring$ -- 2856
+swap$ -- 321
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 707
-warning$ -- 19
-while$ -- 261
+type$ -- 677
+warning$ -- 16
+while$ -- 255
 width$ -- 0
-write$ -- 703
-(There were 4 error messages)
+write$ -- 683
+(There were 2 error messages)

@@ -535,12 +535,13 @@ index. We define the $\IIR$ and $\El$ rules as follows.
   &\IIR : I \to \U_{\max(i,\,k)}                         && \El : \IIR\,i \to O\,i \\
   &\IIR\,i :\equiv (x : \IR\,\Sigr{S^*}) \times \fst\,(\El\,x) = i \hspace{3em}&& \El\,(x,\,p) :\equiv \tr\,O\,p\,(\snd\,(\El\,x))
 \end{alignat*}
-The definition shorthand describes the data that we get when we peel off an $\intro$ from an $\IIR\,S\,i$ value.
+The following definition describes the data that we get when we peel off an $\intro$ from an
+$\IIR\,i$ value.
 \begin{alignat*}{4}
   &\blank_{\floord{0}} : \Sig_\IIR \to I \to \U_{\max(i,\,k)}\\
   &S_{\floord{0}}\,i :\equiv (x : \floord{S}_0\,(\IR\,\floord{S^*})\,\El) \times \fst\,(\floord{S}_1\,x) = i
 \end{alignat*}
-Note that this quantifies over an $S$ that is possibly distinct from $S^*$. Now, we can show that
+Here we quantify over an $S$ that is possibly distinct from $S^*$. Now, we can show that
 $S_{\floord{0}}\,i$ is equivalent to $S_0\,\IIR\,\El\,i$, by induction on $S$. The induction is
 straightforward and we omit it here. We name the components of the equivalence as
 follows:\footnote{In the Agda formalization, we compute $\tau$ by induction on $S$, although it
@@ -552,15 +553,16 @@ could be generically recovered from the other four components as well \cite[Sect
   &\epsilon  &&: \{x\} \to \ora{S_0}\,(\ola{S_0}\,x) = x \\
   &\tau      &&: \{x\} \to \ap\,\ora{S_0}\,(\eta\,x) = \epsilon\,(\ola{S_0}\,x)
 \end{alignat*}
-This is a half adjoint equivalence \cite[Section~4.2]{hottbook}. We will shortly use the coherence
-witness $\tau$ to rearrange some transports. Next, we show that the two $\blank_1$ operations are
-the same, modulo the previous equivalence, again by induction on IIR signatures.
+This is a half adjoint equivalence \cite[Section~4.2]{hottbook}. The coherence witness $\tau$ will
+be shorty required for rearranging some transports. Next, we show that the two $\blank_1$ operations
+are the same, modulo the previous equivalence, again by induction on IIR signatures.
 \[\blank_{\floord{1}} : (S : \Sig_\IIR)\{x : S_0\,\IIR\,\El\,i\} \to \tr\,O\,(\snd\,(\ora{S_0}\,x))\,(\snd\,(\floord{S}_1\,(\fst\,(\ora{S_0}\,x)))) = S_1\,x\]
 This lets us define the other introduction rules as well.
 \begin{alignat*}{3}
   &\intro    : (S^*)_0\,\IIR\,\El\,i \to \IIR\,i && \msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv (S^*)_1\,x \\
   &\intro\,x :\equiv (\intro_\IR\,(\fst\,(\ora{(S^*)_0}\,x)),\,\snd\,(\ora{(S^*)_0}\,x)) \quad\quad&& \msf{El\!\!-\!\!intro} && :\equiv (S^*)_{\floord{1}}
 \end{alignat*}
+
 
 \subsection{Elimination}\label{sec:iir-construction-elimination}
 
@@ -570,7 +572,7 @@ We assume a level $l$ for the elimination target. We aim to define the following
   &                \quad\to && (f : \{i : I\}(x : (S^*)_0\,\IIR\,\El\,i) \to (S^*)_\IH\,P\,x \to P\,(\intro\,x))\\
   &                \quad\to && (x : \IIR\,i) \to P\,x
 \end{alignat*}
-Also recall that $x : \IIR\,i$ is given as a pair of some $x : \IR\,\floord{S^*}$ and $p :
+Recall that $x : \IIR\,i$ is given as a pair of some $x : \IR\,\floord{S^*}$ and $p :
 \fst\,(\El\,x) = i$.  The idea is to use IR elimination on $x : \IR\,\floord{S^*}$ while adjusting
 both $P$ and $f$ to operate on the appropriate data. We use the following induction motive. Note
 that we generalize the induction goal over the $p$ witness.
@@ -583,7 +585,7 @@ Now, we have
   & \elim_\IR\,\floord{P} : ((x : \floord{S^*}_0\,(\IR\,\floord{S^*})\,\El) \to \floord{S^*}_\IH\,\floord{P}\,x \to \floord{P}\,(\intro\,x))
        \to (x : \IR\,\floord{S^*}) \to \floord{P}\,x.
 \end{alignat*}
-We adjust $f$ to obtain the next argument to $\elim_\IR\,\floord{P}$. $f$ takes $(S^*)_\IH\,P\,x$ as input,
+We adjust $f$ to obtain the next argument to $\elim_\IR$. $f$ takes $(S^*)_\IH\,P\,x$ as input,
 so we need a ``backwards'' conversion:
 \begin{alignat*}{3}
   & \ola{S_\IH} : \{x : S_{\floord{0}}\,i\} \to \floord{S}_\IH\,\floord{P}\,(\fst\,x) \to S_\IH\,P\,(\ola{S_0}\,x)
