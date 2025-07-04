@@ -1,5 +1,5 @@
 
-open import Lib
+open import Lib renaming (zero to lzero; suc to lsuc; fst to ₁; snd to ₂)
 
 module UniversalIndFam {li j : Level}(I : Set j) where
 
@@ -63,7 +63,7 @@ proj< {ν A} {B} {S}     (i , p)     = proj≤ p
 module _ {A}(S : Sig A) where
 
   data Tm : ∀ B → Sig≤ A B S → I → Set (li ⊔ j) where
-    ι : ∀ {p} → Tm ι p (proj≤ p .lower)
+    ι : ∀ {p} → Tm ι p (proj≤ p .↓)
     σ : ∀ {B p i} x → Tm B (σ≤ p x) i → Tm (σ B) p i
     δ : ∀ {B p i} → (∀ x → Tm A (inj₁ refl) (proj≤ p .₂ .₁ x)) → Tm B (δ≤ p) i → Tm (δ B) p i
     ν : ∀ {n B p i} ix → Tm (B ix) (ν≤ p ix) i → Tm (ν {n} B) p i
@@ -74,13 +74,13 @@ module _ {A}(S : Sig A) where
     Motive B p = ∀ i → Tm B p i → Set k
 
     Methods : ∀ B (p : Sig≤ A B S) → Motive A (inj₁ refl) → Motive B p → Set (li ⊔ j ⊔ k)
-    Methods ι     p P Q = Lift (li ⊔ j ⊔ k) (Q (proj≤ p .lower) ι)
+    Methods ι     p P Q = Lift (li ⊔ j ⊔ k) (Q (proj≤ p .↓) ι)
     Methods (σ B) p P Q = ∀ x → Methods B (σ≤ p x) P (λ i t → Q i (σ x t))
     Methods (δ B) p P Q = ∀ f → (∀ x → P (proj≤ p .₂ .₁ x) (f x)) → Methods B (δ≤ p) P (λ i t → Q i (δ f t))
     Methods (ν B) p P Q = ∀ ix → Methods (B ix) (ν≤ p ix) P (λ i t → Q i (ν ix t))
 
     Elim : ∀ B p (P : Motive A (inj₁ refl)) (Q : Motive B p) → Methods A (inj₁ refl) P P → Methods B p P Q → ∀ i t → Q i t
-    Elim B p P Q f g i ι        = g .lower
+    Elim B p P Q f g i ι        = g .↓
     Elim B p P Q f g i (σ x t)  = Elim _ (σ≤ p x) P _ f (g x) i t
     Elim B p P Q f g i (δ h t)  = Elim _ (δ≤ p) P _ f (g h λ x → Elim A _ P P f f _ (h x)) i t
     Elim B p P Q f g i (ν ix t) = Elim _ (ν≤ p ix) P _ f (g ix) i t

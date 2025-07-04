@@ -196,10 +196,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
         mapIH-trip (ι oᴾ) hom xᴾ f = refl
 
         mapIH-trip (σ {A} Aᴾ {S} Sᴾ) {a , x} hom h (aᴾ , xᴾ) =
-            tr-∘ {i}{i}{i ⊔ k}{_}{{!Σ (IR.F0 (IR.σ A S) U El)
-                                   (λ v →
-                                      IR.wrap (PathF0 hom v) ≡ IR.wrap (PathF0 hom (a , x)) ×
-                                      F0ᴾ (σ Aᴾ Sᴾ) v)!}}
+            tr-∘ {i}{i}{i ⊔ k}{_}{F0ᴾ' (σ Aᴾ Sᴾ) hom (IR.wrap (PathF0 (σ< hom a aᴾ) x))}
                 (λ xᴾ₁ →
                    IHᴾ (Sᴾ (xᴾ₁ .₂ .₂ .₁)) (xᴾ₁ .₂ .₂ .₂)
                   (mapIH (IR.σ A S) (IR.elim S* P met) (xᴾ₁ .₁)))
@@ -209,7 +206,8 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᴾ : O → Set j) whe
           ◼ mapIH-trip (Sᴾ aᴾ) (σ< hom a aᴾ) h xᴾ
 
         mapIH-trip (δ {A} Aᴾ {S} Sᴾ) {f , x} hom h (fᴾ , xᴾ) =
-             tr-∘ (λ xᴾ₁ → IHᴾ (δ Aᴾ Sᴾ) (xᴾ₁ .₂ .₂) (mapIH (IR.δ A S) (IR.elim S* P met) (xᴾ₁ .₁)))
+             tr-∘ {B = F0ᴾ' (δ Aᴾ Sᴾ) hom (IR.wrap (PathF0 (δ< hom f λ a aᴾ → Elᴾ (fᴾ a aᴾ)) x))}
+                  (λ xᴾ₁ → IHᴾ (δ Aᴾ Sᴾ) (xᴾ₁ .₂ .₂) (mapIH (IR.δ A S) (IR.elim S* P met) (xᴾ₁ .₁)))
                   (λ x₁ → (f , x₁ .₁) , x₁ .₂ .₁ , fᴾ , x₁ .₂ .₂)
                   (F0ᴾlr (Sᴾ (λ a aᴾ → Elᴾ (fᴾ a aᴾ)))(δ< hom f (λ a aᴾ → Elᴾ (fᴾ a aᴾ))) (x , refl , xᴾ))
                   _
