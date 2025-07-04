@@ -156,14 +156,14 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
         ⌞P⌟ : ∀ {x} → IRᵒ x → Set k
         ⌞P⌟ {x} xᵒ = Pᵒ xᵒ (IR.elim P f x)
 
-        IH← : ∀ {S} {Sᵒ} {x}(p : Path {S} Sᵒ){xᵒ : IIR.E (⌞ Sᵒ ⌟ p) IRᵒ Elᵒ x}
+        IH← : ∀ {S} {Sᵒ} (p : Path {S} Sᵒ){x}{xᵒ : IIR.E (⌞ Sᵒ ⌟ p) IRᵒ Elᵒ x}
                  → IIR.IH ⌞P⌟ xᵒ
                  → let (t' , _ , tᵒ') = Eᵒ← p xᵒ in
                    IHᵒ tᵒ' (map (IR.elim P f) t')
-        IH← {Sᵒ = ιᵒ oᵒ   } p               ihᵒ           = tt
-        IH← {Sᵒ = σᵒ Aᵒ Sᵒ} p {a , aᵒ , xᵒ} ihᵒ           = IH← (in-σ p a aᵒ) ihᵒ
-        IH← {Sᵒ = δᵒ Aᵒ Sᵒ} p {f , fᵒ , xᵒ} ihᵒ .fst a aᵒ = ihᵒ .fst (a , aᵒ)
-        IH← {Sᵒ = δᵒ Aᵒ Sᵒ} p {f , fᵒ , xᵒ} ihᵒ .snd      = IH← (in-δ p f _) (ihᵒ .snd)
+        IH← {Sᵒ = ιᵒ oᵒ   } p {_}              ihᵒ           = tt
+        IH← {Sᵒ = σᵒ Aᵒ Sᵒ} p {_}{a , aᵒ , xᵒ} ihᵒ           = IH← (in-σ p a aᵒ) ihᵒ
+        IH← {Sᵒ = δᵒ Aᵒ Sᵒ} p {_}{f , fᵒ , xᵒ} ihᵒ .fst a aᵒ = ihᵒ .fst (a , aᵒ)
+        IH← {Sᵒ = δᵒ Aᵒ Sᵒ} p {_}{f , fᵒ , xᵒ} ihᵒ .snd      = IH← (in-δ p f _) (ihᵒ .snd)
 
         ⌞f⌟ : ∀ {x} (xᵒ : IIR.E (⌞ S*ᵒ ⌟ here) IRᵒ Elᵒ x) → IIR.IH ⌞P⌟ xᵒ → ⌞P⌟ (IIR.intro xᵒ)
         ⌞f⌟ {x} xᵒ ih =
@@ -173,25 +173,28 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
                 (Eᵒ← here xᵒ .snd .fst)
                 (fᵒ (Eᵒ← here xᵒ .snd .snd) (IH← here ih)))
 
---         mapIH-trip :
---           ∀ {S} Sᵒ {x} (p : Path {S} Sᵒ) (h : ∀ {i}(x : IRᵒ i) → ⌞P⌟ x)(xᵒ : Eᵒ Sᵒ x)
---           →
---           tr (λ xᵒ → IHᵒ Sᵒ (xᵒ .snd .snd) (mapIH S (IR.elim S* P f) (xᵒ .fst)))
---              (Eᵒlr Sᵒ p (x , refl , xᵒ))
---              (IH← Sᵒ p (IIR.mapIH (⌞ S*ᵒ ⌟ p) ⌞P⌟ h (Eᵒ→' Sᵒ p xᵒ)))
---           ≡ mapᵒ Sᵒ h xᵒ
---         mapIH-trip (ι oᵒ) p xᵒ f = refl
+        ⌞map⌟ :
+          ∀ {S} Sᵒ {x} (p : Path {S} Sᵒ) (g : ∀ {i}(x : IRᵒ i) → ⌞P⌟ x)(xᵒ : Eᵒ Sᵒ x)
+          →
+          tr (λ xᵒ → IHᵒ (xᵒ .snd .snd) (map (IR.elim P f) (xᵒ .fst)))
+             (Eᵒlr Sᵒ p (x , refl , xᵒ))
+             (IH← p (IIR.map g (Eᵒ→' p xᵒ)))
+          ≡ mapᵒ g xᵒ
+        ⌞map⌟ (ιᵒ oᵒ) p xᵒ f = refl
+        ⌞map⌟ (σᵒ {A} Aᵒ {S} Sᵒ) {a , x} p h (aᵒ , xᵒ) =
+                 tr-∘ {B = ⌞E⌟ p (intro (push p (a , x)))}
+                      (λ x → IHᵒ (x .snd .snd .snd) (map (elim P f) (x .fst .snd)))
+                      (λ x → (a , x .fst) , x .snd .fst , aᵒ , x .snd .snd)
+                      (Eᵒlr (Sᵒ aᵒ) (in-σ p a aᵒ) (x , refl , xᵒ))
+                      _
+               ◼ ⌞map⌟ (Sᵒ aᵒ) (in-σ p a aᵒ) h xᵒ
 
---         mapIH-trip (σ {A} Aᵒ {S} Sᵒ) {a , x} p h (aᵒ , xᵒ) =
---             tr-∘ (λ xᵒ₁ →
---                    IHᵒ (Sᵒ (xᵒ₁ .snd .snd .fst)) (xᵒ₁ .snd .snd .snd)
---                   (mapIH (IR.σ A S) (IR.elim S* P f) (xᵒ₁ .fst)))
---                 (λ x₁ → (a , x₁ .fst) , x₁ .snd .fst , aᵒ , x₁ .snd .snd)
---                 (Eᵒlr (Sᵒ aᵒ) (in-σ p a aᵒ) (x , refl , xᵒ))
---                 _
---           ◼ mapIH-trip (Sᵒ aᵒ) (in-σ p a aᵒ) h xᵒ
+        ⌞map⌟ (δᵒ {A} Aᵒ {S} Sᵒ) {g , x} p h (gᵒ , xᵒ) =
+           {!tr-∘
 
---         mapIH-trip (δ {A} Aᵒ {S} Sᵒ) {f , x} p h (fᵒ , xᵒ) =
+                !}
+
+
 --              tr-∘ (λ xᵒ₁ → IHᵒ (δ Aᵒ Sᵒ) (xᵒ₁ .snd .snd) (mapIH (IR.δ A S) (IR.elim S* P f) (xᵒ₁ .fst)))
 --                   (λ x₁ → (f , x₁ .fst) , x₁ .snd .fst , fᵒ , x₁ .snd .snd)
 --                   (Eᵒlr (Sᵒ (λ a aᵒ → Elᵒ (fᵒ a aᵒ)))(in-δ p f (λ a aᵒ → Elᵒ (fᵒ a aᵒ))) (x , refl , xᵒ))
@@ -209,7 +212,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
 --                           Aᵒ Sᵒ) p) ⌞P⌟ h (Eᵒ→' (δ Aᵒ Sᵒ) p (fᵒ , xᵒ))) .fst)) _
 --               ◼ tr-×₂ (Eᵒlr (Sᵒ (λ a aᵒ → Elᵒ (fᵒ a aᵒ)))
 --                         (in-δ p f (λ a aᵒ → Elᵒ (fᵒ a aᵒ))) (x , refl , xᵒ)) _
---               ◼ mapIH-trip (Sᵒ _) (in-δ p f _) h xᵒ
+--               ◼ ⌞map⌟ (Sᵒ _) (in-δ p f _) h xᵒ
 --              )
 
 
@@ -264,7 +267,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
 --                                     (f (xᵒ₁ .fst) (IR.mapIH S* P (IR.elim S* P f) (xᵒ₁ .fst))))
 --                         (Eᵒlr S*ᵒ here (x , refl , xᵒ)))
 --                ◼ fᵒ-tr xᵒ
---                ◼ ap (fᵒ xᵒ) (mapIH-trip S*ᵒ here elimᵒ xᵒ)
+--                ◼ ap (fᵒ xᵒ) (⌞map⌟ S*ᵒ here elimᵒ xᵒ)
 
 
 -- --------------------------------------------------------------------------------
