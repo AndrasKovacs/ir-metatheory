@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  4 JUL 2025 02:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  4 JUL 2025 23:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1297,48 +1297,53 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
 (Font)              scaled to size 10.0pt on input line 221.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 10.0pt on input line 223.
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 246.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 7.3pt on input line 268.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 5.5pt on input line 268.
+
+Underfull \vbox (badness 2932) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
 (Font)              scaled to size 8.0pt on input line 277.
  [2.2]
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
 (Font)              scaled to size 10.0pt on input line 295.
- [3.3]
+
+[3.3]
 Underfull \vbox (badness 1728) has occurred while \output is active []
 
  [4.4]
 [5.5] [6.6] [7.7]
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 8.0pt on input line 548.
+(Font)              scaled to size 8.0pt on input line 546.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 6.2pt on input line 548.
+(Font)              scaled to size 6.2pt on input line 546.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 548.
+(Font)              scaled to size 6.2pt on input line 546.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 548.
+(Font)              scaled to size 6.2pt on input line 546.
  [8.8] [9.9]
+Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
+ine 688.
+
 Underfull \vbox (badness 1102) has occurred while \output is active []
 
  [10.10]
-[11.11] [12.12] [13.13] [14.14] [15.15] [16.16] [17.17] [18.18]
+[11.11]
+Underfull \vbox (badness 1226) has occurred while \output is active []
 
-LaTeX Warning: Reference `TODO' on page 19 undefined on input line 1192.
+ [12.12]
+[13.13] [14.14] [15.15] [16.16] [17.17] [18.18]
 
-[19.19] (./paper.bbl
+LaTeX Warning: Reference `TODO' on page 19 undefined on input line 1191.
+
+[19.19] [20.20] (./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 46.
- [20.20]
-LaTeX Info: Redefining \tempurl on input line 355.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [21.21]
-LaTeX Info: Redefining \tempurl on input line 447.
+LaTeX Info: Redefining \tempurl on input line 367.
+LaTeX Info: Redefining \tempurl on input line 459.
 )
 (/usr/share/texlive/texmf-dist/tex/generic/stringenc/se-pdfdoc.def
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
@@ -1357,16 +1362,16 @@ Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 60E8F5D9C767F701E58103BA166863D2;2931.
+(rerunfilecheck)             Checksum: EE57160EB1152923DF37E4AAA3713D38;2931.
  ) 
 Here is how much of TeX's memory you used:
- 31868 strings out of 478287
- 581018 string characters out of 5849290
- 914894 words of memory out of 5000000
- 48533 multiletter control sequences out of 15000+600000
- 695274 words of font info for 522 fonts, out of 8000000 for 9000
+ 31869 strings out of 478287
+ 581075 string characters out of 5849290
+ 919894 words of memory out of 5000000
+ 48537 multiletter control sequences out of 15000+600000
+ 694676 words of font info for 520 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 99i,22n,131p,1002b,947s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,22n,131p,1002b,841s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/us
 r/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{/usr/shar
 e/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_oexx6f.enc}{/usr/share/texl
@@ -1388,10 +1393,10 @@ tx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (22 pages, 650522 bytes).
+Output written on paper.pdf (22 pages, 652710 bytes).
 PDF statistics:
- 531 PDF objects out of 1000 (max. 8388607)
- 466 compressed objects within 5 object streams
- 120 named destinations out of 1000 (max. 500000)
+ 536 PDF objects out of 1000 (max. 8388607)
+ 471 compressed objects within 5 object streams
+ 119 named destinations out of 1000 (max. 500000)
  118973 words of extra memory for PDF output out of 128383 (max. 10000000)
 

@@ -36,45 +36,45 @@ Warning--empty address in DBLP:conf/mpc/KaposiKK19
 Warning--empty address in first-class-univ
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/corr/abs-2302-08837
 Warning--empty address in martinlof84sambin
-You've used 31 entries,
+You've used 32 entries,
             6273 wiz_defined-function locations,
-            1786 strings with 26036 characters,
-and the built_in function-call counts, 34735 in all, are:
-= -- 4767
-> -- 860
+            1788 strings with 26071 characters,
+and the built_in function-call counts, 35841 in all, are:
+= -- 4955
+> -- 888
 < -- 1
-+ -- 274
-- -- 313
-* -- 2364
-:= -- 3216
-add.period$ -- 160
-call.type$ -- 31
-change.case$ -- 184
++ -- 285
+- -- 325
+* -- 2438
+:= -- 3316
+add.period$ -- 165
+call.type$ -- 32
+change.case$ -- 190
 chr.to.int$ -- 29
-cite$ -- 47
-duplicate$ -- 3153
-empty$ -- 2227
-format.name$ -- 379
-if$ -- 8604
-int.to.chr$ -- 4
+cite$ -- 48
+duplicate$ -- 3239
+empty$ -- 2290
+format.name$ -- 394
+if$ -- 8900
+int.to.chr$ -- 5
 int.to.str$ -- 1
-missing$ -- 117
-newline$ -- 314
-num.names$ -- 237
-pop$ -- 1070
+missing$ -- 121
+newline$ -- 323
+num.names$ -- 243
+pop$ -- 1100
 preamble$ -- 1
-purify$ -- 428
+purify$ -- 440
 quote$ -- 0
-skip$ -- 1145
+skip$ -- 1172
 stack$ -- 0
-substring$ -- 2856
-swap$ -- 321
+substring$ -- 2937
+swap$ -- 329
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 677
+type$ -- 690
 warning$ -- 16
-while$ -- 255
+while$ -- 264
 width$ -- 0
-write$ -- 683
+write$ -- 703
 (There were 2 error messages)

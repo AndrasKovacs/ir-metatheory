@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{31}
+\begin{thebibliography}{32}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -282,16 +282,28 @@
 \href{https://doi.org/10.1016/S0168-0072(02)00096-9}{doi:\nolinkurl{10.1016/S0168-0072(02)00096-9}}
 
 
-\bibitem[Dybjer and Setzer(2006)]%
+\bibitem[Dybjer and Setzer(2006a)]%
         {DBLP:journals/jlp/DybjerS06}
 \bibfield{author}{\bibinfo{person}{Peter Dybjer} {and} \bibinfo{person}{Anton
-  Setzer}.} \bibinfo{year}{2006}\natexlab{}.
+  Setzer}.} \bibinfo{year}{2006}\natexlab{a}.
 \newblock \showarticletitle{Indexed induction-recursion}.
 \newblock \bibinfo{journal}{\emph{J. Log. Algebraic Methods Program.}}
   \bibinfo{volume}{66}, \bibinfo{number}{1} (\bibinfo{year}{2006}),
   \bibinfo{pages}{1--49}.
 \newblock
 \href{https://doi.org/10.1016/J.JLAP.2005.07.001}{doi:\nolinkurl{10.1016/J.JLAP.2005.07.001}}
+
+
+\bibitem[Dybjer and Setzer(2006b)]%
+        {indexedir}
+\bibfield{author}{\bibinfo{person}{Peter Dybjer} {and} \bibinfo{person}{Anton
+  Setzer}.} \bibinfo{year}{2006}\natexlab{b}.
+\newblock \showarticletitle{Indexed induction-recursion}.
+\newblock \bibinfo{journal}{\emph{J. Log. Algebraic Methods Program.}}
+  \bibinfo{volume}{66}, \bibinfo{number}{1} (\bibinfo{year}{2006}),
+  \bibinfo{pages}{1--49}.
+\newblock
+\href{https://doi.org/10.1016/j.jlap.2005.07.001}{doi:\nolinkurl{10.1016/j.jlap.2005.07.001}}
 
 
 \bibitem[Hancock et~al\mbox{.}(2013)]%

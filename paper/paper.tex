@@ -222,18 +222,18 @@ Our \textbf{main contribution} is to \emph{show canonicity for a Martin-Löf typ
 supports a countable universe hierarchy, where each universe supports indexed inductive-recursive
 types}. Canonicity means that every closed term is definitionally equal to a canonical
 term. Canonical terms are built only from constructors; for instance, a canonical natural number
-term is a numeral. Hence, canonicity justifies evaluation for closed terms. The outline of our
+term is a numeral. Hence, canonicity justifies evaluation of closed terms. The outline of our
 development is as follows.
 
-\begin{enumerate}
+\begin{itemize}
 \item In Section \ref{sec:specification} we specify what it means to support IR and IIR, using
-  Dybjer and Setzer's rules with minor modifications \cite{DBLP:journals/apal/DybjerS03}. We use
+  Dybjer and Setzer's rules with minor modifications \cite{indexedir,DBLP:journals/apal/DybjerS03}. We use
   first-class signatures, meaning that descriptions of (I)IR types are given as ordinary inductive
   types internally.
 \item In Section \ref{sec:iir-construction} we construct IIR types from IR types and other basic
   type formers. This allows us to only consider IR types in the subsequent canonicity proof, which
   is a significant simplification. In the construction of IIR types, we lose some definitional
-  equalities when IIR signatures are neutral, but we still get the same computation rules that are
+  equalities when signatures are neutral, but we still get the same computation rules that are
   available for Agda and Idris' IIR types. We formalize the construction in Agda.
 \item In Section \ref{sec:canonicity}, we give a proof-relevant logical predicate interpretation of
   the type theory, from which canonicity follows. Our method is based on a type-theoretic flavor of
@@ -243,8 +243,8 @@ development is as follows.
   encodes the canonicity predicate for the corresponding IR type.  We formalize the predicate
   interpretation of IR types in Agda, using a shallow embedding of the syntax of the object
   theory. Hence, there is a gap between the Agda version and the fully formal construction, but we
-  argue that it is a modest gap. \todo{We'll see the actual gap}
-\end{enumerate}
+  argue that it is a modest gap.
+\end{itemize}
 
 \section{Specification for (I)IR Types}\label{sec:specification}
 
@@ -391,7 +391,7 @@ on signatures:
   &\hspace{-4.8em}\rlap{$\map : \{S : \Sig_i\,O\} \to ((x : \ir) \to P\,x) \to (x : \E\,S\,\ir\,\el) \to \IH\,P\,x$} \\
   &\hspace{-4.8em}\map\,\{\iota\,o\}    \,&&g\,x       &&:\equiv\,\ttt \\
   &\hspace{-4.8em}\map\,\{\sigma\,A\,S\}\,&&g\,(a,\,x) &&:\equiv \map\,\{S\,a\}\,g\,x\\
-  &\hspace{-4.8em}\map\,\{\delta\,A\,S\}\,&&g\,(f,\,x) &&:\equiv (g \circ f,\,\map\,\{S\,(\el \circ f)\}\,g\,x
+  &\hspace{-4.8em}\map\,\{\delta\,A\,S\}\,&&g\,(f,\,x) &&:\equiv (g \circ f,\,\map\,\{S\,(\el \circ f)\}\,g\,x)
 \end{alignat*}
 $\blank_\IH$ stands for ``induction hypothesis'': it specifies having a witness of a predicate $P$ for
 each inductive field in a value of $\E\,S\,\ir\,\el$. $\map$ maps over $\E\,S\,\ir\,\el$, applying the
@@ -405,9 +405,8 @@ to the initiality of $(\IR\,S,\,\El)$ as an $S$-algebra \cite[Section~4.4]{DBLP:
 
 \subsection{IIR Types}\label{sec:iir}
 
-In IIR signatures, the sole deviation from Dybjer and Setzer is again our use of countable universe
-levels \cite{DBLP:journals/jlp/DybjerS06}. Since IIR is quite similar to IR, we present the rules with
-minimal commentary.
+In IIR signatures, the sole deviation from \citet{DBLP:journals/jlp/DybjerS06} is again our use of
+countable universe levels.
 
 \subsubsection{Signatures}\label{sec:iir-signatures} We assume levels $i$, $j$, $k$, an indexing type $I : \U_k$ and a type family
 for the recursive output as $O : I \to \U_j$. Signatures are as follows.
@@ -486,9 +485,8 @@ $\El$, $\elim$ and $\elim\!-\!\!\beta$. We use some abbreviations in the followi
 \item $\Sig_\IIR$ abbreviates the IIR signature type $\Sig_i\,I\,O$.
 \item $\Sig_\IR$ abbreviates the IR signature type $\Sig_{\max(i,\,k)}\,((i : I) \times O\,i)$.
 \end{itemize}
-In a nutshell, the main idea in this section is to represent IIR signatures as IR signatures
-together with a well-indexing predicate on algebras. First, we define an encoding function for
-signatures:
+In short, the main idea is to represent IIR signatures as IR signatures together with a
+well-indexing predicate on algebras. First, we define an encoding function for signatures:
 \begin{alignat*}{4}
   & \rlap{$\Sigr{\blank} : \Sig_\IIR \to \Sig_\IR$}\\
   & \Sigr{\iota\,i\,o}       &&:\equiv \hspace{0.5em} &&\iota\,(i,\,o)\\
@@ -525,9 +523,9 @@ have a single inductive field whose length is enforced with the extra $\sigma\,(
 \end{example}
 
 \subsection{Type and Term Formers}\label{sec:iir-construction-type-term}
-We assume $S^* : \Sig_\IIR$ as a parameter to the following constructions. This is a ``fixed''
-signature that we aim to construct rules for. In several definitions we will hold $S^*$ fixed while
-we do induction on different universally quantified $S$-es.
+We assume $S^* : \Sig_\IIR$ as a parameter to the constructions in the following. This is a
+``fixed'' signature that we aim to construct IIR rules for. We need to distinguish this signature from
+other ``varying'' signatures that will appear in definitions and we will do induction on.
 
 Since the encoding of signatures already ensures the well-indexing of inductive fields in
 constructors, it only remains to ensure that the ``top-level'' index matches the externally supplied
@@ -555,7 +553,7 @@ could be generically recovered from the other four components as well \cite[Sect
 \end{alignat*}
 This is a half adjoint equivalence \cite[Section~4.2]{hottbook}. The coherence witness $\tau$ will
 be shorty required for rearranging some transports. Next, we show that the two $\F$ operations are
-the same, modulo the previous equivalence, again by induction on IIR signatures.
+the same, modulo the previous equivalence, again by induction on $S$.
 \[\floord{\F} : \{S : \Sig_\IIR\}\{x : S_0\,\IIR\,\El\,i\} \to \tr\,O\,(\snd\,(\ora{\E}\,x))\,(\snd\,(\F\,(\fst\,(\ora{\E}\,x)))) = \F\,x\]
 This lets us define the other introduction rules as well.
 \begin{alignat*}{3}
@@ -694,7 +692,7 @@ content. In the metatheory, we have equality reflection, so we can be more loose
 Informally, the object theory is a Martin-Löf type theory that supports basic type formers as
 described in Section \ref{sec:basic-type-formers} and IR types as described in Section
 \ref{sec:ir-specification}. More formally, the object theory is given as a quotient
-inductive-inductive type. The sets, operations and equations that we give in the following together
+inductive-inductive type. The sets, operations and equations that we give in the following
 constitute the inductive signature.
 
 \subsubsection{Core substitution calculus} The basic judgmental structure is given
@@ -708,7 +706,7 @@ Concretely, we have
       $\blank[\blank] : \Ty\,\Delta\,i \to \Sub\,\Gamma\,\Delta \to \Ty\,\Gamma\,i$.
 \item Terms as $\Tm : (\Gamma : \Con) \to \Ty\,\Gamma\,i \to \Set_0$, with functorial substitution operation
   $\blank[\blank] : \Tm\,\Delta\,A \to (\sigma : \Sub\,\Gamma\,\Delta) \to \Tm\,\Gamma\,A[\sigma]$.
-  \emph{Notation:} both type and term substitution binds stronger than function application, so
+  \emph{Notation:} both type and term substitution bind stronger than function application, so
   for example $\Tm\,\Gamma\,A[\sigma]$ means $\Tm\,\Gamma\,(A[\sigma])$.
 \item Context comprehension, consisting of a context extension operation $\blank\!\ext\!\blank : (\Gamma : \Con) \to \Ty\,\Gamma\,i \to \Con$,
   weakening morphism $\p : \Sub\,(\Gamma\ext A)\,\Gamma$, zero variable $\q : \Tm\,(\Gamma\ext A)\,A[\p]$ and substitution extension $\blank,\!\blank : (\sigma : \Sub\,\Gamma\,\Delta) \to \Tm\,\Gamma\,A[\sigma] \to \Sub\,\Gamma\,(\Delta\ext A)$, such that the following equations hold:
@@ -718,17 +716,17 @@ Concretely, we have
     &(\p,\,\q)                 &&= \id \\
     &(\sigma,\,t) \circ \delta &&= (\sigma \circ \delta,\,t[\delta])
   \end{alignat*}
-  Note that a De Bruijn index $N$ is represented as $\q[\p^N]$, where $\p^N$ is $N$-fold composition
+  A De Bruijn index $N$ is represented as $\q[\p^N]$, where $\p^N$ is $N$-fold composition
   of weakening.
 \end{itemize}
 
-\subsubsection{Universes} We have Russell-style universes, where sets of terms of universes are identified with sets of types.
-Concretely, we have $\U : (i : \Nat) \to \Ty\,\Gamma\,(i + 1)$ such that $\U_i[\sigma] = \U_i$ and
-$\Tm\,\Gamma\,\U_i = \Ty\,\Gamma\,i$.  This lets us implicitly convert between types and terms with
-universe types. Additionally, we specify that this casting operation commutes with substitution, so
-substituting $t : \Tm\,\Gamma\,\U_i$ as a term and then casting to a type is the same as first
-casting and then substituting as a type. Since we omit casts and overload $\blank[\blank]$, this
-rule looks trivial in our notation, but it still has to be assumed.
+\subsubsection{Universes}
+We have Russell-style universes, i.e.\ we have $\U : (i : \Nat) \to \Ty\,\Gamma\,(i + 1)$ such that
+$\U_i[\sigma] = \U_i$ and $\Tm\,\Gamma\,\U_i = \Ty\,\Gamma\,i$.  This lets us implicitly convert
+between types and terms with universe types. Additionally, we specify that this casting operation
+commutes with substitution, so substituting $t : \Tm\,\Gamma\,\U_i$ as a term and then casting to a
+type is the same as first casting and then substituting as a type. Since we omit casts and overload
+$\blank[\blank]$, this rule looks trivial in our notation, but it still has to be assumed.
 
 \subsubsection{Functions} We have $\Pi : (A : \Ty\,\Gamma\,i) \to \Ty\,(\Gamma \ext A)\,j \to \Ty\,\Gamma\,\max(i,\,j)$
 such that $(\Pi\,A\,B)[\sigma] = \Pi\,A[\sigma]\,B[\sigma\circ\p,\,\q]$.  Terms are specified by
@@ -736,10 +734,10 @@ $\app : \Tm\,\Gamma\,(\Pi\,A\,B) \to \Tm\,(\Gamma\ext A)\,B$ and its definitiona
 \Tm\,(\Gamma\ext A)\,B \to \Tm\,\Gamma\,(\Pi\,A\,B)$. This isomorphism is natural in $\Gamma$,
 i.e.\ we have a substitution rule $(\lam\,t)[\sigma\circ\p,\,\q] = \lam\,t[\sigma]$.
 
-\paragraph{Notation \& conventions} So far we have used standard definitions, but now we develop some
-notations and conventions that are more tailored to our use case. CwF combinators and De Bruijn
-indices get very hard to read when we get to more complicated rules like those in the specification
-of IR types.
+\paragraph{Notation \& conventions} So far we have used standard definitions, but
+CwF combinators and De Bruijn indices get very hard to read when we get to more complicated
+rules like those in the specification of IR types. So we develop notations and conventions that are
+more tailored to our situation.
 
 \begin{itemize}
 \item Assuming $t : \Tm\,\Gamma\,(\Pi\,A\,B)$ and $u : \Tm\,\Gamma\,A$, traditional binary function
@@ -769,7 +767,7 @@ of IR types.
   &\fst          &&: \Tm\,\Gamma\,(\{A : \U_i\}\{B : A \to \U_j\} \to \Sigma\,A\,B \to A)\\
   &\snd          &&: \Tm\,\Gamma\,(\{A : \U_i\}\{B : A \to \U_j\}(t : \Sigma\,A\,B) \to B\,(\fst\,t))
 \end{alignat*}
-such that $\fst\,(t,\,u) = t$, $\snd\,(t,\,u) = u$ and $(\fst\,t,\,\snd\,u) = t$.
+such that $\fst\,(t,\,u) = t$, $\snd\,(t,\,u) = u$ and $(\fst\,t,\,\snd\,t) = t$.
 
 \subsubsection{Unit} We have $\top_i : \Tm\,\Gamma\,\U_i$ with the unique inhabitant $\ttt$.
 
@@ -808,14 +806,14 @@ and $j$.
   &           \hspace{2.2em}\to (S : \Sig_i\,O) \to P\,S)\\
   &\\
   &\SigElim\,P\,i\,s\,d\,(\iota\,o) \hspace{1.1em} = i\\
-  &\SigElim\,P\,i\,s\,d\,(\sigma\,A\,S) = s\,A\,S\,(\lam\,a.\,\SigElim\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,a))\\
+  &\SigElim\,P\,i\,s\,d\,(\sigma\,A\,S) = s\,A\,S\hspace{0.3em}(\lam\,a.\hspace{0.3em}\SigElim\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,a))\\
   &\SigElim\,P\,i\,s\,d\,(\delta\,A\,S) \hspace{0.1em}= d\,A\,S\,(\lam\,f.\,\SigElim\,P[\p]\,i[\p]\,s[\p]\,d[\p]\,(S[\p]\,f))
 \end{alignat*}
 Note the $[\p]$ weakenings in the computation rules: $P$, $i$, $s$, $d$, and $S$ are all terms
 quantified in some implicit context $\Gamma$, so when we mention them under an extra binder, we have
 to weaken them. Hence, we cannot fully avoid explicit substitution operations by using named
-binders. We already saw rest of the specification in Section \ref{sec:ir-specification} so we only give a short
-summary.
+binders. As to the rest of the specification, we already saw it in Section
+\ref{sec:ir-specification} so we only give a short summary.
 \begin{itemize}
 \item $\E$, $\F$, $\IH$ and $\map$ are defined by $\SigElim$ and they satisfy the same definitional
   equations as in Section \ref{sec:ir-specification}.
@@ -911,9 +909,9 @@ For \textbf{$\Sigma$-types}, we have
   &\Sigma^\w\,\gamma^\w\,A^\w\,B^\w\,(t,\,u)   &&:= (t^\w : A^\w\,t) \times B^\w\,t^\w\,u\hspace{2em}  && \fst^\w\,\gamma^\w\,(t^\w,\,u^\w) &&:= t^\w \\
   &(\blank,\blank)^\w\,\gamma^\w\,t^\w\,u^\w   &&:= (t^\w,\,u^\w)                                     && \snd^\w\,\gamma^\w\,(t^\w,\,u^\w) &&:= u^\w
 \end{alignat*}
-For the \textbf{unit type}, we have $\top^\w\,\gamma^\w\,t := \top$ and $\ttt^\w\,\gamma^\w := \ttt$.
+For the \textbf{unit type}, we have $(\top_i)^\w\,\gamma^\w\,t := \top_i$ and $\ttt^\w\,\gamma^\w := \ttt$.
 
-\subsubsection{Interpretation of IR signatures}
+\subsubsection{Interpretation of IR signatures}\label{sec:ir-signatures-canonicity}
 
 Signatures are given as an ordinary inductive family, so in principle there should be nothing
 ``new'' in their logical predicate interpretation. We do detail it here because several later
@@ -929,7 +927,7 @@ $O^\w : \Tm\,O \to \Set_i$ and indexed over $\Tm\,(\Sig_i\,O)$. We name this ind
 $\Sig^\w$; the naming risks some confusion, but we shall take the risk and we will shortly
 explain the rationale.
 \begin{alignat*}{4}
-  &\rlap{$\data\,\Sig^\w\,\{O : \Tm\,U_j\}\,(O^\w : \Tm\,O \to \Set_i)  : \Tm\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}$}\\
+  &\rlap{$\data\,\Sig^\w\,\{O : \Tm\,U_j\}\,(O^\w : \Tm\,O \to \Set_j)  : \Tm\,(\Sig_i\,O) \to \Set_{\max(i+1,\,j)}$}\\
   &\quad \iota^\w  &&:\,&&\{o &&: \Tm\,O\}(o^\w : O^\w\,o) \to \Sig^\w\,O^\w\,(\iota\,o)\\
   &\quad \sigma^\w &&:\,&&\{A &&: \Tm\,\U_i\}(A^\w : \Tm\,A \to \Set_i)\\
   &               && &&\{S &&: \Tm\,(A \to \Sig_i\,O)\}\\
@@ -958,18 +956,19 @@ right side we use the metatheoretic $\Sig^\w$ constructor $\iota^\w$. In general
 In this section, the bulk of the work is step (1) and step (2) is fairly trivial. In step (1), we
 use $\blank^\w$ to mark semantic definitions and we do not need to refer to $\blank^\w$ as a family
 of interpretation functions on the object syntax. In step (2) we do overload $\blank^\w$ but hope
-that it does not generate too much confusion.
+that this does not generate too much confusion.
 
-\subsubsection{Interpretation of IR types}
+\subsubsection{Interpretation of IR types}\label{sec:ir-canonicity}
 
 The basic idea is that for each IR type, the corresponding canonicity predicate should be defined as
 a metatheoretic IIR type. This gets rather technical, so first let us look at an informal example
 for a concrete IR type.
 
 \begin{example}\label{ex:code-canonicity}
-Consider the Agda code example in Section \ref{sec:introduction}. We present the canonicity
-predicate for the IR type as a ``native'' metatheoretical IIR definition, focusing on readability.
-First, the specification of the object-theoretic IR type, disregarding the eliminator:
+Consider the Agda code example in Section \ref{sec:introduction}. We assume that it is a concrete
+``native'' IR type in the object theory, and present the canonicity predicate for it as a
+metatheoretic IIR type. First, the specification of the object-theoretic IR type, disregarding the
+eliminator:
 \begin{alignat*}{4}
   &\Code &&: \Tm\,\Gamma\,\U_0 && \El : \Tm\,\Gamma\,(\Code \to \U_0) \\
   &\Nat' &&: \Tm\,\Gamma\,\Code && \El\,\Nat'\hspace{1.5em} = \Nat \\
@@ -996,10 +995,10 @@ We proceed to the semantic definitions. We assume the following parameters: $O :
 \Sig^\w\,O^\w\,S^*$. \emph{Abbreviation:} we write $\Sig^\w\,S$ in the following, omitting the fixed
 $O^\w$ parameter from the type.  Like in Section \ref{sec:iir-construction}, we view $S^*$ as a
 ``fixed'' top-level signature, in contrast to ``varying'' signatures that we will encounter in
-constructions. More concretely, we will do most constructions by induction on \emph{canonical
-sub-signatures} of $S^*$.
+constructions. We will do induction on such varying signatures, but the induction must happen on
+\emph{sub-signatures} of $S^*$, instead of arbitrary signatures.
 
-\begin{definition}[Canonical sub-signatures of $S^*$]
+\begin{definition}[Paths to sub-signatures of $S^*$]
 We define an inductive family indexed
 over $S : \Tm\,(\Sig_i\,O)$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$, viewing
 $S$ as a subtree. Also, the subtree $S$ and all data in the path must be canonical (i.e.\ have $\blank^\w$
@@ -1069,7 +1068,7 @@ operation on it, obtaining $\Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^
   & \hspace{4.8em} \iota\,\,(\intro\,(\Pi',\,A,\,B,\,\ttt))\,(\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\} \to {ElA}^\w\,a \to {ElB}^\w\,(f\,a))
 \end{alignat*}
 This specifies essentially the same IIR type that we had in Example \ref{ex:code-canonicity}, with
-some extra noise in the first argument of $\Pi'$, which is represented as a function with $\top$
+some extra noise in the first argument of $\Pi'$, which is now represented as a function with $\top$
 domain.
 \end{example}
 
@@ -1099,9 +1098,9 @@ Second, we define
   &\floord{\E}\,p\,t := (t' : \Tm\,(\E\,S\,(\IR\,S^*)\,\El)) \times ((\intro\,(\push\,p\,t') = t) \times \E^\w\,S^\w\,t').
 \end{alignat*}
 Next, we show the following equivalence by induction on $S^\w$:
-\[  \floord{\E}\,\{S^\w\}\,p\,t \simeq \E\,\floord{S^\w}\,\IR^\w\,\El^\w \]
+\[  \floord{\E}\,\{S^\w\}\,p\,t \simeq \E\,(\floord{S^\w}\,p)\,\IR^\w\,\El^\w\,t \]
 We write $\ora{\E}\,p$ for the map with type $\floord{\E}\,\{S^\w\}\,p\,t \to
-\E\,\floord{S^\w}\,\IR^\w\,\El^\w$ and $\ola{\E}\,p$ for its inverse. This lets us interpret
+\E\,(\floord{S^\w}\,p)\,\IR^\w\,\El^\w\,t$ and $\ola{\E}\,p$ for its inverse. This lets us interpret
 $\intro$.
 \begin{alignat*}{4}
   & \intro^\w : \{t : \Tm\,(\E\,S^*\,(\IR\,S^*)\,\El)\} \to \E^\w\,S^{*\w}\,t \to \IR^\w\,(\intro\,t)\\
@@ -1123,7 +1122,7 @@ that expresses this:
 \[ \msf{restrict} : \Path\,S^\w \to \Set_{\max(i+1,\,j+1)} \]
 This is required for the predicate interpretation of $\push$, which is defined by induction on $\Path$:
 \[ \push^\w : (p : \Path\,S^\w) \to \msf{restrict}\,p \to \E^\w\,S^\w\,t \to E^\w\,S^{*\w}\,(\push\,p\,t) \]
-This operation preserves $\F^\w$:
+This operation is preserved by $\F^\w$:
 \[ \F^\w\,(\push^\w\,p\,q\,t^\w) = \F^\w\,t^\w \]
 We use $\push^\w$ in the statement of $\floord{\F}$, which we prove by induction on
 $S^\w$:
@@ -1133,7 +1132,7 @@ Finally, we define $\Elintro^\w$:
     &\Elintro^\w : \{t\}(t^\w : \E^\w\,S^{*\w}\,t) \to \El^\w\,(\intro^\w\,t^\w) = \F^\w\,t^\w\\
     &\Elintro^\w\ := \floord{\F}\,\here\,\ttt
 \end{alignat*}
-Above, $\ttt$ witnesses the restriction of $\here$, which is trivial (since $\here$ does not contain $\indelta$).
+Above, $\ttt$ witnesses the restriction of ``$\here$'', which is trivial (since ``$\here$'' does not contain $\indelta$).
 \end{definition}
 \begin{definition}[Interpretation of $\elim$]
 We assume the following parameters to elimination:
@@ -1152,7 +1151,7 @@ arguments to $\IR\,S^*$ and $\El$ and the target level to $k$.
 We also assume the induction method and its canonicity witness as parameters:
 \begin{alignat*}{3}
   &f    &&:\,\,&& \Tm\,((x : \E\,S^*\,(\IR\,S^*)\,\El) \to \IH\,P\,x \to P\,(\intro\,x))\\
-  &f^\w &&:\,\,&& \{t\}(t^\w : \E^\w\,S^{*\w}\,t)\{\ih\} \to (\Ssw)_{\IH^\w}\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
+  &f^\w &&:\,\,&& \{t\}(t^\w : \E^\w\,S^{*\w}\,t)\{\ih\} \to \IH^\w\,t^\w\,\ih \to P^\w\,(\intro^\w\,t^\w)\,(f\,t\,\ih)
 \end{alignat*}
 The goal is the following:
 \[ \elim^\w : \{t : \Tm\,(\IR\,S^*)\}(t^\w : \IR^\w\,t) \to P^\w\,t^\w\,(\elim\,P\,f\,t)  \]
@@ -1160,7 +1159,7 @@ We shall use IIR elimination on $t^\w$ to give the definition. Again like in Sec
 have to massage $P^\w$ and $f^\w$ to be able to pass them to $\elim_\IIR$. For the former, we have
 \begin{alignat*}{4}
   &\floord{P^\w} : \{t\} \to \IR^\w\,t \to \Set_k\\
-  &\floord{P^\w}\,\{t\}\,t^\w := P^\w\,x^\w\,(\elim\,P\,f\,t).
+  &\floord{P^\w}\,\{t\}\,t^\w := P^\w\,t^\w\,(\elim\,P\,f\,t).
 \end{alignat*}
 For the latter, we first define decoding for induction hypotheses, by induction
 on $S^\w$:
@@ -1183,34 +1182,29 @@ The left hand side computes to the following:
   &f^\w\,\Big(\snd\,\big(\snd\,\big(\ola{\E}\,\here\,(\ora{\E}\,\,\here\,(t,\,\refl,\,t^\w))\big)\big)\Big)\,\Big(\ola{\IH}\,\,\here\,\big(\map\,\elim^\w\,(\ora{\E}\,\,\here\,(t,\,\refl,\,t^\w))\big)\Big)
 \end{alignat*}
 The first argument to $f^\w$ simplifies to $t^\w$ by canceling $\ola{\E}$ and $\ora{\E}$.  For the
-second argument, like in Section \ref{sec:iir-construction-elimination}, we show that $\PSbe_\map$
-appropriately commutes with the $\ola{(S^{*\w})_0)}$ isomorphism, by induction on $S^\w$.
+second argument, like in Section \ref{sec:iir-construction-elimination}, we show that $\map$
+appropriately commutes with encoding and decoding.
 
-\emph{Remark.} In the Agda formalization of $\beta$-rules, we use uniqueness of identity proofs
+\emph{Remark.} In the Agda formalization of $\elimbeta$, we use uniqueness of identity proofs
 (UIP) instead of trying to shuffle transports by homotopical reasoning. We do this mainly because it
 is easier. However, we conjecture that is possible skip UIP, and that might be useful in future applications
 and variations of our construction; see Section \ref{TODO} for more discussion of this.
 
-%% However, we conjecture that it is possible to get rid of UIP. In that case, the above
-%% definitions could be reformulated as part of a \emph{syntactic parametricity translation} that maps
-%% from the object theory to itself. Also, we might imagine a binary parametricity variant of our
-%% interpretation \cite{bernardy2010parametricity}. In other words, we conjecture that our IR interpretation can serve as a
-%% blueprint for other kinds of parametric interpretations of IR types.
 \end{definition}
 
 \begin{definition}[Interpretation of object-theoretic IR rules]
-At this point we have semantics for IR rules that only mention closed syntactic terms. The final
-step is to generalize them to arbitrary contexts, thereby interpreting object-theoretic IR rules.
+At this point we have semantic definitions that only mention closed terms. The final step is to
+generalize them to arbitrary contexts, thereby interpreting object-theoretic IR rules.
 
 In the object theory we have $\IIR : \Tm\,\Gamma\,(\{O : \U_j\} \to \Sig_i\,O \to \U_i)$, hence by the specification
 of $\blank^\w$ in Section \ref{sec:canonicity-model}, we need
 \begin{alignat*}{4}
   & \IIR^\w &&:\,\,&& \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma)\{O : \Tm\,\U_j\}(O^\w : \Tm\,O \to \Set_j)\\
-  &         &&     && \{S : \Tm\,(\Sig_i\,O)\}(S^\w : \Sig^\w\,S) \to \Tm\,(\IIR\,S) \to \Set_i
+  &         &&     && \{S : \Tm\,(\Sig_i\,O)\}(S^\w : \Sig^\w\,O^\w\,S) \to \Tm\,(\IIR\,S) \to \Set_i.
 \end{alignat*}
-In this section we defined a different $\IR^\w$ with the following type (including all parameters):
+We have previously defined a semantic $\IIR^\w$ with the following type (including all parameters):
 \begin{alignat*}{4}
-  & \IIR^\w : \{O : \Tm\,\U_j\}(O^\w : \Tm\,O \to \Set_j)\{S : \Tm\,(\Sig_i\,O)\}(S^\w : \Sig^\w\,S) \to \Tm\,(\IIR\,S) \to \Set_i
+  & \IIR^\w : \{O : \Tm\,\U_j\}(O^\w : \Tm\,O \to \Set_j)\{S : \Tm\,(\Sig_i\,O)\}(S^\w : \Sig^\w\,O^\w\,S) \to \Tm\,(\IIR\,S) \to \Set_i
 \end{alignat*}
 Hence, the contextual definition is just a constant function, i.e.\ $\IIR^\w\,\{\gamma\}\,\gamma^\w
 := \IIR^\w$.
@@ -1221,14 +1215,14 @@ to show $((\IIR\,\{\Gamma\})[\sigma])^\w = (\IIR\,\{\Delta\})^\w$ here. Computin
 and applying function extensionality, we have the goal $\IIR^\w\,(\sigma^\w\,\gamma^\w) =
 \IIR^\w\,\gamma^\w$, which is by definition $\IIR^\w = \IIR^\w$ for the non-contextual $\IIR^\w$
 definition, and thus holds trivially. Every other IR rule and substitution rule is interpreted
-similarly, as constant functions and trivial equations. Also, $\Elintro$, and $\elimbeta$ are
-dispatched by direct appeal to the equations that we have already proved.
+similarly, as constant functions and trivial equations. $\Elintro$ and $\elimbeta$ are dispatched by
+the equations that we have already proved.
 
 For an example, we look at $\Elintro$. In the object theory, we have $\Elintro : \El\,(\intro\,x) =
-S_1\,x$, so we need to show $(\El\,(\intro\,x))^\w\,\gamma^\w = (S_1\,x)^\w\,\gamma^\w$. Using the
-definition of $\blank^\w$ of functions and the definitions of $\El^\w\,\gamma^\w$,
-$\intro^\w\,\gamma^\w$ and $(S_1)^\w\,\gamma^\w$, this is computed to
-\[ (\El^\w\,(\intro^\w\,(x^\w\,\gamma^\w))) = (S^\w\,\gamma^\w)_{1^\w}\,(x^\w\,\gamma^\w) \]
+\F\,x$, so we need to show $(\El\,(\intro\,x))^\w\,\gamma^\w = (\F\,x)^\w\,\gamma^\w$. Using the
+definition of $\blank^\w$ for functions and the definitions of $\El^\w\,\gamma^\w$,
+$\intro^\w\,\gamma^\w$ and $\F^\w\,\gamma^\w$, this is computed to
+\[ \El^\w\,(\intro^\w\,(x^\w\,\gamma^\w)) = \F^\w\,(x^\w\,\gamma^\w) \]
 which is an instance of Definition \ref{sec:canonicity-elintro}. We omit describing the other
 rules. This concludes the canonicity interpretation of the object theory.
 
@@ -1244,27 +1238,64 @@ also the corresponding IIR predicate from Example \ref{ex:code-canonicity-signat
   &t^\w\,\{\id\}\,\ttt &&: \IR^\w\,(S^\w\,\ttt)\,t\\
   &t^\w\,\{\id\}\,\ttt &&: \IIR\,(\floord{S^\w\,\ttt}\,\here)\,t.
 \end{alignat*}
-Now, $\IIR\,(\floord{S^\w\,\ttt}\,\here)\,t$ witnesses that $t$ is either definitionally equal to $\intro\,(\Nat',\,\ttt)$
+Now, $\IIR\,(\floord{S^\w\,\ttt}\,\here)\,t$ expresses that $t$ is either definitionally equal to $\intro\,(\Nat',\,\ttt)$
 or to $\intro\,(\Pi',\,A,\,B,\,\ttt)$ for some $A$ and $B$.
+
+
+
+
+%% This is clearly not a fully precise embedding, because we can do more with arbitrary sets.
+
+
 \end{example}
 
 \subsection{Mechanization}
 
+We formalized the semantic constructions in Sections \ref{sec:ir-signatures-canonicity} and
+\ref{sec:ir-canonicity} in Agda, but we did not formalize the object theory nor the contextual
+interpretations for its rules. It amounts to roughly 250 lines.
+
+We used a \emph{shallow embedding} for closed terms, where we work with the standard $\Set$ model of
+the object theory instead of an exact specification of the object syntax.
+\begin{itemize}
+\item We represent $\Tm\,U_i$ as $\Set_i$.
+\item Given $A : \Tm\,U_i$, which is represented simply as $A : \Set_i$, we represent $\Tm\,A$ as $A$.
+\end{itemize}
+In other words, instead of working with sets of closed terms, we work with arbitrary metatheoretical
+sets. Hence, the formalization looks like an ``internal'' logical predicate interpretation of IR
+types using IIR types, where both IR and IIR types are assumed inside Agda. For example, instead of
+having $\Sig_i\,O : \Tm\,\U_{\max(i+1,\,j)}$ and $\Sig^\w\,O^\w : \Tm\,(\Sig_i\,O) \to
+\Set_{\max(i+1,\,j)}$, we have $\Sig_i\,O : \Set_{\max(i+1,\,j)}$ and $\Sig^\w\,O^\w : \Sig_i\,O \to
+\Set_{\max(i+1,\,j)}$. Clearly, this is not a precise embedding and it is possible to do ``illegal''
+constructions.
+
+However, checking the legality of constructions is not difficult, and we only have to check a meager
+250 lines. We could have used a more principled representation of closed terms, for example,
+following \citet{DBLP:conf/mpc/KaposiKK19} where Agda's module system is used to prevent illegal
+constructions. We did not do so, again because of the small size of the project and because the
+additional safety features degrade the ergonomics of working in Agda. Concretely, we need to check
+the following in the formalization.
+\begin{enumerate}
+\item ``Stage separation'': we cannot eliminate from object types to meta-level types, e.g.\ cannot make a case distinction
+      on an object-theoretic term with type $\Bool$ to compute something in the metatheory. Also, we cannot index
+      object types by meta-types, or store meta-level data in object-level type or term formers.
+\item We can convert from $\Tm\,((a : A) \to B\,a)$ to $(a : \Tm\,A) \to \Tm\,(B\,a)$ but not the other way around.
+\end{enumerate}
+Additionally, there is a difference in sizing: if $A : \Tm\,\U_i$ then $\Tm\,A : \Set_0$, while
+using shallow embedding we have $A : \Set_i$. This does not actually impact the formalization,
+because the sizes of $\blank^\w$ components are computed from syntactic levels in any case.
+
 \section{Related Work}
 
-\section{Conclusion and Future Work}
+\section{Conclusion and Future Work}\label{sec:conclusion}
+
+
 
 
 \section{TODO}
 
-foo
-
-
 \begin{itemize}
   \item Cite specific pages of the Agda docs
-  \item Agda sync: rename wrap to intro, unit type in every univ, naming/notation, postulate a Tm universe for IRCanonicity.
-  \item Check paper defs while syncing.
-  \item metatheory: Loic, Anton say it looks OK
 \end{itemize}
 
 \bibliographystyle{ACM-Reference-Format}
