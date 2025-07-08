@@ -47,37 +47,37 @@ Warning--empty address in pedrot2018failure
 Warning--empty address in ctt-normalization
 You've used 54 entries,
             6273 wiz_defined-function locations,
-            1942 strings with 30919 characters,
-and the built_in function-call counts, 59867 in all, are:
-= -- 8247
-> -- 1465
+            1940 strings with 30807 characters,
+and the built_in function-call counts, 59925 in all, are:
+= -- 8253
+> -- 1479
 < -- 1
-+ -- 468
-- -- 534
-* -- 3990
-:= -- 5536
-add.period$ -- 282
++ -- 473
+- -- 541
+* -- 3995
+:= -- 5550
+add.period$ -- 279
 call.type$ -- 54
-change.case$ -- 321
+change.case$ -- 322
 chr.to.int$ -- 52
 cite$ -- 79
-duplicate$ -- 5451
-empty$ -- 3839
-format.name$ -- 652
-if$ -- 14865
+duplicate$ -- 5448
+empty$ -- 3836
+format.name$ -- 663
+if$ -- 14875
 int.to.chr$ -- 4
 int.to.str$ -- 1
 missing$ -- 192
-newline$ -- 519
+newline$ -- 517
 num.names$ -- 404
-pop$ -- 1862
+pop$ -- 1864
 preamble$ -- 1
-purify$ -- 749
+purify$ -- 750
 quote$ -- 0
-skip$ -- 2006
+skip$ -- 2007
 stack$ -- 0
-substring$ -- 4900
-swap$ -- 552
+substring$ -- 4895
+swap$ -- 553
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
@@ -85,5 +85,5 @@ type$ -- 1227
 warning$ -- 25
 while$ -- 435
 width$ -- 0
-write$ -- 1153
+write$ -- 1149
 (There were 2 error messages)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  8 JUL 2025 20:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  8 JUL 2025 21:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1316,23 +1316,34 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
 (Font)              scaled to size 10.0pt on input line 308.
  [3.3] [4.4] [5.5] [6.6] [7.7]
 [8.8] [9.9] [10.10] [11.11] [12.12] [13.13] [14.14] [15.15] [16.16] [17.17]
-[18.18] [19.19] [20.20] [21.21] [22.22] [23.23] (./paper.bbl
+[18.18] [19.19] [20.20]
+Overfull \hbox (30.78094pt too wide) in paragraph at lines 1270--1273
+\T1/LinuxLibertineT-TLF/m/n/10 (-20) Now, $[] \LMS/ntxsy/m/n/10 ¹b\OML/nxlmi/m/
+it/10 S[] []\LMS/ntxsy/m/n/10 c []º \OML/nxlmi/m/it/10 t$ \T1/LinuxLibertineT-T
+LF/m/n/10 (-20) im-plies that $\OML/nxlmi/m/it/10 t$ \T1/LinuxLibertineT-TLF/m/
+n/10 (-20) is ei-ther def-i-ni-tion-ally equal to $[] \LMS/ntxsy/m/n/10 ¹[][]\O
+ML/nxlmi/m/it/10 ;  []\LMS/ntxsy/m/n/10 º$ \T1/LinuxLibertineT-TLF/m/n/10 (-20)
+ or to $[] \LMS/ntxsy/m/n/10 ¹\U/ntxmia/m/it/10 ^^E[]\OML/nxlmi/m/it/10 ;  A;  
+B;  []\LMS/ntxsy/m/n/10 º$
+ []
+
+[21.21] [22.22] [23.23] (./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 46.
-LaTeX Info: Redefining \tempurl on input line 288.
+LaTeX Info: Redefining \tempurl on input line 284.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3701) has occurred while \output is active []
 
  [24.24]
-LaTeX Info: Redefining \tempurl on input line 451.
-LaTeX Info: Redefining \tempurl on input line 528.
-LaTeX Info: Redefining \tempurl on input line 600.
+LaTeX Info: Redefining \tempurl on input line 447.
+LaTeX Info: Redefining \tempurl on input line 524.
+LaTeX Info: Redefining \tempurl on input line 596.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6396) has occurred while \output is active []
 
  [25.25]
-LaTeX Info: Redefining \tempurl on input line 730.
-LaTeX Info: Redefining \tempurl on input line 756.
+LaTeX Info: Redefining \tempurl on input line 726.
+LaTeX Info: Redefining \tempurl on input line 752.
 )
 (/usr/share/texlive/texmf-dist/tex/generic/stringenc/se-pdfdoc.def
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
@@ -1351,13 +1362,13 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 7FDC8A0423FC804DCA1B6AEB4A700E3A;4327.
  ) 
 Here is how much of TeX's memory you used:
- 31998 strings out of 478287
- 584175 string characters out of 5849290
- 916110 words of memory out of 5000000
- 48546 multiletter control sequences out of 15000+600000
- 704421 words of font info for 577 fonts, out of 8000000 for 9000
+ 31991 strings out of 478287
+ 584042 string characters out of 5849290
+ 915482 words of memory out of 5000000
+ 48545 multiletter control sequences out of 15000+600000
+ 703777 words of font info for 573 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 99i,22n,131p,1002b,718s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,22n,131p,1002b,723s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/us
 r/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{/usr/shar
 e/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_oexx6f.enc}{/usr/share/texl
@@ -1379,10 +1390,10 @@ tx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (26 pages, 678721 bytes).
+Output written on paper.pdf (26 pages, 678967 bytes).
 PDF statistics:
- 711 PDF objects out of 1000 (max. 8388607)
- 640 compressed objects within 7 object streams
+ 712 PDF objects out of 1000 (max. 8388607)
+ 641 compressed objects within 7 object streams
  153 named destinations out of 1000 (max. 500000)
  119013 words of extra memory for PDF output out of 128383 (max. 10000000)
 

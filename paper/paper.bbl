@@ -235,20 +235,16 @@
 \href{https://doi.org/10.4230/LIPICS.ECOOP.2021.9}{doi:\nolinkurl{10.4230/LIPICS.ECOOP.2021.9}}
 
 
-\bibitem[Brunerie(2019)]%
-        {brunerie}
-\bibfield{author}{\bibinfo{person}{Guillaume Brunerie}.}
-  \bibinfo{year}{2019}\natexlab{}.
-\newblock \bibinfo{title}{A formalization of the initiality conjecture in
-  Agda}.  (\bibinfo{date}{August} \bibinfo{year}{2019}).
+\bibitem[Brunerie and de~Boer(2020)]%
+        {initiality-agda}
+\bibfield{author}{\bibinfo{person}{Guillaume Brunerie} {and}
+  \bibinfo{person}{Menno de Boer}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \bibinfo{title}{Formalization of the initiality conjecture}.
 \newblock
 \urldef\tempurl%
-\url{https://guillaumebrunerie.github.io/pdf/initiality.pdf}
+\url{https://github.com/guillaumebrunerie/initiality}
 \showURL{%
 \tempurl}
-\newblock
-\shownote{Slides of a talk at the Homotopy Type Theory 2019 Conference,
-  Carnegie Mellon University, Pittsburgh, Pennsylvania}.
 
 
 \bibitem[Cartmell(1978)]%

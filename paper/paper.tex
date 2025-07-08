@@ -687,7 +687,7 @@ content. In the metatheory we have equality reflection so we can be more loose.
 
 \subsubsection{Consistency of the metatheory} As it often happens in type theory, our specific mixture
 of features is not covered by any particular reference. However, it is reasonable to expect that
-previous works can be suitably combined and generalized to yield consistency.
+previous works can be suitably combined and generalized to obtain consistency.
 \begin{itemize}
 \item \citet{DBLP:journals/jlp/DybjerS06} gave a set-theoretic model for IIR. Here, there is a universe of
   small types which supports IIR types, which is modeled using a Mahlo cardinal $\msf{M}$, and a universe of
@@ -697,13 +697,14 @@ previous works can be suitably combined and generalized to yield consistency.
   cardinals, to model our universe hierarchy. Also, having an internal type for finite universe
   levels is naturally supported in the set-theoretic model.
 \item As to the object syntax as a quotient inductive-inductive type (QIIT), it is a small and
-  finitary QIIT, which is constructible from fairly weak metatheoretic assumptions\footnote{Concretely, two universes, function extensionality, propositional extensionality, quotients and natural nubmers.}, and the general
-  construction was described with minor formal gaps in
-  \cite{DBLP:journals/corr/abs-2302-08837}. A construction of a QIIT for a specific type theory
-  was fully formalized in Agda by \citet{brunerie}. Alternatively, we could view the object syntax
-  as essentially algebraic \cite{partialhorn} or generalized algebraic \cite{cartmellthesis}; we
-  choose the QIIT because the literature explicitly describes the type-theoretic induction principle
-  that we use.
+  finitary QIIT, which is constructible from fairly weak metatheoretic
+  assumptions\footnote{Concretely, two universes, UIP, function extensionality, propositional
+  extensionality, quotients and natural numbers.}, and the general construction was described with
+  minor formal gaps in \cite{DBLP:journals/corr/abs-2302-08837}. A construction of a QIIT for a
+  specific type theory was fully formalized in Agda by \citet{initiality-agda}. Alternatively, we
+  could view the object syntax as essentially algebraic \cite{partialhorn} or generalized algebraic
+  \cite{cartmellthesis}. We chose the QIIT because the QIIT literature explicitly describes the
+  type-theoretic induction principle that we use.
 \end{itemize}
 
 \subsection{The Object Theory}\label{sec:object-theory}
@@ -872,11 +873,12 @@ predicates over closed substitutions and closed terms. Coquand's canonicity proo
 definitions as ours \cite{coquand2018canonicity}. The type-theoretic gluing is a variation of gluing
 which uses dependent type families instead of the fibered families of the categorical flavor. The
 type-theoretic style becomes valuable when we get to the interpretation of more complicated type
-formers, where it is easier to use than diagrammatic reasoning.
+formers. In such cases we find it easier to use than diagrammatic reasoning.
 
-In the interpretation of contexts, note that we return in $\Sub\,\Gamma \to \Set_\omega$. Using the
-formal induction principle for the QIIT, the type of the target of elimination would be
-$\Set_{\omega+1}$; hence the need for these two universes.
+In the interpretation of contexts, note that we return in $\Sub\,\Gamma \to \Set_\omega$. This is so
+that arbitrary semantic types (at finite levels) can fit inside semantic contexts. Additionally,
+using the formal induction principle for the QIIT, the type of the target of elimination would be
+$\Set_{\omega+1}$; hence the need for both $\Set_\omega$ and $\Set_{\omega+1}$.
 
 In the interpretation of types, note that $i$ appears in $\Ty\,\Gamma\,i$ as a natural number,
 but it gets implicitly converted to a universe level in $\Set_i$. This conversion requires that
@@ -1252,10 +1254,11 @@ rules. This concludes the canonicity interpretation of the object theory.
 
 \subsection{Canonicity}
 
-Now that we have fully defined the $\blank^\w$ interpretation that act on contexts, types,
+Now that we have fully defined the $\blank^\w$ interpretation that acts on contexts, types,
 subtitutions and terms, we can take any closed term $t : \Tm\,\emptycon\,A$ and get
 $t^\w\,\{\id\}\,\ttt : A^\w\,\{\id\}\,\ttt\,t$ as a witness of canonicty for $t$. Of course, the
-meaning depends on $A$, but the most interesting case is when $A$ is of the form $\IR\,S$.
+meaning of canonicity depends on $A$, but the most interesting case is when $A$ is of the form
+$\IR\,S$.
 \begin{example}
 Recall $S$ from Example \ref{ex:code-signature} and
 also the corresponding IIR predicate from Example \ref{ex:code-canonicity-signature}. Assuming $t :
@@ -1265,7 +1268,7 @@ also the corresponding IIR predicate from Example \ref{ex:code-canonicity-signat
   &t^\w\,\{\id\}\,\ttt &&: \IR^\w\,(S^\w\,\ttt)\,t\\
   &t^\w\,\{\id\}\,\ttt &&: \IIR\,(\floord{S^\w\,\ttt}\,\here)\,t.
 \end{alignat*}
-Now, $\IIR\,(\floord{S^\w\,\ttt}\,\here)\,t$ expresses that $t$ is either definitionally equal to $\intro\,(\Nat',\,\ttt)$
+Now, $\IIR\,(\floord{S^\w\,\ttt}\,\here)\,t$ implies that $t$ is either definitionally equal to $\intro\,(\Nat',\,\ttt)$
 or to $\intro\,(\Pi',\,A,\,B,\,\ttt)$ for some $A$ and $B$.
 \end{example}
 
@@ -1329,9 +1332,9 @@ The latter issue is partially addressed by ``shallow embedding'', where we repre
 the object theory with a chosen \emph{strict model} of the theory, where all equations are
 metatheoretic definitional equalities \cite{DBLP:conf/mpc/KaposiKK19}. We use this in Section
 \ref{sec:canonicity}, pretending that the $\Set$ model of the object theory is the
-syntax. Alternatively, we can cut out even more boilerplate by working in a logic where everything
-is stable under object-theoretic substitutions or variable renamings. Two frameworks for this are
-synthetic Tait computability \cite{sterlingthesis} and internal sconing
+syntax. Additionally or alternatively, we can cut out more boilerplate by working in a logic where
+everything is stable under object-theoretic substitutions or variable renamings. Two frameworks for
+this are synthetic Tait computability \cite{sterlingthesis} and internal sconing
 \cite{DBLP:conf/fscd/BocquetKS23}. Either would be applicable in our canonicity proof, but our case
 is not very technically complicated so we do not think that it is worth to use heavier machinery.
 
@@ -1341,7 +1344,7 @@ In the reduction-free algebraic style, \citet{DBLP:journals/pacmpl/Kovacs24} pro
 for a two-level type theory whose outer level supports countable predicative universes with
 W-types. This involves a logical relation model which implies canonicity of the outer level as a
 corollary. Taken together with Hugunin's construction of (non-indexed) inductive types from W-types
-\cite{whynotw}, this yields canonicity for inductive types. Going further, the construction of
+\cite{whynotw}, this yields canonicity for inductive types. In turn, the construction of
 indexed inductive types from non-indexed ones seems plausible; it is just a special case of
 Section \ref{sec:iir-construction} in the current paper, since IIR is a clear-cut generalization
 of inductive families.
@@ -1352,14 +1355,14 @@ predicative universe. Canonicity evidently follows from strong normalization. Al
 \cite{DBLP:phd/hal/Werner94} proved strong $\beta\eta$-normalization for a calculus of inductive
 constructions with one impredicative and one predicative universe.
 
-Parametric models and translations of inductive types are fairly closely related to our
-work, which can be viewed as a specific parametric construction. \citet{bernardy12parametricity}
-described a translation from a type theory to itself which interprets types as relations. This is
-``binary'' parametricity in contrast to our ``unary'' logical predicates, but switching the arity is
-fairly mechanical. They described the interpretation of inductive families as well, although without
-going into formal details of signatures. \citet{pedrot2018failure} described a parametric
-translation for inductive families as well, which was also implemented as a Rocq plugin. Univalent
-parametric translations have also been described for inductive families and implemented in Rocq
+Parametric models and translations of inductive types are closely related to our work, which can be
+viewed as a specific parametric construction. \citet{bernardy12parametricity} described a
+translation from a type theory to itself which interprets types as relations. This is ``binary''
+parametricity in contrast to our ``unary'' logical predicates, but switching the arity is fairly
+mechanical. They described the interpretation of inductive families as well, although without going
+into formal details of signatures. \citet{pedrot2018failure} described a parametric translation for
+inductive families as well, which was also implemented as a Rocq plugin. Univalent parametric
+translations have also been described for inductive families and implemented in Rocq
 \cite{tabareau2018equivalences,tabareau2021marriage,cohen2024trocq}.
 
 \subsection{Induction-Recursion} Our two primary sources throughout the paper are
@@ -1378,8 +1381,8 @@ possible. \citet{mahlo-canonicity} proved canonicity for external Mahlo universe
 essentially a special case of our proof, instantiated to Mahlo sub-universes as an IR type former.
 
 Second, it is worth to note that the investigation of \emph{predicative foundations of mathematics}
-has been an important motivation in the development of IR; indeed, IR is close to the current limit of
-constructive predicative mathematics in terms of strength. The notion of predicativity is somewhat
+has been an important motivation for IR. Indeed, IR is close to the current strength limit of
+constructive predicative mathematics. The notion of predicativity is somewhat
 subjective, but in one sense a theory is considered predicative if it is amenable to ordinal
 analysis. \citet{setzer00mahlo} calculated the strength of Martin-Löf type theory with one external
 Mahlo universe. \citet{DBLP:journals/logcom/DybjerS24} investigated the predicativity of Mahlo
@@ -1394,9 +1397,9 @@ impredicative foundational systems.
 We describe two ways in which our logical predicate interpretation could be reformulated.
 
 First, as a \emph{syntactic translation} from a type theory that supports IR types to itself; see
-e.g.\ \cite{next700} and \cite{bernardy12parametricity}. In this case, we have two issues with our
-current formulation. First, the usage UIP, which could be relatively easily removed. Second,
-syntactic translation require that definitional equations in the source language are mapped to
+e.g.\ \cite{next700} and \cite{bernardy12parametricity}. In this case, there are two issues with our
+current formulation. First, the usage of UIP, which could be relatively easily removed. Second,
+syntactic translations require that definitional equations in the source language are mapped to
 definitional equations in the target language. In our case, this does not hold, because neutral
 signatures block $\Elintro$ and $\elimbeta$. We could fix this by switching to second-class
 signatures.  That is, we would specify a \emph{sort} of signatures instead of a type of signatures,
@@ -1406,10 +1409,10 @@ plugin for Rocq for univalent parametricity \cite{cohen2024trocq}.\footnote{Unfo
 not support IR, and Agda and Idris do not have a comparable plugin system.}
 
 Second, as a \emph{model construction} which takes an arbitrary model of the object theory as input
-and a returns a displayed model over it. This generalizes the previously described syntactic
+and returns a displayed model over it. This generalizes the previously described syntactic
 translation. In this case, we need to further restrict signatures. In the previous syntactic
-translation, signatures can be part of the object theory, and in the initial model (i.e.\ the
-syntax) we can do induction on them. But in an arbitrary model we have no such induction.
+translation, signatures are part of the object theory, and in the initial model (i.e.\ the
+syntax) we can do induction on them. But in an arbitrary model we cannot do such induction.
 Therefore, we modify the theory, so that each IR signature has an ``arity'' or ``shape'', as a piece
 of metatheoretical data which specifies the number of constructors and their fields (but not the
 types of fields). This lets us do induction on shapes of signatures in arbitrary models. This is a
@@ -1430,11 +1433,11 @@ Martin-Löf type theory, still in the algebraic style
 is significantly more complicated than canonicity. The general strategy is to define logical
 predicates internally to presheaves over syntactic variable renamings, to abstract away the details
 of stability under renaming. Like in the current paper, we would need to compute an IIR predicate
-for each IR signature, with some extra complications, stemming from the possibility of neutral open
-signatures and terms. But note that these IIR predicates would be \emph{internal to presheaves}. So
-first we would need to construct presheaf models of IR types. This task already seems to be a bit
-more complicated than the canonicity construction in the current paper. Nevertheless, it seems to be
-manageable and we believe that it would be well worth to pursue this line of research.
+for each IR signature, but we would need to handle neutral signatures and terms in addition. Note
+that the IIR predicates would be \emph{internal to presheaves}. So first we would need to
+construct presheaf models of IR types. This task already seems to be a bit more complicated than the
+canonicity construction in the current paper. Nevertheless, it seems to be manageable and we believe
+that it would be well worth to pursue this line of research.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
