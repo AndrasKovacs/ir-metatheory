@@ -6,6 +6,10 @@ import IndexedIR
 
 module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) where
 
+
+  -- Section 4.3.2
+  ----------------------------------------------------------------------------------------------------
+
   import PlainIR as IR
   open PlainIR hiding (Sig)
   Sig = IR.Sig i {j} O
@@ -15,6 +19,9 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
     σᵒ : ∀ {A} (Aᵒ : A → Set i){S : A → Sig}      (Sᵒ : ∀ {a} → Aᵒ a → Sigᵒ (S a)) → Sigᵒ (IR.σ A S)
     δᵒ : ∀ {A} (Aᵒ : A → Set i){S : (A → O) → Sig}(Sᵒ : ∀ {f} → (∀ a → Aᵒ a → Oᵒ (f a)) → Sigᵒ (S f)) → Sigᵒ (IR.δ A S)
 
+
+  -- Section 4.3.3
+  ----------------------------------------------------------------------------------------------------
   module _ {S* : Sig}(S*ᵒ : Sigᵒ S*) where
 
     module IIR = IndexedIR
@@ -266,4 +273,4 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
            ◼ fᵒ-tr xᵒ
            ◼ ap (fᵒ xᵒ) (⌞map⌟ S*ᵒ here elimᵒ xᵒ)
 
---------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------

@@ -3,6 +3,8 @@
 open import Lib
 
 -- Section 2.2
+----------------------------------------------------------------------------------------------------
+
 module PlainIR where
 
 private variable
@@ -46,9 +48,11 @@ El {S = S} (intro t) = F t
 elim : {S : Sig i O} (P : IR S → Set k) → (∀ x → IH P x → P (intro x)) → ∀ x → P x
 elim P f (intro x) = f x (map (elim P f) x)
 
---------------------------------------------------------------------------------
 
-outro : {S : Sig i O} → IR S → E S (IR S) El
+-- misc definitions
+----------------------------------------------------------------------------------------------------
+
+outro : {S : Sig i O} → IR S → E S (IR S) El -- the inverse of intro
 outro {S = S} = elim _ λ x _ → x
 
 SigElim :   (P : Sig i O → Set k)

@@ -5,6 +5,9 @@ module DeriveIndexedExamples where
 open import Lib
 import Data.Nat as N
 
+-- Section 3.3
+--------------------------------------------------------------------------------
+
 module VecExample {i}(A : Set i) where
 
   open import DeriveIndexed {i} N.ℕ (const (⊤{zero}))
@@ -42,7 +45,7 @@ module VecExample {i}(A : Set i) where
             → ∀ {n a as} → VecElim P nl cs (cons {n} a as) ≡ cs (VecElim P nl cs as)
   ElimCons P nl cs = refl
 
-module UExample where
+module CodeExample where
 
   import DeriveIndexed {zero} (⊤{zero}) (const Set) as IIR
 
@@ -53,16 +56,16 @@ module UExample where
     ℕ' → IIR.ι tt N.ℕ
     Π' → IIR.δ ⊤ _ λ ElA → IIR.δ (ElA tt) _ λ ElB → IIR.ι _ ((a : ElA tt) → ElB a)
 
-  U : Set
-  U = IIR.IIR S tt
+  Code : Set
+  Code = IIR.IIR S tt
 
-  El : U → Set
+  El : Code → Set
   El = IIR.El S
 
-  n' : U
+  n' : Code
   n' = IIR.intro S (ℕ' , ↑ refl)
 
-  π' : (A : U) → (El A → U) → U
+  π' : (A : Code) → (El A → Code) → Code
   π' A B = IIR.intro S (Π' , const A , B , ↑ refl)
 
   Eln' : El n' ≡ N.ℕ
@@ -71,16 +74,16 @@ module UExample where
   Elπ' : ∀ {A B} → El (π' A B) ≡ ((a : El A) → El (B a))
   Elπ' = refl
 
-  UElim : ∀ {i} (P : U → Set i)(np : P n')(πp : ∀ {A} → P A → ∀ {B} → (∀ a → P (B a)) → P (π' A B)) → ∀ A → P A
-  UElim P np πp = IIR.elim S P λ where
+  CodeElim : ∀ {i} (P : Code → Set i)(np : P n')(πp : ∀ {A} → P A → ∀ {B} → (∀ a → P (B a)) → P (π' A B)) → ∀ A → P A
+  CodeElim P np πp = IIR.elim S P λ where
     (ℕ' , ↑ refl) _                     → np
     (Π' , A , B , ↑ refl) (Ap , Bp , _) → πp (Ap tt) Bp
 
-  UElimn' : ∀ {i} (P : U → Set i)(np : P n')(πp : ∀ {A} → P A → ∀ {B} → (∀ a → P (B a)) → P (π' A B)) → UElim P np πp n' ≡ np
-  UElimn' P np πp = refl
+  CodeElimn' : ∀ {i} (P : Code → Set i)(np : P n')(πp : ∀ {A} → P A → ∀ {B} → (∀ a → P (B a)) → P (π' A B)) → CodeElim P np πp n' ≡ np
+  CodeElimn' P np πp = refl
 
-  UElimπ' : ∀ {i} (P : U → Set i)(np : P n')(πp : ∀ {A} → P A → ∀ {B} → (∀ a → P (B a)) → P (π' A B))
-            → ∀ {A B} → UElim P np πp (π' A B) ≡ πp (UElim P np πp A) (UElim P np πp ∘ B )
-  UElimπ' P np πp = refl
+  CodeElimπ' : ∀ {i} (P : Code → Set i)(np : P n')(πp : ∀ {A} → P A → ∀ {B} → (∀ a → P (B a)) → P (π' A B))
+            → ∀ {A B} → CodeElim P np πp (π' A B) ≡ πp (CodeElim P np πp A) (CodeElim P np πp ∘ B )
+  CodeElimπ' P np πp = refl
 
 --------------------------------------------------------------------------------

@@ -2,6 +2,9 @@
 
 open import Lib
 
+-- Section 2.3
+----------------------------------------------------------------------------------------------------
+
 module IndexedIR where
 
 private variable
@@ -47,6 +50,9 @@ mutual
 elim : ∀ {S : Sig i {j}{k} I O}(P : ∀ {ix} → IIR S ix → Set l)
        → (∀ {ix} x → IH P {ix} x → P (intro x)) → ∀ {ix} x → P {ix} x
 elim {S = S} P f (intro x) = f x (map (elim P f) x)
+
+
+----------------------------------------------------------------------------------------------------
 
 module Ex-2-2 where
 
