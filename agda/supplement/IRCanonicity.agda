@@ -49,8 +49,8 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
     F-push (in-σ p a aᵒ) = F-push p
     F-push (in-δ p f fᵒ) = F-push p
 
+    -- Definition 4.3
     ⌞_⌟ : ∀ {S}(Sᵒ : Sigᵒ S) → Path Sᵒ → SigIIR
-
     ⌞ ιᵒ oᵒ            ⌟ p = IIR.ι (IR.intro (push p tt)) (tr Oᵒ (F-push p) oᵒ)
     ⌞ σᵒ {A} Aᵒ {S} Sᵒ ⌟ p = IIR.σ A λ a → IIR.σ (Aᵒ a) λ aᵒ → ⌞ Sᵒ aᵒ ⌟ (in-σ p a aᵒ)
     ⌞ δᵒ {A} Aᵒ Sᵒ     ⌟ p = IIR.σ (A → IR S*) λ f → IIR.δ (∃ Aᵒ) (λ{(a , _) → f a}) λ fᵒ →
@@ -58,6 +58,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
 
     ⌞S*⌟ = ⌞ S*ᵒ ⌟ here
 
+    -- Definition 4.5
     IRᵒ : IR S* → Set i
     IRᵒ = IIR.IIR ⌞S*⌟
 
@@ -111,16 +112,17 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
     E→← (σᵒ Aᵒ Sᵒ) p (a , aᵒ , xᵒ) = ap (λ x → a , aᵒ , x) (E→← (Sᵒ aᵒ) (in-σ p a aᵒ) xᵒ)
     E→← (δᵒ Aᵒ Sᵒ) p (f , fᵒ , xᵒ) = ap (λ x → f , fᵒ , x) (E→← (Sᵒ _)  (in-δ p f _) xᵒ)
 
+    -- Definition 4.6
     introᵒ : ∀ {x : E S* (IR S*) El}(xᵒ : Eᵒ S*ᵒ x) → IRᵒ (IR.intro x)
     introᵒ xᵒ = IIR.intro (E→' here xᵒ)
 
     restrict : ∀ {S}{Sᵒ : Sigᵒ S} → Path Sᵒ → Set (suc i ⊔ suc j)
-    restrict here                    = ⊤
+    restrict here                  = ⊤
     restrict (in-σ p a aᵒ)         = restrict p
     restrict (in-δ {A}{Aᵒ} p f fᵒ) = Σ (∀ a → Aᵒ a → IRᵒ (f a)) λ fᵒ* → (fᵒ ≡ λ a aᵒ → Elᵒ (fᵒ* _ aᵒ)) × restrict p
 
     pushᵒ : ∀ {S}{Sᵒ}(p : Path {S} Sᵒ)(pᵒ : restrict p){x : E S (IR S*) El}(xᵒ : Eᵒ Sᵒ x) → Eᵒ S*ᵒ (push p x)
-    pushᵒ here            pᵒ                xᵒ = xᵒ
+    pushᵒ here          pᵒ                xᵒ = xᵒ
     pushᵒ (in-σ p a aᵒ) pᵒ                xᵒ = pushᵒ p pᵒ (aᵒ , xᵒ)
     pushᵒ (in-δ p f fᵒ) (fᵒ* , refl , pᵒ) xᵒ = pushᵒ p pᵒ (fᵒ* , xᵒ)
 
@@ -131,7 +133,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
 
     F-pushᵒ : ∀ {S}{Sᵒ}(p : Path {S} Sᵒ)(pᵒ : restrict p){x : E S (IR S*) El}(xᵒ : Eᵒ Sᵒ x)
              → tr Oᵒ (F-push p {x}) (Fᵒ xᵒ) ≡ Fᵒ (pushᵒ p pᵒ xᵒ)
-    F-pushᵒ here            pᵒ              xᵒ = refl
+    F-pushᵒ here          pᵒ              xᵒ = refl
     F-pushᵒ (in-σ p a aᵒ) pᵒ              xᵒ = F-pushᵒ p pᵒ (aᵒ , xᵒ)
     F-pushᵒ (in-δ p f fᵒ) (_ , refl , pᵒ) xᵒ = F-pushᵒ p pᵒ (_ , xᵒ)
 
@@ -141,6 +143,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
     ⌞F⌟ {Sᵒ = σᵒ Aᵒ Sᵒ} p pᵒ (aᵒ , xᵒ) = ⌞F⌟ (in-σ p _ aᵒ) pᵒ xᵒ
     ⌞F⌟ {Sᵒ = δᵒ Aᵒ Sᵒ} p pᵒ (fᵒ , xᵒ) = ⌞F⌟ (in-δ p _ _) (fᵒ , refl , pᵒ) xᵒ
 
+    -- Definition 4.7
     El-introᵒ : ∀ {x} (xᵒ : Eᵒ S*ᵒ x) → Elᵒ (introᵒ xᵒ) ≡ Fᵒ xᵒ
     El-introᵒ = ⌞F⌟ here tt
 
@@ -180,6 +183,10 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
                 (E← here xᵒ .snd .fst)
                 (fᵒ (E← here xᵒ .snd .snd) (IH← here ih)))
 
+        -- Definition 4.8
+        elimᵒ : ∀ {x}(xᵒ : IRᵒ x) → Pᵒ xᵒ (IR.elim P f x)
+        elimᵒ = IIR.elim ⌞Pᵒ⌟ ⌞fᵒ⌟
+
         ⌞map⌟ :
           ∀ {S} Sᵒ {x} (p : Path {S} Sᵒ) (g : ∀ {i}(x : IRᵒ i) → ⌞Pᵒ⌟ x)(xᵒ : Eᵒ Sᵒ x)
           →
@@ -218,9 +225,6 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
                ◼ ⌞map⌟ (Sᵒ _) (in-δ p g _) h xᵒ
               )
 
-        elimᵒ : ∀ {x}(xᵒ : IRᵒ x) → Pᵒ xᵒ (IR.elim P f x)
-        elimᵒ = IIR.elim ⌞Pᵒ⌟ ⌞fᵒ⌟
-
         fᵒ-tr : ∀ {x : E S* (IR S*) El} (xᵒ : Eᵒ S*ᵒ x) →
                 tr (λ xᵒ → Pᵒ (introᵒ (xᵒ .snd .snd)) (f (xᵒ .fst) (map (IR.elim P f) (xᵒ .fst))))
                    (E←→ S*ᵒ here (x , refl , xᵒ))
@@ -243,6 +247,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
            (E←→ S*ᵒ here (x , refl , xᵒ))
            refl
 
+        -- Definition 4.9
         elimβᵒ : ∀ {x : E S* (IR S*) El} (xᵒ : Eᵒ S*ᵒ x) → elimᵒ (introᵒ xᵒ) ≡ fᵒ xᵒ (mapᵒ elimᵒ xᵒ)
         elimβᵒ {x} xᵒ =
 

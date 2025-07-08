@@ -34,9 +34,9 @@ IH {S = δ A ix S} {ir}{el} P (f , x) = (∀ a → P (f a)) × IH {S = S (el ∘
 
 map : ∀ {S : Sig i {j}{k} I O}{ir : I → Set (i ⊔ k)}{el : {ix : I} → ir ix → O ix} {P : ∀ {ix} → ir ix → Set l}
       → (∀ {ix} x → P {ix} x) → ∀ {ix} (x : E S ir el ix) → IH P x
-map {S = ι i' o  }          h t       = tt
-map {S = σ A S   }          h (a , x) = map {S = S a} h x
-map {S = δ A ix S} {ir}{el} h (f , x) = (h ∘ f , map {S = S (el ∘ f)} h x)
+map {S = ι i' o  }          g t       = tt
+map {S = σ A S   }          g (a , x) = map {S = S a} g x
+map {S = δ A ix S} {ir}{el} g (f , x) = (g ∘ f , map {S = S (el ∘ f)} g x)
 
 mutual
   data IIR (S : Sig i {j}{k} I O) : I → Set (i ⊔ k) where

@@ -31,9 +31,9 @@ IH {δ A ix S} {el = el} P (f , x) = (∀ a → P (f a)) × IH {S (el ∘ f)} P 
 
 map : ∀ {S l}{ir : I → Set (i ⊔ k)}{el : {ix : I} → ir ix → O ix} {P : ∀ {ix} → ir ix → Set l}
       → (∀ {ix} x → P {ix} x) → ∀ {ix} (x : E S ir el ix) → IH P x
-map {ι i' o  }          h t       = tt
-map {σ A S   }          h (a , x) = map {S = S a} h x
-map {δ A ix S}{el = el} h (f , x) = (h ∘ f , map {S = S (el ∘ f)} h x)
+map {ι i' o  }          g t       = tt
+map {σ A S   }          g (a , x) = map {S = S a} g x
+map {δ A ix S}{el = el} g (f , x) = (g ∘ f , map {S = S (el ∘ f)} g x)
 
 import PlainIR as IR
 open import PlainIR using (IR)
@@ -56,7 +56,7 @@ module Example-3-1 where
    ⌞S⌟ A = IR.σ (Lift zero Tag) λ where
      (↑ Nil')  → IR.ι (N.zero , tt)
      (↑ Cons') → IR.σ (Lift zero N.ℕ) λ n → IR.σ (Lift zero A) λ _ →
-                 IR.δ (Lift zero (⊤ {zero})) λ f → IR.σ (∀ x → fst (f (↑ x)) ≡ (↓ n)) λ p →
+                 IR.δ (Lift zero (⊤ {zero})) λ f → IR.σ ((x : ⊤ {zero}) → fst (f (↑ x)) ≡ (↓ n)) λ p →
                  IR.ι ((N.suc (↓ n)) , tt)
 
 
@@ -133,8 +133,8 @@ module _ (S* : Sig) where
   intro : ∀ {ix} → E S* IIR El ix → IIR ix
   intro x = IR.intro (fst (E→ x)) , snd (E→ x)
 
-  El≡ : ∀ {ix} x → El (intro {ix} x) ≡ F x
-  El≡ = ⌞F⌟
+  El-intro : ∀ {ix} x → El (intro {ix} x) ≡ F x
+  El-intro = ⌞F⌟
 
 
 -- Section 3.2

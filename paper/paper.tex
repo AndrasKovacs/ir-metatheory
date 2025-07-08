@@ -182,7 +182,7 @@ metatheoretic IIR type.
 \section{Introduction}\label{sec:introduction}
 
 Induction-recursion (IR) allows us to mutually define an inductive type and a function that acts on
-elements of the type. A common application of IR is to define custom universes and universe
+elements of the type. A common application of IR is to define custom universes or universe
 hierarchies inside a type theory. For an example, in the proof assistant Agda, we can use IR to
 define a universe that is closed under our choice of type formers:
 \begin{alignat*}{3}
@@ -198,8 +198,9 @@ define a universe that is closed under our choice of type formers:
 \end{alignat*}
 Here, $\Code$ is a type of codes of types which behaves as a custom Tarski-style universe. This
 universe, unlike the ambient universe $\Set_0$, supports an induction principle and can be used to
-define type-generic functions. Indexed induction-recursion (IIR) additionally allows indexing
-$\Code$ over some type, which lets us define inductive-recursive predicates \cite{DBLP:journals/jlp/DybjerS06}.
+define type-generic functions. Indexed induction-recursion (IIR) additionally allows indexing the
+inductive type over some type, which lets us define inductive-recursive predicates
+\cite{DBLP:journals/jlp/DybjerS06}.
 
 Indexed induction-recursion was first used in an implicit and informal way in Martin-Löf's proof of
 normalization for his intuitionistic type theory \cite{martin1975intuitionistic}. Later, his
@@ -226,10 +227,11 @@ without any formalization in the literature.
 Our \textbf{main contribution} is to \emph{show canonicity for a Martin-Löf type theory that
 supports a countable universe hierarchy, where each universe supports indexed inductive-recursive
 types}. Canonicity means that every closed term is definitionally equal to a canonical term. The
-meaning of canonicity for a term depends on its type. For inductive types, a canonical term is
-given by a constructor whose fields are also canonical (inductively). Canonical functions map canonical inputs
-to canonical outputs, and canonical terms of $\Sigma$-types have canonical projections. On a high level, canonicity
-of a type theory justifies evaluation of closed terms. The outline of our development is as follows.
+meaning of canonicity for a term depends on its type. For inductive types, a canonical term is given
+by a constructor whose fields are also canonical (inductively). Canonical functions map canonical
+inputs to canonical outputs, and canonical terms of $\Sigma$-types have canonical projections. On a
+high level, canonicity for a type theory justifies evaluation of closed terms. The outline of our
+development is the following.
 
 \begin{itemize}
 \item In Section \ref{sec:specification} we specify what it means to support IR and IIR, using
@@ -256,8 +258,7 @@ of a type theory justifies evaluation of closed terms. The outline of our develo
 
 In this section we describe the object type theory, focusing on the specification of IR and IIR
 types. We shall mostly work with internal definitions in an Agda-like syntax. In Section
-\ref{sec:object-theory} we will give a more rigorous specification that is based on
-categories-with-families.
+\ref{sec:object-theory} we will give a more rigorous specification.
 
 \subsection{Basic Type Formers}\label{sec:basic-type-formers}
 We have a countable hierarchy of Russell-style universes, written as $\U_i$, where $i$ is an
@@ -515,7 +516,7 @@ for small IR do not generally transfer to our case of ``large'' IR.
   & \floord{S} \equiv \sigma\,(\Lift\,\Tag)\,\$\,\lambda\,t.\,\case \ldown\!t\,\of \\
   & \quad \Nil'\hspace{0.85em} \to \iota\,(\zero,\,\ttt) \\
   & \quad \Cons'\to \sigma\,(\Lift\,\Nat)\,\$\,\lambda\,n.\,\sigma\,(\Lift\,A)\,\$\,\lambda\,\_.\\
-  & \quad \hspace{4em}  \delta\,(\Lift\,\top)\,\$\,\lambda\,f.\,\sigma\,((x : \top) \to \fst\,(f\,(\lup\!x)) = (\ldown\!n))\,\$\,\lambda\,p.\\
+  & \quad \hspace{4em}  \delta\,(\Lift\,\top_0)\,\$\,\lambda\,f.\,\sigma\,((x : \top_0) \to \fst\,(f\,(\lup\!x)) = (\ldown\!n))\,\$\,\lambda\,p.\\
   & \quad \hspace{4em}  \iota\,(\suc\,(\ldown\!n),\,\ttt)
 \end{alignat*}
 The first $\Nat$ component of the recursive result serves as the index. In the $\Cons'$ case we
@@ -599,7 +600,7 @@ This is again defined by easy induction on $S$. The induction method $\floord{f}
 Thus, the definition of elimination is:
 \[ \elim\,P\,f\,(x,\,p) :\equiv \elim_\IR\,\floord{P}\,\floord{f}\,x\,p \]
 Only the $\beta$-rule remains to be constructed:
-\[ \elim\!-\!\!\beta : \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(\map\,(\elim\,P\,f)\,x) \]
+\[ \elim\!-\!\!\beta : \elim\,P\,f\,(\intro\,x) = f\,x\,(\map\,(\elim\,P\,f)\,x) \]
 Computing definitions on the \textbf{left hand side}, we get:
 \begin{alignat*}{3}
   & \tr\, &&(\lambda\,(x,\,p).\,P\,(\intro\,x,\,p))\\
@@ -612,7 +613,7 @@ Using this equation to rewrite the \textbf{right hand side}, we get:
 \begin{alignat*}{3}
   f\,x\,\Bigl(\tr\,(\IH\,P)\,(\eta\,x)\,\bigl(\ola{\IH}\,(\map\,(\lambda\,x\,p.\,\elim\,P\,f\,(x,\,p))\,(\fst\,(\ora{\E}\,x)))\bigr)\Bigr)
 \end{alignat*}
-This is promising; on the left hand side we transport the result of $f$, while on the right hand
+This is promising: on the left hand side we transport the result of $f$, while on the right hand
 side we transport the argument of $f$. Now, the identification on the left is
 $\epsilon\,(\ora{\E}\,x)$, while we have $\eta\,x$ on the right. However, we have $\tau\,x :
 \ap\,\ora{\E}\,(\eta\,x) = \epsilon\,(\ora{\E}\,x)$, which can be used in conjunction with
@@ -645,7 +646,7 @@ We formalized Section \ref{sec:iir-construction} in roughly 250 lines of Agda, u
 definitions as in this section, and the same notation, as far as Agda's syntax allows. For the
 assumption of IR, we verbatim reproduced the specification in Section \ref{sec:ir-specification},
 turning $\IR$ into an inductive type and $\El$ and $\elim$ into recursive functions. The functions
-are not recognized as terminating by Agda, so we disable terminating checking for
+are not recognized as terminating by Agda, so we disable termination checking for
 them. Alternatively, we could use rewrite rules \cite{DBLP:journals/pacmpl/CockxTW21}; the two
 versions are the same except that rewrite rules have a performance cost in type checking and
 evaluation that we prefer to avoid.
@@ -687,7 +688,7 @@ content. In the metatheory we have equality reflection so we can be more loose.
 
 \subsubsection{Consistency of the metatheory} As it often happens in type theory, our specific mixture
 of features is not covered by any particular reference. However, it is reasonable to expect that
-previous works can be suitably combined and generalized to obtain consistency.
+previous works can be combined and generalized to obtain consistency for our metatheory.
 \begin{itemize}
 \item \citet{DBLP:journals/jlp/DybjerS06} gave a set-theoretic model for IIR. Here, there is a universe of
   small types which supports IIR types, which is modeled using a Mahlo cardinal $\msf{M}$, and a universe of
@@ -696,7 +697,7 @@ previous works can be suitably combined and generalized to obtain consistency.
   having a countable number of Mahlo cardinals and two inaccessible cardinals above the Mahlo
   cardinals, to model our universe hierarchy. Also, having an internal type for finite universe
   levels is naturally supported in the set-theoretic model.
-\item As to the object syntax as a quotient inductive-inductive type (QIIT), it is a small and
+\item Regarding the object syntax as a quotient inductive-inductive type (QIIT), it is a small and
   finitary QIIT, which is constructible from fairly weak metatheoretic
   assumptions\footnote{Concretely, two universes, UIP, function extensionality, propositional
   extensionality, quotients and natural numbers.}, and the general construction was described with
@@ -761,18 +762,18 @@ more tailored to our situation.
 \begin{itemize}
 \item Assuming $t : \Tm\,\Gamma\,(\Pi\,A\,B)$ and $u : \Tm\,\Gamma\,A$, traditional binary function
   application can be derived as $(\app\,t)[\id,\,u] : \Tm\,\Gamma\,B[\id,\,u]$. We overload the
-  metatheoretic whitespace operator for this kind of object-level application.
+  metatheoretic whitespace operator for this kind of application.
 \item We may give a name to a binder (a binder can be a context extension or a $\Pi$, $\Sigma$ or
-  $\lam$ binder), and in the scope of the binder all occurrence of the name is desugared to a De
-  Bruijn index.  We write $\Pi$-types using the same notation as in the metatheory. For example, $(A
+  $\lam$ binder), and in the scope of the binder all occurrences of the name are desugared to a De
+  Bruijn index. We write $\Pi$-types with the same notation as in the metatheory. For example, $(A
   : \U_i) \to A \to A$ is desugared to $\Pi\,\U_i\,(\Pi\,\q\,\q[\p])$. We also reuse the notation
-  and behavior of implicit functions. We write object-level lambda abstraction as $\lam\,x.t$.
+  and behavior of implicit functions. We write object-level lambda abstraction as $\lam\,x.\,t$.
 \item
   In the following we specify all type and term formers as \emph{term constants with an iterated
-  $\Pi$-type}.  For example, we will specify $\Id : \Tm\,\Gamma\,((A : \U_i) \to A \to A \to \U_i)$,
-  instead of abstracting over $A : \Ty\,\Gamma\,i$ and $t,\,u : \Tm\,\Gamma\,A$. In the general, the
-  two flavors are inter-derivable, but sticking to object-level functions lets us consistently use
-  the sugar for named binders. Also, specifying stability under substitution becomes very simple: a
+  $\Pi$-type}. For example, we will specify $\Id : \Tm\,\Gamma\,((A : \U_i) \to A \to A \to \U_i)$,
+  instead of abstracting over $A : \Ty\,\Gamma\,i$ and $t,\,u : \Tm\,\Gamma\,A$. In general, the two
+  flavors are inter-derivable, but sticking to object-level functions lets us consistently use the
+  sugar for named binders. Also, specifying stability under substitution becomes very simple: a
   substituted term constant is computed to the same constant (but living in a possibly different
   context). For example, if $\sigma : \Sub\,\Gamma\,\Delta$, then $\Id[\sigma] = \Id$ specifies
   stability under substitution for the identity type former. Hence, we shall omit substitution rules
@@ -844,8 +845,8 @@ binders. As to the rest of the specification, we already saw it in Section
 On a high level, canonicity is proved by induction over the syntax of the object theory. Since the
 syntax is a quotient inductive-inductive type, it supports an induction principle, which we do not
 write out fully here and only use a particular instance of it. Formally, the induction principle
-takes a \emph{displayed model} as an argument, which corresponds to a bundle of induction motives
-and methods, and proofs that quotient equations are respected
+takes a \emph{displayed model} as an argument, which corresponds to a bundle of induction motives,
+induction methods and proofs that quotient equations are respected
 \cite[Chapter~4]{DBLP:journals/corr/abs-2302-08837}. We could present the current construction as a
 displayed model. However, we find it a bit more readable to use an Agda-like notation, where we
 specify the resulting \emph{section} of the displayed model, which consists of some mutual
@@ -1092,8 +1093,7 @@ operation on it, obtaining $\Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^
   & \hspace{4.8em} \iota\,\,(\intro\,(\Pi',\,A,\,B,\,\ttt))\,(\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\} \to {ElA}^\w\,a \to {ElB}^\w\,(f\,a))
 \end{alignat*}
 This specifies essentially the same IIR type that we had in Example \ref{ex:code-canonicity}, with
-some extra noise in the first argument of $\Pi'$, which is now represented as a function with $\top$
-domain.
+some extra noise in the first argument of $\Pi'$, which is now represented as a function with domain $\top$.
 \end{example}
 
 \begin{definition}[Interpretation of $\IR$ and $\El$]
@@ -1252,13 +1252,12 @@ which is an instance of Definition \ref{sec:canonicity-elintro}. We omit describ
 rules. This concludes the canonicity interpretation of the object theory.
 \end{definition}
 
-\subsection{Canonicity}
+\subsection{The Canonicity Result}
 
 Now that we have fully defined the $\blank^\w$ interpretation that acts on contexts, types,
 subtitutions and terms, we can take any closed term $t : \Tm\,\emptycon\,A$ and get
-$t^\w\,\{\id\}\,\ttt : A^\w\,\{\id\}\,\ttt\,t$ as a witness of canonicty for $t$. Of course, the
-meaning of canonicity depends on $A$, but the most interesting case is when $A$ is of the form
-$\IR\,S$.
+$t^\w\,\{\id\}\,\ttt : A^\w\,\{\id\}\,\ttt\,t$ as a witness of canonicty for $t$. The most
+interesting case is when $A$ is of the form $\IR\,S$.
 \begin{example}
 Recall $S$ from Example \ref{ex:code-signature} and
 also the corresponding IIR predicate from Example \ref{ex:code-canonicity-signature}. Assuming $t :
@@ -1272,15 +1271,15 @@ Now, $\IIR\,(\floord{S^\w\,\ttt}\,\here)\,t$ implies that $t$ is either definiti
 or to $\intro\,(\Pi',\,A,\,B,\,\ttt)$ for some $A$ and $B$.
 \end{example}
 
-\subsection{Mechanization}
+\subsection{Mechanization}\label{sec:canonicity-mechanization}
 
 We formalized the semantic constructions in Sections \ref{sec:ir-signatures-canonicity} and
 \ref{sec:ir-canonicity} in Agda, but we did not formalize the object theory nor the contextual
-interpretations for its rules. The formalization is roughly 250 lines. Overall, we have found the
-Agda formalization extremely useful and it was crucial for coming up with the correct definitions in
-the first place.
+interpretations for its rules. The formalization is roughly 280 lines. Overall, we have found the
+Agda formalization to be extremely useful and it was crucial for coming up with the right
+definitions in the first place.
 
-We used a \emph{shallow embedding} for closed terms, where we work with the standard $\Set$ model of
+We use a \emph{shallow embedding} for closed terms, where we work with the standard $\Set$ model of
 the object theory instead of an exact specification of the object syntax.
 \begin{itemize}
 \item We represent $\Tm\,\U_i$ as $\Set_i$.
@@ -1295,7 +1294,7 @@ having $\Sig_i\,O : \Tm\,\U_{\max(i+1,\,j)}$ and $\Sig^\w\,O^\w : \Tm\,(\Sig_i\,
 constructions.
 
 However, checking the legality of constructions is not difficult, and we only have to check a meager
-250 lines. We could have used a more principled representation of closed terms, for example,
+280 lines. We could have used a more principled representation of closed terms, for example,
 following \citet{DBLP:conf/mpc/KaposiKK19} where Agda's module system is used to prevent illegal
 constructions. We did not do so, again because of the small size of the project and because the
 additional safety features make the ergonomics of Agda somewhat worse. Concretely, we need to check
@@ -1331,12 +1330,12 @@ transports (``transport hell'').
 The latter issue is partially addressed by ``shallow embedding'', where we represent the syntax of
 the object theory with a chosen \emph{strict model} of the theory, where all equations are
 metatheoretic definitional equalities \cite{DBLP:conf/mpc/KaposiKK19}. We use this in Section
-\ref{sec:canonicity}, pretending that the $\Set$ model of the object theory is the
+\ref{sec:canonicity-mechanization}, pretending that the $\Set$ model of the object theory is the
 syntax. Additionally or alternatively, we can cut out more boilerplate by working in a logic where
 everything is stable under object-theoretic substitutions or variable renamings. Two frameworks for
 this are synthetic Tait computability \cite{sterlingthesis} and internal sconing
 \cite{DBLP:conf/fscd/BocquetKS23}. Either would be applicable in our canonicity proof, but our case
-is not very technically complicated so we do not think that it is worth to use heavier machinery.
+is not very technically complicated so we do not think that it is worth to use the heavier machinery.
 
 \subsection{Canonicity (and Parametricity) for Inductive Types}
 
@@ -1372,7 +1371,7 @@ a bit more general discussion of IR in the following.
 First, it is natural to ask if IR types are constructible from a particular ``universal'' IR type,
 similarly to how inductive families are constructible from W-types. We might hope that this would
 simplify the metatheory of IR. Unfortunately no such type is known. However, \emph{Mahlo universes}
-have been studied as relatively simple specifications from which many useful examples of IR types
+have been studied as relatively simple specifications from which many examples of IR types
 are constructible \cite{setzer00mahlo}. An \emph{external Mahlo universe} is specified by the
 existence of a particular IR type in the universe. Hence, external Mahlo-ness is implied by IR, but
 it is not known if all IR types are constructible in an external Mahlo universe. While working on
@@ -1387,8 +1386,8 @@ subjective, but in one sense a theory is considered predicative if it is amenabl
 analysis. \citet{setzer00mahlo} calculated the strength of Martin-Löf type theory with one external
 Mahlo universe. \citet{DBLP:journals/logcom/DybjerS24} investigated the predicativity of Mahlo
 universes in the sense of Martin-Löf's ``extended predicativity''. For IR, the exact proof-theoretic
-strength is unknown, but it still seems to be in the realm of ordinal analysis, unlike common
-impredicative foundational systems.
+strength is unknown, but it still seems to be in the realm of ordinal analysis, unlike
+impredicative foundational systems such as ZFC or Rocq with impredicative $\msf{Prop}$.
 
 \section{Future Work}\label{sec:future-work}
 
@@ -1396,28 +1395,27 @@ impredicative foundational systems.
 
 We describe two ways in which our logical predicate interpretation could be reformulated.
 
-First, as a \emph{syntactic translation} from a type theory that supports IR types to itself; see
-e.g.\ \cite{next700} and \cite{bernardy12parametricity}. In this case, there are two issues with our
-current formulation. First, the usage of UIP, which could be relatively easily removed. Second,
-syntactic translations require that definitional equations in the source language are mapped to
-definitional equations in the target language. In our case, this does not hold, because neutral
+First, as a \emph{syntactic translation} from a type theory that supports IR types to another one
+(possibly the same theory); see e.g.\ \cite{next700} and \cite{bernardy12parametricity}. Syntactic
+translations require that definitional equations in the source language are mapped to definitional
+equations in the target language. In our current construction, this does not hold, because neutral
 signatures block $\Elintro$ and $\elimbeta$. We could fix this by switching to second-class
-signatures.  That is, we would specify a \emph{sort} of signatures instead of a type of signatures,
+signatures. That is, we would specify a \emph{sort} of signatures instead of a type of signatures,
 disallowing computation of signatures by elimination and thereby ruling out neutral signatures. The
 resulting syntactic translation could be useful in metaprogramming applications like the Trocq
 plugin for Rocq for univalent parametricity \cite{cohen2024trocq}.\footnote{Unfortunately Rocq does
 not support IR, and Agda and Idris do not have a comparable plugin system.}
 
-Second, as a \emph{model construction} which takes an arbitrary model of the object theory as input
-and returns a displayed model over it. This generalizes the previously described syntactic
-translation. In this case, we need to further restrict signatures. In the previous syntactic
-translation, signatures are part of the object theory, and in the initial model (i.e.\ the
-syntax) we can do induction on them. But in an arbitrary model we cannot do such induction.
-Therefore, we modify the theory, so that each IR signature has an ``arity'' or ``shape'', as a piece
-of metatheoretical data which specifies the number of constructors and their fields (but not the
-types of fields). This lets us do induction on shapes of signatures in arbitrary models. This is a
-bit similar to \emph{contextuality} of models of type theories, where we require that typing
-contexts are inductively generated by context extensions \cite{gat,cwfs}.
+Second, as a \emph{model construction} which extends type-theoretic gluing with IR types. This
+generalizes the previously described syntactic translation. In this case, we need to further
+restrict signatures. In the previous syntactic translation, signatures are part of the object
+theory, and in the initial model (i.e.\ the syntax) we can do induction on them. But in an arbitrary
+model we cannot do such induction. Therefore, we modify the theory, so that each IR signature has
+an ``arity'' or ``shape'', as a piece of metatheoretical data which specifies the number of
+constructors and their fields (but not the types of fields). This lets us do induction on shapes of
+signatures in arbitrary models. This is a bit similar to \emph{contextuality} of models of type
+theories, where we require that typing contexts are inductively generated by context extensions
+\cite{gat,cwfs}.
 
 \subsection{Normalization for IR Types}
 
