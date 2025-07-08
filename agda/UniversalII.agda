@@ -1,84 +1,85 @@
-{- DOESNT WORK -}
+{-# OPTIONS --without-K #-}
 
-open import Lib
-open import Data.Fin using (Fin; zero; suc)
-open import Data.Sum
+open import Lib renaming (fst to ₁; snd to ₂)
+
 open import Data.Maybe
 open import Data.Empty
-open import Data.Nat using (ℕ; suc; zero)
 
-module UniversalII (i j : Level) (O : Set j) where
+module UniversalII where
 
-data Arity : Set where
-  ι : Arity
-  σ : Arity → Arity
-  δ : Arity → Arity
-  ν : ∀ {n} → (Fin n → Arity) → Arity
+ module V1 (i j : Level) (O : Set j) where
 
-Sig : Arity → Set (lsuc i ⊔ j)
-Sig ι     = Lift (lsuc i ⊔ j) O
-Sig (σ A) = Σ (Set i) λ X → X → Sig A
-Sig (δ A) = Σ (Set i) λ X → (X → O) → Sig A
-Sig (ν A) = ∀ i → Sig (A i)
+  data Sig : Set (suc i ⊔ j) where
+    ι : O → Sig
+    σ : (X : Set i) → (S : X → Sig) → Sig
+    δ : (X : Set i) → (S : (X → O) → Sig) → Sig
 
-Sig≤ : ∀ A → Arity → Sig A → Set i
-Sig< : ∀ A → Arity → Sig A → Set i
-Sig≤ A B S = A ≡ B ⊎ Sig< A B S
-Sig< ι     B S       = Lift _ ⊥
-Sig< (σ A) B (X , S) = ∃ λ x → Sig≤ A B (S x)
-Sig< (δ A) B (X , S) = {!X → ?!} -- ∃ λ f → Sig≤ A B (S f)
-Sig< (ν A) B S       = ∃ λ i → Sig≤ (A i) B (S i)
+  module _ (S* : Sig) where
 
-postulate
-  proj≤ : ∀ {A B S} → Sig≤ A B S → Sig B
-  proj< : ∀ {A B S} → Sig< A B S → Sig B
-  -- proj≤ {A}   {B} {S}     (inj₁ refl) = S
-  -- proj≤ {A}   {B} {S}     (inj₂ p)    = proj< p
-  -- proj< {σ A} {B} {X , S} (x , p)     = proj≤ p
-  -- proj< {δ A} {B} {X , S} p           = proj≤ p
-  -- proj< {ν A} {B} {S}     (i , p)     = proj≤ p
+     Path    : Sig → Set i
 
-  σ≤ : ∀ {A B S} → (p : Sig≤ A (σ B) S) → proj≤ p .₁ → Sig≤ A B S
-  -- σ< : ∀ {A B S} → (p : Sig< A (σ B) S) → proj< p .₁ → Sig< A B S
-  -- σ≤ {A}   (inj₁ refl) y = inj₂ (y , inj₁ refl)
-  -- σ≤ {A}   (inj₂ p)    y = inj₂ (σ< p y)
-  -- σ< {σ A} (x , p)     y = x , σ≤ p y
-  -- σ< {δ A} p           y = σ≤ p y
-  -- σ< {ν A} (i , p)     y = i , σ≤ p y
+     data Tm : Maybe (Path S*) → Set i
+     El      : ∀ {p} → Tm p → O
 
-  -- δ≤ : ∀ {A B S} → (p : Sig≤ A (δ B) S) → Sig≤ A B S
-  -- δ< : ∀ {A B S} → (p : Sig< A (δ B) S) → Sig< A B S
-  -- δ≤ {A}   (inj₁ refl) = inj₂ (inj₁ refl)
-  -- δ≤ {A}   (inj₂ p)    = inj₂ (δ< p)
-  -- δ< {σ A} (x , p)     = x , δ≤ p
-  -- δ< {δ A} p           = δ≤ p
-  -- δ< {ν A} (i , p)     = i , (δ≤ p)
+     Path (ι o)   = Lift _ ⊥
+     Path (σ X S) = (Σ X λ x → Maybe (Path (S x)))
+     Path (δ X S) = (Σ (X → Tm nothing) λ f → Maybe (Path (S λ x → El (f x))))
 
-  ν≤ : ∀ {A n B S} → (p : Sig≤ A (ν {n} B) S) → ∀ j → Sig≤ A (B j) S
-  ν< : ∀ {A n B S} → (p : Sig< A (ν {n} B) S) → ∀ j → Sig< A (B j) S
-  -- ν≤ {A}   (inj₁ refl) j = inj₂ (j , inj₁ refl)
-  -- ν≤ {A}   (inj₂ p)    j = inj₂ (ν< p j)
-  -- ν< {σ A} (x , p)     j = x , ν≤ p j
-  -- ν< {δ A} p           j = ν≤ p j
-  -- ν< {ν A} (i , p)     j = i , ν≤ p j
+     isι     : ∀ {S} → Maybe (Path S) → Set i
+     isι {ι o  } nothing        = ⊤
+     isι {σ X S} (just (_ , p)) = isι p
+     isι {σ X S} nothing        = Lift _ ⊥
+     isι {δ X S} (just (_ , p)) = isι p
+     isι {δ X S} nothing        = Lift _ ⊥
 
-module _ {A}(S : Sig A) where
+     projι : ∀ {S}(p : Maybe (Path S)) → isι p → O
+     projι {ι o}   nothing        q = o
+     projι {σ X S} (just (_ , p)) q = projι p q
+     projι {δ X S} (just (_ , p)) q = projι p q
 
-  data Tm : ∀ B → Sig≤ A B S → Set i
-  El : ∀ B p → Tm B p → O
+     isσ     : ∀ {S} → Maybe (Path S) → Set i
+     isσ {ι x  } p = Lift _ ⊥
+     isσ {σ X S} (just (_ , p)) = isσ p
+     isσ {σ X S} nothing = ⊤
+     isσ {δ X S} (just (_ , p)) = isσ p
+     isσ {δ X S} nothing = Lift _ ⊥
 
-  data Tm where
-    ι : ∀ {p} → Tm ι p
-    σ : ∀ {B p}(x : proj≤ p .₁) → Tm B (σ≤ p x) → Tm (σ B) p
-    ν : ∀ {n B p} i → Tm (B i) (ν≤ p i) → Tm (ν {n} B) p
-    δ : ∀ {B p}(f : proj≤ p .₁ → Tm A (inj₁ refl)) → Tm B {!!} → Tm (δ B) p
+     projσ : ∀ {S}(p : Maybe (Path S)) → isσ p → Σ (Set i) λ P → P → Path S
+     projσ {σ X S} (just (y , p)) q = projσ p q .₁ , λ x → y , just (projσ p q .₂ x)
+     projσ {σ X S} nothing        q = X , λ x → x , nothing
+     projσ {δ X S} (just (y , p)) q = projσ p q .₁ , λ x → y , just (projσ p q .₂ x)
 
-  El B p ι       = proj≤ p .lower
-  El B p (σ x t) = El _ _ t
-  El B p (ν i t) = El _ _ t
-  El B p (δ f t) = {!!}
+     isδ     : ∀ {S} → Maybe (Path S) → Set i
+     isδ {ι x  } p = Lift _ ⊥
+     isδ {σ X S} (just (_ , p)) = isδ p
+     isδ {σ X S} nothing = Lift _ ⊥
+     isδ {δ X S} (just (_ , p)) = isδ p
+     isδ {δ X S} nothing = ⊤
 
-    -- ι : ∀ {p} → Tm ι p
-    -- σ : ∀ {B p}(x : proj≤ p .₁) → Tm B (σ≤ p x) → Tm (σ B) p
-    -- -- δ : ∀ {B p} → (proj≤ p .₁ → Tm A (inj₁ refl)) → Tm B (δ≤ p) → Tm (δ B) p
-    -- ν : ∀ {n B p} i → Tm (B i) (ν≤ p i) → Tm (ν {n} B) p
+     projδ : ∀ {S}(p : Maybe (Path S)) → isδ p → Σ (Set i) λ P → (P → Tm nothing) → Path S
+     projδ {σ X S} (just (y , p)) q = projδ p q .₁ , λ x → y , just (projδ p q .₂ x)
+     projδ {δ X S} (just (y , p)) q = projδ p q .₁ , λ x → y , just (projδ p q .₂ x)
+     projδ {δ X S} nothing        q = X , λ x → x , nothing
+
+     data Tm where
+       ι : (p : Maybe (Path S*)) → isι p → Tm p
+       σ : (p : Maybe (Path S*))(q : isσ p)(x : projσ p q .₁) → Tm (just (projσ p q .₂ x)) → Tm p
+       δ : (p : Maybe (Path S*))(q : isδ p)(f : projδ p q .₁ → Tm nothing) → Tm (just (projδ p q .₂ f)) → Tm p
+
+     El (ι p q)     = projι p q
+     El (σ _ _ _ t) = El t
+     El (δ _ _ _ t) = El t
+
+ -- module V2 (i j : Level) (O : Set j) where
+
+ --  data Sig : Set (suc i ⊔ j) where
+ --    ι : O → Sig
+ --    σ : (X : Set i) → (S : X → Sig) → Sig
+ --    δ : (X : Set i) → (S : (X → O) → Sig) → Sig
+
+ --  module Path (tm : Set i) (el : tm → O) where
+
+ --    Ty : Sig → O
+ --    Ty (ι x)   = {!!}
+ --    Ty (σ X S) = {!!}
+ --    Ty (δ X S) = {!!}

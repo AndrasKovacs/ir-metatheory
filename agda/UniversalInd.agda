@@ -1,68 +1,114 @@
 
 module UniversalInd where
 
-open import Lib
-open import Data.Fin using (Fin; zero; suc)
+open import Lib renaming (fst to ₁; snd to ₂)
 open import Data.Sum
 open import Data.Empty
-open import Data.Nat
+open import Data.Maybe
 
-data Arity : Set where
-  ι : Arity
-  σ : Arity → Arity
-  δ : Arity → Arity
-  ν : ∀ {n} → (Fin n → Arity) → Arity
 
-Sig : Arity → Set₁
-Sig ι     = Lift _ ⊤
-Sig (σ A) = Σ Set λ B → B → Sig A
-Sig (δ A) = Set × Sig A
-Sig (ν A) = ∀ i → Sig (A i)
+module M1 where
 
-Sig≤ : ∀ A → Arity → Sig A → Set
-Sig< : ∀ A → Arity → Sig A → Set
-Sig≤ A B S = A ≡ B ⊎ Sig< A B S
-Sig< ι     B S       = ⊥
-Sig< (σ A) B (X , S) = ∃ (Sig≤ A B ∘ S)
-Sig< (δ A) B (X , S) = Sig≤ A B S
-Sig< (ν A) B S       = ∃ λ i → Sig≤ (A i) B (S i)
+  data Sig : Set₁ where
+    ι : Sig
+    σ : (X : Set) → (X → Sig) → Sig
+    δ : Set → Sig → Sig
 
-proj≤ : ∀ {A B S} → Sig≤ A B S → Sig B
-proj< : ∀ {A B S} → Sig< A B S → Sig B
-proj≤ {A}   {B} {S}     (inj₁ refl) = S
-proj≤ {A}   {B} {S}     (inj₂ p)    = proj< p
-proj< {σ A} {B} {X , S} (x , p)     = proj≤ p
-proj< {δ A} {B} {X , S} p           = proj≤ p
-proj< {ν A} {B} {S}     (i , p)     = proj≤ p
+  data Tag : Set where ι σ δ : Tag
 
-σ≤ : ∀ {A B S} → (p : Sig≤ A (σ B) S) → proj≤ p .₁ → Sig≤ A B S
-σ< : ∀ {A B S} → (p : Sig< A (σ B) S) → proj< p .₁ → Sig< A B S
-σ≤ {A}   (inj₁ refl) y = inj₂ (y , inj₁ refl)
-σ≤ {A}   (inj₂ p)    y = inj₂ (σ< p y)
-σ< {σ A} (x , p)     y = x , σ≤ p y
-σ< {δ A} p           y = σ≤ p y
-σ< {ν A} (i , p)     y = i , σ≤ p y
+  Path : Sig → Tag → Set
+  Path ι       c = c ≡ ι
+  Path (σ X S) c = c ≡ σ ⊎ ∃ λ x → Path (S x) c
+  Path (δ X S) c = c ≡ δ ⊎ Path S c
 
-δ≤ : ∀ {A B S} → (p : Sig≤ A (δ B) S) → Sig≤ A B S
-δ< : ∀ {A B S} → (p : Sig< A (δ B) S) → Sig< A B S
-δ≤ {A}   (inj₁ refl) = inj₂ (inj₁ refl)
-δ≤ {A}   (inj₂ p)    = inj₂ (δ< p)
-δ< {σ A} (x , p)     = x , δ≤ p
-δ< {δ A} p           = δ≤ p
-δ< {ν A} (i , p)     = i , (δ≤ p)
+  here : ∀ S → ∃ (Path S)
+  here ι       = ι , refl
+  here (σ _ _) = σ , inj₁ refl
+  here (δ _ _) = δ , inj₁ refl
 
-ν≤ : ∀ {A n B S} → (p : Sig≤ A (ν {n} B) S) → ∀ j → Sig≤ A (B j) S
-ν< : ∀ {A n B S} → (p : Sig< A (ν {n} B) S) → ∀ j → Sig< A (B j) S
-ν≤ {A}   (inj₁ refl) j = inj₂ (j , inj₁ refl)
-ν≤ {A}   (inj₂ p)    j = inj₂ (ν< p j)
-ν< {σ A} (x , p)     j = x , ν≤ p j
-ν< {δ A} p           j = ν≤ p j
-ν< {ν A} (i , p)     j = i , ν≤ p j
+  projσ : ∀ {S} → Path S σ → Σ Set λ X → Σ (X → Sig) λ S' → ∀ x → Path S (here (S' x) .₁)
+  projσ {σ X S} (inj₁ p)       = X , S , λ x → inj₂ (x , here (S x) .₂)
+  projσ {σ X S} (inj₂ (x , p)) = (projσ p .₁) , (projσ p .₂ .₁) , λ x' → inj₂ (x , projσ p .₂ .₂ x')
+  projσ {δ X S} (inj₂ p)       = projσ p .₁ , projσ p .₂ .₁ , inj₂ ∘ projσ p .₂ .₂
 
-module _ {A}(S : Sig A) where
+  projδ : ∀ {S} → Path S δ → Set × ∃ λ S' → Path S (here S' .₁)
+  projδ {σ X S} (inj₂ (x , p)) = (projδ p .₁) , projδ p .₂ .₁ , inj₂ (x , projδ p .₂ .₂)
+  projδ {δ X S} (inj₁ p) = X , S , inj₂ (here S .₂)
+  projδ {δ X S} (inj₂ p) = projδ p .₁ , projδ p .₂ .₁ , inj₂ (projδ p .₂ .₂)
 
-  data Tm : ∀ B → Sig≤ A B S → Set where
-    ι : ∀ {p} → Tm ι p
-    σ : ∀ {B p}(x : proj≤ p .₁) → Tm B (σ≤ p x) → Tm (σ B) p
-    δ : ∀ {B p} → (proj≤ p .₁ → Tm A (inj₁ refl)) → Tm B (δ≤ p) → Tm (δ B) p
-    ν : ∀ {n B p} i → Tm (B i) (ν≤ p i) → Tm (ν {n} B) p
+  -- data Sig≤ {S} : ∀ {c} → Path S c → Set where
+  --   ι : ∀ {p} → Sig≤ {_}{ι} p
+  --   σ : ∀ {p} → (∀ x → Sig≤ (projσ p .₂ .₂ x)) → Sig≤ {_}{σ} p
+  --   δ : ∀ {p} → Sig≤ (projδ p .₂ .₂) → Sig≤ {_} {δ} p
+
+  -- data Path' : Sig → Sig → Tag → Set₁ where
+  --   ι : Path' ι ι ι
+  --   σ : ∀ {X S} x → Path' (S x) c S' → Path' (σ S X) σ S'
+
+  module _ {S : Sig} where
+
+    data Tm : ∀ {c} → Path S c → Set where
+      ι : ∀ {p} → Tm {ι} p
+      σ : ∀ {p} x → Tm (projσ p .₂ .₂ x) → Tm {σ} p
+      δ : ∀ {p} → (projδ p .₁ → Tm (here S .₂)) → Tm (projδ p .₂ .₂) → Tm {δ} p
+
+    data Snoc : ∀ {c} → Path S c → Set where
+      nil : ∀ {c p} → Snoc {c} p
+
+
+    module Elim {k : Level} where
+
+      Motive : ∀ {c} (p : Path S c) → Set (suc k)
+      Motive p = Tm p → Set k
+
+module M2 where
+
+  data Tag : Set where ι σ δ : Tag
+
+  private variable
+     c c' : Tag
+
+  data Sig : Tag → Set₁ where
+    ι : Sig ι
+    σ : (X : Set){c : X → Tag} → ((x : X) → Sig (c x)) → Sig σ
+    δ : Set → Sig c → Sig δ
+
+  Path  : ∀ {c} → Sig c → Tag → Set
+  Path' : ∀ {c} → Sig c → Tag → Set
+  Path {c} S c' = c ≡ c' ⊎ Path' S c'
+  Path' ι       c' = ⊥
+  Path' (σ X S) c' = ∃ λ x → Path (S x) c'
+  Path' (δ X S) c' = Path S c'
+
+  proj  : (S : Sig c) → Path  S c' → Sig c'
+  proj' : (S : Sig c) → Path' S c' → Sig c'
+  proj S (inj₁ refl) = S
+  proj S (inj₂ p)    = proj' S p
+  proj' (σ X S) (x , p) = proj (S x) p
+  proj' (δ X S) p       = proj S p
+
+  module _ {c}{S : Sig c} where
+
+    data Tm : ∀ {c'} → Path S c' → Set where
+      ι : ∀ {p} → Tm {ι} p
+      σ : ∀ {p} x → {!proj _ p!} → Tm {σ} p
+      -- δ : ∀ {p} → (projδ p .₁ → Tm (here S .₂)) → Tm (projδ p .₂ .₂) → Tm {δ} p
+
+  --   data Snoc : ∀ {c} → Path S c → Set where
+  --     nil : ∀ {c p} → Snoc {c} p
+
+
+  --   module Elim {k : Level} where
+
+  --     Motive : ∀ {c} (p : Path S c) → Set (suc k)
+  --     Motive p = Tm p → Set k
+
+  -- -- Path  : Sig → Tag → Set
+  -- -- Path' : Sig → Tag → Set
+  -- -- Path S c = tag S ≡ c ⊎ Path' S c
+  -- -- Path' ι       c = ⊥
+  -- -- Path' (σ X S) c = ∃ λ x → Path (S x) c
+  -- -- Path' (δ X S) c = Path S c
+
+  -- -- proj : ∀ {S c} → Path S c → Sig
+  -- -- proj

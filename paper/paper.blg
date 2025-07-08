@@ -6,11 +6,11 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Database file #1: references.bib
-Repeated entry---line 5570 of file references.bib
+Repeated entry---line 5550 of file references.bib
  : @incollection{martin1975intuitionistic
  :                                       ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 5772 of file references.bib
+Repeated entry---line 5752 of file references.bib
  : @article{DBLP:journals/corr/abs-2302-08837
  :                                           ,
 I'm skipping whatever remains of this entry
@@ -21,14 +21,20 @@ Reallocated global_strs (elt_size=200001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=4) to 20 items from 10.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Warning--empty address in ttintt
+Warning--page numbers missing in both pages and numpages fields in DBLP:journals/lmcs/AltenkirchK17
 Warning--empty address in SGA4
+Warning--empty address in bernardy12parametricity
+Warning--empty address in DBLP:conf/fscd/BocquetKS23
 Warning--empty address in DBLP:conf/tphol/BoveC01
 Warning--empty address in DBLP:conf/tphol/BoveDN09
 Warning--empty address in DBLP:conf/ecoop/Brady21
 Warning--page numbers missing in both pages and numpages fields in cwfs
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/corr/abs-2502-20485
+Warning--empty publisher in cohen2024trocq
+Warning--empty address in cohen2024trocq
 Warning--empty address in Dybjer96internaltype
 Warning--empty address in dybjer99finite
+Warning--empty address in DBLP:conf/lics/Gratzer22
 Warning--empty address in DBLP:conf/tlca/HancockMGMA13
 Warning--empty address in whynotw
 Warning--empty address in gluing
@@ -36,45 +42,48 @@ Warning--empty address in DBLP:conf/mpc/KaposiKK19
 Warning--empty address in first-class-univ
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/corr/abs-2302-08837
 Warning--empty address in martinlof84sambin
-You've used 32 entries,
+Warning--empty publisher in pedrot2018failure
+Warning--empty address in pedrot2018failure
+Warning--empty address in ctt-normalization
+You've used 54 entries,
             6273 wiz_defined-function locations,
-            1788 strings with 26071 characters,
-and the built_in function-call counts, 35841 in all, are:
-= -- 4955
-> -- 888
+            1942 strings with 30919 characters,
+and the built_in function-call counts, 59867 in all, are:
+= -- 8247
+> -- 1465
 < -- 1
-+ -- 285
-- -- 325
-* -- 2438
-:= -- 3316
-add.period$ -- 165
-call.type$ -- 32
-change.case$ -- 190
-chr.to.int$ -- 29
-cite$ -- 48
-duplicate$ -- 3239
-empty$ -- 2290
-format.name$ -- 394
-if$ -- 8900
-int.to.chr$ -- 5
++ -- 468
+- -- 534
+* -- 3990
+:= -- 5536
+add.period$ -- 282
+call.type$ -- 54
+change.case$ -- 321
+chr.to.int$ -- 52
+cite$ -- 79
+duplicate$ -- 5451
+empty$ -- 3839
+format.name$ -- 652
+if$ -- 14865
+int.to.chr$ -- 4
 int.to.str$ -- 1
-missing$ -- 121
-newline$ -- 323
-num.names$ -- 243
-pop$ -- 1100
+missing$ -- 192
+newline$ -- 519
+num.names$ -- 404
+pop$ -- 1862
 preamble$ -- 1
-purify$ -- 440
+purify$ -- 749
 quote$ -- 0
-skip$ -- 1172
+skip$ -- 2006
 stack$ -- 0
-substring$ -- 2937
-swap$ -- 329
+substring$ -- 4900
+swap$ -- 552
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 690
-warning$ -- 16
-while$ -- 264
+type$ -- 1227
+warning$ -- 25
+while$ -- 435
 width$ -- 0
-write$ -- 703
+write$ -- 1153
 (There were 2 error messages)
