@@ -161,8 +161,8 @@
 
 
 \begin{abstract}
-We prove canonicity for a Martin-Löf type theory that supports a countable universe hierarchy where
-each universe supports indexed inductive-recursive (IIR) types. We proceed in two steps. First, we
+We prove canonicity for a Martin-Löf type theory with a countable universe hierarchy where each
+universe supports indexed inductive-recursive (IIR) types. We proceed in two steps. First, we
 construct IIR types from inductive-recursive (IR) types and other basic type formers, in order to
 simplify the subsequent canonicity proof. The constructed IIR types support the same definitional
 computation rules that are available in Agda's native IIR implementation. Second, we give a
@@ -690,13 +690,13 @@ content. In the metatheory we have equality reflection so we can be more loose.
 of features is not covered by any particular reference. However, it is reasonable to expect that
 previous works can be combined and generalized to obtain consistency for our metatheory.
 \begin{itemize}
-\item \citet{DBLP:journals/jlp/DybjerS06} gave a set-theoretic model for IIR. Here, there is a universe of
-  small types which supports IIR types, which is modeled using a Mahlo cardinal $\msf{M}$, and a universe of
-  large types that contains signatures, which is modeled using an inaccessible cardinal above
-  $\msf{M}$. The construction is agnostic in the number of modeled universes, and it can be adapted to
-  having a countable number of Mahlo cardinals and two inaccessible cardinals above the Mahlo
-  cardinals, to model our universe hierarchy. Also, having an internal type for finite universe
-  levels is naturally supported in the set-theoretic model.
+\item \citet{DBLP:journals/jlp/DybjerS06} gave a set-theoretic model for IIR. Here, there is a
+  universe of small types which supports IIR types, which is modeled using a Mahlo cardinal
+  $\msf{M}$, and a universe of large types that contains the type of signatures, which is modeled
+  using an inaccessible cardinal above $\msf{M}$. The construction is not committed to this specific
+  setup, and it can be adapted to having a countable number of Mahlo cardinals and two inaccessible
+  cardinals above the Mahlo cardinals, in order to model our universe hierarchy. Also, having an
+  internal type for finite universe levels is naturally supported in the set-theoretic model.
 \item Regarding the object syntax as a quotient inductive-inductive type (QIIT), it is a small and
   finitary QIIT, which is constructible from fairly weak metatheoretic
   assumptions\footnote{Concretely, two universes, UIP, function extensionality, propositional
