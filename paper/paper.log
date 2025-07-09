@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  9 JUL 2025 02:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.6.5)  9 JUL 2025 19:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1317,7 +1317,7 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
  [3.3] [4.4] [5.5] [6.6] [7.7]
 [8.8] [9.9] [10.10] [11.11] [12.12] [13.13] [14.14] [15.15] [16.16] [17.17]
 [18.18] [19.19] [20.20]
-Overfull \hbox (30.78094pt too wide) in paragraph at lines 1269--1272
+Overfull \hbox (30.78094pt too wide) in paragraph at lines 1270--1273
 \T1/LinuxLibertineT-TLF/m/n/10 (-20) Now, $[] \LMS/ntxsy/m/n/10 ¹b\OML/nxlmi/m/
 it/10 S[] []\LMS/ntxsy/m/n/10 c []º \OML/nxlmi/m/it/10 t$ \T1/LinuxLibertineT-T
 LF/m/n/10 (-20) im-plies that $\OML/nxlmi/m/it/10 t$ \T1/LinuxLibertineT-TLF/m/
@@ -1355,13 +1355,22 @@ Class acmart Warning: ACM keywords are mandatory for papers over two pages.
 Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 
 [26.26] (./paper.aux)
-Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 7D64A8083535D7E179DB0D291927B8B9;4388.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `paper.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `paper.out':
+(rerunfilecheck)             Before: 7D64A8083535D7E179DB0D291927B8B9;4388
+(rerunfilecheck)             After:  284BCFE594CC4B1BE7530127D2C1DC9B;4431.
  ) 
 Here is how much of TeX's memory you used:
  31989 strings out of 478287
  583991 string characters out of 5849290
- 914076 words of memory out of 5000000
+ 914077 words of memory out of 5000000
  48546 multiletter control sequences out of 15000+600000
  703210 words of font info for 571 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
@@ -1387,7 +1396,7 @@ tx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (26 pages, 678744 bytes).
+Output written on paper.pdf (26 pages, 678920 bytes).
 PDF statistics:
  700 PDF objects out of 1000 (max. 8388607)
  629 compressed objects within 7 object streams

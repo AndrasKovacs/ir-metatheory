@@ -658,7 +658,8 @@ polymorphism.
 \section{Canonicity}\label{sec:canonicity}
 
 In this section we prove canonicity for the object theory extended with IR types. First, we specify
-the metatheory and the object theory in more detail.
+the metatheory and the object theory in more detail. Second, we give a logical predicate
+interpretation which yields canonicity.
 
 \subsection{Metatheory}\label{sec:metatheory}
 
@@ -840,7 +841,7 @@ binders. As to the rest of the specification, we already saw it in Section
 \item $\IR$, $\El$, $\intro$ and $\elim$ are all specified as term constants that are only parameterized over contexts and some universe levels.
 \end{itemize}
 
-\subsection{Canonicity of the Object Theory}\label{sec:canonicity-model}
+\subsection{The Interpretation of the Object Theory}\label{sec:canonicity-model}
 
 On a high level, canonicity is proved by induction over the syntax of the object theory. Since the
 syntax is a quotient inductive-inductive type, it supports an induction principle, which we do not
