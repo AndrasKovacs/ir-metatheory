@@ -56,9 +56,16 @@ Formalization in Agda?
 
 1.4 Parameterized list
 
+  Assume (A : Ty Γ i)
+    (Vec A) : Ty Γ i
 
+  data Vᴾ : ∀ c (γ : Γ c) → Set i where
+    nilᴾ  : ∀ {c γ} → Vᴾ c γ
+    consᴾ : ∀ {c γ} → (a : A γ) → Vᴾ c γ → Vᴾ c γ
 
-
+  _<_> : Vᴾ c γ → (f : c' → c) → Vᴾ c γ<f>
+  (nilᴾ{c γ})<f> = nilᴾ {c} {γ<f>}
+  (consᴾ a fv)<f> = consᴾ a<f> fv<f>
 
 1.5
   What's a nice definition of W-types in presheaves?
