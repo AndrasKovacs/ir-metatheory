@@ -192,8 +192,8 @@ Use-cases:
 \begin{itemize}
 \item Metatheory for TTs with various universe hierarchies:
   \begin{itemize}
-    \item Normalization for TTs with countable hierarchies \cite{martin1975intuitionistic,DBLP:journals/pacmpl/0001OV18,DBLP:journals/pacmpl/PujetT23,DBLP:journals/pacmpl/AbelDE23}.
-    \item Consistency \cite{first-class-univ}, canonicity \cite{DBLP:journals/corr/abs-2502-20485} for first-class universe levels.
+    \item Normalization for TTs with countable universes \cite{martin1975intuitionistic,DBLP:journals/pacmpl/0001OV18,DBLP:journals/pacmpl/PujetT23,DBLP:journals/pacmpl/AbelDE23}.
+    \item Consistency \cite{first-class-univ} and canonicity \cite{DBLP:journals/corr/abs-2502-20485} for first-class universe levels.
   \end{itemize}
 \item Others: partial functions \cite{DBLP:conf/tphol/BoveC01}, generic programming \cite{DBLP:journals/njc/BenkeDJ03,diehl2017fully}, large countable ordinals \cite{ir-ordinals,btb-ordinal}.
 \end{itemize}
@@ -203,7 +203,8 @@ Use-cases:
 \textbf{Canonicity}: can we evaluate every closed term in MLTT+IR to a value?
 \vspace{1em}
 
-Yes, ``obviously'': IR has been supported for a long time in Agda with no canonicity issues.
+IR has been supported for a long time in Agda with no canonicity issues,
+but without formal proof.
 \vspace{1em}
 \pause
 
@@ -360,8 +361,6 @@ Here, since we work in plain MLTT without function extensionality and UIP, we ha
 \begin{center}
   \Large{\textbf{Thank you!}}
 \end{center}
-
-
 \end{frame}
 
 \bibliographystyle{ACM-Reference-Format}
