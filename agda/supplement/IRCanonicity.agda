@@ -45,7 +45,7 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
     push (in-δ p f fᵒ) acc = push p (f , acc)
 
     F-push : ∀ {S}{Sᵒ}(p : Path {S} Sᵒ) → ∀ {x} → F  x ≡ F {S = S*} (push p x)
-    F-push here           = refl
+    F-push here          = refl
     F-push (in-σ p a aᵒ) = F-push p
     F-push (in-δ p f fᵒ) = F-push p
 
