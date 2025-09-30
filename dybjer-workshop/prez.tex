@@ -153,7 +153,7 @@
   \inst%
        {University of Gothenburg \& Chalmers University of Technology}
 }
-\date{1st Oct 2025, Workshop in Honour of Peter Dybjer}
+\date{1st Oct 2025, Workshop in Honour of Peter Dybjer, Gothenburg}
 \begin{document}
 
 
@@ -193,7 +193,7 @@ Use-cases:
 \item Metatheory for TTs with various universe hierarchies:
   \begin{itemize}
     \item Normalization for TTs with countable universes \cite{martin1975intuitionistic,DBLP:journals/pacmpl/0001OV18,DBLP:journals/pacmpl/PujetT23,DBLP:journals/pacmpl/AbelDE23}.
-    \item Consistency \cite{first-class-univ} and canonicity \cite{DBLP:journals/corr/abs-2502-20485} for first-class universe levels.
+    \item Consistency \cite{first-class-univ} and canonicity \cite{DBLP:journals/corr/abs-2502-20485} for notions of first-class universe levels.
   \end{itemize}
 \item Others: partial functions \cite{DBLP:conf/tphol/BoveC01}, generic programming \cite{DBLP:journals/njc/BenkeDJ03,diehl2017fully}, large countable ordinals \cite{ir-ordinals,btb-ordinal}.
 \end{itemize}
@@ -218,8 +218,8 @@ The type of \textbf{IR signatures} is an inductive type.
 \begin{alignat*}{4}
   &\data\, \Sig\,i\,\{j\}\,(O : \Set_j) : \Set_{(i+1\,\sqcup\,j)}\,\where\\
   &\quad \iota\hspace{0.25em}  : O \to \Sig\,i\,O \\
-  &\quad \sigma               : (A : \Set\,i) \to (A \to \Sig\,i\,O) \to \Sig\,i\,O \\
-  &\quad \delta\hspace{0.1em} : (A : \Set\,i) \to ((A \to O) \to \Sig\,i\,O) \to \Sig\,i\,O
+  &\quad \sigma               : (A : \Set_i) \to (A \to \Sig\,i\,O) \to \Sig\,i\,O \\
+  &\quad \delta\hspace{0.1em} : (A : \Set_i) \to ((A \to O) \to \Sig\,i\,O) \to \Sig\,i\,O
 \end{alignat*}
 
 The signature of the previous $\ms{Code}$ example:
@@ -246,13 +246,11 @@ E.g.\ a closed term $t : \Code$ should be either $\Nat'$ or $\Pi'$.
 Type-theoretic Artin gluing \cite{coquand2018canonicity,gluing}:
 \begin{itemize}
   \item A closed type is interpreted as a proof-relevant predicate over its closed terms.
+        The predicate should imply canonicity.
   \item A closed term is interpreted as a predicate witness.
   \item Open types \& terms are generalized over closed substitutions.
 \end{itemize}
-\vspace{1em}
 
-For each type former, we have to choose a predicate that implies canonicity.
-\vspace{1em}
 
 \end{frame}
 
@@ -277,15 +275,15 @@ Generally: the canonicity predicate for an inductive type is a \alert{metatheore
 
 \textbf{Example:} the canonicity predicate for $\Code$ is the following \alert{metatheoretic indexed IR type}:
 \begin{alignat*}{4}
-  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set$}\\
+  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set\,\where$}\\
   &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
   &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\\
   &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
   &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
   &\rlap{}\\
   &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set)$}\\
-  &\rlap{$\El^\w\,\Nat'^\w\,t \hspace{2.55em}= \Nat^\w\,t$}  \\
-  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,f = \{a : \Tm\,A\} \to \El^\w\,A^\w\,a \to \El^\w\,B^\w\,(f\,a)$}
+  &\rlap{$\El^\w\,\Nat'^\w \hspace{2.7em}= \Nat^\w$}  \\
+  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,= \lambda\,f.\,\{a : \Tm\,A\} \to \El^\w\,A^\w\,a \to \El^\w\,B^\w\,(f\,a)$}
 \end{alignat*}
 If I have $t : \Tm\,\Code$, the gluing interpretation hands me an element of $\Code^\w\,t$.
 
@@ -295,7 +293,8 @@ If I have $t : \Tm\,\Code$, the gluing interpretation hands me an element of $\C
 
 In the object theory, let's assume general IR types specified by an internal $\Sig$ type.
 \begin{itemize}
-\item Previously: the object theory supports $\Code$, the canonicity proof involves $\Code^\w$.
+\item Previous slide: the object theory supports $\Code$, the canonicity proof involves $\Code^\w$.
+\pause
 \item Now: the object theory has all IR types, the canonicity proof involves all canonicity predicates.
 \end{itemize}
 \vspace{1em}
@@ -327,8 +326,11 @@ The construction is a moderately technical ``generic programming'' exercise,
 where we have to do some tricky induction over signatures.
 \vspace{1em}
 
-We use metatheoretic IR to show canonicity of object-theoretic IR.  The metatheory has
-to have more universes; in our case the metatheory has extra levels $\omega$ and $\omega+1$\footnote{But $\omega+1$ is only for convenience and could be omitted.}.
+We use metatheoretic IR to show canonicity of object-theoretic IR. The metatheory has
+to have more universes; in our case the metatheory has extra levels $\omega$ and $\omega+1$\footnote{But $\omega+1$ is only used for convenience and could be omitted.}.
+\vspace{1em}
+
+The canonicity interpretation of IR is formalized in Agda using a shallow embedding of $\Ty$ and $\Tm$.
 
 \end{frame}
 
@@ -338,7 +340,11 @@ What about canonicity for \textbf{indexed} IR types?
 \vspace{1em}
 
 We only show canonicity for plain IR types, but also show that indexed IR types are
-\emph{constructible} in MLTT+IR, with \emph{definitional computation rules}.
+constructible in MLTT+IR.
+\vspace{1em}
+
+The construction supports strict computation rules for all IIR types that
+are definable in Agda. For \emph{neutral} signatures we only get propositional computation.
 
 \vspace{1em}
 We use the well-known construction that converts indices to parameters and propositional identities.\footnote{Popularized as ``fording'' by Conor McBride.}
@@ -352,7 +358,12 @@ Here, since we work in plain MLTT without function extensionality and UIP, we ha
 
 \vspace{-1em}
 \begin{itemize}
-\item Future work: normalization for IR types. For this, we first have to show that presheaf models have IR types (which is already quite technical!).
+\item Future work:
+  \begin{itemize}
+    \item Normalization for IR types. For this, we first have to show that presheaf models have IR types (which is already quite technical!).
+    \item Generalize the canonicity proof to a model construction (i.e.\ extend general type-theoretic gluing with IR types). This seems to
+          be incompatible with first-class signatures.
+  \end{itemize}
 \item Paper: under review, I'll publish a preprint in a few weeks.
 \end{itemize}
 \vspace{3em}
