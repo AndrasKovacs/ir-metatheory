@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.27)  30 SEP 2025 17:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.27)  1 OCT 2025 00:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1994,11 +1994,15 @@ LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 375.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 375.
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 375.
 
 
 [17
 
 ]
+LaTeX Font Info:    No math alphabet change to frozen version normal on input l
+ine 375.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
 ine 375.
 LaTeX Font Info:    No math alphabet change to frozen version normal on input l
@@ -2055,7 +2059,7 @@ Package rerunfilecheck Info: File `prez.out' has not changed.
 Here is how much of TeX's memory you used:
  22924 strings out of 475171
  435113 string characters out of 5767095
- 808834 words of memory out of 5000000
+ 808832 words of memory out of 5000000
  45341 multiletter control sequences out of 15000+600000
  585252 words of font info for 123 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -2073,7 +2077,7 @@ fonts/cm/cmssi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi
 are/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/pub
 lic/cm-super/sfso1000.pfb>
-Output written on prez.pdf (22 pages, 188382 bytes).
+Output written on prez.pdf (22 pages, 188538 bytes).
 PDF statistics:
  285 PDF objects out of 1000 (max. 8388607)
  221 compressed objects within 3 object streams
