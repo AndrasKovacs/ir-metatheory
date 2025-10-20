@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{55}
+\begin{thebibliography}{58}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -102,6 +102,18 @@
   \bibinfo{volume}{13}, \bibinfo{number}{4} (\bibinfo{year}{2017}).
 \newblock
 \href{https://doi.org/10.23638/LMCS-13(4:1)2017}{doi:\nolinkurl{10.23638/LMCS-13(4:1)2017}}
+
+
+\bibitem[Altenkirch and McBride(2006)]%
+        {towards-ott}
+\bibfield{author}{\bibinfo{person}{Thorsten Altenkirch} {and}
+  \bibinfo{person}{Conor McBride}.} \bibinfo{year}{2006}\natexlab{}.
+\newblock \bibinfo{title}{Towards Observational Type Theory}.
+\newblock
+\urldef\tempurl%
+\url{http://www.strictlypositive.org/ott.pdf}
+\showURL{%
+\tempurl}
 
 
 \bibitem[Artin et~al\mbox{.}(1971)]%
@@ -645,6 +657,19 @@
 \newblock
 
 
+\bibitem[Pujet et~al\mbox{.}(2025)]%
+        {DBLP:journals/toplas/PujetLT25}
+\bibfield{author}{\bibinfo{person}{Lo{\"{\i}}c Pujet}, \bibinfo{person}{Yann
+  Leray}, {and} \bibinfo{person}{Nicolas Tabareau}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Observational Equality Meets {CIC}}.
+\newblock \bibinfo{journal}{\emph{{ACM} Trans. Program. Lang. Syst.}}
+  \bibinfo{volume}{47}, \bibinfo{number}{2} (\bibinfo{year}{2025}),
+  \bibinfo{pages}{6:1--6:35}.
+\newblock
+\href{https://doi.org/10.1145/3719342}{doi:\nolinkurl{10.1145/3719342}}
+
+
 \bibitem[Pujet and Tabareau(2023)]%
         {DBLP:journals/pacmpl/PujetT23}
 \bibfield{author}{\bibinfo{person}{Lo{\"{\i}}c Pujet} {and}
@@ -749,6 +774,19 @@
 \newblock \bibinfo{publisher}{\url{https://homotopytypetheory.org/book}},
   \bibinfo{address}{Institute for Advanced Study}.
 \newblock
+
+
+\bibitem[Vytiniotis et~al\mbox{.}(2011)]%
+        {vytiniotis2011outsidein}
+\bibfield{author}{\bibinfo{person}{Dimitrios Vytiniotis},
+  \bibinfo{person}{Simon~L. {Peyton Jones}}, \bibinfo{person}{Tom Schrijvers},
+  {and} \bibinfo{person}{Martin Sulzmann}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{OutsideIn(X) Modular type inference with local
+  assumptions}.
+\newblock \bibinfo{journal}{\emph{J. Funct. Program.}} \bibinfo{volume}{21},
+  \bibinfo{number}{4-5} (\bibinfo{year}{2011}), \bibinfo{pages}{333--412}.
+\newblock
+\href{https://doi.org/10.1017/S0956796811000098}{doi:\nolinkurl{10.1017/S0956796811000098}}
 
 
 \bibitem[Werner(1994)]%

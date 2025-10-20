@@ -54,13 +54,29 @@ elim {S = S} P f (intro x) = f x (map (elim P f) x)
 
 ----------------------------------------------------------------------------------------------------
 
-module Ex-2-2 where
+module Ex-2-3 where
 
   import Data.Nat as N
+  open import Data.Nat using (ℕ)
 
-  data Tag : Set where Nil' Cons' : Tag
+  data Tag : Set where nil' cons' : Tag
 
   S : (A : Set) → Sig zero {zero}{zero} N.ℕ (λ _ → ⊤)
   S A = σ Tag λ where
-    Nil'  → ι N.zero tt
-    Cons' → σ N.ℕ λ n → σ A λ _ → δ ⊤ (λ _ → n) λ _ → ι (N.suc n) tt
+    nil'  → ι N.zero tt
+    cons' → σ ℕ λ n → σ A λ _ → δ ⊤ (λ _ → n) λ _ → ι (N.suc n) tt
+
+module Ex-2-4 where
+
+  import Data.Nat as N
+  open import Data.Nat using (ℕ)
+  open Ex-2-3
+
+  Vec : Set → ℕ → Set
+  Vec A n = IIR (S A) n
+
+  nil : ∀{A} → Vec A 0
+  nil = intro (nil' , ↑ refl)
+
+  cons : ∀{A} → (n : ℕ) → A → Vec A n → Vec A (N.suc n)
+  cons n a as = intro (cons' , n , a , (λ _ → as) , ↑ refl)

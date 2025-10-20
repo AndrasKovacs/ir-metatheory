@@ -46,45 +46,45 @@ Warning--empty address in martinlof84sambin
 Warning--empty publisher in pedrot2018failure
 Warning--empty address in pedrot2018failure
 Warning--empty address in ctt-normalization
-You've used 55 entries,
+You've used 58 entries,
             6273 wiz_defined-function locations,
-            1945 strings with 30941 characters,
-and the built_in function-call counts, 60570 in all, are:
-= -- 8322
-> -- 1494
+            1967 strings with 31549 characters,
+and the built_in function-call counts, 63945 in all, are:
+= -- 8831
+> -- 1595
 < -- 1
-+ -- 478
-- -- 547
-* -- 4031
-:= -- 5621
-add.period$ -- 283
-call.type$ -- 55
-change.case$ -- 327
-chr.to.int$ -- 52
-cite$ -- 80
-duplicate$ -- 5510
-empty$ -- 3882
-format.name$ -- 669
-if$ -- 15018
++ -- 512
+- -- 582
+* -- 4268
+:= -- 5934
+add.period$ -- 297
+call.type$ -- 58
+change.case$ -- 348
+chr.to.int$ -- 55
+cite$ -- 83
+duplicate$ -- 5784
+empty$ -- 4077
+format.name$ -- 716
+if$ -- 15873
 int.to.chr$ -- 5
 int.to.str$ -- 1
-missing$ -- 192
-newline$ -- 528
-num.names$ -- 410
-pop$ -- 1888
+missing$ -- 200
+newline$ -- 557
+num.names$ -- 431
+pop$ -- 1978
 preamble$ -- 1
-purify$ -- 761
+purify$ -- 806
 quote$ -- 0
-skip$ -- 2031
+skip$ -- 2133
 stack$ -- 0
-substring$ -- 4939
-swap$ -- 557
+substring$ -- 5206
+swap$ -- 585
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 1251
+type$ -- 1313
 warning$ -- 25
-while$ -- 441
+while$ -- 460
 width$ -- 0
-write$ -- 1169
+write$ -- 1229
 (There were 2 error messages)

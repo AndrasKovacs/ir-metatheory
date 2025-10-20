@@ -64,15 +64,41 @@ SigElim P ι' σ' δ' (ι o)   = ι' o
 SigElim P ι' σ' δ' (σ A S) = σ' A S (SigElim P ι' σ' δ' ∘ S)
 SigElim P ι' σ' δ' (δ A S) = δ' A S (SigElim P ι' σ' δ' ∘ S)
 
+
+-- examples in the paper
+--------------------------------------------------------------------------------
 module Example-2-1 where
 
   open import Data.Nat using (ℕ)
 
   data Tag : Set where
-    Nat' : Tag
-    Π'   : Tag
+    ℕ' : Tag
+    Π' : Tag
 
-  Example-2-1 : Sig zero Set₀
-  Example-2-1 = σ Tag λ where
-    Nat' → ι ℕ
-    Π'   → δ ⊤ λ ElA → δ (ElA tt) λ ElB → ι ((x : ElA tt) → ElB x)
+  S : Sig zero Set₀
+  S = σ Tag λ where
+    ℕ' → ι ℕ
+    Π' → δ ⊤ λ ElA → δ (ElA tt) λ ElB → ι ((x : ElA tt) → ElB x)
+
+module Example-2-2 where
+
+  open Example-2-1
+  open import Data.Nat using (ℕ)
+
+  Code : Set₀
+  Code = IR S
+
+  mkℕ' : Code
+  mkℕ' = intro (ℕ' , tt)
+
+  mkΠ' : (A : Code) → (El A → Code) → Code
+  mkΠ' A B = intro (Π' , (λ _ → A) , B , tt)
+
+  Elℕ' : El mkℕ' ≡ ℕ
+  Elℕ' = refl
+
+  ElΠ' : ∀ A B → El (mkΠ' A B) ≡ ((x : El A) → El (B x))
+  ElΠ' A B = refl
+
+
+--------------------------------------------------------------------------------

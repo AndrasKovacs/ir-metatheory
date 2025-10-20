@@ -53,7 +53,7 @@
 %% \usepackage{stmaryrd}
 %% \usepackage[title]{appendix}
 
-\newcommand{\mit}[1]{{\mathsf{#1}}}
+\newcommand{\mit}[1]{{\mathit{#1}}}
 \newcommand{\msf}[1]{{\mathsf{#1}}}
 \newcommand{\mbf}[1]{{\mathbf{#1}}}
 \newcommand{\mbb}[1]{\mathbb{#1}}
@@ -105,6 +105,7 @@
 \newcommand{\Level}{\msf{Level}}
 \newcommand{\emptycon}{\scaleobj{.75}\bullet}
 \newcommand{\id}{\msf{id}}
+\newcommand{\Vect}{\msf{Vec}}
 
 \newcommand{\Con}{\msf{Con}}
 \newcommand{\Sub}{\msf{Sub}}
@@ -129,6 +130,8 @@
 \newcommand{\Path}{\msf{Path}}
 \newcommand{\here}{\msf{here}}
 \newcommand{\Ssw}{S^{*\w}}
+\newcommand{\nil}{\msf{nil}}
+\newcommand{\cons}{\msf{cons}}
 
 \newcommand{\insigma}{\msf{in}\!\!-\!\!\sigma}
 \newcommand{\indelta}{\msf{in}\!\!-\!\!\delta}
@@ -338,7 +341,7 @@ right-associative $\blank\!\$\!\blank$ operator for function application.
   & S :\equiv \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
   & \quad \Nat' \to \iota\,\Nat \\
   & \quad \Pi'\hspace{0.85em} \to \delta\,\top\,\$\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\$\,\lambda\,{ElB}.\,
-      \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
+      \iota\, ((a : {ElA}\,\ttt) \to {ElB}\,a)
 \end{alignat*}
 First, we introduce a choice between two constructors by $\sigma\,\Tag$. In the $\Nat'$ branch, we
 specify that the recursive function maps the constructor to $\Nat$. In the $\Pi'$ branch, we first
@@ -384,7 +387,41 @@ not internal definitions but part of the specification of the object theory. Hen
 assumed to be stable under object-theoretic substitution. On a high level, the introduction rules
 express the existence of an $S$-algebra where we view $S$ as an endofunctor on $\U_i/O$.
 
-\todo{Constructor example for $\Code$}
+\begin{example}\label{ex:code-constructors} We look at how $\Code$, $\Nat'$, $\Pi'$ and $\El$ from the Agda
+example in Section \ref{sec:introduction} are obtained from the general rules for IR.
+\begin{itemize}
+\item We take the signature $S$ from Example \ref{ex:code-signature}.
+\item $\Code$ is defined as $\IR\,S$, and we immediately have $\El : \Code \to \U_0$.
+\item We have $\intro : \E\,S\,\Code\,\El \to \Code$. If we try to compute $\E\,S\,\Code\,\El$, we
+  get $(t : \Tag) \times \E\,(S'\,t)\,\Code\,\El$, where $S'$ is the function
+  $\lambda\,t.\,\case\,t\,\of\,...$ inside $S$. Hence, the computation of $\E$ gets stuck on the
+  neutral $t$. However, as soon as we specify the tag, we can fully compute the types of the $\Code$
+  constructors. We define them as $\msf{mk}\Nat'$ and $\msf{mk}\Pi'$, in order to disambiguate them
+  from their tags.
+  \begin{alignat*}{3}
+    & \msf{mk}\Nat' : \Code                         && \msf{mk}\Pi' : (A : \Code) \to (\El\,A \to \Code) \to \Code\\
+    & \msf{mk}\Nat' :\equiv \intro\,(\Nat',\,\ttt)\quad  && \msf{mk}\Pi'\,A\,B :\equiv \intro\,(\Pi',(\lambda\,\_.\,A),\,B,\,\ttt)
+  \end{alignat*}
+  The constant function $(\lambda\,\_.\,A)$ is required because we always specify inductive
+  branching with a function.
+\item Let us look at $\El$. We have the expected definitional equalities:
+  \begin{alignat*}{3}
+    & \El\,\msf{mk}\Nat' \equiv \Nat \hspace{2em} \El\,(\msf{mk}\Pi'\,A\,B) \equiv ((a : \El\,A) \to \El\,(B\,a))
+  \end{alignat*}
+  These are obtained from $\msf{El\!\!-\!\!intro}$ and the definition of $\F$. Unfolding the $\msf{mk}\Nat'$ case, we have
+  \[ \El\,\msf{mk}\Nat' \equiv \El\,(\intro\,(\Nat',\,\ttt)) \equiv \F\,\{S\}\,(\Nat',\,\ttt) \equiv \F\,\{\iota\,\Nat\}\,\ttt \equiv \Nat. \]
+  For $\msf{mk}\Pi'$, we have the following:
+  \begin{alignat*}{3}
+    &            &&\El\,(\msf{mk}\Pi'\,A\,B)\\
+    & \equiv\,\, &&\El\,(\intro\,(\Pi',(\lambda\,\_.\,A),\,B,\,\ttt))\\
+    & \equiv\,\, &&\F\,\{S\}\,(\Pi',(\lambda\,\_.\,A),\,B,\,\ttt)\\
+    & \equiv\,\, &&\F\,\{\delta\,\top\,\$\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\$\,\lambda\,{ElB}.\,\iota\, ((a : {ElA}\,\ttt) \to {ElB}\,a)\}\,((\lambda\,\_.\,A),\,B,\,\ttt)\\
+    & \equiv\,\, &&\F\,\{\delta\,(\El\,A)\,\$\,\lambda\,{ElB}.\,\iota\, ((a : \El\,A) \to {ElB}\,a)\}\,(B,\,\ttt)\\
+    & \equiv\,\, &&\F\,\{\iota\,((a : \El\,A) \to \El\,(B\,a))\}\,\ttt\\
+    & \equiv\,\, && (a : \El\,A) \to \El\,(B\,a)
+  \end{alignat*}
+\end{itemize}
+\end{example}
 
 \subsubsection{Elimination}\label{sec:ir-elimination}
 
@@ -430,20 +467,24 @@ The most important addition is the field $\ixs : A \to I$ in $\delta$: it stands
 it specifies the index of each inductive subtree.
 
 \begin{example}\label{ex:vector} We reproduce length-indexed vectors as an IIR type. We assume $A : \U_0$ for a type of elements in the vector,
-and a type $\Tag : \U_0$ with inhabitants $\Nil'$ and $\Cons'$.
+and a type $\Tag : \U_0$ with inhabitants $\nil'$ and $\cons'$.
 \begin{alignat*}{4}
   & S : \Sig_0\,\Nat\,(\lambda\,\_.\,\top)\\
   & S :\equiv \sigma\,\Tag\,\$\,\lambda\,t.\,\case\,t\,\of \\
-  & \quad \Nil'\hspace{0.85em} \to \iota\,\zero\,\ttt \\
-  & \quad \Cons'\to \sigma\,\Nat\,\$\,\lambda\,n.\,\sigma\,A\,\$\,\lambda\,\_.\,\delta\,\top\,(\lambda\,\_.\,n)\,\$\,\lambda\,\_.\,\iota\,(\suc\,n)\,\ttt
+  & \quad \nil'\hspace{0.85em} \to \iota\,\zero\,\ttt \\
+  & \quad \cons'\to \sigma\,\Nat\,\$\,\lambda\,n.\,\sigma\,A\,\$\,\lambda\,\_.\,\delta\,\top\,(\lambda\,\_.\,n)\,\$\,\lambda\,\_.\,\iota\,(\suc\,n)\,\ttt
 \end{alignat*}
 We set $O$ to be constantly $\top$ because vectors do not have an associated recursive function. In
 the $\Nil'$ case, we simply set the constructor index to $\zero$. In the $\Cons'$ case, we introduce
 a non-inductive argument, binding $n$ for the length of the tail of the vector. Then, when we
 introduce the inductive argument using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that index of
-the argument is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$.
-
-\todo{Vector example in Agda notation}
+the argument is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$. For
+illustration, the same specification could be written as the following inductive family in Agda:
+\begin{alignat*}{3}
+  &\data\,\Vect\,(A : \Set_0) : \Nat \to \Set_0\,\where \\
+  &\quad \nil  \hspace{0.75em}: \Vect\,A\,0\\
+  &\quad \cons : (n : \Nat) \to A \to \Vect\,A\,n \to \Vect\,A\,(\suc\,n)
+\end{alignat*}
 
 \end{example}
 
@@ -461,14 +502,30 @@ $\E$ and $\F$ are similar to before:
   &\hspace{-2em}\F\,\{\delta\,A\,\ixs\,S)\}\,&&\hspace{-0.1em}(f,\,x)  && \hspace{-0.2em}:\equiv \F\,\{S\,(\el \circ f)\}\,x
 \end{alignat*}
 Note the transport in $\tr\,O\,x\,o$: this is necessary, since $o$ has type $O\,\ix'$ while the
-required type is $O\,\ix$. The type and term formation rules are the following. Also note the pattern matching notation
-in $(\lup\,x)$: this makes sense since $\lup$ is a definitional isomorphism, and we could unfold it to $(x,\,\ttt)$.
+required type is $O\,\ix$. Also note the pattern matching notation in $(\lup\,x)$: this makes sense
+since $\lup$ is a definitional isomorphism and we could unfold the pattern to $(x,\,\ttt)$.  The
+type and term formation rules are the following.
 \begin{alignat*}{4}
   &\IIR               && : \Sig_i\,I\,O \to I \to \U_{\max(i,\,k)}\\
   &\El                && : \IIR\,S\,\ix \to O\,\ix\\
   &\intro             && : \E\,S\,(\IIR\,S)\,\El\,\ix \to \IIR\,S\,\ix\\
   &\msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv \F\,x
 \end{alignat*}
+
+\begin{example}\label{ex:vector-constructors} Let us obtain the $\Vect$ constructors from the IIR rules. We take $S$ from Example \ref{ex:vector}. We define $\Vect\,A\,n : \U_0$ to be $\IIR\,S\,n$, where we appropriately instantiate $A$ in $S$. The derived constructors are the following.
+  \begin{alignat*}{3}
+    &\nil : \Vect\,A\,0                                  && \cons : (n : \Nat) \to A \to \Vect\,A\,n \to \Vect\,A\,(\suc\,n)\\
+    &\nil :\equiv \intro\,(\nil',\,(\lup\refl))\quad\quad  && \cons\,n\,a\,\mit{as} :\equiv \intro\,(\cons',\,n,\,a,\,(\lambda\,\_.\,\mit{as}),\,(\lup\refl))
+  \end{alignat*}
+  In $\nil$, the type of $\lup\refl$ is $\zero = \zero$, and in $\cons$ its type is $\suc\,n = \suc\,n$. $\El$ and $\Elintro$ are trivial in this case.
+\end{example}
+
+\emph{Remark:} this specification uses identity types to fix the correct index for each
+constructor. This style has been popularized as ``Fordism'' or ``fording'' by Conor McBride, and it
+has been widely used to represent inductive families, e.g.\ in observational type theories
+\cite{towards-ott, DBLP:journals/toplas/PujetLT25} and in the Glasgow Haskell Compiler's
+implementation of generalized algebraic datatypes (GADTs) \cite{vytiniotis2011outsidein}.
+
 \subsubsection{Elimination}\label{sec:iir-elimination} $\IH$, $\map$ and elimination are
 as follows. We assume a level $l$ for the target type of elimination.
 \begin{alignat*}{3}
