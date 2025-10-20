@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{54}
+\begin{thebibliography}{55}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -716,14 +716,26 @@
 \newblock
 
 
-\bibitem[{The Agda Team}(2025)]%
+\bibitem[{The Agda Team}(2025a)]%
         {agdadocs}
 \bibfield{author}{\bibinfo{person}{{The Agda Team}}.}
-  \bibinfo{year}{2025}\natexlab{}.
+  \bibinfo{year}{2025}\natexlab{a}.
 \newblock \bibinfo{title}{Agda documentation}.
 \newblock
 \urldef\tempurl%
-\url{https://agda.readthedocs.io/en/v2.8.0-rc2/}
+\url{https://agda.readthedocs.io/en/v2.8.0/}
+\showURL{%
+\tempurl}
+
+
+\bibitem[{The Agda Team}(2025b)]%
+        {agdadocs-withoutk}
+\bibfield{author}{\bibinfo{person}{{The Agda Team}}.}
+  \bibinfo{year}{2025}\natexlab{b}.
+\newblock \bibinfo{title}{Agda documentation on \texttt{--without-K}}.
+\newblock
+\urldef\tempurl%
+\url{https://agda.readthedocs.io/en/v2.8.0/language/without-k.html#without-k}
 \showURL{%
 \tempurl}
 

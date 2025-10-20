@@ -6,11 +6,11 @@ Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Database file #1: references.bib
-Repeated entry---line 5550 of file references.bib
+Repeated entry---line 5558 of file references.bib
  : @incollection{martin1975intuitionistic
  :                                       ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 5752 of file references.bib
+Repeated entry---line 5760 of file references.bib
  : @article{DBLP:journals/corr/abs-2302-08837
  :                                           ,
 I'm skipping whatever remains of this entry
@@ -46,45 +46,45 @@ Warning--empty address in martinlof84sambin
 Warning--empty publisher in pedrot2018failure
 Warning--empty address in pedrot2018failure
 Warning--empty address in ctt-normalization
-You've used 54 entries,
+You've used 55 entries,
             6273 wiz_defined-function locations,
-            1942 strings with 30815 characters,
-and the built_in function-call counts, 59925 in all, are:
-= -- 8253
-> -- 1479
+            1945 strings with 30941 characters,
+and the built_in function-call counts, 60570 in all, are:
+= -- 8322
+> -- 1494
 < -- 1
-+ -- 473
-- -- 541
-* -- 3995
-:= -- 5550
-add.period$ -- 279
-call.type$ -- 54
-change.case$ -- 322
++ -- 478
+- -- 547
+* -- 4031
+:= -- 5621
+add.period$ -- 283
+call.type$ -- 55
+change.case$ -- 327
 chr.to.int$ -- 52
-cite$ -- 79
-duplicate$ -- 5448
-empty$ -- 3836
-format.name$ -- 663
-if$ -- 14875
-int.to.chr$ -- 4
+cite$ -- 80
+duplicate$ -- 5510
+empty$ -- 3882
+format.name$ -- 669
+if$ -- 15018
+int.to.chr$ -- 5
 int.to.str$ -- 1
 missing$ -- 192
-newline$ -- 517
-num.names$ -- 404
-pop$ -- 1864
+newline$ -- 528
+num.names$ -- 410
+pop$ -- 1888
 preamble$ -- 1
-purify$ -- 750
+purify$ -- 761
 quote$ -- 0
-skip$ -- 2007
+skip$ -- 2031
 stack$ -- 0
-substring$ -- 4895
-swap$ -- 553
+substring$ -- 4939
+swap$ -- 557
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 1227
+type$ -- 1251
 warning$ -- 25
-while$ -- 435
+while$ -- 441
 width$ -- 0
-write$ -- 1149
+write$ -- 1169
 (There were 2 error messages)

@@ -1,6 +1,6 @@
+{-# OPTIONS --without-K #-}
 
 open import Lib
-open import UIP
 import PlainIR
 import IndexedIR
 
@@ -247,9 +247,17 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
            (E←→ S*ᵒ here (x , refl , xᵒ))
            refl
 
+        UIP : ∀ i → Set (suc i)
+        UIP i = {A : Set i}{x y : A}{p q : x ≡ y} → p ≡ q
+
+        coe-irrel : ∀ {i} → UIP (suc i) → {A B : Set i}(p q : A ≡ B){x : A} → coe p x ≡ coe q x
+        coe-irrel uip p q {x} = ap (λ p → coe p x) (uip {p = p}{q})
+
         -- Definition 4.9
-        elimβᵒ : ∀ {x : E S* (IR S*) El} (xᵒ : Eᵒ S*ᵒ x) → elimᵒ (introᵒ xᵒ) ≡ fᵒ xᵒ (mapᵒ elimᵒ xᵒ)
-        elimβᵒ {x} xᵒ =
+        elimβᵒ :
+            UIP (suc k) →     -- we assume UIP locally
+            ∀ {x : E S* (IR S*) El} (xᵒ : Eᵒ S*ᵒ x) → elimᵒ (introᵒ xᵒ) ≡ fᵒ xᵒ (mapᵒ elimᵒ xᵒ)
+        elimβᵒ uip {x} xᵒ =
 
           let lhs = ⌞fᵒ⌟ (E→' here xᵒ) (IIR.map elimᵒ (E→' here xᵒ))
               rhs = fᵒ xᵒ (mapᵒ elimᵒ xᵒ)
@@ -261,7 +269,8 @@ module IRCanonicity (i : Level) (j : Level) (O : Set j) (Oᵒ : O → Set j) whe
                                           , x₁ .snd , E← here (E→ here (x , refl , xᵒ)) .snd .snd)))
                               (elim P f (x₁ .fst)))
                            (contr (E← here (E→ here (x , refl , xᵒ)) .snd .fst))) _
-           ◼ coe-UIP (ap (λ x₁ → Pᵒ
+           ◼ coe-irrel uip
+                     (ap (λ x₁ → Pᵒ
                               (IIR.intro
                                (E→ here
                                 (E← here (E→ here (x , refl , xᵒ)) .fst ,

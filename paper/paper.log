@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.27)  20 OCT 2025 13:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.27)  20 OCT 2025 16:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1431,7 +1431,7 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
 
 [4.4]
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 386.
+ine 387.
 
 
 [5.5]
@@ -1469,40 +1469,35 @@ Underfull \vbox (badness 2119) has occurred while \output is active []
 [18.18]
 
 [19.19]
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 12
+50.
+ (/usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 1250.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `zi4' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
 
 [20.20]
-Overfull \hbox (30.78094pt too wide) in paragraph at lines 1294--1297
-\T1/LinuxLibertineT-TLF/m/n/10 (-20) Now, $[] \LMS/ntxsy/m/n/10 ¹b\OML/nxlmi/m/
-it/10 S[] []\LMS/ntxsy/m/n/10 c []º \OML/nxlmi/m/it/10 t$ \T1/LinuxLibertineT-T
-LF/m/n/10 (-20) im-plies that $\OML/nxlmi/m/it/10 t$ \T1/LinuxLibertineT-TLF/m/
-n/10 (-20) is ei-ther def-i-ni-tion-ally equal to $[] \LMS/ntxsy/m/n/10 ¹[][]\O
-ML/nxlmi/m/it/10 ;  []\LMS/ntxsy/m/n/10 º$ \T1/LinuxLibertineT-TLF/m/n/10 (-20)
- or to $[] \LMS/ntxsy/m/n/10 ¹\U/ntxmia/m/it/10 ^^E[]\OML/nxlmi/m/it/10 ;  A;  
-B;  []\LMS/ntxsy/m/n/10 º$
- []
 
-
-
-[21.21]
-Underfull \vbox (badness 2359) has occurred while \output is active []
-
-
+[21.21{/usr/share/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}]
 
 [22.22]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 [23.23] (./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 46.
 
+Underfull \vbox (badness 7397) has occurred while \output is active []
+
+
 
 [24.24]
 LaTeX Info: Redefining \tempurl on input line 284.
-
-Underfull \vbox (badness 6396) has occurred while \output is active []
-
 
 
 [25.25]
@@ -1510,13 +1505,16 @@ LaTeX Info: Redefining \tempurl on input line 447.
 LaTeX Info: Redefining \tempurl on input line 524.
 LaTeX Info: Redefining \tempurl on input line 596.
 
-Underfull \vbox (badness 6396) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
 [26.26]
 LaTeX Info: Redefining \tempurl on input line 726.
-LaTeX Info: Redefining \tempurl on input line 752.
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 8.0pt on input line 735.
+LaTeX Info: Redefining \tempurl on input line 738.
+LaTeX Info: Redefining \tempurl on input line 764.
 )
 
 Package natbib Warning: There were undefined citations.
@@ -1539,43 +1537,35 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `paper.out':
-(rerunfilecheck)             Before: D04287C35CBED6BE065EF85D9C13116C;4432
-(rerunfilecheck)             After:  704FA0F171F9AD700CC678A826D140B7;4432.
+Package rerunfilecheck Info: File `paper.out' has not changed.
+(rerunfilecheck)             Checksum: 981AF562290F6D2470B29D6449DFCC55;4616.
  ) 
 Here is how much of TeX's memory you used:
- 32469 strings out of 475171
- 586214 string characters out of 5767095
- 1027337 words of memory out of 5000000
- 53831 multiletter control sequences out of 15000+600000
- 794981 words of font info for 598 fonts, out of 8000000 for 9000
+ 32516 strings out of 475171
+ 587046 string characters out of 5767095
+ 1029083 words of memory out of 5000000
+ 53866 multiletter control sequences out of 15000+600000
+ 796337 words of font info for 602 fonts, out of 8000000 for 9000
  175 hyphenation exceptions out of 8191
  99i,22n,131p,1002b,967s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf-dist/fonts/type1/public/newtx/LibertineMathMI.pfb></usr/sha
-re/texmf-dist/fonts/type1/public/newtx/LibertineMathMI7.pfb></usr/share/texmf-d
-ist/fonts/type1/public/newtx/LibertineMathRM.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/libertine/LinBiolinumT.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/libertine/LinBiolinumTB.pfb></usr/share/texmf-dist/fonts/type1/public/liberti
-ne/LinBiolinumTI.pfb></usr/share/texmf-dist/fonts/type1/public/libertine/LinLib
-ertineT.pfb></usr/share/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.
-pfb></usr/share/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb></us
-r/share/texmf-dist/fonts/type1/public/libertine/LinLibertineTZ.pfb></usr/share/
-texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/share/texmf-dist/fonts/ty
-pe1/public/newtx/txexs.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/txmi
-aX.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/txsym.pfb></usr/share/te
-xmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (27 pages, 696135 bytes).
+</usr/share/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></
+usr/share/texmf-dist/fonts/type1/public/newtx/LibertineMathMI.pfb></usr/share/t
+exmf-dist/fonts/type1/public/newtx/LibertineMathMI7.pfb></usr/share/texmf-dist/
+fonts/type1/public/newtx/LibertineMathRM.pfb></usr/share/texmf-dist/fonts/type1
+/public/libertine/LinBiolinumT.pfb></usr/share/texmf-dist/fonts/type1/public/li
+bertine/LinBiolinumTB.pfb></usr/share/texmf-dist/fonts/type1/public/libertine/L
+inBiolinumTI.pfb></usr/share/texmf-dist/fonts/type1/public/libertine/LinLiberti
+neT.pfb></usr/share/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb>
+</usr/share/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb></usr/sh
+are/texmf-dist/fonts/type1/public/libertine/LinLibertineTZ.pfb></usr/share/texm
+f-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/share/texmf-dist/fonts/type1/
+public/newtx/txexs.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/txmiaX.p
+fb></usr/share/texmf-dist/fonts/type1/public/newtx/txsym.pfb></usr/share/texmf-
+dist/fonts/type1/public/newtx/txsys.pfb>
+Output written on paper.pdf (27 pages, 706908 bytes).
 PDF statistics:
- 718 PDF objects out of 1000 (max. 8388607)
- 645 compressed objects within 7 object streams
- 161 named destinations out of 1000 (max. 500000)
- 129253 words of extra memory for PDF output out of 154059 (max. 10000000)
+ 734 PDF objects out of 1000 (max. 8388607)
+ 660 compressed objects within 7 object streams
+ 164 named destinations out of 1000 (max. 500000)
+ 131309 words of extra memory for PDF output out of 154059 (max. 10000000)
 
