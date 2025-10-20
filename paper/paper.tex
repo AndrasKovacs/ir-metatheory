@@ -255,6 +255,8 @@ development is the following.
   argue that it is a modest gap.
 \end{itemize}
 
+The Agda formalization of this work is available in \cite{TODO}.
+
 \section{Specification for (I)IR Types}\label{sec:specification}
 
 In this section we describe the object type theory, focusing on the specification of IR and IIR
@@ -275,7 +277,7 @@ to be implicitly quantified with a $\Pi$-type.
 $\Sigma$-types: for $A : \U_i$ and $B : A \to \U_j$, we have $((x : A) \times B\,x) :
 \U_{\max(i,\,j)}$.  We write $\blank,\blank$ for pairing and $\fst$ and $\snd$ for projections. We
 have the unit type $\top : \U_i$ with unique inhabitant $\ttt$. We have $\Bool : \U_0$ for
-Booleans. We have intensional identity types, as $t = u : \U_i$ for $t : A : \U_i$. We define (by
+Booleans. We have intensional identity types, as $t = u : \U_i$ for $t,\,u : A : \U_i$. We define (by
 identity elimination) a transport operation $\tr : \{A : \U_i\}(P : A \to \U_j)\{x\,y : A\} \to x =
 y \to P\,x \to P\,y$. We derive some other type formers below.
 \begin{itemize}
@@ -385,7 +387,7 @@ express the existence of an $S$-algebra where we view $S$ as an endofunctor on $
 We assume a universe level $k$ for the size of the type into which we eliminate. We define two
 additional functions on signatures:
 \begin{alignat*}{3}
-  &\rlap{$\IH : \{S : \Sig_i\,O\}(P : \ir \to \U_k) \to S_0\,\ir\,\el \to \U_{\max(i,\,k)}$} \\
+  &\rlap{$\IH : \{S : \Sig_i\,O\}(P : \ir \to \U_k) \to \E\,S\,\ir\,\el \to \U_{\max(i,\,k)}$} \\
   &\IH\,\{\iota\,o\}    \,&&P\,x       &&:\equiv \top \\
   &\IH\,\{\sigma\,A\,S\}\,&&P\,(a,\,x) &&:\equiv \IH\,\{S\,a\}\,P\,x\\
   &\IH\,\{\delta\,A\,S\}\,&&P\,(f,\,x) &&:\equiv ((a : A) \to P\,(f\,a)) \times \IH\,\{S\,(\el \circ f)\}\,P\,x
@@ -469,14 +471,14 @@ as follows. We assume a level $l$ for the target type of elimination.
   &\hspace{-7em}\rlap{$\map : \{S : \Sig_i\,I\,O\} \to (\{i : I\}(x : \ir\,i) \to P\,x) \to (x : \E\,S\,\ir\,\el\,i) \to S_\IH\,P\,x$} \\
   &\hspace{-7em}\map\,\{\iota\,o    \}\,&&g\,x       &&:\equiv\,\ttt \\
   &\hspace{-7em}\map\,\{\sigma\,A\,S\}\,&&g\,(a,\,x) &&:\equiv \map\,\{S\,a\}\,g\,x \\
-  &\hspace{-7em}\map\,\{\delta\,A\,S\}\,&&g\,(f,\,x) &&:\equiv (g \circ f,\,\map\,\{S\,(\el \circ f)\}\,g\,x)
+  &\hspace{-7em}\map\,\{\delta\,A\,\ix\,S\}\,&&g\,(f,\,x) &&:\equiv (g \circ f,\,\map\,\{S\,(\el \circ f)\}\,g\,x)
 \end{alignat*}
 \begin{alignat*}{3}
   &\elim           &&: (P : \{i : I\}\to \IIR\,S\,i \to \U_l) \to (\{i : I\}(x : \E\,S\,(\IIR\,S)\,\El\,i) \to \IH\,P\,x \to P\,(\intro\,x))\\
   &                && \hspace{0.7em}\to (x : \IIR\,S\,i) \to P\,x \\
   &\elim\!-\!\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(\map\,(\elim\,P\,f)\,x)
 \end{alignat*}
-\emph{Notation.} We overload $\El$, $\intro$ and $\elim$ for IR and IIR types, but we will sometimes disambiguate them
+\emph{Notation.} We overload $\Sig$, $\El$, $\intro$ and $\elim$ for IR and IIR types, but we will sometimes disambiguate them
 with a subscript, e.g.\ as $\intro_\IR$ or $\intro_\IIR$.
 
 \section{Construction of IIR Types}\label{sec:iir-construction}

@@ -1,10 +1,10 @@
-This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2026/dev/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
 The style file: ACM-Reference-Format.bst
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Database file #1: references.bib
 Repeated entry---line 5550 of file references.bib
  : @incollection{martin1975intuitionistic
@@ -14,12 +14,13 @@ Repeated entry---line 5752 of file references.bib
  : @article{DBLP:journals/corr/abs-2302-08837
  :                                           ,
 I'm skipping whatever remains of this entry
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
-Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Warning--I didn't find a database entry for "TODO"
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
+Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
 Reallocated global_strs (elt_size=200001) to 20 items from 10.
-Reallocated glb_str_end (elt_size=4) to 20 items from 10.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_end (elt_size=8) to 20 items from 10.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
 Warning--empty address in ttintt
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/lmcs/AltenkirchK17
 Warning--empty address in SGA4
@@ -47,7 +48,7 @@ Warning--empty address in pedrot2018failure
 Warning--empty address in ctt-normalization
 You've used 54 entries,
             6273 wiz_defined-function locations,
-            1940 strings with 30807 characters,
+            1942 strings with 30815 characters,
 and the built_in function-call counts, 59925 in all, are:
 = -- 8253
 > -- 1479
