@@ -1,7 +1,7 @@
 
 %% build: latexmk -pdf -pvc paper.tex
 
-\documentclass[acmsmall,screen,review,anonymous]{acmart}
+\documentclass[acmsmall,screen,review]{acmart}
 %% \documentclass[nonacm,acmsmall]{acmart}
 %% \documentclass[acmsmall]{acmart}
 %% \raggedbottom
@@ -84,6 +84,7 @@
 \newcommand{\ir}{{ir}}
 \newcommand{\el}{{el}}
 \newcommand{\ix}{{ix}}
+\newcommand{\ixs}{{ixs}}
 \newcommand{\IR}{\msf{IR}}
 \newcommand{\ih}{{ih}}
 \newcommand{\intro}{\msf{intro}}
@@ -255,7 +256,7 @@ development is the following.
   argue that it is a modest gap.
 \end{itemize}
 
-The Agda formalization of this work is available in \cite{TODO}.
+The Agda formalization is available in \cite{TODO}.
 
 \section{Specification for (I)IR Types}\label{sec:specification}
 
@@ -277,7 +278,7 @@ to be implicitly quantified with a $\Pi$-type.
 $\Sigma$-types: for $A : \U_i$ and $B : A \to \U_j$, we have $((x : A) \times B\,x) :
 \U_{\max(i,\,j)}$.  We write $\blank,\blank$ for pairing and $\fst$ and $\snd$ for projections. We
 have the unit type $\top : \U_i$ with unique inhabitant $\ttt$. We have $\Bool : \U_0$ for
-Booleans. We have intensional identity types, as $t = u : \U_i$ for $t,\,u : A : \U_i$. We define (by
+Booleans. We have intensional identity types, as $t = u : \U_i$ for $t : A : \U_i$ and $u : A : \U_i$. We define (by
 identity elimination) a transport operation $\tr : \{A : \U_i\}(P : A \to \U_j)\{x\,y : A\} \to x =
 y \to P\,x \to P\,y$. We derive some other type formers below.
 \begin{itemize}
@@ -382,6 +383,8 @@ not internal definitions but part of the specification of the object theory. Hen
 assumed to be stable under object-theoretic substitution. On a high level, the introduction rules
 express the existence of an $S$-algebra where we view $S$ as an endofunctor on $\U_i/O$.
 
+\todo{Constructor example for $\Code$}
+
 \subsubsection{Elimination}\label{sec:ir-elimination}
 
 We assume a universe level $k$ for the size of the type into which we eliminate. We define two
@@ -418,10 +421,12 @@ where the index of every constructor is determined by the first field.} specific
 for the recursive output as $O : I \to \U_j$. Signatures are as follows.
 \begin{alignat*}{4}
   &\data\, \Sig_i\,I\,O : \U_{\max(i+1,\,j,\,k)}\,\where\\
-  &\quad \iota\hspace{0.25em}  : (i : I) \to O\,i \to \Sig_i\,I\,O \\
+  &\quad \iota\hspace{0.25em}  : (\ix : I) \to O\,\ix \to \Sig_i\,I\,O \\
   &\quad \sigma                : (A : \U_i) \to (A \to \Sig_i\,I\,O) \to \Sig_i\,I\,O \\
-  &\quad \delta\hspace{0.1em}  : (A : \U_i)(\ix : A \to I) \to (((a : A) \to O\,(\ix\,a)) \to \Sig_i\,I\,O) \to \Sig_i\,I\,O
+  &\quad \delta\hspace{0.1em}  : (A : \U_i)(\ixs : A \to I) \to (((a : A) \to O\,(\ixs\,a)) \to \Sig_i\,I\,O) \to \Sig_i\,I\,O
 \end{alignat*}
+The most important addition is the field $\ixs : A \to I$ in $\delta$: it stands for ``indexes'' and
+it specifies the index of each inductive subtree.
 
 \begin{example}\label{ex:vector} We reproduce length-indexed vectors as an IIR type. We assume $A : \U_0$ for a type of elements in the vector,
 and a type $\Tag : \U_0$ with inhabitants $\Nil'$ and $\Cons'$.
@@ -431,81 +436,85 @@ and a type $\Tag : \U_0$ with inhabitants $\Nil'$ and $\Cons'$.
   & \quad \Nil'\hspace{0.85em} \to \iota\,\zero\,\ttt \\
   & \quad \Cons'\to \sigma\,\Nat\,\$\,\lambda\,n.\,\sigma\,A\,\$\,\lambda\,\_.\,\delta\,\top\,(\lambda\,\_.\,n)\,\$\,\lambda\,\_.\,\iota\,(\suc\,n)\,\ttt
 \end{alignat*}
-We set $O$ to be constant $\top$ because vectors do not have an associated recursive function. In
+We set $O$ to be constantly $\top$ because vectors do not have an associated recursive function. In
 the $\Nil'$ case, we simply set the constructor index to $\zero$. In the $\Cons'$ case, we introduce
 a non-inductive argument, binding $n$ for the length of the tail of the vector. Then, when we
 introduce the inductive argument using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that index of
 the argument is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$.
+
+\todo{Vector example in Agda notation}
+
 \end{example}
 
 \subsubsection{Type and term formation}\label{sec:iir-type-and-term-formation}
 $\E$ and $\F$ are similar to before:
 \begin{alignat*}{4}
-  &\hspace{-2em}\rlap{$\E : \Sig_i\,I\,O \to (\ir : I \to \U_{\max(i,\,k)}) \to (\{i : I\} \to \ir\,i \to O\,i) \to I \to \U_{\max(i,\,k)}$} \\
-  &\hspace{-2em}\E\,(\iota\,i'\,o)     \,&&\hspace{-0.4em}\ir\,\el\,i &&\hspace{-0.6em} :\equiv \Lift\,(i' = i)\\
-  &\hspace{-2em}\E\,(\sigma\,A\,S)     \,&&\hspace{-0.4em}\ir\,\el\,i &&\hspace{-0.6em} :\equiv (a : A) \times \E\,(S\,a)\,\ir\,\el\,i\\
-  &\hspace{-2em}\E\,(\delta\,A\,\ix\,S)\,&&\hspace{-0.4em}\ir\,\el\,i &&\hspace{-0.6em} :\equiv (f : (a : A) \to \ir\,(\ix\,a)) \times \E\,(S\,(\el \circ f))\,\ir\,\el\,i\\
+  &\hspace{-2em}\rlap{$\E : \Sig_i\,I\,O \to (\ir : I \to \U_{\max(i,\,k)}) \to (\{\ix : I\} \to \ir\,\ix \to O\,\ix) \to I \to \U_{\max(i,\,k)}$} \\
+  &\hspace{-2em}\E\,(\iota\,\ix'\,o)     \,&&\hspace{-0.4em}\ir\,\el\,\ix &&\hspace{-0.2em} :\equiv \Lift\,(\ix' = \ix)\\
+  &\hspace{-2em}\E\,(\sigma\,A\,S)     \,&&  \hspace{-0.4em}\ir\,\el\,\ix &&\hspace{-0.2em} :\equiv (a : A) \times \E\,(S\,a)\,\ir\,\el\,\ix\\
+  &\hspace{-2em}\E\,(\delta\,A\,\ixs\,S)\,&&  \hspace{-0.4em}\ir\,\el\,\ix &&\hspace{-0.2em} :\equiv (f : (a : A) \to \ir\,(\ixs\,a)) \times \E\,(S\,(\el \circ f))\,\ir\,\el\,\ix\\
   &\hspace{-2em} && &&\\
-  &\hspace{-2em}\rlap{$\F : \{S : \Sig_i\,I\,O\} \to \E\,S\,\ir\,\el\,i \to O\,i$} \\
-  &\hspace{-2em}\F\,\{\iota\,i'\,o      \}\,&&\hspace{-0.1em}(\lup x) && \hspace{-0.2em}:\equiv \tr\,O\,x\,o\\
+  &\hspace{-2em}\rlap{$\F : \{S : \Sig_i\,I\,O\} \to \E\,S\,\ir\,\el\,\ix \to O\,\ix$} \\
+  &\hspace{-2em}\F\,\{\iota\,\ix'\,o      \}\,&&\hspace{-0.1em}(\lup x) && \hspace{-0.2em}:\equiv \tr\,O\,x\,o\\
   &\hspace{-2em}\F\,\{\sigma\,A\,S      \}\,&&\hspace{-0.1em}(a,\,x)  && \hspace{-0.2em}:\equiv \F\,\{S\,a\}\,x\\
-  &\hspace{-2em}\F\,\{\delta\,A\,\ix\,S)\}\,&&\hspace{-0.1em}(f,\,x)  && \hspace{-0.2em}:\equiv \F\,\{S\,(\el \circ f)\}\,x
+  &\hspace{-2em}\F\,\{\delta\,A\,\ixs\,S)\}\,&&\hspace{-0.1em}(f,\,x)  && \hspace{-0.2em}:\equiv \F\,\{S\,(\el \circ f)\}\,x
 \end{alignat*}
-Note the transport in $\tr\,O\,x\,o$: this is necessary, since $o$ has type $O\,i'$ while the
-required type is $O\,i$. The type and term formation rules are the following.
+Note the transport in $\tr\,O\,x\,o$: this is necessary, since $o$ has type $O\,\ix'$ while the
+required type is $O\,\ix$. The type and term formation rules are the following. Also note the pattern matching notation
+in $(\lup\,x)$: this makes sense since $\lup$ is a definitional isomorphism, and we could unfold it to $(x,\,\ttt)$.
 \begin{alignat*}{4}
   &\IIR               && : \Sig_i\,I\,O \to I \to \U_{\max(i,\,k)}\\
-  &\El                && : \IIR\,S\,i \to O\,i\\
-  &\intro             && : \E\,S\,(\IIR\,S)\,\El\,i \to \IIR\,S\,i\\
+  &\El                && : \IIR\,S\,\ix \to O\,\ix\\
+  &\intro             && : \E\,S\,(\IIR\,S)\,\El\,\ix \to \IIR\,S\,\ix\\
   &\msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv \F\,x
 \end{alignat*}
 \subsubsection{Elimination}\label{sec:iir-elimination} $\IH$, $\map$ and elimination are
 as follows. We assume a level $l$ for the target type of elimination.
 \begin{alignat*}{3}
-  &\rlap{$\IH : \{S : \Sig_i\,I\,O\}(P : \{i : I\}\to \ir\,i \to \U_l) \to \E\,S\,\ir\,\el\,i \to \U_{\max(i,\,l)}$} \\
-  &\IH\,\{\iota\,i\,o      \}\,&&P\,x       &&:\equiv \top \\
+  &\rlap{$\IH : \{S : \Sig_i\,I\,O\}(P : \{\ix : I\}\to \ir\,\ix \to \U_l) \to \E\,S\,\ir\,\el\,\ix \to \U_{\max(i,\,l)}$} \\
+  &\IH\,\{\iota\,\ix\,o      \}\,&&P\,x       &&:\equiv \top \\
   &\IH\,\{\sigma\,A\,S     \}\,&&P\,(a,\,x) &&:\equiv \IH\,\{S\,a\}\,P\,x \\
-  &\IH\,\{\delta\,A\,\ix\,S\}\,&&P\,(f,\,x) &&:\equiv ((a : A) \to P\,(f\,a)) \times \IH\,\{S\,(\el \circ f)\}\,P\,x
+  &\IH\,\{\delta\,A\,\ixs\,S\}\,&&P\,(f,\,x) &&:\equiv ((a : A) \to P\,(f\,a)) \times \IH\,\{S\,(\el \circ f)\}\,P\,x
 \end{alignat*}
 \begin{alignat*}{3}
-  &\hspace{-7em}\rlap{$\map : \{S : \Sig_i\,I\,O\} \to (\{i : I\}(x : \ir\,i) \to P\,x) \to (x : \E\,S\,\ir\,\el\,i) \to S_\IH\,P\,x$} \\
-  &\hspace{-7em}\map\,\{\iota\,o    \}\,&&g\,x       &&:\equiv\,\ttt \\
+  &\hspace{-7em}\rlap{$\map : \{S : \Sig_i\,I\,O\} \to (\{\ix : I\}(x : \ir\,\ix) \to P\,x) \to (x : \E\,S\,\ir\,\el\,\ix) \to \IH\,P\,x$} \\
+  &\hspace{-7em}\map\,\{\iota\,\ix\,o\}\,&&g\,x       &&:\equiv\,\ttt \\
   &\hspace{-7em}\map\,\{\sigma\,A\,S\}\,&&g\,(a,\,x) &&:\equiv \map\,\{S\,a\}\,g\,x \\
-  &\hspace{-7em}\map\,\{\delta\,A\,\ix\,S\}\,&&g\,(f,\,x) &&:\equiv (g \circ f,\,\map\,\{S\,(\el \circ f)\}\,g\,x)
+  &\hspace{-7em}\map\,\{\delta\,A\,\ixs\,S\}\,&&g\,(f,\,x) &&:\equiv (g \circ f,\,\map\,\{S\,(\el \circ f)\}\,g\,x)
 \end{alignat*}
 \begin{alignat*}{3}
-  &\elim           &&: (P : \{i : I\}\to \IIR\,S\,i \to \U_l) \to (\{i : I\}(x : \E\,S\,(\IIR\,S)\,\El\,i) \to \IH\,P\,x \to P\,(\intro\,x))\\
-  &                && \hspace{0.7em}\to (x : \IIR\,S\,i) \to P\,x \\
+  &\elim           &&: (P : \{\ix : I\}\to \IIR\,S\,\ix \to \U_l) \to (\{\ix : I\}(x : \E\,S\,(\IIR\,S)\,\El\,\ix) \to \IH\,P\,x \to P\,(\intro\,x))\\
+  &                && \hspace{0.7em}\to (x : \IIR\,S\,\ix) \to P\,x \\
   &\elim\!-\!\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(\map\,(\elim\,P\,f)\,x)
 \end{alignat*}
-\emph{Notation.} We overload $\Sig$, $\El$, $\intro$ and $\elim$ for IR and IIR types, but we will sometimes disambiguate them
+\emph{Notation.} We overload $\E$, $\F$, $\IH$, $\map$, $\Sig$, $\El$, $\intro$ and $\elim$ for IR and IIR types, but we will sometimes disambiguate them
 with a subscript, e.g.\ as $\intro_\IR$ or $\intro_\IIR$.
 
 \section{Construction of IIR Types}\label{sec:iir-construction}
 
 We proceed to construct IIR types from IR types and other basic type formers. We assume $i$, $j$,
 $k$, $I : \U_k$ and $O : I \to \U_j$, and also assume definitions for IIR signatures and the four
-operations ($\E$, $\F$, $\IH$, $\map$). The task is to define $\IR$,
-$\El$, $\elim$ and $\elim\!-\!\!\beta$. We use some abbreviations in the following:
+operations ($\E$, $\F$, $\IH$, $\map$). The task is to define $\IIR$,
+$\El_{\IIR}$, $\elim_{\IIR}$ and $\elim\!-\!\!\beta_{\IIR}$. We use some abbreviations in the following:
 \begin{itemize}
 \item $\Sig_\IIR$ abbreviates the IIR signature type $\Sig_i\,I\,O$.
-\item $\Sig_\IR$ abbreviates the IR signature type $\Sig_{\max(i,\,k)}\,((i : I) \times O\,i)$.
+\item $\Sig_\IR$ abbreviates the IR signature type $\Sig_{\max(i,\,k)}\,((\ix : I) \times O\,\ix)$.
 \end{itemize}
 The main idea is to represent IIR signatures as IR signatures together with a
 well-indexing predicate on algebras. First, we define an encoding function for signatures:
 \begin{alignat*}{4}
   & \rlap{$\Sigr{\blank} : \Sig_\IIR \to \Sig_\IR$}\\
-  & \Sigr{\iota\,i\,o}       &&:\equiv \hspace{0.5em} &&\iota\,(i,\,o)\\
-  & \Sigr{\sigma\,A\,S}      &&:\equiv \hspace{0.5em} &&\sigma\,(\Lift\,A)\,(\lambda\,a.\,\Sigr{S\,\ldown\!a})\\
-  & \Sigr{\delta\,A\,\ix\,S} &&:\equiv \hspace{0.5em} &&\delta\,(\Lift\,A)\,\$\,\lambda\,f.\\
-  &  &&                                &&\sigma\,((a : A) \to \fst\,(f\,(\lup\!a)) = \ix\,a)\,\$\,\lambda\,p.\\
+  & \Sigr{\iota\,\ix\,o}      &&:\equiv \hspace{0.5em} &&\iota\,(\ix,\,o)\\
+  & \Sigr{\sigma\,A\,S}       &&:\equiv \hspace{0.5em} &&\sigma\,(\Lift\,A)\,(\lambda\,a.\,\Sigr{S\,\ldown\!a})\\
+  & \Sigr{\delta\,A\,\ixs\,S} &&:\equiv \hspace{0.5em} &&\delta\,(\Lift\,A)\,\$\,\lambda\,f.\\
+  &  &&                                &&\sigma\,((a : A) \to \fst\,(f\,(\lup\!a)) = \ixs\,a)\,\$\,\lambda\,p.\\
   &  &&                                &&\Sigr{S\,(\lambda\,a.\,\tr\,O\,(p\,a)\,(\snd\,(f\,(\lup\! a))))}
 \end{alignat*}
-There are two points of interest. First, the encoded IR signature has the recursive output type $(i
-: I) \times O\,i$, which lets us interpret $\iota\,i\,o$ as $\iota\,(i,\,o)$. Second, in the
+There are two points of interest. First, the encoded IR signature has the recursive output type $(\ix
+: I) \times O\,\ix$, which lets us interpret $\iota\,\ix\,o$ as $\iota\,(\ix,\,o)$. Second, in the
 interpretation of $\delta$, we already need to enforce well-indexing for inductive fields, or else
 we cannot recursively proceed with the translation. We solve this by adding an \emph{extra field} in
-the output signature, which contains a well-indexing witness of type $((a : A) \to \fst\,(f\,(\lup\!a)) = \ix\,a)$.
+the output signature, which contains a well-indexing witness of type $((a : A) \to \fst\,(f\,(\lup\!a)) = \ixs\,a)$.
 This lets us continue the translation for $S$, by fixing up the return type of $f$ by a transport.
 
 \emph{Note on prior work.} Hancock et al.\ described the same translation from small IIR signatures
@@ -526,6 +535,8 @@ The first $\Nat$ component of the recursive result serves as the index. In the $
 have a single inductive field whose length is enforced with the extra $\sigma\,((x : \top) \to
 \fst\,(f\,(\lup\!x)) = n)$.
 
+\todo{Fording of vector in Agda notation as well}
+
 \end{example}
 
 \subsection{Type and Term Formers}\label{sec:iir-construction-type-term}
@@ -533,37 +544,39 @@ We assume $S^* : \Sig_\IIR$ as a parameter to the constructions in the following
 ``fixed'' signature that we aim to construct IIR rules for. We need to distinguish this signature from
 other ``varying'' signatures that will appear in definitions and we will do induction on.
 
+\todo{Explanation for the need of fixed and varying signatures}
+
 Since the encoding of signatures already ensures the well-indexing of inductive fields in
 constructors, it only remains to ensure that the ``top-level'' index matches the externally supplied
 index. We define the $\IIR$ and $\El$ rules as follows.
 \begin{alignat*}{3}
-  &\IIR : I \to \U_{\max(i,\,k)}                         && \El : \IIR\,i \to O\,i \\
-  &\IIR\,i :\equiv (x : \IR\,\Sigr{S^*}) \times \fst\,(\El\,x) = i \hspace{3em}&& \El\,(x,\,p) :\equiv \tr\,O\,p\,(\snd\,(\El\,x))
+  &\IIR : I \to \U_{\max(i,\,k)}                         && \El : \IIR\,\ix \to O\,\ix \\
+  &\IIR\,\ix :\equiv (x : \IR\,\Sigr{S^*}) \times \fst\,(\El\,x) = \ix \hspace{3em}&& \El\,(x,\,p) :\equiv \tr\,O\,p\,(\snd\,(\El\,x))
 \end{alignat*}
 The following definition describes the data that we get when we peel off an $\intro$ from an
-$\IIR\,i$ value.
+$\IIR\,\ix$ value.
 \begin{alignat*}{4}
   &\floord{\E} : \Sig_\IIR \to I \to \U_{\max(i,\,k)}\\
-  &\floord{\E}\,S\,i :\equiv (x : \E\,\floord{S}\,(\IR\,\floord{S^*})\,\El) \times \fst\,(\F\,x) = i
+  &\floord{\E}\,S\,\ix :\equiv (x : \E\,\floord{S}\,(\IR\,\floord{S^*})\,\El) \times \fst\,(\F\,x) = \ix
 \end{alignat*}
-Now, we can show that $\floord{\E}\,S\,i$ is equivalent to $\E\,S\,\IIR\,\El\,i$, by induction on
+Now, we can show that $\floord{\E}\,S\,\ix$ is equivalent to $\E\,S\,\IIR\,\El\,\ix$, by induction on
 $S$. The induction is straightforward and we omit it here. We name the components of the equivalence
 as follows:\footnote{In the Agda formalization, we compute $\tau$ by induction on $S$, although it
 could be generically recovered from the other four components as well \cite[Section~4.2]{hottbook}.}
 \begin{alignat*}{4}
-  &\rlap{$\hspace{2em}\ora{\E} : \E\,S\,\IIR\,\El\,i \to \floord{\E}\,S\,i$} \\
-  &\rlap{$\hspace{2em}\ola{\E} : \floord{\E}\,S\,i \to \E\,S\,\IIR\,\El\,i$} \\
-  &\eta      &&: (x : \E\,S\,\IIR\,\El\,i) &&\to \ola{\E}\,(\ora{\E}\,x) = x \\
-  &\epsilon  &&: (x : \floord{\E}\,S\,i)   &&\to \ora{\E}\,(\ola{\E}\,x) = x \\
-  &\tau      &&: (x : \E\,S\,\IIR\,\El\,i) &&\to \ap\,\ora{\E}\,(\eta\,x) = \epsilon\,(\ola{\E}\,x)
+  &\rlap{$\hspace{2em}\ora{\E} : \E\,S\,\IIR\,\El\,\ix \to \floord{\E}\,S\,\ix$} \\
+  &\rlap{$\hspace{2em}\ola{\E} : \floord{\E}\,S\,\ix \to \E\,S\,\IIR\,\El\,\ix$} \\
+  &\eta      &&: (x : \E\,S\,\IIR\,\El\,\ix) &&\to \ola{\E}\,(\ora{\E}\,x) = x \\
+  &\epsilon  &&: (x : \floord{\E}\,S\,\ix)   &&\to \ora{\E}\,(\ola{\E}\,x) = x \\
+  &\tau      &&: (x : \E\,S\,\IIR\,\El\,\ix) &&\to \ap\,\ora{\E}\,(\eta\,x) = \epsilon\,(\ola{\E}\,x)
 \end{alignat*}
 This is a half adjoint equivalence \cite[Section~4.2]{hottbook}. The coherence witness $\tau$ will
-be shorty required for rearranging some transports. Next, we show that the two $\F$ operations are
+be shortly required for rearranging some transports. Next, we show that the two $\F$ operations are
 the same, modulo the previous equivalence, again by induction on $S$.
-\[\floord{\F} : \{S : \Sig_\IIR\}\{x : S_0\,\IIR\,\El\,i\} \to \tr\,O\,(\snd\,(\ora{\E}\,x))\,(\snd\,(\F\,(\fst\,(\ora{\E}\,x)))) = \F\,x\]
+\[\floord{\F} : \{S : \Sig_\IIR\}\{x : S_0\,\IIR\,\El\,\ix\} \to \tr\,O\,(\snd\,(\ora{\E}\,x))\,(\snd\,(\F\,(\fst\,(\ora{\E}\,x)))) = \F\,x\]
 This lets us define the other introduction rules as well.
 \begin{alignat*}{3}
-  &\intro    : \E\,S^*\,\IIR\,\El\,i \to \IIR\,i && \msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) = \F\,x \\
+  &\intro    : \E\,S^*\,\IIR\,\El\,\ix \to \IIR\,\ix && \msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) = \F\,x \\
   &\intro\,x :\equiv \big(\intro_\IR\,(\fst\,(\ora{\E}\,x)),\,\snd\,(\ora{\E}\,x)\big) \quad\quad&& \msf{El\!\!-\!\!intro} && :\equiv \floord{\F}
 \end{alignat*}
 
@@ -572,9 +585,9 @@ This lets us define the other introduction rules as well.
 
 We assume a level $l$ for the elimination target. We aim to define the following:
 \begin{alignat*}{3}
-  &\elim :\,           &&(P : \{i : I\}\to \IIR\,i \to \U_l)\\
-  &                \quad\to && (f : \{i : I\}(x : \E\,S^*\,\IIR\,\El\,i) \to \IH\,P\,x \to P\,(\intro\,x))\\
-  &                \quad\to && (x : \IIR\,i) \to P\,x
+  &\elim :\,           &&(P : \{\ix : I\}\to \IIR\,\ix \to \U_l)\\
+  &                \quad\to && (f : \{\ix : I\}(x : \E\,S^*\,\IIR\,\El\,\ix) \to \IH\,P\,x \to P\,(\intro\,x))\\
+  &                \quad\to && (x : \IIR\,\ix) \to P\,x
 \end{alignat*}
 Recall that $x : \IIR\,i$ is given as a pair of some $x : \IR\,\floord{S^*}$ and $p :
 \fst\,(\El\,x) = i$.  The idea is to use IR elimination on $x : \IR\,\floord{S^*}$ while adjusting
@@ -582,7 +595,7 @@ both $P$ and $f$ to operate on the appropriate data. For $P$, we generalize the 
 over a well-indexing witness:
 \begin{alignat*}{3}
   &\floord{P} : \IR\,\floord{S^*} \to \U_{\max(k,\,l)} \\
-  &\floord{P}\,x :\equiv \{i : I\}(p : \fst\,(\El\,x) = i) \to P\,(x,\,p)
+  &\floord{P}\,x :\equiv \{\ix : I\}(p : \fst\,(\El\,x) = \ix) \to P\,(x,\,p)
 \end{alignat*}
 Now, we have
 \begin{alignat*}{3}
@@ -592,7 +605,7 @@ Now, we have
 We adjust $f$ to obtain the next argument to $\elim_\IR$. $f$ takes $\IH\,P\,x$ as input,
 so we need a ``backwards'' conversion:
 \begin{alignat*}{3}
-  & \ola{\IH} : \{x : \floord{\E}\,S\,i\} \to \IH\,\floord{P}\,(\fst\,x) \to \IH\,P\,(\ola{\E}\,x)
+  & \ola{\IH} : \{x : \floord{\E}\,S\,\ix\} \to \IH\,\floord{P}\,(\fst\,x) \to \IH\,P\,(\ola{\E}\,x)
 \end{alignat*}
 This is again defined by easy induction on $S$. The induction method $\floord{f}$ is as follows.
 \begin{alignat*}{3}
@@ -686,9 +699,9 @@ interpretation which yields canonicity.
     described in Section \ref{sec:object-theory}.
 \end{itemize}
 \emph{Notation:} $\Lift$ is derivable the same way as we have seen, but we will make all
-lifting implicit in the metatheory. In the object theory, explicit lifting is advisable, because
+lifting implicit in the metatheory. In the object theory, explicit lifting is sensible, because
 we talk about strict computation and canonicty, so we want to be precise about definitional
-content. In the metatheory we have equality reflection so we can be more loose.
+content. In the metatheory we can be more liberal.
 
 \subsubsection{Consistency of the metatheory} As it often happens in type theory, our specific mixture
 of features is not covered by any particular reference. However, it is reasonable to expect that
@@ -703,7 +716,7 @@ previous works can be combined and generalized to obtain consistency for our met
   internal type for finite universe levels is naturally supported in the set-theoretic model.
 \item Regarding the object syntax as a quotient inductive-inductive type (QIIT), it is a small and
   finitary QIIT, which is constructible from fairly weak metatheoretic
-  assumptions\footnote{Concretely, two universes, UIP, function extensionality, propositional
+  assumptions\footnote{Concretely, two universes, UIP, function extensionality, proposition
   extensionality, quotients and natural numbers.}, and the general construction was described with
   minor formal gaps in \cite{DBLP:journals/corr/abs-2302-08837}. A construction of a QIIT for a
   specific type theory was fully formalized in Agda by \citet{initiality-agda}. Alternatively, we
@@ -808,7 +821,7 @@ such that $\fst\,(t,\,u) = t$, $\snd\,(t,\,u) = u$ and $(\fst\,t,\,\snd\,t) = t$
   &\refl &&: \Tm\,\Gamma\,(\{A : \U_i\}(t : A) \to \Id\,A\,t\,t)
 \end{alignat*}
 \begin{alignat*}{3}
-  &\J : \Tm\,\Gamma\,(\{A : \U_i\}\{x : A\}(P : (y : A) \to \Id\,A\,x\,y \to \U_k)\\
+  &\J : \Tm\,\Gamma\,(\{A : \U_i\}\{x : A\}(P : (y : A) \to \Id\,A\,x\,y \to \U_j)\\
   & \hspace{3.5em}\to P\,(\refl\,x) \to \{y : A\}(p : \Id\,A\,x\,y) \to P\,y\,p)&&
   &\\
   &\J\,P\,r\,(\refl\,x) = r
@@ -885,6 +898,8 @@ that arbitrary semantic types (at finite levels) can fit inside semantic context
 using the formal induction principle for the QIIT, the type of the target of elimination would be
 $\Set_{\omega+1}$; hence the need for both $\Set_\omega$ and $\Set_{\omega+1}$.
 
+\todo{Possibly extra discussion on sizing predicates}
+
 In the interpretation of types, note that $i$ appears in $\Ty\,\Gamma\,i$ as a natural number,
 but it gets implicitly converted to a universe level in $\Set_i$. This conversion requires that
 finite levels are given by an internal type in the metatheory.
@@ -902,8 +917,8 @@ types. The interpretation of empty and extended contexts is as follows.
 \end{alignat*}
 This says that the logical predicate holds for a closing substitution if it holds for each term in
 the substitution. Note the pattern matching notation in $(\gamma,\,\alpha)$: this is justified,
-since all values of $\Sub\,(\Gamma\ext A)$ are uniquely given as a pairing (similarly to pattern
-matching notation for plain $\Sigma$-types). The other CwF operations are as follows.
+since all inhabitants of $\Sub\,(\Gamma\ext A)$ are uniquely given as a pairing. The other CwF operations
+are as follows.
 \begin{alignat*}{4}
   &\id^\w\,\gamma^\w                   &&:= \gamma^\w                  &&(\sigma,\,t)^\w\,\gamma^\w          &&:= (\sigma^\w\,\gamma^\w,\,t^\w\,\gamma^\w)\\
   &(\sigma \circ \delta)^\w\,\gamma^\w &&:= \sigma^\w\,(\delta^\w\,\gamma^\w) && \p^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \gamma^\w\\
@@ -916,8 +931,8 @@ The interpretation of \textbf{universes} is the following.
 \end{alignat*}
 This definition also supports the Russell universe rules. For illustration, assuming $t :
 \Tm\,\Gamma\,\U_i$, we have $t^\w : \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to
-\Tm\,t[\gamma] \to \Set_i$. If we first cast $t$ to a type using the syntactic Russell
-universe equation, then $t^\w$ has exactly the same type.
+\Tm\,t[\gamma] \to \Set_i$. If use first use the syntactic Russell equation to cast $t$ to the type
+$\Ty\,\Gamma\,i$, then $t^\w$ still has the same type.
 
 Note that we do not get a canonicity statement about types themselves, i.e.\ we do not get that
 every closed type is definitionally equal to one of the canonical type formers. This could be handled
@@ -1015,8 +1030,10 @@ We assume $\Nat^\w : \Tm\,\Nat \to \Set_0$. The canonicity predicate is the foll
   &\rlap{$\El^\w\,\Nat'^\w\,t \hspace{2.55em}= \Nat^\w\,t$}  \\
   &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,f = \{a : \Tm\,A\} \to \El^\w\,A^\w\,a \to \El^\w\,B^\w\,(f\,a)$}
 \end{alignat*}
-This definition is sufficient to prove canonicity for $\Code$ as a concrete IR type. The task
-in this section is to do the same construction generically for all IR types.
+The predicate has to be inductive-recursive, because we have to recursively compute predicates for
+types of the form $\El\,a$. Using this definition of canonicity for $\Code$, we could proceed and
+prove canonicity for an object theory that supports $\Code$. Our task in this section is to
+generalize this: we do the same construction generically for all IR types.
 \end{example}
 
 We proceed to the semantic definitions. We assume the following parameters: $O : \Tm\,\U_j$, $O^\w :
@@ -1042,6 +1059,8 @@ allowing $f : \Tm\,(A \to \IR\,S^*)$ functions instead of functions with type $\
   &               && \hspace{0.6em} \to \Path\,(S^\w\,f^\w)
 \end{alignat*}
 
+\todo{illustration of paths and sub-signatures}
+
 If we have a path to $S^\w : \Sig^\w\,S$, we can push the terms contained in the path onto a
 term of $\E\,S\,(\IR\,S^*)\,\El$:
 \begin{alignat*}{4}
@@ -1052,6 +1071,8 @@ term of $\E\,S\,(\IR\,S^*)\,\El$:
 \end{alignat*}
 We also show that this operation preserves $\F$, so we have $\F\,(\push\,p\,t) = \F\,t$.
 \end{definition}
+
+\todo{illustration of the restriction of functions in paths}
 
 \begin{definition}[Encoding for signatures]
 This is only possible by induction on $\Sig^\w\,S$, as we have no appropriate induction principle

@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex paper"] 1760543313.65598 "paper.aux" "paper.bbl" "paper" 1760621741.61472 2
+["bibtex paper"] 1760958083.62126 "paper.aux" "paper.bbl" "paper" 1760958083.67351 2
   "./ACM-Reference-Format.bst" 1752082916 93560 12e0ced1522ea2bfa9b2fb12855c7e9e ""
   "./references.bib" 1752082916 223983 411de65852811474253d4e487efbcee4 ""
-  "paper.aux" 1760621741.49687 14520 453e371193a5651636bb273a47bf0a74 "pdflatex"
+  "paper.aux" 1760958083.47445 15704 34f43de5a15345f320b1ee2177ad2e41 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1760621740.93016 "paper.tex" "paper.pdf" "paper" 1760621741.61482 0
+["pdflatex"] 1760958082.71743 "paper.tex" "paper.pdf" "paper" 1760958083.67364 0
   "/usr/share/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1755987285 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/share/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1755987285 2933 9ad527ce78d7c5fa0a642dead095f172 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc" 1755987285 2934 a4a9158faed2e9e89c771b4e3b7fc12f ""
@@ -278,13 +278,13 @@
   "/usr/share/texmf-dist/tex/latex/xcolor/xcolor.sty" 1755987285 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "/usr/share/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1755987285 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1755987285 42087 b0f9697c952c8f5a8eede4134282cb0d ""
-  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1759026003 5311557 9da84c45f5b388655502706482323571 ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1759026002 2686924 af158dec7d2020399bfb163007870b5b ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1758980685 5311557 9da84c45f5b388655502706482323571 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1758980660 2686920 c32aee0992379094ffa80de51e292202 ""
   "acmart.cls" 1752082916 121725 55c82b1c8415ebc97f8e984a7d310e9c ""
-  "paper.aux" 1760621741.49687 14520 453e371193a5651636bb273a47bf0a74 "pdflatex"
-  "paper.bbl" 1752082916 32147 98ec30c6d1d44c6c102e895cba8c7ba0 "bibtex paper"
-  "paper.out" 1760621741.49687 4431 284bcfe594cc4b1be7530127d2c1dc9b "pdflatex"
-  "paper.tex" 1760621740.29187 91738 62c93c1759cc030a42da69844b8faf51 ""
+  "paper.aux" 1760958083.47445 15704 34f43de5a15345f320b1ee2177ad2e41 "pdflatex"
+  "paper.bbl" 1760958083.67269 32147 98ec30c6d1d44c6c102e895cba8c7ba0 "bibtex paper"
+  "paper.out" 1760958083.47545 4432 704fa0f171f9ad700cc678a826d140b7 "pdflatex"
+  "paper.tex" 1760958082.66643 92739 783affd9754df85d9132f5d1987d6789 ""
   (generated)
   "paper.aux"
   "paper.log"
