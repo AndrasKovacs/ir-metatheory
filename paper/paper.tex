@@ -988,13 +988,13 @@ that arbitrary semantic types (at finite levels) can fit inside semantic context
 using the formal induction principle for the QIIT, the type of the target of elimination would be
 $\Set_{\omega+1}$; hence the need for both $\Set_\omega$ and $\Set_{\omega+1}$.
 
-\todo{Possibly extra discussion on sizing predicates}
+%% \todo{Possibly extra discussion on sizing predicates}
 
 In the interpretation of types, note that $i$ appears in $\Ty\,\Gamma\,i$ as a natural number,
 but it gets implicitly converted to a universe level in $\Set_i$. This conversion requires that
 finite levels are given by an internal type in the metatheory.
 
-\subsubsection{Interpretation of the CwF and the basic type formers}
+\subsubsection{Interpretation of the CwF and the basic type formers}\label{sec:cwf-pred}
 
 This was described in previously mentioned works \cite{gluing,coquand2018canonicity}. Additionally,
 the code supplement \cite{formalisation} to \cite{DBLP:conf/mpc/KaposiKK19} has an Agda
@@ -1148,7 +1148,7 @@ plugged into $\sigma$ and $\delta$ constructors.
   &\quad \indelta &&: \Path\,(\delta^\w\,A^\w\,S^\w) \to \{f : \Tm\,(A \to \IR\,S^*)\}(f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a)))\\
   &               && \hspace{0.6em} \to \Path\,(S^\w\,f^\w)
 \end{alignat*}
-We give an informal explanation for why we need to talk about paths to sub-signatures. Consider
+We give an informal explanation for why we need these paths. Consider
 $\Code$ from Section \ref{sec:introduction} and its signature $S$ in Example
 \ref{ex:code-signature}. We aim to produce the signature that corresponds to $\Code^\w$ in Example
 \ref{ex:code-canonicity}, by induction on $S$.  Note the return type of $\Pi'^\w$, which is
@@ -1200,14 +1200,21 @@ Some remarks:
 \end{definition}
 
 
-\begin{example}\label{ex:code-canonicity-signature} Let $S^*$ be the signature from Example \ref{ex:code-signature}. It depends on the $\Tag$ and $\Nat$ types,
-so we assume evident $\blank^\w$ interpretations for them. Now, $S^* : \Tm\,(\Sig_0\,\U_0)$ is a closed term
-that does not refer to any IR type or term former, so we can already fully compute the $\blank^\w$
-operation on it, obtaining $\Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^*$.
-
-\todo{Present $\Ssw$}
-
-Then, we compute the following.
+\begin{example}\label{ex:code-canonicity-signature}
+Let $S^*$ be the signature from Example \ref{ex:code-signature}. It depends on the $\Tag$ and $\Nat$
+types, so we assume evident $\blank^\w$ interpretations for them. Now, $S^* : \Tm\,(\Sig_0\,\U_0)$
+is a closed term that does not refer to any IR type or term former, so we can already fully compute
+the action of the $\blank^\w$ operation on it:
+\begin{alignat*}{3}
+  & \Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^*\\
+  & \Ssw = \sigma^\w\,\Tag^\w\,\$^\w\,\lambda\,t^\w.\,\case\,t^\w\,\of \\
+  & \quad \Nat'^\w \to \iota^\w\,\Nat^\w \\
+  & \quad \Pi'^\w\hspace{0.85em} \to \delta^\w\,\top^\w\,\$^\w\,\lambda\,\{{ElA}\}\,{ElA}^\w.\,
+                                    \delta^\w\,({ElA}^\w\,\ttt^\w)\,\$^\w\,\lambda\,\{{ElB}\}\,{ElB}^\w.\,\\
+  & \hspace{4.8em}\iota^\w\, (\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\}(a^\w : {ElA}^\w\,\ttt^\w\,a) \to {ElB}^\w\,a^\w\,(f\,a))
+\end{alignat*}
+Above, $\blank\$^\w\blank$ is the evident predicate interpretation of the $\blank\$\blank$
+combinator. Then, we compute the following.
 \begin{alignat*}{4}
   & \floord{\Ssw}\,\here : \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(\lambda\,t.\,\Tm\,(\El\,t) \to \Set_0)\\
   & \floord{\Ssw}\,\here = \sigma\,(\Tm\,\Tag)\,\$\,\lambda\,t.\,\sigma\,(\Tag^\w\,t)\,\$\,\lambda\,t^\w.\,\case\,t^\w\,\of\\
