@@ -566,12 +566,12 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/libertine/LinLibertineTI-tlf-ot1--b
 INPUT /usr/share/texmf-dist/fonts/enc/dvips/libertine/lbtn_kijugd.enc
 INPUT /usr/share/texmf-dist/fonts/tfm/public/libertine/LinLibertineTI-tlf-ot1.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/libertine/LinLibertineTI-tlf-ot1.tfm
+INPUT /usr/share/texmf-dist/fonts/vf/public/newtx/ntxexx.vf
+INPUT /usr/share/texmf-dist/fonts/tfm/public/newtx/txexs.tfm
 INPUT /usr/share/texmf-dist/fonts/vf/public/newtx/nxlmi7.vf
 INPUT /usr/share/texmf-dist/fonts/tfm/public/newtx/LibertineMathMI7.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/newtx/NewTXMI7.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/newtx/stxscr.tfm
-INPUT /usr/share/texmf-dist/fonts/vf/public/newtx/ntxexx.vf
-INPUT /usr/share/texmf-dist/fonts/tfm/public/newtx/txexs.tfm
 INPUT /usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 INPUT /usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 INPUT /usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd

@@ -70,6 +70,7 @@
 \newcommand{\suc}{\msf{suc}}
 \newcommand{\Nil}{\msf{Nil}}
 \newcommand{\Cons}{\msf{Cons}}
+\newcommand{\List}{\msf{List}}
 \newcommand{\El}{\msf{El}}
 \newcommand{\Lift}{\msf{Lift}}
 \newcommand{\lup}{\uparrow}
@@ -209,7 +210,7 @@ inductive type over some type, which lets us define inductive-recursive predicat
 
 Indexed induction-recursion was first used in an implicit and informal way in Martin-Löf's proof of
 normalization for his intuitionistic type theory \cite{martin1975intuitionistic}. Later, his
-specification of a Tarski-style universe was a more clear-cut example of induction recursion
+specification of a Tarski-style universe was a more clear-cut example of induction-recursion
 \cite{martinlof84sambin}. The general specification of IR was formalized by
 \citet{DBLP:journals/jsyml/Dybjer00} and
 \citet{dybjer99finite,DBLP:journals/jlp/DybjerS06,DBLP:journals/apal/DybjerS03}, who also developed
@@ -444,7 +445,7 @@ each inductive field in a value of $\E\,S\,\ir\,\el$. $\map$ maps over $\E\,S\,\
 section $g : (x : \ir) \to P\,x$ to each inductive field. Elimination is specified as follows.
 \begin{alignat*}{3}
   &\elim           &&: (P : \IR\,S \to \U_k) \to ((x : \E\,S\,(\IR\,S)\,\El) \to \IH\,P\,x \to P\,(\intro\,x)) \to (x : \IR\,S) \to P\,x \\
-  &\elim\!-\!\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(\map\,(\elim\,P\,f)\,x)
+  &\elim\!\!-\!\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(\map\,(\elim\,P\,f)\,x)
 \end{alignat*}
 If we have function extensionality, this specification of elimination can be shown to be equivalent
 to the initiality of $(\IR\,S,\,\El)$ as an $S$-algebra \cite[Section~4.4]{DBLP:journals/apal/DybjerS03}.
@@ -478,13 +479,15 @@ We set $O$ to be constantly $\top$ because vectors do not have an associated rec
 the $\Nil'$ case, we simply set the constructor index to $\zero$. In the $\Cons'$ case, we introduce
 a non-inductive argument, binding $n$ for the length of the tail of the vector. Then, when we
 introduce the inductive argument using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that index of
-the argument is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$. For
-illustration, the same specification could be written as the following inductive family in Agda:
-\begin{alignat*}{3}
-  &\data\,\Vect\,(A : \Set_0) : \Nat \to \Set_0\,\where \\
-  &\quad \nil  \hspace{0.75em}: \Vect\,A\,0\\
-  &\quad \cons : (n : \Nat) \to A \to \Vect\,A\,n \to \Vect\,A\,(\suc\,n)
-\end{alignat*}
+the argument is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$.
+
+%% For
+%% illustration, the same specification could be written as the following inductive family in Agda:
+%% \begin{alignat*}{3}
+%%   &\data\,\Vect\,(A : \Set_0) : \Nat \to \Set_0\,\where \\
+%%   &\quad \nil  \hspace{0.75em}: \Vect\,A\,\zero\\
+%%   &\quad \cons : (n : \Nat) \to A \to (\top \to \Vect\,A\,n) \to \Vect\,A\,(\suc\,n)
+%% \end{alignat*}
 
 \end{example}
 
@@ -512,17 +515,17 @@ type and term formation rules are the following.
   &\msf{El\!\!-\!\!intro} && : \El\,(\intro\,x) \equiv \F\,x
 \end{alignat*}
 
-\begin{example}\label{ex:vector-constructors} Let us obtain the $\Vect$ constructors from the IIR rules. We take $S$ from Example \ref{ex:vector}. We define $\Vect\,A\,n : \U_0$ to be $\IIR\,S\,n$, where we appropriately instantiate $A$ in $S$. The derived constructors are the following.
+\begin{example}\label{ex:vector-constructors} Let us obtain Agda-style $\Vect$ constructors from the IIR rules. We take $S$ from Example \ref{ex:vector}. We define $\Vect\,A\,n : \U_0$ to be $\IIR\,S\,n$, where we appropriately instantiate $A$ in $S$. The derived constructors are the following.
   \begin{alignat*}{3}
-    &\nil : \Vect\,A\,0                                  && \cons : (n : \Nat) \to A \to \Vect\,A\,n \to \Vect\,A\,(\suc\,n)\\
+    &\nil : \Vect\,A\,\zero                                && \cons : (n : \Nat) \to A \to \Vect\,A\,n \to \Vect\,A\,(\suc\,n)\\
     &\nil :\equiv \intro\,(\nil',\,(\lup\refl))\quad\quad  && \cons\,n\,a\,\mit{as} :\equiv \intro\,(\cons',\,n,\,a,\,(\lambda\,\_.\,\mit{as}),\,(\lup\refl))
   \end{alignat*}
-  In $\nil$, the type of $\lup\refl$ is $\zero = \zero$, and in $\cons$ its type is $\suc\,n = \suc\,n$. $\El$ and $\Elintro$ are trivial in this case.
+  In $\nil$, the type of $(\lup\refl)$ is $\zero = \zero$, and in $\cons$ its type is $\suc\,n = \suc\,n$. $\El$ and $\Elintro$ are trivial in this case.
 \end{example}
 
 \emph{Remark:} this specification uses identity types to fix the correct index for each
 constructor. This style has been popularized as ``Fordism'' or ``fording'' by Conor McBride, and it
-has been widely used to represent inductive families, e.g.\ in observational type theories
+has been used to represent inductive families, e.g.\ in observational type theories
 \cite{towards-ott, DBLP:journals/toplas/PujetLT25} and in the Glasgow Haskell Compiler's
 implementation of generalized algebraic datatypes (GADTs) \cite{vytiniotis2011outsidein}.
 
@@ -543,10 +546,11 @@ as follows. We assume a level $l$ for the target type of elimination.
 \begin{alignat*}{3}
   &\elim           &&: (P : \{\ix : I\}\to \IIR\,S\,\ix \to \U_l) \to (\{\ix : I\}(x : \E\,S\,(\IIR\,S)\,\El\,\ix) \to \IH\,P\,x \to P\,(\intro\,x))\\
   &                && \hspace{0.7em}\to (x : \IIR\,S\,\ix) \to P\,x \\
-  &\elim\!-\!\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(\map\,(\elim\,P\,f)\,x)
+  &\elim\!\!-\!\!\beta &&: \elim\,P\,f\,(\intro\,x) \equiv f\,x\,(\map\,(\elim\,P\,f)\,x)
 \end{alignat*}
-\emph{Notation.} We overload $\E$, $\F$, $\IH$, $\map$, $\Sig$, $\El$, $\intro$ and $\elim$ for IR and IIR types, but we will sometimes disambiguate them
-with a subscript, e.g.\ as $\intro_\IR$ or $\intro_\IIR$.
+\emph{Notation.} We overload $\Sig$, $\E$, $\F$, $\El$, $\intro$, $\Elintro$, $\IH$, $\map$, $\elim$
+and $\elim\!\!-\!\!\beta$ for IR and IIR types, but we will sometimes disambiguate them with a
+subscript, e.g.\ as $\intro_\IR$ or $\intro_\IIR$.
 
 \section{Construction of IIR Types}\label{sec:iir-construction}
 
@@ -580,7 +584,7 @@ to small IR signatures \cite[Section~6]{DBLP:conf/tlca/HancockMGMA13}. However, 
 the translation of signatures, without the rest of the construction. Also, constructions and results
 for small IR do not generally transfer to our case of ``large'' IR.
 
-\begin{example} We compute the translation of the length-indexed vector signature from Example \ref{ex:vector}.
+\begin{example} \label{ex:ir-vector} We compute the translation of the length-indexed vector signature from Example \ref{ex:vector}.
 \begin{alignat*}{4}
   & \floord{S} : \Sig\,(\Nat \times \top)\\
   & \floord{S} \equiv \sigma\,(\Lift\,\Tag)\,\$\,\lambda\,t.\,\case \ldown\!t\,\of \\
@@ -589,30 +593,58 @@ for small IR do not generally transfer to our case of ``large'' IR.
   & \quad \hspace{4em}  \delta\,(\Lift\,\top_0)\,\$\,\lambda\,f.\,\sigma\,((x : \top_0) \to \fst\,(f\,(\lup\!x)) = (\ldown\!n))\,\$\,\lambda\,p.\\
   & \quad \hspace{4em}  \iota\,(\suc\,(\ldown\!n),\,\ttt)
 \end{alignat*}
-The first $\Nat$ component of the recursive result serves as the index. In the $\Cons'$ case we
-have a single inductive field whose length is enforced with the extra $\sigma\,((x : \top) \to
-\fst\,(f\,(\lup\!x)) =\,\,\ldown\!n)$.
-
-\todo{Fording of vector in Agda notation as well}
+The first $\Nat$ component of the recursive result serves as the index. In the $\Cons'$ case we have
+a single inductive field whose length is enforced with the extra $\sigma\,((x : \top) \to
+\fst\,(f\,(\lup\!x)) =\,\,\ldown\!n)$. For illustration, we also present the above signature as an
+Agda-style IR definition below. We omit type lifting for the sake of brevity.
+\begin{alignat*}{4}
+  & \data\,\List : \U_0\,\where\\
+  & \quad \nil \hspace{0.78em} : \List\\
+  & \quad \cons : (n : \Nat) \to A \to (\mit{as} : \top \to \List) \to ((x : \top) \to \fst\,(\El\,(\mit{as}\,x)) = n) \to \List\\
+  & \\
+  & \El : \List \to \Nat \times \top\\
+  & \El\,\nil \hspace{4.7em}:\equiv (\zero,\,\ttt)\\
+  & \El\,(\cons\,n\,a\,\mit{as}\,p) :\equiv (\suc\,n,\,\ttt)
+\end{alignat*}
+This definition is not yet length-indexed, so we use the name ``$\List$'' for the inductive type. However, the length
+of the recursive list in $\cons$ is already specified to be $n$.
 
 \end{example}
 
 \subsection{Type and Term Formers}\label{sec:iir-construction-type-term}
 We assume $S^* : \Sig_\IIR$ as a parameter to the constructions in the following. This is a
-``fixed'' signature that we aim to construct IIR rules for. We need to distinguish this signature from
-other ``varying'' signatures that will appear in definitions and we will do induction on.
+``fixed'' signature that we aim to construct IIR rules for. We need to distinguish this signature
+from other ``varying'' signatures that will appear in definitions and we will do induction on.
 
-\todo{Explanation for the need of fixed and varying signatures}
+We give some intuition for the distinction of fixed and varying signatures. Consider the definition
+of $\E_{\IIR}$ in Section \ref{sec:iir-type-and-term-formation}: it recurses on the signature
+argument while keeping the $\mit{ir}$ and $\mit{el}$ arguments unchanged on every recursive call.
+Also consider $\intro_{\IIR}$ which has type $\E\,S\,(\IIR\,S)\,\El\,\mit{ix} \to
+\IIR\,S\,\mit{ix}$. If we want to do constructions on $\E\,S\,(\IIR\,S)\,\El\,\mit{ix}$ or
+prove properties about its values, if we do induction on $S$, the $(\IIR\,S)$ and $\El$ values
+remain unchanged in inductive steps. Hence, most constructions must be parameterized over two
+signatures, a ``varying'' $S$ and a ``fixed'' $S^*$, and we can do induction on an $S$ that appears
+in $\E\,S\,(\IIR\,S^*)\,\El\,\mit{ix}$. From a different angle: as we iterate through the fields
+of a constructor, the signature that specifies the remaining fields changes, but the type of each
+inductive field is specified by the same signature.
 
-Since the encoding of signatures already ensures the well-indexing of inductive fields in
-constructors, it only remains to ensure that the ``top-level'' index matches the externally supplied
-index. We define the $\IIR$ and $\El$ rules as follows.
+We proceed to the definition of $\IIR$ and $\El$. Since the encoding of signatures already ensures
+the well-indexing of inductive fields in constructors, it only remains to ensure that the
+``top-level'' index matches the externally supplied index. We define the $\IIR$ and $\El$ rules as
+follows.
 \begin{alignat*}{3}
   &\IIR : I \to \U_{\max(i,\,k)}                         && \El : \IIR\,\ix \to O\,\ix \\
   &\IIR\,\ix :\equiv (x : \IR\,\Sigr{S^*}) \times \fst\,(\El\,x) = \ix \hspace{3em}&& \El\,(x,\,p) :\equiv \tr\,O\,p\,(\snd\,(\El\,x))
 \end{alignat*}
-The following definition describes the data that we get when we peel off an $\intro$ from an
-$\IIR\,\ix$ value.
+\begin{example} Continuing the $\Vect$ example and applying the above definitions, we obtain the properly length-indexed definition:
+  \begin{alignat*}{3}
+    &\Vect : \Nat \to \U_0                                        &&\El : \Vect\,n \to \top\\
+    &\Vect\,n :\equiv (x : \List) \times \fst\,(\El\,x) = n\quad  &&\El\,(x,\,p) :\equiv \tr\,(\lambda\,\_.\,\top)\,p\,(\snd\,(\El\,x))
+  \end{alignat*}
+\end{example}
+
+Let us continue towards the generic $\intro$ definition. First, the following definition describes the
+data that we get when we peel off an $\intro$ from an $\IIR\,\ix$ value.
 \begin{alignat*}{4}
   &\floord{\E} : \Sig_\IIR \to I \to \U_{\max(i,\,k)}\\
   &\floord{\E}\,S\,\ix :\equiv (x : \E\,\floord{S}\,(\IR\,\floord{S^*})\,\El) \times \fst\,(\F\,x) = \ix
@@ -979,7 +1011,7 @@ since all inhabitants of $\Sub\,(\Gamma\ext A)$ are uniquely given as a pairing.
 are as follows.
 \begin{alignat*}{4}
   &\id^\w\,\gamma^\w                   &&:= \gamma^\w                  &&(\sigma,\,t)^\w\,\gamma^\w          &&:= (\sigma^\w\,\gamma^\w,\,t^\w\,\gamma^\w)\\
-  &(\sigma \circ \delta)^\w\,\gamma^\w &&:= \sigma^\w\,(\delta^\w\,\gamma^\w) && \p^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \gamma^\w\\
+  &(\sigma \circ \theta)^\w\,\gamma^\w &&:= \sigma^\w\,(\theta^\w\,\gamma^\w) && \p^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \gamma^\w\\
   &(A[\sigma]) ^\w\,\gamma^\w\,\alpha  &&:= A^\w\,(\sigma^\w\,\gamma^\w)\,\alpha\hspace{3em} && \q^\w\,(\gamma^\w,\,\alpha^\w)      &&:= \alpha^\w\\
   &(t[\sigma]) ^\w\,\gamma^\w          &&:= t^\w\,(\sigma^\w\,\gamma^\w) && \epsilon^\w\,\gamma^\w              &&:= \ttt
 \end{alignat*}
@@ -1099,16 +1131,16 @@ We proceed to the semantic definitions. We assume the following parameters: $O :
 \Sig^\w\,O^\w\,S^*$. \emph{Abbreviation:} we write $\Sig^\w\,S$ in the following, omitting the fixed
 $O^\w$ parameter from the type.  Like in Section \ref{sec:iir-construction}, we view $S^*$ as a
 ``fixed'' top-level signature, in contrast to ``varying'' signatures that we will encounter in
-constructions. We will do induction on such varying signatures, but the induction must happen on
-\emph{sub-signatures} of $S^*$, instead of arbitrary signatures.
+constructions. We will do induction on such varying signatures, but now the induction must happen
+on \emph{sub-signatures} of $S^*$, instead of arbitrary signatures.
+
 
 \begin{definition}[Paths to sub-signatures of $S^*$]
 We define an inductive family indexed
 over $S : \Tm\,(\Sig_i\,O)$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$, viewing
 $S$ as a subtree. Also, the subtree $S$ and all data in the path must be canonical (i.e.\ have $\blank^\w$
 witnesses). The path is represented as a left-associated \emph{snoc-list} of data that can be
-plugged into $\sigma$ and $\delta$ constructors. Moreover, we restrict the $\delta$ case, only
-allowing $f : \Tm\,(A \to \IR\,S^*)$ functions instead of functions with type $\Tm\,(A \to O)$.
+plugged into $\sigma$ and $\delta$ constructors.
 \begin{alignat*}{4}
   &\rlap{$\data\,\Path : \{S : \Tm\,(\Sig_i\,O)\} \to \Sig^\w\,S \to \Set_{\max(i+1,\,j+1)}$}\\
   &\quad \here    &&: \Path\,\Ssw\\
@@ -1116,27 +1148,34 @@ allowing $f : \Tm\,(A \to \IR\,S^*)$ functions instead of functions with type $\
   &\quad \indelta &&: \Path\,(\delta^\w\,A^\w\,S^\w) \to \{f : \Tm\,(A \to \IR\,S^*)\}(f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a)))\\
   &               && \hspace{0.6em} \to \Path\,(S^\w\,f^\w)
 \end{alignat*}
+We give an informal explanation for why we need to talk about paths to sub-signatures. Consider
+$\Code$ from Section \ref{sec:introduction} and its signature $S$ in Example
+\ref{ex:code-signature}. We aim to produce the signature that corresponds to $\Code^\w$ in Example
+\ref{ex:code-canonicity}, by induction on $S$.  Note the return type of $\Pi'^\w$, which is
+$\Code^\w\,(\Pi'\,A\,B)$. This refers back to $A$ and $B$ which are bound \emph{previously} in the
+constructor type. Hence, as we recurse through $S$, we need to remember the constructor fields that
+we already passed, and we represent this data as a snoc-list, using $\Path$.
 
-\todo{illustration of paths and sub-signatures}
-
-If we have a path to $S^\w : \Sig^\w\,S$, we can push the terms contained in the path onto a
-term of $\E\,S\,(\IR\,S^*)\,\El$, getting a term of $\E\,S^*\,(\IR\,S^*)\,\El$.
+We can push the terms contained in a path onto a term with type $\E\,S\,(\IR\,S^*)\,\El$, getting a
+term with type $\E\,S^*\,(\IR\,S^*)\,\El$:
 \begin{alignat*}{4}
   & \hspace{-6em}\rlap{$\push : \Path\,S^\w \to \Tm\,(\E\,S\,(\IR\,S^*)\,\El) \to \Tm\,(\E\,S^*\,(\IR\,S^*)\,\El)$}\\
   & \hspace{-6em}\push\,\here\,                     &&t := t\\
   & \hspace{-6em}\push\,(\insigma\,p\,\{a\}\,a^\w)\,&&t := \push\,p\,(a,\,t)\\
   & \hspace{-6em}\push\,(\indelta\,p\,\{f\}\,f^\w)\,&&t := \push\,p\,(f,\,t)
 \end{alignat*}
-We also show that this operation preserves $\F$, so we have $\F\,(\push\,p\,t) = \F\,t$.
+Note that we have $f : \Tm\,(A \to \IR\,S^*)$ in $\indelta$, although we could have used a more
+general definition of sub-signatures with $f : \Tm\,(A \to O)$. The more specific version is
+necessary to make the definition of $\push$ well-typed. We also show that $\push$ preserves $\F$, so
+we have $\F\,(\push\,p\,t) = \F\,t$.
+
 \end{definition}
 
-\todo{illustration of the restriction of functions in paths}
-
-\begin{definition}[Encoding for signatures] We encode signatures by induction on $\Sig^\w\,S$;
+\begin{definition}[Interpretation of signatures] We translate signatures by induction on $\Sig^\w\,S$;
 this is the only viable way, since we have no appropriate induction principle for
 $\Tm\,(\Sig_i\,O)$.  As we recurse into a signature, we store the data that we have seen in a
-$\Path$, and when we hit the base case $\iota^\w$, we use the $\Path$ to build up the correct term
-for the constructor index.
+$\Path$, and when we hit the base case $\iota^\w$, we push the path onto $\ttt$ to build up the
+correct term for the constructor index.
 \begin{alignat*}{5}
   &\rlap{$\floord{\blank} : (S^\w : \Sig^\w\,S) \to \Path\,S^\w \to \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(O^\w\circ \El)$}\\
   &\floord{\iota^\w\,o^\w}\,&&p               &&:=\,&&\,\iota\,(\intro\,(\push\,p\,\ttt))\,o^\w\\
@@ -1184,7 +1223,7 @@ some extra noise in the first argument of $\Pi'$, which is now represented as a 
 \end{example}
 
 \begin{definition}[Interpretation of $\IR$ and $\El$]
-This time around, encoded signatures directly yield the interpretation of $\IR$ and $\El$, and we do not need to
+This time around, translated signatures directly yield the interpretation of $\IR$ and $\El$, and we do not need to
 fix it up with additional predicates.
 \begin{alignat*}{4}
   &\IR^\w : \Tm\,(\IR\,S^*) \to \Set_i \quad\quad && \El^\w : \{t : \Tm\,(\IR\,S^*)\} \to \IR^\w\,t \to O^\w\,(\El\,t)\\
@@ -1222,7 +1261,7 @@ $\intro$.
 
 \begin{definition}[Interpretation of $\Elintro$]\label{sec:canonicity-elintro}
 Similarly as in Section \ref{sec:iir-construction-type-term}, we need to show that $\F$ is preserved
-by signature encoding. For this, we need to annotate $\Path$ with additional information. Recall
+by signature translation. For this, we need to annotate $\Path$ with additional information. Recall
 that the current definition of $\Path$ is not quite the most general notion of paths in signatures,
 because the $\indelta$ constructor restricts the stored syntactic functions to the form $\El \circ f
 : \Tm\,(A \to O)$, only storing $f : \Tm\,(A \to \IR\,S^*)$. This restriction is required for the
@@ -1370,7 +1409,20 @@ or to $\intro\,(\Pi',\,A,\,B,\,\ttt)$ for some $A$ and $B$.
 
 \subsection{Algorithm Extraction}
 
-\todo{TODO}
+Is our proof constructive and can we extract an evaluation algorithm from it?  We believe that it
+would not be difficult to write a program that follows the computation in our construction.  Also,
+similar evaluators have been used in Agda and Idris for a while. However, we do not make this
+formally precise in this paper, and leave it to potential future work. In short, we see two ways to
+establish constructivity.
+\begin{itemize}
+\item We could exhibit a constructive model of the metatheory. As far as we know, this has not been
+  done, since Dybjer and Setzer only developed classical set-theoretical models of IR.
+\item We could prove canonicity for the metatheory. To handle the IR types in the metatheory, we can
+  reuse the canonicity proof in this paper. However, we would also need to handle the QIIT of the
+  object theory, and currently there is no generic canonicity proof for QIITs, and there are also
+  some formal gaps in the construction of finitary QIITs from more basic type formers
+  \cite{DBLP:journals/corr/abs-2302-08837}.
+\end{itemize}
 
 \subsection{Mechanization}\label{sec:canonicity-mechanization}
 
