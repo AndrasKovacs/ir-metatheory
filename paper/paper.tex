@@ -1128,10 +1128,10 @@ We assume $\Nat^\w : \Tm\,\Nat \to \Set_0$. The canonicity predicate is the foll
   &\rlap{}\\
   &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)$}\\
   &\rlap{$\El^\w\,\Nat'^\w  \hspace{2.4em}            = \Nat^\w$}  \\
-  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,A\} \to \El^\w\,A^\w\,a \to \El^\w\,B^\w\,(f\,a)$}
+  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
 \end{alignat*}
 The predicate has to be inductive-recursive, because we have to recursively compute predicates for
-types of the form $\El\,t$. Using this definition of canonicity for $\Code$, we could proceed and
+types of the form $\El\,A$. Using this definition of canonicity for $\Code$, we could proceed and
 prove canonicity for an object theory that supports $\Code$. Our task in this section is to
 generalize this: we do the same construction generically for all IR types.
 \end{example}
@@ -1143,7 +1143,6 @@ $O^\w$ parameter from the type.  Like in Section \ref{sec:iir-construction}, we 
 ``fixed'' top-level signature, in contrast to ``varying'' signatures that we will encounter in
 constructions. We will do induction on such varying signatures, but now the induction must happen
 on \emph{sub-signatures} of $S^*$, instead of arbitrary signatures.
-
 
 \begin{definition}[Paths to sub-signatures of $S^*$]
 We define an inductive family indexed
@@ -1213,9 +1212,9 @@ Some remarks:
 \begin{example}\label{ex:code-canonicity-signature}
 Let $S^*$ be the signature from Example \ref{ex:code-signature}. It depends on the $\Tag$ and $\Nat$
 types, so we assume $\blank^\w$ interpretations for them. We also assume $\blank\$^\w\blank$ as the
-evident predicate interpretation of the $\blank\$\blank$ combinator. Now, $S^* :
+evident predicate interpretation of $\blank\$\blank$. Now, $S^* :
 \Tm\,(\Sig_0\,\U_0)$ is a closed term that does not refer to any IR type or term former, so we can
-already fully compute the action of the $\blank^\w$ operation on it:
+already fully compute the action of $\blank^\w$ on it:
 \begin{alignat*}{3}
   & \Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^*\\
   & \Ssw = \sigma^\w\,\Tag^\w\,\$^\w\,\lambda\,t^\w.\,\case\,t^\w\,\of \\
@@ -1225,23 +1224,33 @@ already fully compute the action of the $\blank^\w$ operation on it:
   & \hspace{4.8em}\iota^\w\, (\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\}(a^\w : {ElA}^\w\,\ttt^\w\,a) \to {ElB}^\w\,a^\w\,(f\,a))
 \end{alignat*}
 Note that the computation of $\Ssw$ does not get stuck on neutral tags, because $\blank^\w$ is a
-metatheoretic operation on the object syntax and as such it computes on every syntactic
-construction. Next, we compute the following.
+metatheoretic operation that computes on every construction in the object syntax. Next, we compute
+the following.
 \begin{alignat*}{4}
   & \floord{\Ssw}\,\here : \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(\lambda\,t.\,\Tm\,(\El\,t) \to \Set_0)\\
   & \floord{\Ssw}\,\here = \sigma\,(\Tm\,\Tag)\,\$\,\lambda\,t.\,\sigma\,(\Tag^\w\,t)\,\$\,\lambda\,t^\w.\,\case\,t^\w\,\of\\
   & \quad \Nat'^\w \to \iota\,(\intro\,(\Nat',\,\ttt))\,\Nat^\w\\
-  & \quad \Pi'^\w\hspace{0.8em} \to \sigma\,(\Tm\,(\top \to \IR\,S^*))\hspace{1.75em}\$\,\lambda\,A.\,
-                      \delta\,((a : \Tm\,\top) \times \top)\hspace{4.4em}(\fst \circ A)\,\$\,\lambda\,\{{ElA}\}\,{ElA}^\w.\\
-  & \hspace{4.8em} \sigma\,(\Tm\,({ElA}\,\ttt \to \IR\,S^*))\,\$\,\lambda\,B.\,
-                      \delta\,((a : \Tm\,({ElA}\,\ttt)) \times {ElA}^\w\,a)\,(\fst \circ B)\,\$\,\lambda\,\{{ElB}\}\,{ElB}^\w.\\
-  & \hspace{4.8em} \iota\,\,(\intro\,(\Pi',\,A,\,B,\,\ttt))\,(\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\} \to {ElA}^\w\,a \to {ElB}^\w\,(f\,a))
+  & \quad \Pi'^\w\hspace{0.8em} \to \\
+  & \hspace{2em} \sigma\,(\Tm\,(\top \to \IR\,S^*))\hspace{2.65em}\$\,\lambda\,A.\,
+                      \delta\,((a : \Tm\,\top) \times \top)\hspace{7.95em}(A \circ \fst)\,\$\,\lambda\,{ElA}^\w.\\
+  & \hspace{2em} \sigma\,(\Tm\,(\El\,(A\,\ttt) \to \IR\,S^*))\,\$\,\lambda\,B.\,
+                      \delta\,((a : \Tm\,(\El\,(A\,\ttt))) \times {ElA}^\w\,(\ttt,\,\ttt)\,a)\,(B \circ \fst)\,\$\,\lambda\,{ElB}^\w.\\
+  & \hspace{2em} \iota\,\,(\intro\,(\Pi',\,A,\,B,\,\ttt))\,(\lambda\,f.\,\{a : \Tm\,(\El\,(A\,\ttt))\}(a^\w : {ElA}^\w\,(\ttt,\,\ttt)\,a) \to {ElB}^\w\,(a,\,a^\w)\,(f\,a))
 \end{alignat*}
-This specifies essentially the same IIR type that we have seen in Example \ref{ex:code-canonicity},
-with some extra noise in the first argument of $\Pi'$, which is now represented as a function with
-domain $\top$. We do not get stuck on neutral tags here either, but for a different reason: we have
+This specifies essentially the same IIR type that we have seen in Example \ref{ex:code-canonicity}.
+We get some extra noise in the first inductive argument of $\Pi'^\w$, which is now a function with domain
+$\Tm\,\top \times \top$, and some more noise in the second inductive argument, where we pack the inputs into a
+$\Sigma$-type. We do not get stuck on neutral tags here either, but for a different reason: we have
 function extensionality and equality reflection in the metatheory, so we are allowed to push
-computation under the $t^\w$ split, up to meta-level definitional equality.
+computation under the $t^\w$ splitting, up to meta-level definitional equality.
+
+  %% ⌞S*ᵒ⌟here : IIR.Sig zero (IR.IR S*) (λ t → IR.El t → Set)
+  %% ⌞S*ᵒ⌟here = IIR.σ Tag λ t → IIR.σ (Tagᵒ t) λ where
+  %%   ℕ'ᵒ → IIR.ι (IR.intro (ℕ' , tt)) ℕᵒ
+  %%   Π'ᵒ → IIR.σ (⊤₀ → IR.IR S*) λ A → IIR.δ (⊤₀ × ⊤₀) (A ∘ fst) λ ElAᵒ →
+  %%         IIR.σ (IR.El (A tt) → IR.IR S*) λ B → IIR.δ (Σ (IR.El (A tt)) (ElAᵒ (tt , ttᵒ))) (B ∘ fst) λ ElBᵒ →
+  %%         IIR.ι (IR.intro (Π' , A , B , tt)) (λ f → {a : IR.El (A tt)}(aᵒ : ElAᵒ (tt , ttᵒ) a) → ElBᵒ (a , aᵒ) (f a))
+
 \end{example}
 
 \begin{definition}[Interpretation of $\IR$ and $\El$]
