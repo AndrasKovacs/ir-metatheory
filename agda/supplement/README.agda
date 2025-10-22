@@ -2,7 +2,7 @@
 
 module README where
 
--- This folder was checked using Agda 2.8.0 and standard library 2.2.
+-- This folder was checked using Agda 2.9.0 and standard library 2.2.
 
 import Lib                   -- Standard definitions and re-exports.
 import PlainIR               -- Postulated IR types. Section 2.2 in paper.

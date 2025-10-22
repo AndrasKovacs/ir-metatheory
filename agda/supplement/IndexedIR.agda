@@ -19,28 +19,28 @@ data Sig i {j k}(I : Set k)(O : I → Set j) : Set (suc i ⊔ j ⊔ k) where
 E : Sig i {j}{k} I O → (ir : I → Set (i ⊔ k)) → (∀ {ix} → ir ix → O ix) → I → Set (i ⊔ k)
 E {i}{_}{k}(ι ix' o  ) ir el ix = Lift (i ⊔ k) (ix' ≡ ix)
 E          (σ A S    ) ir el ix = Σ A λ a → E (S a) ir el ix
-E          (δ A ix' S) ir el ix = Σ (∀ a → ir (ix' a)) λ f → E (S (el ∘ f)) ir el ix
+E          (δ A ixs S) ir el ix = Σ (∀ a → ir (ixs a)) λ f → E (S (el ∘ f)) ir el ix
 
 F : ∀ {S : Sig i {j}{k} I O}{ir : I → Set (i ⊔ k)}{el : ∀ {i} → ir i → O i} → ∀ {ix} → E S ir el ix → O ix
-F {O = O}{S = ι ix o}            (↑ x)   = tr O x o
-F        {S = σ A S}             (a , x) = F {S = S a} x
-F        {S = δ A ix S} {ir}{el} (f , x) = F {S = S (el ∘ f)} x
+F {O = O}{S = ι ix o}             (↑ x)   = tr O x o
+F        {S = σ A S}              (a , x) = F {S = S a} x
+F        {S = δ A ixs S} {ir}{el} (f , x) = F {S = S (el ∘ f)} x
 
 IH : ∀ {S : Sig i {j}{k} I O}{ir : I → Set (i ⊔ k)}{el : ∀{ix} → ir ix → O ix}
        (P : ∀ {ix} → ir ix → Set l) → ∀ {ix} → E S ir el ix → Set (i ⊔ l)
-IH {S = ι ix o  }          P _       = ⊤
-IH {S = σ A S   }          P (a , x) = IH {S = S a} P x
-IH {S = δ A ix S} {ir}{el} P (f , x) = (∀ a → P (f a)) × IH {S = S (el ∘ f)} P x
+IH {S = ι ix o   }          P _       = ⊤
+IH {S = σ A S    }          P (a , x) = IH {S = S a} P x
+IH {S = δ A ixs S} {ir}{el} P (f , x) = (∀ a → P (f a)) × IH {S = S (el ∘ f)} P x
 
 map : ∀ {S : Sig i {j}{k} I O}{ir : I → Set (i ⊔ k)}{el : {ix : I} → ir ix → O ix} {P : ∀ {ix} → ir ix → Set l}
       → (∀ {ix} x → P {ix} x) → ∀ {ix} (x : E S ir el ix) → IH P x
-map {S = ι i' o  }          g t       = tt
-map {S = σ A S   }          g (a , x) = map {S = S a} g x
-map {S = δ A ix S} {ir}{el} g (f , x) = (g ∘ f , map {S = S (el ∘ f)} g x)
+map {S = ι i' o   }          g t       = tt
+map {S = σ A S    }          g (a , x) = map {S = S a} g x
+map {S = δ A ixs S} {ir}{el} g (f , x) = (g ∘ f , map {S = S (el ∘ f)} g x)
 
 mutual
   data IIR (S : Sig i {j}{k} I O) : I → Set (i ⊔ k) where
-    intro : ∀ {i} → E S (IIR S) El i → IIR S i
+    intro : ∀ {ix} → E S (IIR S) El ix → IIR S ix
 
   {-# TERMINATING #-}
   El : ∀ {S : Sig i {j}{k} I O}{ix} → IIR S ix → O ix

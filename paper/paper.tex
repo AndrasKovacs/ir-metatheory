@@ -204,8 +204,10 @@ define a universe that is closed under our choice of type formers:
 \end{alignat*}
 Here, $\Code$ is a type of codes of types which behaves as a custom Tarski-style universe. This
 universe, unlike the ambient universe $\Set_0$, supports an induction principle and can be used to
-define type-generic functions. Indexed induction-recursion (IIR) additionally allows indexing the
-inductive type over some type, which lets us define inductive-recursive predicates
+define type-generic functions. Induction-recursion also allows the definition of custom
+\emph{universe hierarchies}, and greatly increases the proof-theoretic strength of predicative
+Martin-Löf type theory. Indexed induction-recursion (IIR) additionally allows indexing the inductive
+type over some type, which lets us define inductive-recursive predicates
 \cite{DBLP:journals/jlp/DybjerS06}.
 
 Indexed induction-recursion was first used in an implicit and informal way in Martin-Löf's proof of
@@ -397,7 +399,7 @@ example in Section \ref{sec:introduction} are obtained from the general rules fo
   get $(t : \Tag) \times \E\,(S'\,t)\,\Code\,\El$, where $S'$ is the function
   $\lambda\,t.\,\case\,t\,\of\,...$ inside $S$. Hence, the computation of $\E$ gets stuck on the
   neutral $t$. However, as soon as we specify the tag, we can fully compute the types of the $\Code$
-  constructors. We define them as $\msf{mk}\Nat'$ and $\msf{mk}\Pi'$, in order to disambiguate them
+  constructors. We define the constructors as $\msf{mk}\Nat'$ and $\msf{mk}\Pi'$, in order to disambiguate them
   from their tags.
   \begin{alignat*}{3}
     & \msf{mk}\Nat' : \Code                         && \msf{mk}\Pi' : (A : \Code) \to (\El\,A \to \Code) \to \Code\\
@@ -584,7 +586,17 @@ to small IR signatures \cite[Section~6]{DBLP:conf/tlca/HancockMGMA13}. However, 
 the translation of signatures, without the rest of the construction. Also, constructions and results
 for small IR do not generally transfer to our case of ``large'' IR.
 
-\begin{example} \label{ex:ir-vector} We compute the translation of the length-indexed vector signature from Example \ref{ex:vector}.
+\begin{example} \label{ex:ir-vector}
+We compute the translation of the length-indexed vector signature from Example \ref{ex:vector}. We
+have a slight technical annoyance: similarly as in the computation of $\E$ in Example
+\ref{ex:code-constructors}, the computation of $\floord{\blank}$ gets stuck on an unknown
+$\Tag$. Thus, $\floord{S}$ is computed to
+$\sigma\,(\Lift\,\Tag)\,\$\,\lambda\,t.\,\floord{\case\,\ldown\!t\,\of\,...}$. \citet{whynotw}
+solved this issue by adding an extra rule to signatures which represents \emph{binary}
+branching. This can be iterated to get finite branching, and it allows recursion to proceed into
+branches. We do not use the extra rule, because our results do not require it and we prefer to keep
+our formalization as simple as possible. For the sake of illustration, we present $\floord{S}$ below
+in a form where we manually push $\floord{\blank}$ into the branches of the $\Tag$ split.
 \begin{alignat*}{4}
   & \floord{S} : \Sig\,(\Nat \times \top)\\
   & \floord{S} \equiv \sigma\,(\Lift\,\Tag)\,\$\,\lambda\,t.\,\case \ldown\!t\,\of \\
@@ -594,9 +606,9 @@ for small IR do not generally transfer to our case of ``large'' IR.
   & \quad \hspace{4em}  \iota\,(\suc\,(\ldown\!n),\,\ttt)
 \end{alignat*}
 The first $\Nat$ component of the recursive result serves as the index. In the $\Cons'$ case we have
-a single inductive field whose length is enforced with the extra $\sigma\,((x : \top) \to
-\fst\,(f\,(\lup\!x)) =\,\,\ldown\!n)$. For illustration, we also present the above signature as an
-Agda-style IR definition below. We omit type lifting for the sake of brevity.
+a single inductive field whose length is enforced with the extra $\sigma\,((x : \top_0) \to
+\fst\,(f\,(\lup\!x)) =\,(\ldown\!n))$. We also present the above signature as an Agda-style IR
+definition below. We omit type lifting for the sake of brevity.
 \begin{alignat*}{4}
   & \data\,\List : \U_0\,\where\\
   & \quad \nil \hspace{0.78em} : \List\\
@@ -606,9 +618,7 @@ Agda-style IR definition below. We omit type lifting for the sake of brevity.
   & \El\,\nil \hspace{4.7em}:\equiv (\zero,\,\ttt)\\
   & \El\,(\cons\,n\,a\,\mit{as}\,p) :\equiv (\suc\,n,\,\ttt)
 \end{alignat*}
-This definition is not yet length-indexed, so we use the name ``$\List$'' for the inductive type. However, the length
-of the recursive list in $\cons$ is already specified to be $n$.
-
+This definition is not length-indexed, so we use the name ``$\List$'' for the inductive type.
 \end{example}
 
 \subsection{Type and Term Formers}\label{sec:iir-construction-type-term}
@@ -625,8 +635,8 @@ prove properties about its values, if we do induction on $S$, the $(\IIR\,S)$ an
 remain unchanged in inductive steps. Hence, most constructions must be parameterized over two
 signatures, a ``varying'' $S$ and a ``fixed'' $S^*$, and we can do induction on an $S$ that appears
 in $\E\,S\,(\IIR\,S^*)\,\El\,\mit{ix}$. From a different angle: as we iterate through the fields
-of a constructor, the signature that specifies the remaining fields changes, but the type of each
-inductive field is specified by the same signature.
+of a constructor, the signature that specifies the remaining fields changes, but the signature
+that specifies the type of inductive fields stays the same.
 
 We proceed to the definition of $\IIR$ and $\El$. Since the encoding of signatures already ensures
 the well-indexing of inductive fields in constructors, it only remains to ensure that the
@@ -636,7 +646,7 @@ follows.
   &\IIR : I \to \U_{\max(i,\,k)}                         && \El : \IIR\,\ix \to O\,\ix \\
   &\IIR\,\ix :\equiv (x : \IR\,\Sigr{S^*}) \times \fst\,(\El\,x) = \ix \hspace{3em}&& \El\,(x,\,p) :\equiv \tr\,O\,p\,(\snd\,(\El\,x))
 \end{alignat*}
-\begin{example} Continuing the $\Vect$ example and applying the above definitions, we obtain the properly length-indexed definition:
+\begin{example} Continuing the vector example and instantiating the above definitions, we obtain the length-indexed definition:
   \begin{alignat*}{3}
     &\Vect : \Nat \to \U_0                                        &&\El : \Vect\,n \to \top\\
     &\Vect\,n :\equiv (x : \List) \times \fst\,(\El\,x) = n\quad  &&\El\,(x,\,p) :\equiv \tr\,(\lambda\,\_.\,\top)\,p\,(\snd\,(\El\,x))
@@ -679,8 +689,8 @@ We assume a level $l$ for the elimination target. We aim to define the following
   &                \quad\to && (f : \{\ix : I\}(x : \E\,S^*\,\IIR\,\El\,\ix) \to \IH\,P\,x \to P\,(\intro\,x))\\
   &                \quad\to && (x : \IIR\,\ix) \to P\,x
 \end{alignat*}
-Recall that $x : \IIR\,i$ is given as a pair of some $x : \IR\,\floord{S^*}$ and $p :
-\fst\,(\El\,x) = i$.  The idea is to use IR elimination on $x : \IR\,\floord{S^*}$ while adjusting
+Recall that $x : \IIR\,\ix$ is given as a pair of some $x : \IR\,\floord{S^*}$ and $p :
+\fst\,(\El\,x) = \ix$.  The idea is to use IR elimination on $x : \IR\,\floord{S^*}$ while adjusting
 both $P$ and $f$ to operate on the appropriate data. For $P$, we generalize the induction goal
 over a well-indexing witness:
 \begin{alignat*}{3}
@@ -750,7 +760,7 @@ computation rules.
 
 We formalized Section \ref{sec:iir-construction} in roughly 250 lines of Agda, using the same
 definitions as in this section, and the same notation, as far as Agda's syntax allows. For the
-assumption of IR, we verbatim reproduced the specification in Section \ref{sec:ir-specification},
+assumption of IR types, we verbatim reproduced the specification in Section \ref{sec:ir-specification},
 turning $\IR$ into an inductive type and $\El$ and $\elim$ into recursive functions. The functions
 are not recognized as terminating by Agda, so we disable termination checking for
 them. Alternatively, we could use rewrite rules \cite{DBLP:journals/pacmpl/CockxTW21}; the two
@@ -1138,7 +1148,7 @@ on \emph{sub-signatures} of $S^*$, instead of arbitrary signatures.
 \begin{definition}[Paths to sub-signatures of $S^*$]
 We define an inductive family indexed
 over $S : \Tm\,(\Sig_i\,O)$ and $S^\w : \Sig^\w\,O^\w\,S$, which represents paths into $S^*$ that lead to $S$, viewing
-$S$ as a subtree. Also, the subtree $S$ and all data in the path must be canonical (i.e.\ have $\blank^\w$
+$S$ as a subtree.\footnote{Recall that signatures are given as an inductive type, and all inductive types can be viewed as well-founded trees (W-types) equipped with subtree relations.} Also, the subtree $S$ and all data in the path must be canonical (i.e.\ have $\blank^\w$
 witnesses). The path is represented as a left-associated \emph{snoc-list} of data that can be
 plugged into $\sigma$ and $\delta$ constructors.
 \begin{alignat*}{4}
@@ -1148,11 +1158,11 @@ plugged into $\sigma$ and $\delta$ constructors.
   &\quad \indelta &&: \Path\,(\delta^\w\,A^\w\,S^\w) \to \{f : \Tm\,(A \to \IR\,S^*)\}(f^\w : \{a : \Tm\,A\} \to A^\w\,a \to O^\w\,(\El\,(f\,a)))\\
   &               && \hspace{0.6em} \to \Path\,(S^\w\,f^\w)
 \end{alignat*}
-We give an informal explanation for why we need these paths. Consider
+We give an informal explanation for why we need $\Path$. Consider
 $\Code$ from Section \ref{sec:introduction} and its signature $S$ in Example
 \ref{ex:code-signature}. We aim to produce the signature that corresponds to $\Code^\w$ in Example
 \ref{ex:code-canonicity}, by induction on $S$.  Note the return type of $\Pi'^\w$, which is
-$\Code^\w\,(\Pi'\,A\,B)$. This refers back to $A$ and $B$ which are bound \emph{previously} in the
+$\Code^\w\,(\Pi'\,A\,B)$. This refers to $A$ and $B$ which are bound \emph{previously} in the
 constructor type. Hence, as we recurse through $S$, we need to remember the constructor fields that
 we already passed, and we represent this data as a snoc-list, using $\Path$.
 
@@ -1202,9 +1212,10 @@ Some remarks:
 
 \begin{example}\label{ex:code-canonicity-signature}
 Let $S^*$ be the signature from Example \ref{ex:code-signature}. It depends on the $\Tag$ and $\Nat$
-types, so we assume evident $\blank^\w$ interpretations for them. Now, $S^* : \Tm\,(\Sig_0\,\U_0)$
-is a closed term that does not refer to any IR type or term former, so we can already fully compute
-the action of the $\blank^\w$ operation on it:
+types, so we assume $\blank^\w$ interpretations for them. We also assume $\blank\$^\w\blank$ as the
+evident predicate interpretation of the $\blank\$\blank$ combinator. Now, $S^* :
+\Tm\,(\Sig_0\,\U_0)$ is a closed term that does not refer to any IR type or term former, so we can
+already fully compute the action of the $\blank^\w$ operation on it:
 \begin{alignat*}{3}
   & \Ssw : \Sig^\w\,(\lambda\,A.\,\Tm\,A \to \Set_0)\,S^*\\
   & \Ssw = \sigma^\w\,\Tag^\w\,\$^\w\,\lambda\,t^\w.\,\case\,t^\w\,\of \\
@@ -1213,8 +1224,9 @@ the action of the $\blank^\w$ operation on it:
                                     \delta^\w\,({ElA}^\w\,\ttt^\w)\,\$^\w\,\lambda\,\{{ElB}\}\,{ElB}^\w.\,\\
   & \hspace{4.8em}\iota^\w\, (\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\}(a^\w : {ElA}^\w\,\ttt^\w\,a) \to {ElB}^\w\,a^\w\,(f\,a))
 \end{alignat*}
-Above, $\blank\$^\w\blank$ is the evident predicate interpretation of the $\blank\$\blank$
-combinator. Then, we compute the following.
+Note that the computation of $\Ssw$ does not get stuck on neutral tags, because $\blank^\w$ is a
+metatheoretic operation on the object syntax and as such it computes on every syntactic
+construction. Next, we compute the following.
 \begin{alignat*}{4}
   & \floord{\Ssw}\,\here : \Sig_\IIR\,(\Tm\,(\IR\,S^*))\,(\lambda\,t.\,\Tm\,(\El\,t) \to \Set_0)\\
   & \floord{\Ssw}\,\here = \sigma\,(\Tm\,\Tag)\,\$\,\lambda\,t.\,\sigma\,(\Tag^\w\,t)\,\$\,\lambda\,t^\w.\,\case\,t^\w\,\of\\
@@ -1225,20 +1237,23 @@ combinator. Then, we compute the following.
                       \delta\,((a : \Tm\,({ElA}\,\ttt)) \times {ElA}^\w\,a)\,(\fst \circ B)\,\$\,\lambda\,\{{ElB}\}\,{ElB}^\w.\\
   & \hspace{4.8em} \iota\,\,(\intro\,(\Pi',\,A,\,B,\,\ttt))\,(\lambda\,f.\,\{a : \Tm\,({ElA}\,\ttt)\} \to {ElA}^\w\,a \to {ElB}^\w\,(f\,a))
 \end{alignat*}
-This specifies essentially the same IIR type that we have seen in Example \ref{ex:code-canonicity}, with
-some extra noise in the first argument of $\Pi'$, which is now represented as a function with domain $\top$.
+This specifies essentially the same IIR type that we have seen in Example \ref{ex:code-canonicity},
+with some extra noise in the first argument of $\Pi'$, which is now represented as a function with
+domain $\top$. We do not get stuck on neutral tags here either, but for a different reason: we have
+function extensionality and equality reflection in the metatheory, so we are allowed to push
+computation under the $t^\w$ split, up to meta-level definitional equality.
 \end{example}
 
 \begin{definition}[Interpretation of $\IR$ and $\El$]
 This time around, translated signatures directly yield the interpretation of $\IR$ and $\El$, and we do not need to
-fix it up with additional predicates.
+fix it up with additional constraints.
 \begin{alignat*}{4}
   &\IR^\w : \Tm\,(\IR\,S^*) \to \Set_i \quad\quad && \El^\w : \{t : \Tm\,(\IR\,S^*)\} \to \IR^\w\,t \to O^\w\,(\El\,t)\\
   &\IR^\w := \IIR\,\PSbe                          && \El^\w := \El_\IIR
 \end{alignat*}
 \end{definition}
 
-\begin{definition}[Interpretation of $\E$, $\F$ and $\intro$]
+\begin{definition}[Interpretation of $\,\E$, $\F$ and $\intro$]
 To interpret $\intro$, we need to show an equivalence between two representations of $\IR^\w$'s data, somewhat
 similarly to Section \ref{sec:iir-construction-type-term}. For $\intro$, we only need one
 component map of the equivalence, but later we will need all of it.
@@ -1345,12 +1360,12 @@ appropriately commutes with $\ora{\E}$.
 
 \emph{Remark.} In the Agda formalization of $\elimbeta$, we use uniqueness of identity proofs (UIP)
 instead of trying to shuffle transports by homotopical reasoning. UIP is available in the metatheory
-in this paper since we assume equality reflection. We use UIP mainly because it makes the
+since we assume equality reflection. We use UIP mainly because it makes the
 formalization easier. However, we conjecture that it is possible skip UIP, and that might be useful in
 future applications and variations of our construction. See Section
 \ref{sec:generalizing-the-logical-predicate} for more discussion. We note that we only use UIP in
-$\elimbeta$, and we make this fact explicit in the formalization by parameterizing $\elimbeta$ over
-UIP and otherwise using the $\texttt{--without-K}$ option everywhere \cite{agdadocs-withoutk}.
+$\elimbeta$, and we make this point explicit in the formalization by parameterizing $\elimbeta$ over
+UIP and otherwise using the $\texttt{--without-K}$ option \cite{agdadocs-withoutk}.
 
 \end{definition}
 
@@ -1383,7 +1398,7 @@ the equations that we have already proved.
 In a nutshell, contextualization is easy because every IR type former and term former is interpreted
 as a closed term in the semantics, which is then weakened to arbitrary contexts, and the action of
 substitution on closed terms is trivial. However, we note that this setup is made possible by having
-enough universes, i.e.\ every type is contained in some universe, which allows us to use term constants
+enough universes, that is, every type is contained in some universe, which allows us to use term constants
 with $\Pi$-types in the specification.
 
 For an example, we look at $\Elintro$. In the object theory, we have $\Elintro : \El\,(\intro\,x) =
@@ -1419,9 +1434,9 @@ or to $\intro\,(\Pi',\,A,\,B,\,\ttt)$ for some $A$ and $B$.
 Is our proof constructive and can we extract an evaluation algorithm from it?  We believe that it
 would not be difficult to write a program that follows the computation in our construction.  Also,
 similar evaluators have been used in Agda and Idris for a while. However, we do not make this
-formally precise in this paper, and leave it to potential future work. In short, we see two ways to
-establish constructivity.
-\begin{itemize}
+formally precise in this paper and leave it to potential future work. In short, we see two ways to
+establish constructivity more rigorously.
+\begin{enumerate}
 \item We could exhibit a constructive model of the metatheory. As far as we know, this has not been
   done, since Dybjer and Setzer only developed classical set-theoretical models of IR.
 \item We could prove canonicity for the metatheory. To handle the IR types in the metatheory, we can
@@ -1429,7 +1444,7 @@ establish constructivity.
   object theory, and currently there is no generic canonicity proof for QIITs, and there are also
   some formal gaps in the construction of finitary QIITs from more basic type formers
   \cite{DBLP:journals/corr/abs-2302-08837}.
-\end{itemize}
+\end{enumerate}
 
 \subsection{Mechanization}\label{sec:canonicity-mechanization}
 
