@@ -260,9 +260,11 @@ development is the following.
   interpretation of IR types in Agda, using a shallow embedding of the syntax of the object
   theory. Hence, there is a gap between the Agda version and the fully formal construction, but we
   argue that it is a modest gap.
+\item
+  The Agda formalization is available in the paper's supplement \cite{TODO}.
 \end{itemize}
 
-The Agda formalization is available in \cite{TODO}.
+
 
 \section{Specification for (I)IR Types}\label{sec:specification}
 
@@ -405,8 +407,8 @@ example in Section \ref{sec:introduction} are obtained from the general rules fo
     & \msf{mk}\Nat' : \Code                         && \msf{mk}\Pi' : (A : \Code) \to (\El\,A \to \Code) \to \Code\\
     & \msf{mk}\Nat' :\equiv \intro\,(\Nat',\,\ttt)\quad  && \msf{mk}\Pi'\,A\,B :\equiv \intro\,(\Pi',(\lambda\,\_.\,A),\,B,\,\ttt)
   \end{alignat*}
-  The constant function $(\lambda\,\_.\,A)$ is required because we always specify inductive
-  branching with a function.
+  The constant function $(\lambda\,\_.\,A)$ is required because inductive branching is always
+  specified with a function, and in this case we have unary branching as $\top \to \Code$.
 \item Let us look at $\El$. We have the expected definitional equalities:
   \begin{alignat*}{3}
     & \El\,\msf{mk}\Nat' \equiv \Nat \hspace{2em} \El\,(\msf{mk}\Pi'\,A\,B) \equiv ((a : \El\,A) \to \El\,(B\,a))
@@ -483,13 +485,17 @@ a non-inductive argument, binding $n$ for the length of the tail of the vector. 
 introduce the inductive argument using $\delta$, we use $(\lambda\,\_.\,n)$ to specify that index of
 the argument is indeed $n$. Finally, the length of the $\Cons'$ constructor is $\suc\,n$.
 
-%% For
-%% illustration, the same specification could be written as the following inductive family in Agda:
-%% \begin{alignat*}{3}
-%%   &\data\,\Vect\,(A : \Set_0) : \Nat \to \Set_0\,\where \\
-%%   &\quad \nil  \hspace{0.75em}: \Vect\,A\,\zero\\
-%%   &\quad \cons : (n : \Nat) \to A \to (\top \to \Vect\,A\,n) \to \Vect\,A\,(\suc\,n)
-%% \end{alignat*}
+\emph{Remark.} Why not use a ``proper'' IIR example here with non-trivial recursive component? The
+reason is that the non-artifical examples that we know are fairly
+complicated. \citet{DBLP:journals/jlp/DybjerS06} list three examples of IIR: Martin-Löf's
+computability predicates \cite{martinlof84sambin}, Bove and Capretta's termination predicates
+\cite{DBLP:conf/tphol/BoveC01} and Palmgren's higher-order universes
+\cite{Palmgren98onuniverses}. None of these are simple, and other proper IIR examples that we know
+are similar to one of these. However, we will present the canonicity predicate for $\Code$ in
+Examples \ref{ex:code-canonicity} and \ref{ex:code-canonicity-signature}; this is a proper IIR type
+that can be viewed as a simple example of a computability predicate. We also expand on this example
+in the paper's supplement, detailing the derivation of constructors and the elimination principle
+from the general IIR rules \cite{TODO}.
 
 \end{example}
 
@@ -525,9 +531,9 @@ type and term formation rules are the following.
   In $\nil$, the type of $(\lup\refl)$ is $\zero = \zero$, and in $\cons$ its type is $\suc\,n = \suc\,n$. $\El$ and $\Elintro$ are trivial in this case.
 \end{example}
 
-\emph{Remark:} this specification uses identity types to fix the correct index for each
+\emph{Remark:} this specification uses identity types to pin down the index for each
 constructor. This style has been popularized as ``Fordism'' or ``fording'' by Conor McBride, and it
-has been used to represent inductive families, e.g.\ in observational type theories
+has been used to represent indexed inductive types, e.g.\ in observational type theories
 \cite{towards-ott, DBLP:journals/toplas/PujetLT25} and in the Glasgow Haskell Compiler's
 implementation of generalized algebraic datatypes (GADTs) \cite{vytiniotis2011outsidein}.
 
@@ -998,11 +1004,15 @@ that arbitrary semantic types (at finite levels) can fit inside semantic context
 using the formal induction principle for the QIIT, the type of the target of elimination would be
 $\Set_{\omega+1}$; hence the need for both $\Set_\omega$ and $\Set_{\omega+1}$.
 
-%% \todo{Possibly extra discussion on sizing predicates}
-
 In the interpretation of types, note that $i$ appears in $\Ty\,\Gamma\,i$ as a natural number,
 but it gets implicitly converted to a universe level in $\Set_i$. This conversion requires that
 finite levels are given by an internal type in the metatheory.
+
+\emph{Remark.} In Agda it would be possible to have $\blank^\w : (\Gamma : \Con) \to \Sub\,\Gamma
+\to \Set_{(\msf{size}\,\Gamma)}$, where we compute the size by recursion on $\Gamma$. In this case,
+the type of $\blank^\w$ would live in $\Set_\omega$ and we could drop the assumption of
+$\Set_{\omega+1}$. However, as far as we know, such ``dependently sized'' functions have not been
+described in type theory literature, so we stick to non-dependently sized ones.
 
 \subsubsection{Interpretation of the CwF and the basic type formers}\label{sec:cwf-pred}
 
@@ -1123,7 +1133,7 @@ We assume $\Nat^\w : \Tm\,\Nat \to \Set_0$. The canonicity predicate is the foll
   &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set_0$}\\
   &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
   &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\\
-  &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
+  &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,A)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
   &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
   &\rlap{}\\
   &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)$}\\

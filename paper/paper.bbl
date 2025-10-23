@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{58}
+\begin{thebibliography}{59}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -631,6 +631,17 @@
 \newblock \bibinfo{publisher}{Bibliopolis}. iv+91 pages.
 \newblock
 \showISBNx{88-7088-105-9}
+
+
+\bibitem[Palmgren(1998)]%
+        {Palmgren98onuniverses}
+\bibfield{author}{\bibinfo{person}{Erik Palmgren}.}
+  \bibinfo{year}{1998}\natexlab{}.
+\newblock \showarticletitle{On universes in type theory}. In
+  \bibinfo{booktitle}{\emph{Twenty-five years of constructive type theory}}
+  \emph{(\bibinfo{series}{Oxford Logic Guides}, Vol.~\bibinfo{volume}{36})}.
+  \bibinfo{publisher}{Oxford University Press}, \bibinfo{pages}{191 – 204}.
+\newblock
 
 
 \bibitem[Palmgren and Vickers(2007)]%

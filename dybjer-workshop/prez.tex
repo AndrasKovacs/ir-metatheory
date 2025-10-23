@@ -275,15 +275,15 @@ Generally: the canonicity predicate for an inductive type is a \alert{metatheore
 
 \textbf{Example:} the canonicity predicate for $\Code$ is the following \alert{metatheoretic indexed IR type}:
 \begin{alignat*}{4}
-  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set\,\where$}\\
+  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set_0$}\\
   &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
   &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\\
   &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
   &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
   &\rlap{}\\
-  &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set)$}\\
-  &\rlap{$\El^\w\,\Nat'^\w \hspace{2.7em}= \Nat^\w$}  \\
-  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w)\,= \lambda\,f.\,\{a : \Tm\,A\} \to \El^\w\,A^\w\,a \to \El^\w\,B^\w\,(f\,a)$}
+  &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)$}\\
+  &\rlap{$\El^\w\,\Nat'^\w  \hspace{2.4em}            = \Nat^\w$}  \\
+  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
 \end{alignat*}
 If we have $t : \Tm\,\Code$, the gluing interpretation hands us an element of $\Code^\w\,t$.
 

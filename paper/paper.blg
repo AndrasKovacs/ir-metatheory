@@ -43,48 +43,49 @@ Warning--empty address in DBLP:conf/mpc/KaposiKK19
 Warning--empty address in first-class-univ
 Warning--page numbers missing in both pages and numpages fields in DBLP:journals/corr/abs-2302-08837
 Warning--empty address in martinlof84sambin
+Warning--empty address in Palmgren98onuniverses
 Warning--empty publisher in pedrot2018failure
 Warning--empty address in pedrot2018failure
 Warning--empty address in ctt-normalization
-You've used 58 entries,
+You've used 59 entries,
             6273 wiz_defined-function locations,
-            1967 strings with 31549 characters,
-and the built_in function-call counts, 63945 in all, are:
-= -- 8831
-> -- 1595
+            1977 strings with 31735 characters,
+and the built_in function-call counts, 65139 in all, are:
+= -- 8969
+> -- 1612
 < -- 1
-+ -- 512
-- -- 582
-* -- 4268
-:= -- 5934
-add.period$ -- 297
-call.type$ -- 58
-change.case$ -- 348
-chr.to.int$ -- 55
-cite$ -- 83
-duplicate$ -- 5784
-empty$ -- 4077
-format.name$ -- 716
-if$ -- 15873
++ -- 516
+- -- 589
+* -- 4325
+:= -- 6031
+add.period$ -- 302
+call.type$ -- 59
+change.case$ -- 353
+chr.to.int$ -- 56
+cite$ -- 85
+duplicate$ -- 5922
+empty$ -- 4163
+format.name$ -- 723
+if$ -- 16174
 int.to.chr$ -- 5
 int.to.str$ -- 1
-missing$ -- 200
-newline$ -- 557
-num.names$ -- 431
-pop$ -- 1978
+missing$ -- 205
+newline$ -- 564
+num.names$ -- 438
+pop$ -- 2026
 preamble$ -- 1
-purify$ -- 806
+purify$ -- 819
 quote$ -- 0
-skip$ -- 2133
+skip$ -- 2201
 stack$ -- 0
-substring$ -- 5206
-swap$ -- 585
+substring$ -- 5299
+swap$ -- 613
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 1313
-warning$ -- 25
-while$ -- 460
+type$ -- 1343
+warning$ -- 26
+while$ -- 468
 width$ -- 0
-write$ -- 1229
+write$ -- 1249
 (There were 2 error messages)

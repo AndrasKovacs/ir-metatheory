@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.27)  22 OCT 2025 17:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.28)  23 OCT 2025 23:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1402,29 +1402,29 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
 (Font)              scaled to size 10.0pt on input line 235.
 
 
-Package natbib Warning: Citation `TODO' on page 2 undefined on input line 265.
+Package natbib Warning: Citation `TODO' on page 2 undefined on input line 264.
 
 
 
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 283.
+(Font)              scaled to size 8.0pt on input line 285.
 [2.2]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 285.
+(Font)              scaled to size 7.3pt on input line 287.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 285.
+(Font)              scaled to size 5.5pt on input line 287.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 8.0pt on input line 316.
+(Font)              scaled to size 8.0pt on input line 318.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 6.0pt on input line 316.
+(Font)              scaled to size 6.0pt on input line 318.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 316.
+(Font)              scaled to size 8.0pt on input line 318.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 316.
+(Font)              scaled to size 6.0pt on input line 318.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 316.
+(Font)              scaled to size 6.0pt on input line 318.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 319.
+(Font)              scaled to size 10.0pt on input line 321.
 
 
 [3.3]
@@ -1433,13 +1433,17 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
 
 [5.5]
 
+Package natbib Warning: Citation `TODO' on page 6 undefined on input line 498.
+
+
+
 [6.6]
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 524.
+(Font)              scaled to size 10.0pt on input line 530.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.3pt on input line 524.
+(Font)              scaled to size 7.3pt on input line 530.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 5.5pt on input line 524.
+(Font)              scaled to size 5.5pt on input line 530.
 
 
 [7.7{/usr/share/texmf-dist/fonts/enc/dvips/libertine/lbtn_kijugd.enc}]
@@ -1448,9 +1452,9 @@ LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
 
 [9.9]
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 8.0pt on input line 665.
+(Font)              scaled to size 8.0pt on input line 671.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 6.0pt on input line 665.
+(Font)              scaled to size 6.0pt on input line 671.
 
 
 [10.10]
@@ -1477,51 +1481,60 @@ LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/it' will be
 
 [21.21]
 LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 13
-77.
+87.
  (/usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.0pt on input line 1377.
+(Font)              scaled to size 10.0pt on input line 1387.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
 
-[22.22{/usr/share/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}]
+[22.22]
 
-[23.23]
+[23.23{/usr/share/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}]
+Underfull \vbox (badness 1668) has occurred while \output is active []
+
+
 
 [24.24]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [25.25]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [26.26] (./paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 46.
-LaTeX Info: Redefining \tempurl on input line 257.
-LaTeX Info: Redefining \tempurl on input line 296.
 
-Underfull \vbox (badness 1895) has occurred while \output is active []
+Underfull \vbox (badness 2698) has occurred while \output is active []
 
 
 
 [27.27]
+LaTeX Info: Redefining \tempurl on input line 257.
+LaTeX Info: Redefining \tempurl on input line 296.
 LaTeX Info: Redefining \tempurl on input line 459.
 LaTeX Info: Redefining \tempurl on input line 536.
-LaTeX Info: Redefining \tempurl on input line 608.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
 [28.28]
-LaTeX Info: Redefining \tempurl on input line 751.
+LaTeX Info: Redefining \tempurl on input line 608.
+LaTeX Info: Redefining \tempurl on input line 762.
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 8.0pt on input line 760.
-LaTeX Info: Redefining \tempurl on input line 763.
-LaTeX Info: Redefining \tempurl on input line 802.
+(Font)              scaled to size 8.0pt on input line 771.
+LaTeX Info: Redefining \tempurl on input line 774.
+LaTeX Info: Redefining \tempurl on input line 813.
 )
 
 Package natbib Warning: There were undefined citations.
@@ -1548,13 +1561,13 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: FF4D4E34438E2D6CF56058B97D324F64;4615.
  ) 
 Here is how much of TeX's memory you used:
- 32507 strings out of 475171
- 586849 string characters out of 5767095
- 1027960 words of memory out of 5000000
- 53808 multiletter control sequences out of 15000+600000
- 807799 words of font info for 630 fonts, out of 8000000 for 9000
+ 32514 strings out of 475171
+ 586992 string characters out of 5767095
+ 1029804 words of memory out of 5000000
+ 53811 multiletter control sequences out of 15000+600000
+ 808582 words of font info for 633 fonts, out of 8000000 for 9000
  175 hyphenation exceptions out of 8191
- 99i,22n,131p,1002b,799s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,22n,131p,1002b,791s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></
 usr/share/texmf-dist/fonts/type1/public/newtx/LibertineMathMI.pfb></usr/share/t
 exmf-dist/fonts/type1/public/newtx/LibertineMathMI7.pfb></usr/share/texmf-dist/
@@ -1569,10 +1582,10 @@ f-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/share/texmf-dist/fonts/type1/
 public/newtx/txexs.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/txmiaX.p
 fb></usr/share/texmf-dist/fonts/type1/public/newtx/txsym.pfb></usr/share/texmf-
 dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (29 pages, 719469 bytes).
+Output written on paper.pdf (29 pages, 721653 bytes).
 PDF statistics:
- 767 PDF objects out of 1000 (max. 8388607)
- 690 compressed objects within 7 object streams
- 166 named destinations out of 1000 (max. 500000)
+ 779 PDF objects out of 1000 (max. 8388607)
+ 701 compressed objects within 8 object streams
+ 167 named destinations out of 1000 (max. 500000)
  143597 words of extra memory for PDF output out of 154059 (max. 10000000)
 

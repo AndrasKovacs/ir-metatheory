@@ -52,6 +52,7 @@ elim : ∀ {S : Sig i {j}{k} I O}(P : ∀ {ix} → IIR S ix → Set l)
 elim {S = S} P f (intro x) = f x (map (elim P f) x)
 
 
+-- examples
 ----------------------------------------------------------------------------------------------------
 
 module Ex-2-3 where
