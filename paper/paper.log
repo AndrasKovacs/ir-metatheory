@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.28)  24 OCT 2025 01:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.28)  24 OCT 2025 02:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1506,9 +1506,6 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 46.
 
-Underfull \vbox (badness 2698) has occurred while \output is active []
-
-
 
 [27.27]
 LaTeX Info: Redefining \tempurl on input line 257.
@@ -1546,17 +1543,23 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: FF4D4E34438E2D6CF56058B97D324F64;4615.
+
+Package rerunfilecheck Warning: File `paper.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `paper.out':
+(rerunfilecheck)             Before: FF4D4E34438E2D6CF56058B97D324F64;4615
+(rerunfilecheck)             After:  8C5B217BD5AB86F104392A6D6D91297B;4615.
  ) 
 Here is how much of TeX's memory you used:
- 32521 strings out of 475171
- 587192 string characters out of 5767095
- 1030082 words of memory out of 5000000
+ 32522 strings out of 475171
+ 587202 string characters out of 5767095
+ 1030894 words of memory out of 5000000
  53814 multiletter control sequences out of 15000+600000
  808855 words of font info for 635 fonts, out of 8000000 for 9000
  175 hyphenation exceptions out of 8191
- 99i,22n,131p,1002b,791s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,22n,131p,1002b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></
 usr/share/texmf-dist/fonts/type1/public/newtx/LibertineMathMI.pfb></usr/share/t
 exmf-dist/fonts/type1/public/newtx/LibertineMathMI7.pfb></usr/share/texmf-dist/
@@ -1571,10 +1574,10 @@ f-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/share/texmf-dist/fonts/type1/
 public/newtx/txexs.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/txmiaX.p
 fb></usr/share/texmf-dist/fonts/type1/public/newtx/txsym.pfb></usr/share/texmf-
 dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (29 pages, 721846 bytes).
+Output written on paper.pdf (29 pages, 722440 bytes).
 PDF statistics:
- 786 PDF objects out of 1000 (max. 8388607)
- 708 compressed objects within 8 object streams
- 168 named destinations out of 1000 (max. 500000)
+ 788 PDF objects out of 1000 (max. 8388607)
+ 710 compressed objects within 8 object streams
+ 169 named destinations out of 1000 (max. 500000)
  143597 words of extra memory for PDF output out of 154059 (max. 10000000)
 

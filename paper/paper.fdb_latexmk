@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex paper"] 1761263855.88703 "paper.aux" "paper.bbl" "paper" 1761263855.9142 2
+["bibtex paper"] 1761266470.61626 "paper.aux" "paper.bbl" "paper" 1761266470.64295 2
   "./ACM-Reference-Format.bst" 1752082916 93560 12e0ced1522ea2bfa9b2fb12855c7e9e ""
   "./references.bib" 1761263729.63489 225381 5f9054660476f0b4ceac1a5e46aaacd5 ""
-  "paper.aux" 1761263855.7663 15721 aaae8e91c6a4cf7b972b59cdd6f527ea "pdflatex"
+  "paper.aux" 1761266470.49369 15721 4e0376cb7d6059e02ab58fda4a45d154 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1761263855.17218 "paper.tex" "paper.pdf" "paper" 1761263855.91429 0
+["pdflatex"] 1761266469.89175 "paper.tex" "paper.pdf" "paper" 1761266470.64302 0
   "/usr/share/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc" 1755987285 7693 0f2dce6d313c82989ec3a67fc24df2a0 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1755987285 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/share/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1755987285 2933 9ad527ce78d7c5fa0a642dead095f172 ""
@@ -289,10 +289,10 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1759026003 5311557 9da84c45f5b388655502706482323571 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1759026002 2686924 af158dec7d2020399bfb163007870b5b ""
   "acmart.cls" 1752082916 121725 55c82b1c8415ebc97f8e984a7d310e9c ""
-  "paper.aux" 1761263855.7663 15721 aaae8e91c6a4cf7b972b59cdd6f527ea "pdflatex"
-  "paper.bbl" 1761263855.91348 34847 173040ba40361a58d6c2595485fcc915 "bibtex paper"
-  "paper.out" 1761263855.7673 4615 ff4d4e34438e2d6cf56058b97d324f64 "pdflatex"
-  "paper.tex" 1761263855.0803 106000 f495c2e10e86996f64135986983fc881 ""
+  "paper.aux" 1761266470.49369 15721 4e0376cb7d6059e02ab58fda4a45d154 "pdflatex"
+  "paper.bbl" 1761266470.64251 34847 173040ba40361a58d6c2595485fcc915 "bibtex paper"
+  "paper.out" 1761266470.49469 4615 8c5b217bd5ab86f104392a6d6d91297b "pdflatex"
+  "paper.tex" 1761266462.56766 106263 e6b48d6a104c93e058bd88913e147f4c ""
   (generated)
   "paper.aux"
   "paper.log"
