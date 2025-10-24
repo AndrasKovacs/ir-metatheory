@@ -1,0 +1,6 @@
+
++ Fording references?
++ Typos
++ Update Zenodo if necessary
+
+Section 3, "the task is to define" - missing stuff
