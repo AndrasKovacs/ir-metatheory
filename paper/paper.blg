@@ -14,7 +14,6 @@ Repeated entry---line 5760 of file references.bib
  : @article{DBLP:journals/corr/abs-2302-08837
  :                                           ,
 I'm skipping whatever remains of this entry
-Warning--I didn't find a database entry for "TODO"
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
@@ -47,45 +46,45 @@ Warning--empty address in Palmgren98onuniverses
 Warning--empty publisher in pedrot2018failure
 Warning--empty address in pedrot2018failure
 Warning--empty address in ctt-normalization
-You've used 59 entries,
+You've used 60 entries,
             6273 wiz_defined-function locations,
-            1977 strings with 31735 characters,
-and the built_in function-call counts, 65139 in all, are:
-= -- 8969
-> -- 1612
+            1980 strings with 31914 characters,
+and the built_in function-call counts, 66010 in all, are:
+= -- 9072
+> -- 1629
 < -- 1
-+ -- 516
-- -- 589
-* -- 4325
-:= -- 6031
-add.period$ -- 302
-call.type$ -- 59
-change.case$ -- 353
-chr.to.int$ -- 56
-cite$ -- 85
-duplicate$ -- 5922
-empty$ -- 4163
-format.name$ -- 723
-if$ -- 16174
++ -- 520
+- -- 616
+* -- 4365
+:= -- 6133
+add.period$ -- 306
+call.type$ -- 60
+change.case$ -- 358
+chr.to.int$ -- 57
+cite$ -- 86
+duplicate$ -- 5988
+empty$ -- 4210
+format.name$ -- 730
+if$ -- 16349
 int.to.chr$ -- 5
 int.to.str$ -- 1
 missing$ -- 205
-newline$ -- 564
-num.names$ -- 438
-pop$ -- 2026
+newline$ -- 572
+num.names$ -- 445
+pop$ -- 2046
 preamble$ -- 1
-purify$ -- 819
+purify$ -- 832
 quote$ -- 0
-skip$ -- 2201
+skip$ -- 2230
 stack$ -- 0
-substring$ -- 5299
-swap$ -- 613
-text.length$ -- 1
+substring$ -- 5395
+swap$ -- 617
+text.length$ -- 39
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 1343
+type$ -- 1373
 warning$ -- 26
-while$ -- 468
+while$ -- 477
 width$ -- 0
-write$ -- 1249
+write$ -- 1266
 (There were 2 error messages)
