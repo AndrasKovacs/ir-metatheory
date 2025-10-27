@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.28)  24 OCT 2025 02:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.9.27)  27 OCT 2025 11:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1543,19 +1543,13 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-Package rerunfilecheck Warning: File `paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `paper.out':
-(rerunfilecheck)             Before: FF4D4E34438E2D6CF56058B97D324F64;4615
-(rerunfilecheck)             After:  8C5B217BD5AB86F104392A6D6D91297B;4615.
+Package rerunfilecheck Info: File `paper.out' has not changed.
+(rerunfilecheck)             Checksum: 8C5B217BD5AB86F104392A6D6D91297B;4615.
  ) 
 Here is how much of TeX's memory you used:
  32522 strings out of 475171
  587202 string characters out of 5767095
- 1030894 words of memory out of 5000000
+ 1030896 words of memory out of 5000000
  53814 multiletter control sequences out of 15000+600000
  808855 words of font info for 635 fonts, out of 8000000 for 9000
  175 hyphenation exceptions out of 8191
@@ -1574,7 +1568,7 @@ f-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/share/texmf-dist/fonts/type1/
 public/newtx/txexs.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/txmiaX.p
 fb></usr/share/texmf-dist/fonts/type1/public/newtx/txsym.pfb></usr/share/texmf-
 dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on paper.pdf (29 pages, 722440 bytes).
+Output written on paper.pdf (29 pages, 722480 bytes).
 PDF statistics:
  788 PDF objects out of 1000 (max. 8388607)
  710 compressed objects within 8 object streams
