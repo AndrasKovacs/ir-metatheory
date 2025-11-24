@@ -1,10 +1,7 @@
 
 %% build: latexmk -pdf -pvc paper.tex
 
-\documentclass[acmsmall,screen,review]{acmart}
-%% \documentclass[nonacm,acmsmall]{acmart}
-%% \documentclass[acmsmall]{acmart}
-%% \raggedbottom
+\documentclass[acmsmall]{acmart}
 
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
@@ -43,15 +40,8 @@
 
 %% --------------------------------------------------------------------------------
 
-%% \usepackage{xcolor}
-%% \usepackage{mathpartir}
 \usepackage{todonotes}
-\presetkeys{todonotes}{inline}{}
 \usepackage{scalerel}
-%% \usepackage{bm}
-%% \usepackage{mathtools}
-%% \usepackage{stmaryrd}
-%% \usepackage[title]{appendix}
 
 \newcommand{\mit}[1]{{\mathit{#1}}}
 \newcommand{\msf}[1]{{\mathsf{#1}}}
@@ -146,6 +136,22 @@
 \newcommand{\E}{\mbb{E}}
 \newcommand{\F}{\mbb{F}}
 
+%%% The following is specific to  and the paper
+%%% 'Canonicity for Indexed Inductive-Recursive Types'
+%%% by András Kovács.
+%%%
+\setcopyright{cc}
+\setcctype{by}
+\acmDOI{10.1145/3776685}
+\acmYear{2026}
+\acmJournal{PACMPL}
+\acmVolume{10}
+\acmNumber{POPL}
+\acmArticle{43}
+\acmMonth{1}
+\received{2025-07-08}
+\received[accepted]{2025-11-06}
+
 %% --------------------------------------------------------------------------------
 
 %%
@@ -153,18 +159,21 @@
 %% \hypersetup{draft}
 \begin{document}
 
-
 \title{Canonicity for Indexed Inductive-Recursive Types}
 
 \author{András Kovács}
 \orcid{0000-0002-6375-9781}
 \affiliation{%
-  \institution{University of Gothenburg \& Chalmers University of Technology}
+  \institution{University of Gothenburg}
+  \city{Gothenburg}
+  \country{Sweden}
+}
+\affiliation{%
+  \institution{Chalmers University of Technology}
   \city{Gothenburg}
   \country{Sweden}
 }
 \email{andrask@chalmers.se}
-
 
 \begin{abstract}
 We prove canonicity for a Martin-Löf type theory with a countable universe hierarchy where each
@@ -177,11 +186,18 @@ sections functor. The main idea is to encode the canonicity predicate for each I
 metatheoretic IIR type.
 \end{abstract}
 
-%% \begin{CCSXML}
-%% \end{CCSXML}
-%% \ccsdesc[500]{Theory of computation~Type theory}
-%% \ccsdesc[500]{Software and its engineering~Source code generation}
-%% \keywords{}
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003752.10003790.10011740</concept_id>
+       <concept_desc>Theory of computation~Type theory</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Type theory}
+\keywords{inductive-recursive types, canonicity}
 
 \maketitle
 
@@ -365,15 +381,15 @@ $\U_i/O$, but in the following we only need the action on objects. For the sake 
 split this action to two functions. $\E$ yields the ``total type'' part of the interpretation of a
 signature, and $\F$ yields the morphism part, i.e.\ a function into $O$.
 \begin{alignat*}{3}
-  &\rlap{$\E : \{i\,j : \mbb{N}\}\{O : \U_j\} \to \Sig_i\,O \to (\ir : \U_i) \to (\ir \to O) \to \U_i$} \\
-  &\E\,(\iota\,o)    \,&&\ir\,\el && \hspace{-0.7em}:\equiv \top\\
-  &\E\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (a : A) \times \E\,(S\,a)\,\ir\,\el\\
-  &\E\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (f : A \to \ir) \times \E\,(S\,(\el \circ f))\,\ir\,\el\\
-  & && &&\\
-  &\rlap{$\F : \{i\,j : \mbb{N}\}\{O : \U_j\}\{S : \Sig_i\,O\}\{\ir\}\{\el\} \to \E\,S\,\ir\,\el \to O$} \\
-  &\F\,\{\iota\,o\}    \,&&x       && :\equiv o\\
-  &\F\,\{\sigma\,A\,S\}\,&&(a,\,x) && :\equiv \F\,\{S\,a\}\,x\\
-  &\F\,\{\delta\,A\,S\}\,&&(f,\,x) && :\equiv \F\,\{S\,(\el \circ f)\}\,x
+  &\hspace{-3em}\rlap{$\E : \{i\,j : \mbb{N}\}\{O : \U_j\} \to \Sig_i\,O \to (\ir : \U_i) \to (\ir \to O) \to \U_i$} \\
+  &\hspace{-3em}\E\,(\iota\,o)    \,&&\ir\,\el && \hspace{-0.7em}:\equiv \top\\
+  &\hspace{-3em}\E\,(\sigma\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (a : A) \times \E\,(S\,a)\,\ir\,\el\\
+  &\hspace{-3em}\E\,(\delta\,A\,S)\,&&\ir\,\el && \hspace{-0.7em}:\equiv (f : A \to \ir) \times \E\,(S\,(\el \circ f))\,\ir\,\el\\
+  &\hspace{-3em} && &&\\
+  &\hspace{-3em}\rlap{$\F : \{i\,j : \mbb{N}\}\{O : \U_j\}\{S : \Sig_i\,O\}\{\ir\}\{\el\} \to \E\,S\,\ir\,\el \to O$} \\
+  &\hspace{-3em}\F\,\{\iota\,o\}    \,&&x       && :\equiv o\\
+  &\hspace{-3em}\F\,\{\sigma\,A\,S\}\,&&(a,\,x) && :\equiv \F\,\{S\,a\}\,x\\
+  &\hspace{-3em}\F\,\{\delta\,A\,S\}\,&&(f,\,x) && :\equiv \F\,\{S\,(\el \circ f)\}\,x
 \end{alignat*}
 Above we use an Agda-like notation for specifying the implicit $S$ argument to $\F$. Here, we marked
 the quantification of all implicit arguments to $\E$ and $\F$, but we shall omit more of them from
@@ -504,12 +520,12 @@ $\E$ and $\F$ are similar to before:
   &\hspace{-2em}\rlap{$\E : \Sig_i\,I\,O \to (\ir : I \to \U_{\max(i,\,k)}) \to (\{\ix : I\} \to \ir\,\ix \to O\,\ix) \to I \to \U_{\max(i,\,k)}$} \\
   &\hspace{-2em}\E\,(\iota\,\ix'\,o)     \,&&\hspace{-0.4em}\ir\,\el\,\ix &&\hspace{-0.2em} :\equiv \Lift\,(\ix' = \ix)\\
   &\hspace{-2em}\E\,(\sigma\,A\,S)     \,&&  \hspace{-0.4em}\ir\,\el\,\ix &&\hspace{-0.2em} :\equiv (a : A) \times \E\,(S\,a)\,\ir\,\el\,\ix\\
-  &\hspace{-2em}\E\,(\delta\,A\,\ixs\,S)\,&&  \hspace{-0.4em}\ir\,\el\,\ix &&\hspace{-0.2em} :\equiv (f : (a : A) \to \ir\,(\ixs\,a)) \times \E\,(S\,(\el \circ f))\,\ir\,\el\,\ix\\
+  &\hspace{-2em}\E\,(\delta\,A\,\ixs\,S)\,\,\,&&  \hspace{-0.4em}\ir\,\el\,\ix &&\hspace{-0.2em} :\equiv (f : (a : A) \to \ir\,(\ixs\,a)) \times \E\,(S\,(\el \circ f))\,\ir\,\el\,\ix\\
   &\hspace{-2em} && &&\\
   &\hspace{-2em}\rlap{$\F : \{S : \Sig_i\,I\,O\} \to \E\,S\,\ir\,\el\,\ix \to O\,\ix$} \\
   &\hspace{-2em}\F\,\{\iota\,\ix'\,o      \}\,&&\hspace{-0.1em}(\lup x) && \hspace{-0.2em}:\equiv \tr\,O\,x\,o\\
   &\hspace{-2em}\F\,\{\sigma\,A\,S      \}\,&&\hspace{-0.1em}(a,\,x)  && \hspace{-0.2em}:\equiv \F\,\{S\,a\}\,x\\
-  &\hspace{-2em}\F\,\{\delta\,A\,\ixs\,S)\}\,&&\hspace{-0.1em}(f,\,x)  && \hspace{-0.2em}:\equiv \F\,\{S\,(\el \circ f)\}\,x
+  &\hspace{-2em}\F\,\{\delta\,A\,\ixs\,S\}\,&&\hspace{-0.1em}(f,\,x)  && \hspace{-0.2em}:\equiv \F\,\{S\,(\el \circ f)\}\,x
 \end{alignat*}
 Note the transport in $\tr\,O\,x\,o$: this is necessary, since $o$ has type $O\,\ix'$ while the
 required type is $O\,\ix$. Also note the pattern matching notation in $(\lup\,x)$: this makes sense
@@ -763,7 +779,7 @@ computation rules.
 
 \subsection{Mechanization}
 
-We formalized Section \ref{sec:iir-construction} in roughly 250 lines of Agda, using the same
+We formalized Section \ref{sec:iir-construction} in roughly 250 lines of Agda \cite{ir-canonicity-supplement}, using the same
 definitions as in this section, and the same notation, as far as Agda's syntax allows. For the
 assumption of IR types, we verbatim reproduced the specification in Section \ref{sec:ir-specification},
 turning $\IR$ into an inductive type and $\El$ and $\elim$ into recursive functions. The functions
@@ -1467,10 +1483,10 @@ establish constructivity more rigorously.
 \subsection{Mechanization}\label{sec:canonicity-mechanization}
 
 We formalized the semantic constructions in Sections \ref{sec:ir-signatures-canonicity} and
-\ref{sec:ir-canonicity} in Agda, but we did not formalize the object theory nor the contextual
-interpretations for its rules. The formalization is roughly 280 lines. Overall, we have found the
-Agda formalization to be extremely useful and it was crucial for coming up with the right
-definitions in the first place.
+\ref{sec:ir-canonicity} in Agda \cite{ir-canonicity-supplement}, but we did not formalize the object
+theory nor the contextual interpretations for its rules. The formalization is roughly 280
+lines. Overall, we have found the Agda formalization to be extremely useful and it was crucial for
+coming up with the right definitions in the first place.
 
 We use a \emph{shallow embedding} for closed terms, where we work with the standard $\Set$ model of
 the object theory instead of an exact specification of the object syntax.
