@@ -8,24 +8,6 @@
   \providecommand\BibTeX{{%
     Bib\TeX}}}
 
-%% Rights management information.newcomm  This information is sent to you
-%% when you complete the rights form.  These commands have SAMPLE
-%% values in them; it is your responsibility as an author to replace
-%% the commands and values with those provided to you when you
-%% complete the rights form.
-\setcopyright{acmlicensed}
-\copyrightyear{2018}
-\acmYear{2018}
-\acmDOI{XXXXXXX.XXXXXXX}
-
-%%
-%% These commands are for a JOURNAL article.
-\acmJournal{JACM}
-\acmVolume{37}
-\acmNumber{4}
-\acmArticle{111}
-\acmMonth{8}
-
 %%
 %% The majority of ACM publications use numbered citations and
 %% references.  The command \citestyle{authoryear} switches to the
@@ -332,7 +314,7 @@ presentation with three universes.\footnote{In that setup, ``$\msf{set}$'' conta
 inductively specified type, ``$\msf{stype}$'' contains the non-inductive constructor arguments and
 ``$\msf{type}$'' contains the recursive output type and the type of signatures.}
 
-\subsubsection{IR signatures}\label{sec:ir-signatures}
+\subsubsection{IR Signatures}\label{sec:ir-signatures}
 Signatures are parameterized by the following data:
 \begin{itemize}
 \item The level $i$ is the size of the IR type that is being specified.
@@ -373,7 +355,7 @@ represent the corresponding recursive output. Finally, $\iota\, ((x : {ElA}\,\tt
 specifies the output of the recursive function for the $\Pi'$ constructor.
 \end{example}
 
-\subsubsection{Type and term formation}\label{sec:ir-type-and-term-formation}
+\subsubsection{Type and Term Formation}\label{sec:ir-type-and-term-formation}
 
 First, assuming $O : \U_j$, a signature $S : \Sig_i\,O$ can be interpreted as a function from $(A : \U_i) \times (A \to O)$ to
 $(A : \U_i) \times (A \to O)$. This can be extended to an endofunctor on the slice category
@@ -514,7 +496,7 @@ from the general IIR rules \cite{ir-canonicity-supplement}.
 
 \end{example}
 
-\subsubsection{Type and term formation}\label{sec:iir-type-and-term-formation}
+\subsubsection{Type and Term Formation}\label{sec:iir-type-and-term-formation}
 $\E$ and $\F$ are similar to before:
 \begin{alignat*}{4}
   &\hspace{-2em}\rlap{$\E : \Sig_i\,I\,O \to (\ir : I \to \U_{\max(i,\,k)}) \to (\{\ix : I\} \to \ir\,\ix \to O\,\ix) \to I \to \U_{\max(i,\,k)}$} \\
@@ -824,7 +806,7 @@ lifting implicit in the metatheory. In the object theory, explicit lifting is se
 we talk about strict computation and canonicity, so we want to be precise about definitional
 content. In the metatheory we can be more liberal.
 
-\subsubsection{Consistency of the metatheory} As it often happens in type theory, our specific mixture
+\subsubsection{Consistency of the Metatheory} As it often happens in type theory, our specific mixture
 of features is not covered by any particular reference. However, it is reasonable to expect that
 previous works can be combined and generalized to obtain consistency for our metatheory.
 \begin{itemize}
@@ -854,7 +836,7 @@ described in Section \ref{sec:basic-type-formers} and IR types as described in S
 inductive-inductive type. The sets, operations and equations that we give in the following
 constitute the inductive signature.
 
-\subsubsection{Core substitution calculus} The basic judgmental structure is given
+\subsubsection{Core Substitution Calculus} The basic judgmental structure is given
 as a category with families (CwF) \cite{Dybjer96internaltype,cwfs} where types are additionally
 annotated with levels. This consists of the following.
 \begin{itemize}
@@ -918,7 +900,7 @@ more tailored to our situation.
   in the following.
 \end{itemize}
 
-\subsubsection{Sigma types} We have
+\subsubsection{Sigma Types} We have
 \begin{alignat*}{3}
   &\Sigma        &&: \Tm\,\Gamma\,((A : \U_i) \to (A \to \U_j) \to \U_{\max(i,\,j)}) \\
   &\blank,\blank &&: \Tm\,\Gamma\,(\{A : \U_i\}\{B : A \to \U_j\}(t : A) \to B\,t \to \Sigma\,A\,B)\\
@@ -936,7 +918,7 @@ such that $\fst\,(t,\,u) = t$, $\snd\,(t,\,u) = u$ and $(\fst\,t,\,\snd\,t) = t$
   & \BoolElim\,P\,t\,f\,\false = f
 \end{alignat*}
 
-\subsubsection{Identity type}
+\subsubsection{Identity Type}
 \begin{alignat*}{3}
   &\Id   &&: \Tm\,\Gamma\,((A : \U_i) \to A \to A \to \U_i)\\
   &\refl &&: \Tm\,\Gamma\,(\{A : \U_i\}(t : A) \to \Id\,A\,t\,t)
@@ -1029,7 +1011,7 @@ the type of $\blank^\w$ would live in $\Set_\omega$ and we could drop the assump
 $\Set_{\omega+1}$. However, as far as we know, such ``dependently sized'' functions have not been
 described in type theory literature, so we stick to non-dependently sized ones.
 
-\subsubsection{Interpretation of the CwF and the basic type formers}\label{sec:cwf-pred}
+\subsubsection{Interpretation of the CwF and the Basic Type Formers}\label{sec:cwf-pred}
 
 This was described in previously mentioned works \cite{gluing,coquand2018canonicity}. Additionally,
 the code supplement \cite{formalisation} to \cite{DBLP:conf/mpc/KaposiKK19} has an Agda
@@ -1080,7 +1062,7 @@ For \textbf{$\Sigma$-types}, we have
 \end{alignat*}
 For the \textbf{unit type}, we have $(\top_i)^\w\,\gamma^\w\,t := \top_i$ and $\ttt^\w\,\gamma^\w := \ttt$.
 
-\subsubsection{Interpretation of IR signatures}\label{sec:ir-signatures-canonicity}
+\subsubsection{Interpretation of IR Signatures}\label{sec:ir-signatures-canonicity}
 
 Signatures are given as an ordinary inductive family, so in principle there should be nothing
 ``new'' in their logical predicate interpretation. We do detail it here because several later
@@ -1127,7 +1109,7 @@ use $\blank^\w$ to mark semantic definitions and we do not need to refer to $\bl
 of interpretation functions on the object syntax. In step (2) we do overload $\blank^\w$ but hope
 that this does not generate too much confusion.
 
-\subsubsection{Interpretation of IR types}\label{sec:ir-canonicity}
+\subsubsection{Interpretation of IR Types}\label{sec:ir-canonicity}
 
 The basic idea is that for each IR type, the corresponding canonicity predicate should be defined as
 a metatheoretic IIR type. This gets rather technical, so first let us look at an informal example

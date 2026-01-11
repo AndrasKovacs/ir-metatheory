@@ -1,0 +1,380 @@
+%% build: latexmk -pdf -pvc prez.tex
+
+\documentclass[dvipsnames,aspectratio=169]{beamer}
+\usetheme{Madrid}
+
+%% kill footline
+\setbeamertemplate{footline}[frame number]{}
+\setbeamertemplate{navigation symbols}{}
+%% \setbeamertemplate{footline}{}
+
+%% bibliography
+\bibliographystyle{alpha}
+\setbeamerfont{bibliography item}{size=\footnotesize}
+\setbeamerfont{bibliography entry author}{size=\footnotesize}
+\setbeamerfont{bibliography entry title}{size=\footnotesize}
+\setbeamerfont{bibliography entry location}{size=\footnotesize}
+\setbeamerfont{bibliography entry note}{size=\footnotesize}
+\setbeamertemplate{bibliography item}{}
+
+%% kill ball enumeration
+\setbeamertemplate{enumerate items}[circle]
+\setbeamertemplate{section in toc}[circle]
+
+%% kill block shadows
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+
+%% kill ball itemize
+\setbeamertemplate{itemize items}[circle]
+
+%% --------------------------------------------------------------------------------
+
+\usepackage[utf8]{inputenc}
+%% \usepackage[hidelinks]{hyperref}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathpartir}
+\usepackage{scalerel}
+\usepackage{stmaryrd}
+\usepackage{bm}
+\usepackage{graphicx}
+
+%% --------------------------------------------------------------------------------
+
+%% HoTT style composition
+\makeatletter
+\DeclareRobustCommand{\sqcdot}{\mathbin{\mathpalette\morphic@sqcdot\relax}}
+\newcommand{\morphic@sqcdot}[2]{%
+  \sbox\z@{$\m@th#1\centerdot$}%
+  \ht\z@=.33333\ht\z@
+  \vcenter{\box\z@}%
+}
+\makeatother
+
+\newcommand{\mi}[1]{\mathit{#1}}
+\newcommand{\ms}[1]{\mathsf{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+\newcommand{\push}{\mathsf{push}}
+\newcommand{\p}{\mathsf{p}}
+\newcommand{\q}{\mathsf{q}}
+\newcommand{\data}{\mbf{data}}
+\newcommand{\U}{\ms{U}}
+\newcommand{\Set}{\ms{Set}}
+\newcommand{\where}{\mbf{where}}
+\newcommand{\Nat}{\ms{Nat}}
+\newcommand{\zero}{\ms{zero}}
+\newcommand{\suc}{\ms{suc}}
+\newcommand{\Nil}{\ms{Nil}}
+\newcommand{\Cons}{\ms{Cons}}
+\newcommand{\El}{\ms{El}}
+\newcommand{\Lift}{\ms{Lift}}
+\newcommand{\lup}{\uparrow}
+\newcommand{\ldown}{\downarrow}
+\newcommand{\Sig}{\ms{Sig}}
+\newcommand{\Code}{\ms{Code}}
+\newcommand{\Tag}{\ms{Tag}}
+\newcommand{\case}{\mbf{case}}
+\newcommand{\of}{\mbf{of}}
+\newcommand{\ttt}{\ms{tt}}
+\newcommand{\blank}{{\mathord{\hspace{1pt}\text{--}\hspace{1pt}}}}
+\newcommand{\ir}{{ir}}
+\newcommand{\el}{{el}}
+\newcommand{\ix}{{ix}}
+\newcommand{\IR}{\ms{IR}}
+\newcommand{\ih}{{ih}}
+\newcommand{\intro}{\ms{intro}}
+\newcommand{\IH}{\ms{IH}}
+\newcommand{\map}{\ms{map}}
+\newcommand{\elim}{\ms{elim}}
+\newcommand{\inj}{\ms{inj}}
+\newcommand{\tr}{\ms{tr}}
+\newcommand{\fst}{\ms{fst}}
+\newcommand{\snd}{\ms{snd}}
+\newcommand{\IIR}{\ms{IIR}}
+\newcommand{\Sigr}[1]{\lfloor #1 \rfloor}
+\newcommand{\floord}[1]{\lfloor #1 \rfloor}
+\newcommand{\ora}[1]{\overrightarrow{#1}}
+\newcommand{\ola}[1]{\overleftarrow{#1}}
+\newcommand{\ap}{\ms{ap}}
+\newcommand{\Bool}{\ms{Bool}}
+\newcommand{\Level}{\ms{Level}}
+\newcommand{\emptycon}{\scaleobj{.75}\bullet}
+\newcommand{\id}{\ms{id}}
+
+\newcommand{\Con}{\ms{Con}}
+\newcommand{\Sub}{\ms{Sub}}
+\newcommand{\Ty}{\ms{Ty}}
+\newcommand{\Tm}{\ms{Tm}}
+\newcommand{\ext}{\triangleright}
+\newcommand{\w}{\circ}
+\newcommand{\lam}{\ms{lam}}
+\newcommand{\app}{\ms{app}}
+\newcommand{\bapp}{\$}
+\newcommand{\proj}{\ms{proj}}
+\newcommand{\exfalso}{\ms{exfalso}}
+\newcommand{\true}{\ms{true}}
+\newcommand{\false}{\ms{false}}
+\newcommand{\BoolElim}{\ms{BoolElim}}
+\newcommand{\fun}{\Rightarrow}
+\newcommand{\SigElim}{\ms{SigElim}}
+\newcommand{\Id}{\ms{Id}}
+\newcommand{\refl}{\ms{refl}}
+\newcommand{\J}{\ms{J}}
+\newcommand{\G}{\mbb{G}}
+\newcommand{\Path}{\ms{Path}}
+\newcommand{\here}{\ms{here}}
+\newcommand{\Ssw}{S^{*\w}}
+
+\newcommand{\insigma}{\ms{in}\!\!-\!\!\sigma}
+\newcommand{\indelta}{\ms{in}\!\!-\!\!\delta}
+
+\newcommand{\Sb}{S^{*\circ}}
+\newcommand{\Sbe}{{\floord{S^{*\circ}}\,\here}}
+\newcommand{\PSbe}{{(\floord{S^{*\circ}}\,\here)}}
+\newcommand{\Elintro}{\ms{El\!\!-\!\!intro}}
+\newcommand{\elimbeta}{\elim\!-\!\!\beta}
+
+\newcommand{\E}{\mbb{E}}
+\newcommand{\F}{\mbb{F}}
+\newcommand{\W}{\ms{W}}
+
+%% --------------------------------------------------------------------------------
+
+\title{Canonicity for Indexed Inductive-Recursive Types}
+\author{\textbf{András Kovács}}
+\institute{
+  \inst%
+       {University of Gothenburg \& Chalmers University of Technology}
+}
+\date{15th Jan 2026, POPL, Rennes}
+\begin{document}
+
+
+\frame{\titlepage}
+
+\begin{frame}{Inductive-Recursive Types}
+
+Mutual definition of an inductive type and a function acting on it.
+
+\vspace{-1em}
+\begin{alignat*}{3}
+  & \mbf{mutual} \\
+  & \quad\data\,\Code : \Set_0\,\where \\
+  & \quad\quad \Nat' : \Code\\
+  & \quad\quad \Pi' \hspace{0.8em} : (A : \Code) \to (\El\,A \to \Code) \to \Code
+  & \\
+  & \\
+  & \quad\El : \Code \to \Set_0 \\
+  & \quad\El\,\Nat'\hspace{1.5em}  = \Nat \\
+  & \quad\El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
+\end{alignat*}
+\vspace{-0.5em}
+
+Early and informal use by Per Martin-Löf \cite{martin1975intuitionistic,martinlof84sambin}.
+\vspace{1em}
+
+Formal syntax \& semantics developed by Dybjer \& Setzer \cite{dybjer00ir,dybjer99finite,DBLP:journals/apal/DybjerS03,DBLP:journals/jlp/DybjerS06}.
+\vspace{1em}
+
+
+\end{frame}
+
+\begin{frame}{Inductive-Recursive Types}
+
+Use-cases:
+\begin{itemize}
+\item Metatheory for TTs with various universe hierarchies:
+  \begin{itemize}
+    \item Normalization for TTs with countable universes \cite{martin1975intuitionistic,DBLP:journals/pacmpl/0001OV18,DBLP:journals/pacmpl/PujetT23,DBLP:journals/pacmpl/AbelDE23}.
+    \item Consistency \cite{first-class-univ} and canonicity \cite{DBLP:journals/corr/abs-2502-20485} for notions of first-class universe levels.
+  \end{itemize}
+\item Others: partial functions \cite{DBLP:conf/tphol/BoveC01}, generic programming \cite{DBLP:journals/njc/BenkeDJ03,diehl2017fully}, large countable ordinals \cite{ir-ordinals,btb-ordinal}.
+\end{itemize}
+\vspace{1em}
+\pause
+
+\textbf{Canonicity}: can we evaluate every closed term in MLTT+IR to a value?
+\vspace{1em}
+
+IR has been supported for a long time in Agda with no canonicity issues,
+but without formal proof.
+\vspace{1em}
+\pause
+
+In this talk \& upcoming paper: formal proof of canonicity.
+\end{frame}
+
+\begin{frame}{How to specify an IR type?}
+
+The type of \textbf{IR signatures} is an inductive type.
+\vspace{-0.5em}
+\begin{alignat*}{4}
+  &\data\, \Sig\,i\,\{j\}\,(O : \Set_j) : \Set_{(i+1\,\sqcup\,j)}\,\where\\
+  &\quad \iota\hspace{0.25em}  : O \to \Sig\,i\,O \\
+  &\quad \sigma               : (A : \Set_i) \to (A \to \Sig\,i\,O) \to \Sig\,i\,O \\
+  &\quad \delta\hspace{0.1em} : (A : \Set_i) \to ((A \to O) \to \Sig\,i\,O) \to \Sig\,i\,O
+\end{alignat*}
+
+The signature of the previous $\ms{Code}$ example:
+\begin{alignat*}{4}
+  & \ms{SigCode} : \Sig\,0\,\Set_0\\
+  & \ms{SigCode} :\equiv \sigma\,\Bool\,\lambda\,t.\,\case\,t\,\of \\
+  & \quad \true  \,\to \iota\,\Nat \\
+  & \quad \false \to \delta\,\top\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\lambda\,{ElB}.\,
+      \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
+\end{alignat*}
+
+For each signature, we postulate type formation, term formation, elimination and computation rules,
+for the described IR type.
+
+\end{frame}
+
+
+\begin{frame}{How to prove canonicity?}
+
+Every closed term with IR type should be convertible to an IR constructor.
+E.g.\ a closed term $t : \Code$ should be either $\Nat'$ or $\Pi'$.
+\vspace{1em}
+
+Type-theoretic Artin gluing \cite{coquand2018canonicity,gluing}:
+\begin{itemize}
+  \item A closed type is interpreted as a proof-relevant predicate over its closed terms.
+        The predicate should imply canonicity.
+  \item A closed term is interpreted as a predicate witness.
+  \item Open types \& terms are generalized over closed substitutions.
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{How to prove canonicity?}
+
+\textbf{Notation:} we write $\bs{\Ty}$ for the set of closed types, $\bs{\Tm\,A}$ for sets of closed terms,
+  and $\bs{\U : \Ty}$ for object-theoretic universes (omitting levels).
+\vspace{1em}
+
+\textbf{Example:} canonicity predicate for natural numbers.
+\begin{alignat*}{3}
+  &\data\,\Nat^\w : \Tm\,\Nat \to \Set\,\where\\
+  & \quad \zero^\w : \Nat^\w\,\zero\\
+  & \quad \suc^\w\,\,: (n : \Tm\,\Nat) \to \Nat^\w\,n \to \Nat^\w\,(\suc\,n)
+\end{alignat*}
+Generally: the canonicity predicate for an inductive type is a \alert{metatheoretic indexed inductive type}.
+
+
+\end{frame}
+
+\begin{frame}{How to prove canonicity?}
+
+\textbf{Example:} the canonicity predicate for $\Code$ is the following \alert{metatheoretic indexed IR type}:
+\begin{alignat*}{4}
+  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set_0$}\\
+  &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
+  &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\\
+  &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
+  &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
+  &\rlap{}\\
+  &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)$}\\
+  &\rlap{$\El^\w\,\Nat'^\w  \hspace{2.4em}            = \Nat^\w$}  \\
+  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
+\end{alignat*}
+If we have $t : \Tm\,\Code$, the gluing interpretation hands us an element of $\Code^\w\,t$.
+
+\end{frame}
+
+\begin{frame}{How to prove canonicity?}
+
+In the object theory, let's assume general IR types specified by an internal $\Sig$ type.
+\begin{itemize}
+\item Previous slide: the object theory supports $\Code$, the canonicity proof involves $\Code^\w$.
+\pause
+\item Now: the object theory has all IR types, the canonicity proof involves all canonicity predicates.
+\end{itemize}
+\vspace{1em}
+\pause
+
+Interpreting IR types in the glued model:
+\begin{itemize}
+ \item We write $\IR\,S : \Tm\,\U$ for the IR \emph{type formation} rule, for $S : \Tm\,(\Sig\,O)$.
+ \pause
+ \item To interpret $\IR\,S$:
+   \begin{itemize}
+     \item By induction hypothesis, we get $S^\w : \Sig^\w\,S$ witnessing the canonicity of the
+       signature $S$ itself.
+     \item We compute a metatheoretic indexed IR signature by induction on $S^\w$.
+       This yields the canonicity predicate for $\IR\,S$.
+   \end{itemize}
+ \pause
+ \item We also need to interpret \emph{term formation}, \emph{elimination} and \emph{computation} rules.
+ \item For these, we have to show that universal properties of IR types are
+       preserved through the indexed IR encoding.
+\end{itemize}
+\vspace{1em}
+\end{frame}
+
+
+\begin{frame}{How to prove canonicity?}
+
+The construction is a moderately technical ``generic programming'' exercise,
+where we have to do some tricky induction over signatures.
+\vspace{1em}
+
+We use metatheoretic IR to show canonicity of object-theoretic IR. The metatheory has
+to have more universes; in our case the metatheory has extra levels $\omega$ and $\omega+1$\footnote{But $\omega+1$ is only used for convenience and could be omitted.}.
+\vspace{1em}
+
+The canonicity interpretation of IR is formalized in Agda using a shallow embedding of $\Ty$ and $\Tm$.
+
+\end{frame}
+
+\begin{frame}{Indexed Induction-Recursion}
+
+What about canonicity for \textbf{indexed} IR types?
+\vspace{1em}
+
+We only show canonicity for plain IR types, but also show that indexed IR types are
+constructible in MLTT+IR.
+\vspace{1em}
+
+The construction supports strict computation rules for all IIR types that
+are definable in Agda. For \emph{neutral} signatures we only get propositional computation.
+
+\vspace{1em}
+We use the well-known construction that converts indices to parameters and propositional identities.\footnote{Popularized as ``fording'' by Conor McBride.}
+
+\vspace{1em}
+Here, since we work in plain MLTT without function extensionality and UIP, we have to do a modest amount of HoTT reasoning.
+
+\end{frame}
+
+\begin{frame}{Closing notes}
+
+\vspace{-1em}
+\begin{itemize}
+\item Future work:
+  \begin{itemize}
+    \item Normalization for IR types. For this, we first have to show that presheaf models have IR types (which is already quite technical!).
+    \item Generalize the canonicity proof to a model construction (i.e.\ extend general type-theoretic gluing with IR types). This seems to
+          be incompatible with first-class signatures.
+  \end{itemize}
+\item Paper: under review. I'll publish a preprint in $\sim$2 weeks.
+\end{itemize}
+\vspace{2em}
+\pause
+
+\begin{center}
+  {\Large{\textbf{Thank you!}}}
+\end{center}
+\end{frame}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

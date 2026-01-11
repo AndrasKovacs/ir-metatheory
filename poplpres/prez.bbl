@@ -1,0 +1,109 @@
+\begin{thebibliography}{A{\"{O}}V18}
+
+\bibitem[ADE23]{DBLP:journals/pacmpl/AbelDE23}
+Andreas Abel, Nils~Anders Danielsson, and Oskar Eriksson.
+\newblock A graded modal dependent type theory with a universe and erasure,
+  formalized.
+\newblock {\em Proc. {ACM} Program. Lang.}, 7({ICFP}):920--954, 2023.
+
+\bibitem[A{\"{O}}V18]{DBLP:journals/pacmpl/0001OV18}
+Andreas Abel, Joakim {\"{O}}hman, and Andrea Vezzosi.
+\newblock Decidability of conversion for type theory in type theory.
+\newblock {\em Proc. {ACM} Program. Lang.}, 2({POPL}):23:1--23:29, 2018.
+
+\bibitem[BC01]{DBLP:conf/tphol/BoveC01}
+Ana Bove and Venanzio Capretta.
+\newblock Nested general recursion and partiality in type theory.
+\newblock In Richard~J. Boulton and Paul~B. Jackson, editors, {\em Theorem
+  Proving in Higher Order Logics, 14th International Conference, TPHOLs 2001,
+  Edinburgh, Scotland, UK, September 3-6, 2001, Proceedings}, volume 2152 of
+  {\em Lecture Notes in Computer Science}, pages 121--135. Springer, 2001.
+
+\bibitem[BDJ03]{DBLP:journals/njc/BenkeDJ03}
+Marcin Benke, Peter Dybjer, and Patrik Jansson.
+\newblock Universes for generic programs and proofs in dependent type theory.
+\newblock {\em Nord. J. Comput.}, 10(4):265--289, 2003.
+
+\bibitem[Coq19]{coquand2018canonicity}
+Thierry Coquand.
+\newblock Canonicity and normalization for dependent type theory.
+\newblock {\em Theor. Comput. Sci.}, 777:184--191, 2019.
+
+\bibitem[CW25]{DBLP:journals/corr/abs-2502-20485}
+Jonathan Chan and Stephanie Weirich.
+\newblock Bounded first-class universe levels in dependent type theory.
+\newblock {\em CoRR}, abs/2502.20485, 2025.
+
+\bibitem[Die17]{diehl2017fully}
+Larry Diehl.
+\newblock {\em Fully Generic Programming over Closed Universes of
+  Inductive-Recursive Types}.
+\newblock PhD thesis, Portland State University, 2017.
+
+\bibitem[DS99]{dybjer99finite}
+Peter Dybjer and Anton Setzer.
+\newblock A finite axiomatization of inductive-recursive definitions.
+\newblock In Jean{-}Yves Girard, editor, {\em Typed Lambda Calculi and
+  Applications, 4th International Conference, TLCA'99, L'Aquila, Italy, April
+  7-9, 1999, Proceedings}, volume 1581 of {\em Lecture Notes in Computer
+  Science}, pages 129--146. Springer, 1999.
+
+\bibitem[DS03]{DBLP:journals/apal/DybjerS03}
+Peter Dybjer and Anton Setzer.
+\newblock Induction-recursion and initial algebras.
+\newblock {\em Ann. Pure Appl. Log.}, 124(1-3):1--47, 2003.
+
+\bibitem[DS06]{DBLP:journals/jlp/DybjerS06}
+Peter Dybjer and Anton Setzer.
+\newblock Indexed induction-recursion.
+\newblock {\em J. Log. Algebraic Methods Program.}, 66(1):1--49, 2006.
+
+\bibitem[Dyb00]{dybjer00ir}
+Peter Dybjer.
+\newblock A general formulation of simultaneous inductive-recursive definitions
+  in type theory.
+\newblock {\em Journal of Symbolic Logic}, 65:525--549, 2000.
+
+\bibitem[KHS19]{gluing}
+Ambrus Kaposi, Simon Huber, and Christian Sattler.
+\newblock Gluing for type theory.
+\newblock In Herman Geuvers, editor, {\em 4th International Conference on
+  Formal Structures for Computation and Deduction, {FSCD} 2019, June 24-30,
+  2019, Dortmund, Germany}, volume 131 of {\em LIPIcs}, pages 25:1--25:19.
+  Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik, 2019.
+
+\bibitem[Kov22]{first-class-univ}
+Andr{\'{a}}s Kov{\'{a}}cs.
+\newblock Generalized universe hierarchies and first-class universe levels.
+\newblock In Florin Manea and Alex Simpson, editors, {\em 30th {EACSL} Annual
+  Conference on Computer Science Logic, {CSL} 2022, February 14-19, 2022,
+  G{\"{o}}ttingen, Germany (Virtual Conference)}, volume 216 of {\em LIPIcs},
+  pages 28:1--28:17. Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik,
+  2022.
+
+\bibitem[Kov23]{ir-ordinals}
+András Kovács.
+\newblock {Large Countable Ordinals in Agda}, 2023.
+
+\bibitem[Kyu25]{btb-ordinal}
+Chou Kyuhei.
+\newblock Brouwer tree barrier ordinal, 2025.
+
+\bibitem[ML75]{martin1975intuitionistic}
+Per Martin-L{\"o}f.
+\newblock {An intuitionistic theory of types: Predicative part}.
+\newblock In {\em Studies in Logic and the Foundations of Mathematics},
+  volume~80, pages 73--118. Elsevier, 1975.
+
+\bibitem[ML84]{martinlof84sambin}
+Per Martin-L{\"o}f.
+\newblock {\em Intuitionistic type theory}, volume~1 of {\em Studies in Proof
+  Theory}.
+\newblock Bibliopolis, 1984.
+
+\bibitem[PT23]{DBLP:journals/pacmpl/PujetT23}
+Lo{\"{\i}}c Pujet and Nicolas Tabareau.
+\newblock Impredicative observational equality.
+\newblock {\em Proc. {ACM} Program. Lang.}, 7({POPL}):2171--2196, 2023.
+
+\end{thebibliography}
