@@ -1,15 +1,4 @@
-\begin{thebibliography}{A{\"{O}}V18}
-
-\bibitem[ADE23]{DBLP:journals/pacmpl/AbelDE23}
-Andreas Abel, Nils~Anders Danielsson, and Oskar Eriksson.
-\newblock A graded modal dependent type theory with a universe and erasure,
-  formalized.
-\newblock {\em Proc. {ACM} Program. Lang.}, 7({ICFP}):920--954, 2023.
-
-\bibitem[A{\"{O}}V18]{DBLP:journals/pacmpl/0001OV18}
-Andreas Abel, Joakim {\"{O}}hman, and Andrea Vezzosi.
-\newblock Decidability of conversion for type theory in type theory.
-\newblock {\em Proc. {ACM} Program. Lang.}, 2({POPL}):23:1--23:29, 2018.
+\begin{thebibliography}{DFK26}
 
 \bibitem[BC01]{DBLP:conf/tphol/BoveC01}
 Ana Bove and Venanzio Capretta.
@@ -33,6 +22,11 @@ Thierry Coquand.
 Jonathan Chan and Stephanie Weirich.
 \newblock Bounded first-class universe levels in dependent type theory.
 \newblock {\em CoRR}, abs/2502.20485, 2025.
+
+\bibitem[DFK26]{10.1145/3776645}
+Nils~Anders Danielsson, Na\"{\i}m~Camille Favier, and Ond\v{r}ej Kub\'{a}nek.
+\newblock Normalisation for first-class universe levels.
+\newblock {\em Proc. ACM Program. Lang.}, 10(POPL), January 2026.
 
 \bibitem[Die17]{diehl2017fully}
 Larry Diehl.
@@ -81,14 +75,6 @@ Andr{\'{a}}s Kov{\'{a}}cs.
   pages 28:1--28:17. Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik,
   2022.
 
-\bibitem[Kov23]{ir-ordinals}
-András Kovács.
-\newblock {Large Countable Ordinals in Agda}, 2023.
-
-\bibitem[Kyu25]{btb-ordinal}
-Chou Kyuhei.
-\newblock Brouwer tree barrier ordinal, 2025.
-
 \bibitem[ML75]{martin1975intuitionistic}
 Per Martin-L{\"o}f.
 \newblock {An intuitionistic theory of types: Predicative part}.
@@ -100,10 +86,5 @@ Per Martin-L{\"o}f.
 \newblock {\em Intuitionistic type theory}, volume~1 of {\em Studies in Proof
   Theory}.
 \newblock Bibliopolis, 1984.
-
-\bibitem[PT23]{DBLP:journals/pacmpl/PujetT23}
-Lo{\"{\i}}c Pujet and Nicolas Tabareau.
-\newblock Impredicative observational equality.
-\newblock {\em Proc. {ACM} Program. Lang.}, 7({POPL}):2171--2196, 2023.
 
 \end{thebibliography}

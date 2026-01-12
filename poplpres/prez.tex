@@ -68,7 +68,7 @@
 \newcommand{\U}{\ms{U}}
 \newcommand{\Set}{\ms{Set}}
 \newcommand{\where}{\mbf{where}}
-\newcommand{\Nat}{\ms{Nat}}
+\newcommand{\Nat}{\mbb{N}}
 \newcommand{\zero}{\ms{zero}}
 \newcommand{\suc}{\ms{suc}}
 \newcommand{\Nil}{\ms{Nil}}
@@ -161,19 +161,17 @@
 
 \begin{frame}{Inductive-Recursive Types}
 
-Mutual definition of an inductive type and a function acting on it.
-
+Small Agda example.
 \vspace{-1em}
 \begin{alignat*}{3}
-  & \mbf{mutual} \\
-  & \quad\data\,\Code : \Set_0\,\where \\
-  & \quad\quad \Nat' : \Code\\
-  & \quad\quad \Pi' \hspace{0.8em} : (A : \Code) \to (\El\,A \to \Code) \to \Code
+  & \data\,\Code : \Set\,\where \\
+  & \quad \Nat' : \Code\\
+  & \quad \Pi'  : (A : \Code) \to (\El\,A \to \Code) \to \Code
   & \\
   & \\
-  & \quad\El : \Code \to \Set_0 \\
-  & \quad\El\,\Nat'\hspace{1.5em}  = \Nat \\
-  & \quad\El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
+  & \El : \Code \to \Set \\
+  & \El\,\Nat'\hspace{2.5em}  = \Nat \\
+  & \El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
 \end{alignat*}
 \vspace{-0.5em}
 
@@ -182,36 +180,165 @@ Early and informal use by Per Martin-Löf \cite{martin1975intuitionistic,martinl
 
 Formal syntax \& semantics developed by Dybjer \& Setzer \cite{dybjer00ir,dybjer99finite,DBLP:journals/apal/DybjerS03,DBLP:journals/jlp/DybjerS06}.
 \vspace{1em}
+\end{frame}
 
 
+\begin{frame}{Inductive-Recursive Types}
+Let's parameterize $\Code$ and $\El$ with $\bs{u : \Set}$ and $\bs{\mi{el} : u \to \Set}$,
+and add extra rules.
+
+\begin{columns}
+,\begin{column}{0.4\textwidth}
+\begin{alignat*}{3}
+  & \data\,\Code : \Set\,\where \\
+  & \quad ... \\
+  & \quad \ms{u'}\hspace{0.9em} : \Code\\
+  & \quad \ms{el'}\hspace{0.8em} : u \to \Code\\
+  & \\
+  & \El : \Code \to \Set \\
+  & ...\\
+  & \El\,\ms{u'}\hspace{1.75em} = u\\
+  & \El\,(\ms{el'}\,a)\hspace{0.15em} = \el\,a
+\end{alignat*}
+\end{column}
+\pause
+\begin{column}{0.6\textwidth}
+$\Code$ and $\El$ yield a function $\ms{F} : \ms{FamSet} \to \ms{FamSet}$.
+\vspace{1em}
+
+We get countable universes by iteration:
+\begin{alignat*}{3}
+  &\U : \Nat \to \ms{FamSet}\hspace{10em}\\
+  &\U\,\zero\hspace{1.1em} = (\bot,\,\exfalso)\\
+  &\U\,(\suc\,n)  = \ms{F}\,(\U\,n)
+\end{alignat*}
+
+\emph{More generally: any well-founded universe hierarchy can be defined by induction-recursion inside $\Set$.}
+\end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}{Inductive-Recursive Types}
 
-Use-cases:
+IR is convenient for doing metatheory of universe features.
+\vspace{1em}
+
+Recent works on various notions of first-class universe levels, all using IR in Agda formalizations:
 \begin{itemize}
-\item Metatheory for TTs with various universe hierarchies:
-  \begin{itemize}
-    \item Normalization for TTs with countable universes \cite{martin1975intuitionistic,DBLP:journals/pacmpl/0001OV18,DBLP:journals/pacmpl/PujetT23,DBLP:journals/pacmpl/AbelDE23}.
-    \item Consistency \cite{first-class-univ} and canonicity \cite{DBLP:journals/corr/abs-2502-20485} for notions of first-class universe levels.
-  \end{itemize}
-\item Others: partial functions \cite{DBLP:conf/tphol/BoveC01}, generic programming \cite{DBLP:journals/njc/BenkeDJ03,diehl2017fully}, large countable ordinals \cite{ir-ordinals,btb-ordinal}.
+  \item Consistency \cite{first-class-univ}
+  \item Canonicity \cite{DBLP:journals/corr/abs-2502-20485}
+  \item Here at POPL: normalization \cite{10.1145/3776645}
 \end{itemize}
 \vspace{1em}
-\pause
 
-\textbf{Canonicity}: can we evaluate every closed term in MLTT+IR to a value?
-\vspace{1em}
+Some other uses: partial functions \cite{DBLP:conf/tphol/BoveC01}, generic programming
+\cite{DBLP:journals/njc/BenkeDJ03,diehl2017fully}.
 
-IR has been supported for a long time in Agda with no canonicity issues,
-but without formal proof.
-\vspace{1em}
-\pause
-
-In this talk \& upcoming paper: formal proof of canonicity.
 \end{frame}
 
-\begin{frame}{How to specify an IR type?}
+\begin{frame}{Implementation \& Metatheory}
+
+IR has been supported in Agda for 15+ years. Also supported in Idris-es.
+\vspace{1em}
+
+Intuitively, there is \emph{nothing special} about the implementation.
+\vspace{1em}
+\pause
+
+However, syntactic properties had been missing:
+\begin{enumerate}
+\item \emph{Canonicity:} every closed term can be computed to a constructor.
+\item \emph{Normalization:} every open term can be computed to a normal form.
+\end{enumerate}
+\vspace{1em}
+
+We show \textbf{canonicity} in the current work.
+
+\end{frame}
+
+\begin{frame}{Canonicity: basic setup}
+
+We only talk about well-typed syntax, quotiented by conversion.
+\vspace{1em}
+
+The syntax is given as a quotient inductive-inductive type with the following sorts:
+\begin{alignat*}{3}
+  & \Con &&: \Set\\
+  & \Ty  &&: \Con \to \Nat \to \Set\\
+  & \Sub &&: \Con \to \Con \to \Set\\
+  & \Tm  &&: (\Gamma : \Con)\{i : \Nat\} \to \Ty\,\Gamma\,i \to \Set
+\end{alignat*}
+
+We have
+\begin{itemize}
+  \item An explicit substitution calculus, given as a category with families.
+  \item Russell-style universes, as $\U : (i : \Nat) \to \Ty\,\Gamma\,(i + 1)$ such that
+    $\Tm\,\Gamma\,(\U\,i) = \Ty\,\Gamma\,i$.
+  \item Basic type formers: $\Pi$, $\Sigma$, $\top$, $\Bool$, intensional identity.
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Canonicity: basic setup}
+
+\textbf{Artin gluing} is an established proof-relevant version of \textbf{logical predicates} which
+works nicely for our syntax.\footnote{See e.g.\ \cite{coquand2018canonicity,gluing}}
+\vspace{1em}
+
+We define a family of functions $\blank^\circ$ from the syntax by induction.
+\begin{alignat*}{3}
+  &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\emptycon\,\Gamma \to \Set_\omega\\
+  &\blank^\w : (A : \Ty\,\Gamma\,i) && \to \{\gamma : \Sub\,\emptycon\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Tm\,\emptycon\,A[\gamma] \to \Set_i\\
+  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\sigma \circ \gamma)\\
+  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma^\w\,t[\gamma]
+\end{alignat*}
+
+\end{frame}
+
+\begin{frame}{Canonicity for inductive types}
+
+The main task is to specify what it means for a closed term to be canonical.
+\vspace{1em}
+
+\textbf{Example:} natural numbers.
+\vspace{1em}
+
+In the syntax, assume $\Nat : \Ty\,\Gamma$ with $\zero$ and $\suc$.
+\vspace{1em}
+
+Closed canonical terms of type $\Nat$ are specified by an \alert{indexed inductive type}
+in the metatheory.
+\begin{alignat*}{3}
+  &\data\,\Nat^\w : \Tm\,\emptycon\,\Nat \to \Set\,\where\\
+  & \quad \zero^\w : \Nat^\w\,\zero\\
+  & \quad \suc^\w\,\,: (n : \Tm\,\emptycon\,\Nat) \to \Nat^\w\,n \to \Nat^\w\,(\suc\,n)
+\end{alignat*}
+
+
+\end{frame}
+
+\begin{frame}{Canonicity for inductive types}
+
+\textbf{Example:} the canonicity predicate for the IR type $\Code$ is an \alert{indexed IR type} in the metatheory.
+\pause
+\begin{alignat*}{4}
+  &\rlap{$\data\,\Code^\w : \Tm\,\emptycon\,\Code \to \Set$}\\
+  &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
+  &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\emptycon\,\Code\}(A^\w : \Code^\w\,A)\\
+  &\quad         &&  && \{B : \Tm\,\emptycon\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,\emptycon\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
+  &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
+  &\rlap{}\\
+  &\rlap{$\El^\w : \{t : \Tm\,\emptycon\,\Code\} \to \Code^\w\,t \to (\Tm\,\emptycon\,(\El\,t) \to \Set)$}\\
+  &\rlap{$\El^\w\,\Nat'^\w  \hspace{3.3em}            = \Nat^\w$}  \\
+  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,\emptycon\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
+\end{alignat*}
+
+\end{frame}
+
+
+
+
+\begin{frame}{}
 
 The type of \textbf{IR signatures} is an inductive type.
 \vspace{-0.5em}
@@ -224,7 +351,7 @@ The type of \textbf{IR signatures} is an inductive type.
 
 The signature of the previous $\ms{Code}$ example:
 \begin{alignat*}{4}
-  & \ms{SigCode} : \Sig\,0\,\Set_0\\
+  & \ms{SigCode} : \Sig\,0\,\Set\\
   & \ms{SigCode} :\equiv \sigma\,\Bool\,\lambda\,t.\,\case\,t\,\of \\
   & \quad \true  \,\to \iota\,\Nat \\
   & \quad \false \to \delta\,\top\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\lambda\,{ElB}.\,
@@ -275,13 +402,13 @@ Generally: the canonicity predicate for an inductive type is a \alert{metatheore
 
 \textbf{Example:} the canonicity predicate for $\Code$ is the following \alert{metatheoretic indexed IR type}:
 \begin{alignat*}{4}
-  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set_0$}\\
+  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set$}\\
   &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
   &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\\
   &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
   &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
   &\rlap{}\\
-  &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set_0)$}\\
+  &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set)$}\\
   &\rlap{$\El^\w\,\Nat'^\w  \hspace{2.4em}            = \Nat^\w$}  \\
   &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
 \end{alignat*}

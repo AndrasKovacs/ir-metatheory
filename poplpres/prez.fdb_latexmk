@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex prez"] 1768078051.21035 "prez.aux" "prez.bbl" "prez" 1768078105.19538 2
-  "./references.bib" 1761262737.88581 224109 37de13797e36836c1a00972aa69ef9e0 ""
+["bibtex prez"] 1768258809.7652 "prez.aux" "prez.bbl" "prez" 1768258981.49927 2
+  "./references.bib" 1768252163.24183 225418 91145802364fb868c6c73cf645965735 ""
   "/usr/share/texmf-dist/bibtex/bst/acmart/ACM-Reference-Format.bst" 1767555874 90749 48abc1cbed6fafc6fc31528e3aa606ca ""
   "/usr/share/texmf-dist/bibtex/bst/base/alpha.bst" 1767555874 23907 a5f93555796fb564b924339521f10a7c ""
-  "prez.aux" 1768078105.06301 4578 b9400af0c4435ba8556a0ac9179739bc "pdflatex"
+  "prez.aux" 1768258981.18488 4251 9148b1599a3990ef1da14f731cc53672 "pdflatex"
   (generated)
   "prez.bbl"
   "prez.blg"
   (rewritten before read)
-["pdflatex"] 1768078104.56992 "prez.tex" "prez.pdf" "prez" 1768078105.19548 0
+["pdflatex"] 1768258980.44911 "prez.tex" "prez.pdf" "prez" 1768258981.49942 0
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1767555874 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1767555874 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecso1000.tfm" 1767555874 3584 28de528d5eb276f96f1afe67dab24105 ""
@@ -67,8 +67,10 @@
   "/usr/share/texmf-dist/fonts/tfm/public/stmaryrd/stmary7.tfm" 1767555874 848 26631fcb3e4cb6757598b9cda7967b63 ""
   "/usr/share/texmf-dist/fonts/tfm/public/stmaryrd/stmary8.tfm" 1767555874 848 6125cdd3627e68d3db8013b98e587508 ""
   "/usr/share/texmf-dist/fonts/tfm/public/stmaryrd/stmary9.tfm" 1767555874 848 594c171945930dfc7cc52fb30457c803 ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb" 1767555874 34793 87a84b12f86dfd35a1cf1bb142b75602 ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1767555874 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1767555874 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1767555874 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb" 1767555874 36094 798f80770b3b148ceedd006d487db67c ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb" 1767555874 24457 5cbb7bdf209d5d1ce9892a9b80a307cc ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb" 1767555874 24393 3b7eb51a67a0a62aec5849271bdb9c2e ""
@@ -81,6 +83,7 @@
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1767555874 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1767555874 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1767555874 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1767555874 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/share/texmf-dist/fonts/type1/public/cm-super/sfso1000.pfb" 1767555874 160858 2985abeca00255053fda4e0f01ab8650 ""
   "/usr/share/texmf-dist/fonts/vf/public/sansmathaccent/mathkerncmssxi10.vf" 1767555874 968 66e003066820a2b63fdd32edaa048d04 ""
   "/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1767555874 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -255,13 +258,13 @@
   "/usr/share/texmf-dist/tex/latex/url/url.sty" 1767555874 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/usr/share/texmf-dist/tex/latex/xcolor/xcolor.sty" 1767555874 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1767555874 42087 b0f9697c952c8f5a8eede4134282cb0d ""
-  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1767605026 5311557 9da84c45f5b388655502706482323571 ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1767605013 2686912 ac80846aadf1de12b2d74191ebc3c515 ""
-  "prez.aux" 1768078105.06301 4578 b9400af0c4435ba8556a0ac9179739bc "pdflatex"
-  "prez.bbl" 1768078051.23277 4471 80f7d838c931061fff136dfbcf7d63be "bibtex prez"
-  "prez.nav" 1768078105.06432 1210 4664759cec03205e1d89b33f7e576107 "pdflatex"
-  "prez.out" 1768078104.84903 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "prez.tex" 1768078104.39501 12697 b8a248f54014f69561786e0ab4ba0e22 ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1767781612 5311557 9da84c45f5b388655502706482323571 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1767781580 2686915 c39b7aec74af7097a446f0315c389cff ""
+  "prez.aux" 1768258981.18488 4251 9148b1599a3990ef1da14f731cc53672 "pdflatex"
+  "prez.bbl" 1768258809.82173 3789 b2aa153875e87824b7c97e6dd69df790 "bibtex prez"
+  "prez.nav" 1768258981.18588 1768 a21b0255744e1decf9c939d3bd41287c "pdflatex"
+  "prez.out" 1768258980.85899 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "prez.tex" 1768258979.02378 16868 39903bb03991676b9df68350a20e63f0 ""
   (generated)
   "prez.aux"
   "prez.log"

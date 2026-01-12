@@ -7,45 +7,45 @@ Illegal, another \bibstyle command---line 49 of file prez.aux
  :          {ACM-Reference-Format}
 I'm skipping whatever remains of this command
 Database file #1: references.bib
-You've used 18 entries,
+You've used 14 entries,
             2543 wiz_defined-function locations,
-            685 strings with 7657 characters,
-and the built_in function-call counts, 7647 in all, are:
-= -- 789
-> -- 302
-< -- 19
-+ -- 97
-- -- 94
-* -- 547
-:= -- 1208
-add.period$ -- 57
-call.type$ -- 18
-change.case$ -- 102
-chr.to.int$ -- 18
-cite$ -- 18
-duplicate$ -- 318
-empty$ -- 585
-format.name$ -- 118
-if$ -- 1601
+            666 strings with 7203 characters,
+and the built_in function-call counts, 6136 in all, are:
+= -- 636
+> -- 242
+< -- 17
++ -- 77
+- -- 75
+* -- 440
+:= -- 970
+add.period$ -- 47
+call.type$ -- 14
+change.case$ -- 79
+chr.to.int$ -- 14
+cite$ -- 14
+duplicate$ -- 267
+empty$ -- 461
+format.name$ -- 93
+if$ -- 1293
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 16
-newline$ -- 91
-num.names$ -- 62
-pop$ -- 92
+missing$ -- 14
+newline$ -- 73
+num.names$ -- 50
+pop$ -- 65
 preamble$ -- 1
-purify$ -- 122
+purify$ -- 95
 quote$ -- 0
-skip$ -- 279
+skip$ -- 232
 stack$ -- 0
-substring$ -- 503
-swap$ -- 80
-text.length$ -- 19
-text.prefix$ -- 6
+substring$ -- 384
+swap$ -- 76
+text.length$ -- 17
+text.prefix$ -- 4
 top$ -- 0
-type$ -- 140
+type$ -- 108
 warning$ -- 0
-while$ -- 81
-width$ -- 23
-write$ -- 240
+while$ -- 65
+width$ -- 18
+write$ -- 194
 (There was 1 error message)
