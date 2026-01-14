@@ -186,9 +186,12 @@ Formal syntax \& semantics developed by Dybjer \& Setzer \cite{dybjer00ir,dybjer
 \begin{frame}{Inductive-Recursive Types}
 Let's parameterize $\Code$ and $\El$ with $\bs{u : \Set}$ and $\bs{\mi{el} : u \to \Set}$,
 and add extra rules.
+\vspace{1em}
 
 \begin{columns}
-,\begin{column}{0.4\textwidth}
+\begin{column}{0.35\textwidth}
+\begin{block}{}
+\vspace{-1.2em}
 \begin{alignat*}{3}
   & \data\,\Code : \Set\,\where \\
   & \quad ... \\
@@ -200,10 +203,15 @@ and add extra rules.
   & \El\,\ms{u'}\hspace{1.75em} = u\\
   & \El\,(\ms{el'}\,a)\hspace{0.15em} = \el\,a
 \end{alignat*}
+\end{block}
 \end{column}
 \pause
 \begin{column}{0.6\textwidth}
-$\Code$ and $\El$ yield a function $\ms{F} : \ms{FamSet} \to \ms{FamSet}$.
+\begin{block}{}
+Let $\ms{FamSet} = \Sigma(A : \Set).(A \to \Set)$.
+
+$\Code$ and $\El$ yield a function $\bs{\ms{F} : \ms{FamSet} \to \ms{FamSet}}$
+
 \vspace{1em}
 
 We get countable universes by iteration:
@@ -214,6 +222,7 @@ We get countable universes by iteration:
 \end{alignat*}
 
 \emph{More generally: any well-founded universe hierarchy can be defined by induction-recursion inside $\Set$.}
+\end{block}
 \end{column}
 \end{columns}
 \end{frame}
@@ -225,57 +234,63 @@ IR is convenient for doing metatheory of universe features.
 
 Recent works on various notions of first-class universe levels, all using IR in Agda formalizations:
 \begin{itemize}
-  \item Consistency \cite{first-class-univ}
-  \item Canonicity \cite{DBLP:journals/corr/abs-2502-20485}
-  \item Here at POPL: normalization \cite{10.1145/3776645}
+  \item Consistency by AK \cite{first-class-univ}
+  \item Canonicity by Chan \& Weirich \cite{DBLP:journals/corr/abs-2502-20485}
+  \item Here at POPL: normalization by Danielsson, Favier \& Kubánek \cite{10.1145/3776645}
 \end{itemize}
 \vspace{1em}
+\pause
 
 Some other uses: partial functions \cite{DBLP:conf/tphol/BoveC01}, generic programming
 \cite{DBLP:journals/njc/BenkeDJ03,diehl2017fully}.
+\vspace{1em}
+\pause
+
+\emph{Impredicative Prop} is technically stronger than IR, but
+\begin{itemize}
+\item We may prefer weaker predicative foundations.
+\item IR formalization may be more direct \& convenient.
+\end{itemize}
 
 \end{frame}
 
-\begin{frame}{Implementation \& Metatheory}
+\begin{frame}{IR implementation \& metatheory}
 
 IR has been supported in Agda for 15+ years. Also supported in Idris-es.
 \vspace{1em}
 
-Intuitively, there is \emph{nothing special} about the implementation.
+The implementation is quite straightforward. \emph{Intuitively}, there's nothing
+that could go wrong.
 \vspace{1em}
 \pause
 
-However, syntactic properties had been missing:
+However, syntactic properties had not been shown:
 \begin{enumerate}
 \item \emph{Canonicity:} every closed term can be computed to a constructor.
 \item \emph{Normalization:} every open term can be computed to a normal form.
 \end{enumerate}
 \vspace{1em}
 
-We show \textbf{canonicity} in the current work.
+We show \textbf{canonicity}.
 
 \end{frame}
 
-\begin{frame}{Canonicity: basic setup}
+\begin{frame}{The object theory}
 
-We only talk about well-typed syntax, quotiented by conversion.
-\vspace{1em}
-
-The syntax is given as a quotient inductive-inductive type with the following sorts:
+The syntax is a quotient inductive-inductive type with these sorts:\footnote{We omit universe levels here and elsewhere}
 \begin{alignat*}{3}
   & \Con &&: \Set\\
-  & \Ty  &&: \Con \to \Nat \to \Set\\
+  & \Ty  &&: \Con \to \Set\\
   & \Sub &&: \Con \to \Con \to \Set\\
-  & \Tm  &&: (\Gamma : \Con)\{i : \Nat\} \to \Ty\,\Gamma\,i \to \Set
+  & \Tm  &&: (\Gamma : \Con) \to \Ty\,\Gamma \to \Set
 \end{alignat*}
 
 We have
 \begin{itemize}
   \item An explicit substitution calculus, given as a category with families.
-  \item Russell-style universes, as $\U : (i : \Nat) \to \Ty\,\Gamma\,(i + 1)$ such that
-    $\Tm\,\Gamma\,(\U\,i) = \Ty\,\Gamma\,i$.
+  \item Countable Russell-style universes.
   \item Basic type formers: $\Pi$, $\Sigma$, $\top$, $\Bool$, intensional identity.
-
+  \item IR types.
 \end{itemize}
 \end{frame}
 
@@ -285,13 +300,15 @@ We have
 works nicely for our syntax.\footnote{See e.g.\ \cite{coquand2018canonicity,gluing}}
 \vspace{1em}
 
-We define a family of functions $\blank^\circ$ from the syntax by induction.
+We define a family of functions by induction:
 \begin{alignat*}{3}
-  &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\emptycon\,\Gamma \to \Set_\omega\\
-  &\blank^\w : (A : \Ty\,\Gamma\,i) && \to \{\gamma : \Sub\,\emptycon\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Tm\,\emptycon\,A[\gamma] \to \Set_i\\
-  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\sigma \circ \gamma)\\
-  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to \{\gamma : \Sub\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma^\w\,t[\gamma]
+  &\blank^\w : (\Gamma : \Con)      && \to \Sub\,\emptycon\,\Gamma \to \Set\\
+  &\blank^\w : (A : \Ty\,\Gamma) && \to \{\gamma : \Sub\,\emptycon\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Tm\,\emptycon\,A[\gamma] \to \Set\\
+  &\blank^\w : (\sigma : \Sub\,\Gamma\,\Delta) && \to \{\gamma : \Sub\,\emptycon\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to \Delta^\w\,(\sigma \circ \gamma)\\
+  &\blank^\w : (t : \Tm\,\Gamma\,A) && \to \{\gamma : \Sub\,\emptycon\,\Gamma\}(\gamma^\w : \Gamma^\w\,\gamma) \to A^\w\,\gamma^\w\,t[\gamma]
 \end{alignat*}
+
+$\blank^\w$ acts on every type and term former and respects definitional equality.
 
 \end{frame}
 
@@ -299,6 +316,7 @@ We define a family of functions $\blank^\circ$ from the syntax by induction.
 
 The main task is to specify what it means for a closed term to be canonical.
 \vspace{1em}
+\pause
 
 \textbf{Example:} natural numbers.
 \vspace{1em}
@@ -317,9 +335,9 @@ in the metatheory.
 
 \end{frame}
 
-\begin{frame}{Canonicity for inductive types}
+\begin{frame}{Canonicity for IR types}
 
-\textbf{Example:} the canonicity predicate for the IR type $\Code$ is an \alert{indexed IR type} in the metatheory.
+\textbf{Example:} the canonicity predicate for the basic $\Code$ type is an \alert{indexed IR type} in the metatheory.
 \pause
 \begin{alignat*}{4}
   &\rlap{$\data\,\Code^\w : \Tm\,\emptycon\,\Code \to \Set$}\\
@@ -332,174 +350,319 @@ in the metatheory.
   &\rlap{$\El^\w\,\Nat'^\w  \hspace{3.3em}            = \Nat^\w$}  \\
   &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,\emptycon\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
 \end{alignat*}
+\end{frame}
 
+\begin{frame}{Canonicity for IR types}
+
+\vspace{0.5em}
+\textbf{Example:} the canonicity predicate for the basic $\Code$ type is an \alert{indexed IR type} in the metatheory.
+
+\begin{alignat*}{3}
+  & \data\,\Code : \Set\,\where \\
+  & \quad \Nat' : \Code\\
+  & \quad \Pi'  : (A : \Code) \to (\El\,A \to \Code) \to \Code
+  & \\
+  & \\
+  & \El : \Code \to \Set \\
+  & \El\,\Nat'\hspace{2.5em}  = \Nat \\
+  & \El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)\\
+  & \\
+  & \\
+\end{alignat*}
 \end{frame}
 
 
 
 
-\begin{frame}{}
+\begin{frame}{Canonicity for all IR types}
 
-The type of \textbf{IR signatures} is an inductive type.
-\vspace{-0.5em}
+$\Code$ is a \emph{single} IR type, but we want to show canonicity for \emph{all} IR types.
+\vspace{1em}
+
+We need to
+\begin{enumerate}
+    \item Specificy and assume all IR types in the object theory.
+    \item Generalize the canonicity construction across IR type descriptions.
+\end{enumerate}
+
+
+\end{frame}
+
+
+
+\begin{frame}{Specifying IR types}
+
+Following Dybjer \& Setzer: the type of \textbf{IR signatures} is an \textbf{internal} inductive type:
+
 \begin{alignat*}{4}
-  &\data\, \Sig\,i\,\{j\}\,(O : \Set_j) : \Set_{(i+1\,\sqcup\,j)}\,\where\\
-  &\quad \iota\hspace{0.25em}  : O \to \Sig\,i\,O \\
-  &\quad \sigma               : (A : \Set_i) \to (A \to \Sig\,i\,O) \to \Sig\,i\,O \\
-  &\quad \delta\hspace{0.1em} : (A : \Set_i) \to ((A \to O) \to \Sig\,i\,O) \to \Sig\,i\,O
+  &\data\, \Sig\,(O : \Set_1) : \Set_1\,\where\\
+  &\quad \iota\hspace{0.25em}  : O \to \Sig\,O \\
+  &\quad \sigma               : (A : \Set) \to (A \to \Sig\,O) \to \Sig\,O \\
+  &\quad \delta\hspace{0.1em} : (A : \Set) \to ((A \to O) \to \Sig\,O) \to \Sig\,O
 \end{alignat*}
+\vspace{0.5em}
 
-The signature of the previous $\ms{Code}$ example:
+For each signature, we postulate type formation, term formation, elimination and computation rules, for the described IR type.
+
+\end{frame}
+
+\begin{frame}{Specifying IR types}
+
+Let's write out the signature for $\Code$.
+
+\begin{alignat*}{3}
+  & \data\,\Code : \Set\,\where && \El : \Code \to \Set \\
+  & \quad \Nat' : \Code         && \El\,\Nat'\hspace{2.5em}  = \Nat \\
+  & \quad \Pi'  : (A : \Code) \to (\El\,A \to \Code) \to \Code \hspace{1.5em} && \El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
+\end{alignat*}
 \begin{alignat*}{4}
-  & \ms{SigCode} : \Sig\,0\,\Set\\
+  & \ms{SigCode} : \Sig\,\Set\\
   & \ms{SigCode} :\equiv \sigma\,\Bool\,\lambda\,t.\,\case\,t\,\of \\
   & \quad \true  \,\to \iota\,\Nat \\
   & \quad \false \to \delta\,\top\,\lambda\,{ElA}.\, \delta\,({ElA}\,\ttt)\,\lambda\,{ElB}.\,
       \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
 \end{alignat*}
 
-For each signature, we postulate type formation, term formation, elimination and computation rules,
-for the described IR type.
-
 \end{frame}
 
+\begin{frame}{Generic canonicity}
 
-\begin{frame}{How to prove canonicity?}
+Somewhat technical. I try to give computational intuition.
 
-Every closed term with IR type should be convertible to an IR constructor.
-E.g.\ a closed term $t : \Code$ should be either $\Nat'$ or $\Pi'$.
-\vspace{1em}
-
-Type-theoretic Artin gluing \cite{coquand2018canonicity,gluing}:
 \begin{itemize}
-  \item A closed type is interpreted as a proof-relevant predicate over its closed terms.
-        The predicate should imply canonicity.
-  \item A closed term is interpreted as a predicate witness.
-  \item Open types \& terms are generalized over closed substitutions.
-\end{itemize}
-
-
-\end{frame}
-
-\begin{frame}{How to prove canonicity?}
-
-\textbf{Notation:} we write $\bs{\Ty}$ for the set of closed types, $\bs{\Tm\,A}$ for sets of closed terms,
-  and $\bs{\U : \Ty}$ for object-theoretic universes (omitting levels).
-\vspace{1em}
-
-\textbf{Example:} canonicity predicate for natural numbers.
-\begin{alignat*}{3}
-  &\data\,\Nat^\w : \Tm\,\Nat \to \Set\,\where\\
-  & \quad \zero^\w : \Nat^\w\,\zero\\
-  & \quad \suc^\w\,\,: (n : \Tm\,\Nat) \to \Nat^\w\,n \to \Nat^\w\,(\suc\,n)
-\end{alignat*}
-Generally: the canonicity predicate for an inductive type is a \alert{metatheoretic indexed inductive type}.
-
-
-\end{frame}
-
-\begin{frame}{How to prove canonicity?}
-
-\textbf{Example:} the canonicity predicate for $\Code$ is the following \alert{metatheoretic indexed IR type}:
-\begin{alignat*}{4}
-  &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set$}\\
-  &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
-  &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\\
-  &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
-  &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
-  &\rlap{}\\
-  &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set)$}\\
-  &\rlap{$\El^\w\,\Nat'^\w  \hspace{2.4em}            = \Nat^\w$}  \\
-  &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
-\end{alignat*}
-If we have $t : \Tm\,\Code$, the gluing interpretation hands us an element of $\Code^\w\,t$.
-
-\end{frame}
-
-\begin{frame}{How to prove canonicity?}
-
-In the object theory, let's assume general IR types specified by an internal $\Sig$ type.
-\begin{itemize}
-\item Previous slide: the object theory supports $\Code$, the canonicity proof involves $\Code^\w$.
-\pause
-\item Now: the object theory has all IR types, the canonicity proof involves all canonicity predicates.
+\item The computational content of the proof is \emph{type-directed closed evaluation}.
+\item Canonicity witnesses correspond to \emph{runtime values}.
 \end{itemize}
 \vspace{1em}
 \pause
 
-Interpreting IR types in the glued model:
-\begin{itemize}
- \item We write $\IR\,S : \Tm\,\U$ for the IR \emph{type formation} rule, for $S : \Tm\,(\Sig\,O)$.
- \pause
- \item To interpret $\IR\,S$:
-   \begin{itemize}
-     \item By induction hypothesis, we get $S^\w : \Sig^\w\,S$ witnessing the canonicity of the
-       signature $S$ itself.
-     \item We compute a metatheoretic indexed IR signature by induction on $S^\w$.
-       This yields the canonicity predicate for $\IR\,S$.
-   \end{itemize}
- \pause
- \item We also need to interpret \emph{term formation}, \emph{elimination} and \emph{computation} rules.
- \item For these, we have to show that universal properties of IR types are
-       preserved through the indexed IR encoding.
-\end{itemize}
+How to evaluate an \textbf{IR type constructor} $\IR\,S$?
+\begin{enumerate}
+  \item Evaluate the signature $S$ to get a value (canonicity witness).
+  \item Do induction on the value to compute a \emph{metatheoretic indexed IR signature}.
+  \item We take the indexed IR type for this signature to get the \emph{canonicity predicate}
+        for $\IR\,S$, i.e.\ the corresponding type of runtime values.
+\end{enumerate}
 \vspace{1em}
-\end{frame}
+\pause
 
-
-\begin{frame}{How to prove canonicity?}
-
-The construction is a moderately technical ``generic programming'' exercise,
-where we have to do some tricky induction over signatures.
+To evaluate \textbf{IR term constructors} and \textbf{IR elimination}, we use the corresponding
+meta-level indexed IR constructors and eliminators.
 \vspace{1em}
-
-We use metatheoretic IR to show canonicity of object-theoretic IR. The metatheory has
-to have more universes; in our case the metatheory has extra levels $\omega$ and $\omega+1$\footnote{But $\omega+1$ is only used for convenience and could be omitted.}.
-\vspace{1em}
-
-The canonicity interpretation of IR is formalized in Agda using a shallow embedding of $\Ty$ and $\Tm$.
 
 \end{frame}
 
-\begin{frame}{Indexed Induction-Recursion}
-
-What about canonicity for \textbf{indexed} IR types?
-\vspace{1em}
+\begin{frame}{What about indexed IR?}
 
 We only show canonicity for plain IR types, but also show that indexed IR types are
 constructible in MLTT+IR.
+\begin{itemize}
+ \item We use ``fording'', i.e.\ converting indices to parameters and propositional identities.
+ \item Since we work in MLTT without UIP, we have to use a modest amount of HoTT.
+\end{itemize}
+\vspace{1em}
+\pause
+
+\emph{Constructed IIR types have the same definitional computation rules as native IIR types in
+Agda.}
 \vspace{1em}
 
-The construction supports strict computation rules for all IIR types that
-are definable in Agda. For \emph{neutral} signatures we only get propositional computation.
-
+However, we can represent some IIR types which are
+\begin{enumerate}
+\item not representable in Agda
+\item don't support definitional $\beta$-rules
+\end{enumerate}
 \vspace{1em}
-We use the well-known construction that converts indices to parameters and propositional identities.\footnote{Popularized as ``fording'' by Conor McBride.}
 
-\vspace{1em}
-Here, since we work in plain MLTT without function extensionality and UIP, we have to do a modest amount of HoTT reasoning.
+This is because we have \emph{first-class} signatures and Agda doesn't.
 
 \end{frame}
 
-\begin{frame}{Closing notes}
+\begin{frame}{Overview}
 
-\vspace{-1em}
+1. Indexed IR types can be constructed from IR types and basic type formers (omitted in this talk).
+\vspace{1em}
+
+2. Canonicity:
+\begin{alignat*}{3}
+  &                       &&\text{MLTT with $\omega$ universes with IR}\\
+  & \text{\emph{is proved canonical by}}\quad &&\text{ETT with $\omega$ universes with IR, plus $\Set_\omega$ and $\Set_{\omega+1}$}\\
+  & \text{\emph{is proved consistent by}}\quad &&\text{ZF with $\omega$ Mahlo cardinals, plus two inaccessible cardinals above}
+\end{alignat*}
+
+\end{frame}
+
+\begin{frame}{Future work}
+
+Normalization for IR types?
 \begin{itemize}
-\item Future work:
-  \begin{itemize}
-    \item Normalization for IR types. For this, we first have to show that presheaf models have IR types (which is already quite technical!).
-    \item Generalize the canonicity proof to a model construction (i.e.\ extend general type-theoretic gluing with IR types). This seems to
-          be incompatible with first-class signatures.
-  \end{itemize}
-\item Paper: under review. I'll publish a preprint in $\sim$2 weeks.
+\item We want to work internally to presheaves over variable renamings.
+\item \emph{To use IR reducibility predicates, we first have to show that IR types exists
+      in presheaves.}
 \end{itemize}
-\vspace{2em}
+\vspace{1em}
+\pause
+
+Canonicity for other kinds of inductive types?
+\begin{itemize}
+\item Quotient induction and QW-types are probably OK.
+\item Induction-induction seems harder.
+\end{itemize}
+\vspace{1em}
+\pause
+
+Generalizing the proof?
+\begin{itemize}
+  \item To a \emph{syntactic parametricity translation}.
+  \item To a \emph{model construction}.
+\end{itemize}
 \pause
 
 \begin{center}
   {\Large{\textbf{Thank you!}}}
 \end{center}
+
 \end{frame}
+
+
+%% %% --------------------------------------------------------------------------------
+
+%% \begin{frame}{How to prove canonicity?}
+
+%% Every closed term with IR type should be convertible to an IR constructor.
+%% E.g.\ a closed term $t : \Code$ should be either $\Nat'$ or $\Pi'$.
+%% \vspace{1em}
+
+%% Type-theoretic Artin gluing \cite{coquand2018canonicity,gluing}:
+%% \begin{itemize}
+%%   \item A closed type is interpreted as a proof-relevant predicate over its closed terms.
+%%         The predicate should imply canonicity.
+%%   \item A closed term is interpreted as a predicate witness.
+%%   \item Open types \& terms are generalized over closed substitutions.
+%% \end{itemize}
+
+
+%% \end{frame}
+
+%% \begin{frame}{How to prove canonicity?}
+
+%% \textbf{Notation:} we write $\bs{\Ty}$ for the set of closed types, $\bs{\Tm\,A}$ for sets of closed terms,
+%%   and $\bs{\U : \Ty}$ for object-theoretic universes (omitting levels).
+%% \vspace{1em}
+
+%% \textbf{Example:} canonicity predicate for natural numbers.
+%% \begin{alignat*}{3}
+%%   &\data\,\Nat^\w : \Tm\,\Nat \to \Set\,\where\\
+%%   & \quad \zero^\w : \Nat^\w\,\zero\\
+%%   & \quad \suc^\w\,\,: (n : \Tm\,\Nat) \to \Nat^\w\,n \to \Nat^\w\,(\suc\,n)
+%% \end{alignat*}
+%% Generally: the canonicity predicate for an inductive type is a \alert{metatheoretic indexed inductive type}.
+
+
+%% \end{frame}
+
+%% \begin{frame}{How to prove canonicity?}
+
+%% \textbf{Example:} the canonicity predicate for $\Code$ is the following \alert{metatheoretic indexed IR type}:
+%% \begin{alignat*}{4}
+%%   &\rlap{$\data\,\Code^\w : \Tm\,\Code \to \Set$}\\
+%%   &\quad\Nat'^\w &&: \,\,&& \Code^\w\,\Nat'\\
+%%   &\quad\Pi'^\w  &&: \,\,&&\{A : \Tm\,\Code\}(A^\w : \Code^\w\,A)\\
+%%   &\quad         &&  && \{B : \Tm\,(\El\,A \to \Code)\}(B^\w : \{a : \Tm\,(\El\,a)\} \to \El^\w\,A^\w\,a \to \Code^\w\,(B\,a))\\
+%%   &\quad         &&  && \to \Code^\w\,(\Pi'\,A\,B)\\
+%%   &\rlap{}\\
+%%   &\rlap{$\El^\w : \{t : \Tm\,\Code\} \to \Code^\w\,t \to (\Tm\,(\El\,t) \to \Set)$}\\
+%%   &\rlap{$\El^\w\,\Nat'^\w  \hspace{2.4em}            = \Nat^\w$}  \\
+%%   &\rlap{$\El^\w\,(\Pi'^\w\,A^\w\,B^\w) = \lambda\,f.\,\{a : \Tm\,(\El\,A)\}(a^\w : \El^\w\,A^\w\,a) \to \El^\w\,(B^\w\,a^\w)\,(f\,a)$}
+%% \end{alignat*}
+%% If we have $t : \Tm\,\Code$, the gluing interpretation hands us an element of $\Code^\w\,t$.
+
+%% \end{frame}
+
+%% \begin{frame}{How to prove canonicity?}
+
+%% In the object theory, let's assume general IR types specified by an internal $\Sig$ type.
+%% \begin{itemize}
+%% \item Previous slide: the object theory supports $\Code$, the canonicity proof involves $\Code^\w$.
+%% \pause
+%% \item Now: the object theory has all IR types, the canonicity proof involves all canonicity predicates.
+%% \end{itemize}
+%% \vspace{1em}
+%% \pause
+
+%% Interpreting IR types in the glued model:
+%% \begin{itemize}
+%%  \item We write $\IR\,S : \Tm\,\U$ for the IR \emph{type formation} rule, for $S : \Tm\,(\Sig\,O)$.
+%%  \pause
+%%  \item To interpret $\IR\,S$:
+%%    \begin{itemize}
+%%      \item By induction hypothesis, we get $S^\w : \Sig^\w\,S$ witnessing the canonicity of the
+%%        signature $S$ itself.
+%%      \item We compute a metatheoretic indexed IR signature by induction on $S^\w$.
+%%        This yields the canonicity predicate for $\IR\,S$.
+%%    \end{itemize}
+%%  \pause
+%%  \item We also need to interpret \emph{term formation}, \emph{elimination} and \emph{computation} rules.
+%%  \item For these, we have to show that universal properties of IR types are
+%%        preserved through the indexed IR encoding.
+%% \end{itemize}
+%% \vspace{1em}
+%% \end{frame}
+
+
+%% \begin{frame}{How to prove canonicity?}
+
+%% The construction is a moderately technical ``generic programming'' exercise,
+%% where we have to do some tricky induction over signatures.
+%% \vspace{1em}
+
+%% We use metatheoretic IR to show canonicity of object-theoretic IR. The metatheory has
+%% to have more universes; in our case the metatheory has extra levels $\omega$ and $\omega+1$\footnote{But $\omega+1$ is only used for convenience and could be omitted.}.
+%% \vspace{1em}
+
+%% The canonicity interpretation of IR is formalized in Agda using a shallow embedding of $\Ty$ and $\Tm$.
+
+%% \end{frame}
+
+%% \begin{frame}{Indexed Induction-Recursion}
+
+%% What about canonicity for \textbf{indexed} IR types?
+%% \vspace{1em}
+
+%% We only show canonicity for plain IR types, but also show that indexed IR types are
+%% constructible in MLTT+IR.
+%% \vspace{1em}
+
+%% The construction supports strict computation rules for all IIR types that
+%% are definable in Agda. For \emph{neutral} signatures we only get propositional computation.
+
+%% \vspace{1em}
+%% We use the well-known construction that converts indices to parameters and propositional identities.\footnote{Popularized as ``fording'' by Conor McBride.}
+
+%% \vspace{1em}
+%% Here, since we work in plain MLTT without function extensionality and UIP, we have to do a modest amount of HoTT reasoning.
+
+%% \end{frame}
+
+%% \begin{frame}{Closing notes}
+
+%% \vspace{-1em}
+%% \begin{itemize}
+%% \item Future work:
+%%   \begin{itemize}
+%%     \item Normalization for IR types. For this, we first have to show that presheaf models have IR types (which is already quite technical!).
+%%     \item Generalize the canonicity proof to a model construction (i.e.\ extend general type-theoretic gluing with IR types). This seems to
+%%           be incompatible with first-class signatures.
+%%   \end{itemize}
+%% \item Paper: under review. I'll publish a preprint in $\sim$2 weeks.
+%% \end{itemize}
+%% \vspace{2em}
+%% \pause
+
+%% \begin{center}
+%%   {\Large{\textbf{Thank you!}}}
+%% \end{center}
+%% \end{frame}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
