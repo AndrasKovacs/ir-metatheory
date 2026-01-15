@@ -254,22 +254,22 @@ Some other uses: partial functions \cite{DBLP:conf/tphol/BoveC01}, generic progr
 
 \end{frame}
 
-\begin{frame}{IR implementation \& metatheory}
+\begin{frame}{IR implementation \& syntactic metatheory}
 
-IR has been supported in Agda for 15+ years. Also supported in Idris-es.
+IR has been supported in Agda for 15+ years. Also available in Idris-es.
 \vspace{1em}
 
-The implementation is quite straightforward. \emph{Intuitively}, there's nothing
-that could go wrong.
+\emph{Informally} the implementation is quite straightforward.
 \vspace{1em}
 \pause
 
-However, syntactic properties had not been shown:
+Desired syntactic properties:
 \begin{enumerate}
 \item \emph{Canonicity:} every closed term can be computed to a constructor.
 \item \emph{Normalization:} every open term can be computed to a normal form.
 \end{enumerate}
 \vspace{1em}
+\pause
 
 We show \textbf{canonicity}.
 
@@ -277,7 +277,7 @@ We show \textbf{canonicity}.
 
 \begin{frame}{The object theory}
 
-The syntax is a quotient inductive-inductive type with these sorts:\footnote{We omit universe levels here and elsewhere}
+Quotient inductive-inductive definition with these sorts:\footnote{We omit universe levels here and in the rest of the talk}
 \begin{alignat*}{3}
   & \Con &&: \Set\\
   & \Ty  &&: \Con \to \Set\\
@@ -287,8 +287,8 @@ The syntax is a quotient inductive-inductive type with these sorts:\footnote{We 
 
 We have
 \begin{itemize}
-  \item An explicit substitution calculus, given as a category with families.
-  \item Countable Russell-style universes.
+  \item An explicit substitution calculus, given as a category with family.
+  \item Countable universes in Russell style.
   \item Basic type formers: $\Pi$, $\Sigma$, $\top$, $\Bool$, intensional identity.
   \item IR types.
 \end{itemize}
@@ -296,7 +296,7 @@ We have
 
 \begin{frame}{Canonicity: basic setup}
 
-\textbf{Artin gluing} is an established proof-relevant version of \textbf{logical predicates} which
+\textbf{Artin gluing} is an established proof-relevant version of \textbf{logical predicate interpretation} which
 works nicely for our syntax.\footnote{See e.g.\ \cite{coquand2018canonicity,gluing}}
 \vspace{1em}
 
@@ -321,17 +321,16 @@ The main task is to specify what it means for a closed term to be canonical.
 \textbf{Example:} natural numbers.
 \vspace{1em}
 
-In the syntax, assume $\Nat : \Ty\,\Gamma$ with $\zero$ and $\suc$.
+In the syntax, assume $\Nat : \Ty\,\Gamma$ with $\zero : \Tm\,\Gamma\,\Nat$ and $\suc : \Tm\,\Gamma\,\Nat \to \Tm\,\Gamma\,\Nat$.
 \vspace{1em}
+\pause
 
-Closed canonical terms of type $\Nat$ are specified by an \alert{indexed inductive type}
-in the metatheory.
+Closed canonical terms are specified by a \alert{metatheoretic indexed inductive type}.
 \begin{alignat*}{3}
   &\data\,\Nat^\w : \Tm\,\emptycon\,\Nat \to \Set\,\where\\
   & \quad \zero^\w : \Nat^\w\,\zero\\
   & \quad \suc^\w\,\,: (n : \Tm\,\emptycon\,\Nat) \to \Nat^\w\,n \to \Nat^\w\,(\suc\,n)
 \end{alignat*}
-
 
 \end{frame}
 
@@ -393,28 +392,13 @@ We need to
 \begin{frame}{Specifying IR types}
 
 Following Dybjer \& Setzer: the type of \textbf{IR signatures} is an \textbf{internal} inductive type:
-
 \begin{alignat*}{4}
   &\data\, \Sig\,(O : \Set_1) : \Set_1\,\where\\
   &\quad \iota\hspace{0.25em}  : O \to \Sig\,O \\
   &\quad \sigma               : (A : \Set) \to (A \to \Sig\,O) \to \Sig\,O \\
   &\quad \delta\hspace{0.1em} : (A : \Set) \to ((A \to O) \to \Sig\,O) \to \Sig\,O
 \end{alignat*}
-\vspace{0.5em}
-
-For each signature, we postulate type formation, term formation, elimination and computation rules, for the described IR type.
-
-\end{frame}
-
-\begin{frame}{Specifying IR types}
-
-Let's write out the signature for $\Code$.
-
-\begin{alignat*}{3}
-  & \data\,\Code : \Set\,\where && \El : \Code \to \Set \\
-  & \quad \Nat' : \Code         && \El\,\Nat'\hspace{2.5em}  = \Nat \\
-  & \quad \Pi'  : (A : \Code) \to (\El\,A \to \Code) \to \Code \hspace{1.5em} && \El\,(\Pi'\,A\,B) = (a : \El\,A) \to \El\,(B\,a)
-\end{alignat*}
+\textbf{Example:} the signature for $\Code$:
 \begin{alignat*}{4}
   & \ms{SigCode} : \Sig\,\Set\\
   & \ms{SigCode} :\equiv \sigma\,\Bool\,\lambda\,t.\,\case\,t\,\of \\
@@ -423,15 +407,17 @@ Let's write out the signature for $\Code$.
       \iota\, ((x : {ElA}\,\ttt) \to {ElB}\,x)
 \end{alignat*}
 
+For each signature, we assume type formation, term formation, elimination and computation rules.
 \end{frame}
 
-\begin{frame}{Generic canonicity}
+\begin{frame}{General canonicity}
 
 Somewhat technical. I try to give computational intuition.
+\pause
 
 \begin{itemize}
-\item The computational content of the proof is \emph{type-directed closed evaluation}.
-\item Canonicity witnesses correspond to \emph{runtime values}.
+\item The computational content of $\blank^\w$ is \alert{type-directed closed evaluation}.
+\item Canonicity witnesses correspond to \alert{runtime values}.
 \end{itemize}
 \vspace{1em}
 \pause
@@ -480,14 +466,14 @@ This is because we have \emph{first-class} signatures and Agda doesn't.
 
 \begin{frame}{Overview}
 
-1. Indexed IR types can be constructed from IR types and basic type formers (omitted in this talk).
+1. Indexed IR types can be constructed from IR types and basic type formers.
 \vspace{1em}
 
 2. Canonicity:
 \begin{alignat*}{3}
   &                       &&\text{MLTT with $\omega$ universes with IR}\\
-  & \text{\emph{is proved canonical by}}\quad &&\text{ETT with $\omega$ universes with IR, plus $\Set_\omega$ and $\Set_{\omega+1}$}\\
-  & \text{\emph{is proved consistent by}}\quad &&\text{ZF with $\omega$ Mahlo cardinals, plus two inaccessible cardinals above}
+  & \text{\emph{is proved canonical by}}\quad &&\text{ETT with $\omega$ universes with IR + $\Set_\omega$ and $\Set_{\omega+1}$}\\
+  & \text{\emph{is proved consistent by}}\quad &&\text{ZF with $\omega$ Mahlo cardinals + two inaccessible cardinals above}
 \end{alignat*}
 
 \end{frame}
